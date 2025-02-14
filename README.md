@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next.js Boilerplate
 
-## Getting Started
+This is a Next.js project bootstrapped with create-next-app.
 
-First, run the development server:
+## 概要
+
+このプロジェクトは、Next.jsを使用して構築されたボイラープレートです。ユニットテストにはVitestを使用しています。
+
+## セットアップ手順
+
+1. リポジトリをクローンします。
+
+   ```bash
+   git clone <repository-url>
+   cd <project-name>
+   ```
+
+2. 依存関係をインストールします。
+
+   ```bash
+   npm install
+   ```
+
+3. 開発サーバーを起動します。
+
+   ```bash
+   npm run dev
+   ```
+
+   ブラウザで [http://localhost:3000](http://localhost:3000) を開いて結果を確認します。
+
+## テストの実行
+
+ユニットテストを実行するには、以下のコマンドを使用します。
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm test
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 使用しているライブラリ
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### コア技術
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Next.js**: フロントエンドフレームワーク
+- **React**: UIライブラリ
+- **TypeScript**: 型付きJavaScript
 
-## Learn More
+### スタイル
 
-To learn more about Next.js, take a look at the following resources:
+- **Tailwind CSS**: ユーティリティファーストCSSフレームワーク
+- **framer-motion**: アニメーションライブラリ
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### ユーティリティ
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **date-fns**: 日付操作ライブラリ
+- **immer**: 不変データを扱うためのライブラリ
+- **clsx**: 条件付きクラス名を簡単に操作するためのライブラリ
+- **tailwind-merge**: Tailwind CSSのクラスをマージするためのライブラリ
+- **class-variance-authority**: クラスのバリアンスを管理するためのライブラリ
 
-## Deploy on Vercel
+### フォーム管理
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **react-hook-form**: フォームの状態管理ライブラリ
+- **zod**: 型安全なスキーマバリデーションライブラリ
+- **@hookform/resolvers**: react-hook-form用のバリデーションライブラリ
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### テスト
+
+- **Vitest**: ユニットテストフレームワーク
+- **@testing-library/jest-dom**: Jest用のDOM拡張ライブラリ
+- **jsdom**: Node.js環境でDOMをシミュレートするためのライブラリ
+
+### 開発ツール
+
+- **npm**: パッケージマネージャー
+- **Biome**: コードリントとフォーマッター
+
+## 注意事項
+
+このプロジェクトは、さまざまなプロジェクトで再利用できるように設計されています。必要に応じて設定を変更してください。
