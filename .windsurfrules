@@ -140,6 +140,9 @@
 
 ```
 my-week-checker/
+├── reference/
+│   ├── docs/                # ドキュメント
+│   └── samples/             # サンプルコード
 ├── src/
 │   ├── app/                 # ページコンポーネント
 │   ├── components/          # 再利用可能なコンポーネント
