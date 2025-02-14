@@ -54,6 +54,7 @@
 ### chadcn/ui で必要なライブラリ
 - class-variance-authority: ^0.7.0
 - clsx: ^2.1.0
+- date-fns: ^4.1.0
 - lucide-react: ^0.475.0
 - tailwind-merge: ^3.0.0
 - tailwindcss-animate: ^1.0.0
@@ -75,9 +76,13 @@
 - table
 - tabs
 - textarea
-- toast
 - toggle
 - toggle-group
+
+## フォームバリデーションライブラリ
+- react-hook-form: ^7.0.0
+- zod: ^4.1.0
+- @hookform/resolvers: ^2.0.0
 
 ## バックエンド
 - SQLite: 最新版
