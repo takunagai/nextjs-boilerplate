@@ -1,4 +1,4 @@
-# Next.js Boilerplate
+# nextjs-boilerplate
 
 This is a Next.js project bootstrapped with create-next-app.
 
@@ -12,7 +12,7 @@ This is a Next.js project bootstrapped with create-next-app.
 
    ```bash
    git clone <repository-url>
-   cd <project-name>
+   cd nextjs-boilerplate
    ```
 
 2. 依存関係をインストールします。
