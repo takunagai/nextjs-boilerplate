@@ -1,80 +1,52 @@
-# nextjs-boilerplate
+# Next.js Boilerplate
 
-This is a Next.js project bootstrapped with create-next-app.
+モダンなウェブアプリケーション開発のための Next.js ボイラープレート
 
-## 概要
+## 特徴
 
-このプロジェクトは、Next.jsを使用して構築されたボイラープレートです。ユニットテストにはVitestを使用しています。
+- 🚀 Next.js 15
+- 🎨 Tailwind CSS
+- 📦 shadcn/ui コンポーネント
+- 🗃️ Drizzle ORM
+- 🔍 Biome
+- ✅ Vitest
 
-## セットアップ手順
-
-1. リポジトリをクローンします。
-
-   ```bash
-   git clone <repository-url>
-   cd nextjs-boilerplate
-   ```
-
-2. 依存関係をインストールします。
-
-   ```bash
-   npm install
-   ```
-
-3. 開発サーバーを起動します。
-
-   ```bash
-   npm run dev
-   ```
-
-   ブラウザで [http://localhost:3000](http://localhost:3000) を開いて結果を確認します。
-
-## テストの実行
-
-ユニットテストを実行するには、以下のコマンドを使用します。
+## 始め方
 
 ```bash
-npm test
+# リポジトリのクローン
+git clone https://github.com/takunagai/nextjs-boilerplate.git
+cd nextjs-boilerplate
+
+# 依存関係のインストール
+npm install
+
+# 環境変数の設定
+cp .env.example .env.local
+
+# 開発サーバーの起動
+npm run dev
 ```
 
-## 使用しているライブラリ
+## 利用可能なコマンド
 
-### コア技術
+```bash
+npm run dev      # 開発サーバーの起動
+npm run build    # プロダクションビルド
+npm run start    # プロダクションサーバーの起動
+npm run lint     # Biomeによるコード検証
+npm run format   # Biomeによるコードフォーマット
+npm run test     # Vitestによるテスト実行
+```
 
-- **Next.js**: フロントエンドフレームワーク
-- **React**: UIライブラリ
-- **TypeScript**: 型付きJavaScript
+## データベース操作
 
-### スタイル
+```bash
+npm run db:generate  # マイグレーションファイルの生成
+npm run db:push      # データベースへの変更の適用
+npm run db:studio    # Drizzle Studioの起動
+```
 
-- **Tailwind CSS**: ユーティリティファーストCSSフレームワーク
-- **framer-motion**: アニメーションライブラリ
+## ライセンス
 
-### ユーティリティ
-
-- **date-fns**: 日付操作ライブラリ
-- **immer**: 不変データを扱うためのライブラリ
-- **clsx**: 条件付きクラス名を簡単に操作するためのライブラリ
-- **tailwind-merge**: Tailwind CSSのクラスをマージするためのライブラリ
-- **class-variance-authority**: クラスのバリアンスを管理するためのライブラリ
-
-### フォーム管理
-
-- **react-hook-form**: フォームの状態管理ライブラリ
-- **zod**: 型安全なスキーマバリデーションライブラリ
-- **@hookform/resolvers**: react-hook-form用のバリデーションライブラリ
-
-### テスト
-
-- **Vitest**: ユニットテストフレームワーク
-- **@testing-library/jest-dom**: Jest用のDOM拡張ライブラリ
-- **jsdom**: Node.js環境でDOMをシミュレートするためのライブラリ
-
-### 開発ツール
-
-- **npm**: パッケージマネージャー
-- **Biome**: コードリントとフォーマッター
-
-## 注意事項
-
-このプロジェクトは、さまざまなプロジェクトで再利用できるように設計されています。必要に応じて設定を変更してください。
+MIT
