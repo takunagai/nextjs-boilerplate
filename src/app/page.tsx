@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { APP } from "@/lib/constants";
 import { ArrowRight, CheckCircle, ExternalLink } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
@@ -25,9 +26,8 @@ export default function Home() {
 							新しいスタンダード
 						</h1>
 						<p className="text-xl text-muted-foreground mb-8 max-w-2xl">
-							Next.js、TypeScript、Tailwind
-							CSSを組み合わせた最新のボイラープレートで、
-							高速で美しいWebアプリケーションを構築しましょう。
+							{/* 定数使用のサンプル */}
+							{APP.DESCRIPTION}
 						</p>
 						<div className="flex flex-col sm:flex-row gap-4">
 							<Button asChild size="lg" className="gap-2">
