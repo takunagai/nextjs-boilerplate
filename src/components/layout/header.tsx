@@ -1,13 +1,15 @@
 "use client";
 
-import * as React from "react";
+import { type VariantProps, cva } from "class-variance-authority";
+import { Menu } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { type VariantProps, cva } from "class-variance-authority";
-import { cn } from "@/lib/utils";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import * as React from "react";
+
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { SITE_NAME } from "@/lib/constants";
+import { cn } from "@/lib/utils";
 
 // ヘッダーのバリアントを定義
 const headerVariants = cva("w-full border-b sticky top-0 z-50", {
@@ -56,7 +58,7 @@ export function Header({
 	variant,
 	size,
 	logo,
-	logoText = "Next.js",
+	logoText = SITE_NAME,
 	items = [],
 	rightContent,
 	mobileMenuBreakpoint = "md",
@@ -73,15 +75,22 @@ export function Header({
 			// ブレークポイントに基づいてデスクトップかどうかを判定
 			let breakpointWidth = 768; // デフォルトはmd (768px)
 			switch (mobileMenuBreakpoint) {
-				case "sm": breakpointWidth = 640; break;
-				case "lg": breakpointWidth = 1024; break;
-				case "xl": breakpointWidth = 1280; break;
-				default: breakpointWidth = 768; // md
+				case "sm":
+					breakpointWidth = 640;
+					break;
+				case "lg":
+					breakpointWidth = 1024;
+					break;
+				case "xl":
+					breakpointWidth = 1280;
+					break;
+				default:
+					breakpointWidth = 768; // md
 			}
-			
+
 			const isDesktopView = window.innerWidth >= breakpointWidth;
 			setIsDesktop(isDesktopView);
-			
+
 			// デスクトップサイズになったらドロワーメニューを閉じる
 			if (isDesktopView && isOpen) {
 				setIsOpen(false);
@@ -90,13 +99,13 @@ export function Header({
 
 		// 初期チェック
 		checkIsDesktop();
-		
+
 		// リサイズイベントリスナーを追加
-		window.addEventListener('resize', checkIsDesktop);
-		
+		window.addEventListener("resize", checkIsDesktop);
+
 		// クリーンアップ
 		return () => {
-			window.removeEventListener('resize', checkIsDesktop);
+			window.removeEventListener("resize", checkIsDesktop);
 		};
 	}, [mobileMenuBreakpoint, isOpen]);
 
@@ -153,9 +162,7 @@ export function Header({
 									rel={item.external ? "noopener noreferrer" : undefined}
 									className={cn(
 										"text-sm font-medium transition-colors hover:text-primary",
-										item.active
-											? "text-foreground"
-											: "text-muted-foreground",
+										item.active ? "text-foreground" : "text-muted-foreground",
 									)}
 								>
 									{item.label}
@@ -166,9 +173,11 @@ export function Header({
 					</div>
 
 					{/* モバイルメニュートグル - デスクトップでは完全に非表示 */}
-					<div className={`${breakpointClass.replace("flex", "hidden")} ${isDesktop ? "hidden" : "block"}`}>
-						<Sheet 
-							open={isOpen} 
+					<div
+						className={`${breakpointClass.replace("flex", "hidden")} ${isDesktop ? "hidden" : "block"}`}
+					>
+						<Sheet
+							open={isOpen}
 							onOpenChange={(open) => {
 								// デスクトップサイズではドロワーメニューを開かない
 								if (!isDesktop) {
@@ -177,9 +186,9 @@ export function Header({
 							}}
 						>
 							<SheetTrigger asChild>
-								<Button 
-									variant="ghost" 
-									size="icon" 
+								<Button
+									variant="ghost"
+									size="icon"
 									className="-mr-2"
 									onClick={(e) => {
 										// デスクトップサイズではクリックイベントを無効化
