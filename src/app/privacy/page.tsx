@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { Footer } from "@/components/layout/footer";
 import Link from "next/link";
 
 export const metadata = {
@@ -215,14 +216,7 @@ export default function PrivacyPolicyPage() {
 				</Card>
 
 				{/* フッター */}
-				<div className="mt-8 text-center">
-					<p className="text-sm text-muted-foreground mb-4">
-						© {currentYear} 株式会社〇〇 All Rights Reserved.
-					</p>
-					<Link href="/" className="text-primary hover:underline">
-						ホームに戻る
-					</Link>
-				</div>
+				<Footer />
 			</div>
 		</div>
 	);
