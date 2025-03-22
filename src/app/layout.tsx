@@ -35,6 +35,7 @@ export default function RootLayout({
 						items={[
 							{ label: "ホーム", href: "/" },
 							{ label: "自己紹介", href: "/about" },
+							{ label: "お問い合わせ", href: "/contact" },
 							{ label: "プライバシーポリシー", href: "/privacy" },
 						]}
 					/>
