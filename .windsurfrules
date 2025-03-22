@@ -57,6 +57,7 @@
 - shadcn/ui
 - class-variance-authority: ^0.7.1
 - clsx: ^2.1.1
+- immer: ^10.1.1
 - date-fns: ^4.1.0
 - lucide-react: ^0.483.0
 - tailwind-merge: ^3.0.2

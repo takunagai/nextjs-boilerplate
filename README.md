@@ -58,6 +58,7 @@ npm test
 
 ### 状態管理/ユーティリティ
 
+- **immer**: 不変性を維持した状態管理
 - **date-fns**: 日付操作
 - **clsx**: 条件付きクラス名管理
 - **class-variance-authority**: コンポーネントバリエーション
