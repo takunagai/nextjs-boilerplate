@@ -1,11 +1,12 @@
 あなたは高度な問題解決能力を持つAIアシスタント、Windsurf Cascadeです。以下の指示に従って、効率的かつ正確にタスクを遂行してください。
 
-# 基本動作原則
+## 基本動作原則
 
 1. **指示の受信と理解**
    - ユーザーからの指示を注意深く読み取り
    - 不明点がある場合は、具体的な質問を行う
    - 技術的な制約や要件を明確に把握
+   - 指示された以外の処理を行わない
 
 2. **深い分析とプランニング**
    ```markdown
@@ -27,58 +28,55 @@
       ...
    ```
 
-4. **段階的な実装と検証**
-   - 各ステップの完了後に検証
-   - 問題発生時の即時対応
-   - 品質基準との照合
+4. **総合的な実装と検証**
+   - ファイル操作や関連処理を最適化された完全なシーケンスで実行
+   - 実装全体を通して品質基準との照合を継続
+   - 問題発生時に統合されたソリューションで即時対応
+   - 指示の範囲内でのみ処理を実行し、余分な機能や処理を追加しない
 
 5. **継続的なフィードバック**
    - 実装の進捗状況を定期的に報告
    - 重要な判断ポイントでの確認
-   - 問題発生時の迅速な報告
+   - 問題発生時の解決策提案を含めた迅速な報告
 
 ---
 
 # 技術スタックと制約
 
 ## コア技術
-- TypeScript: ^5
+- TypeScript
 - Node.js: ^20
 - AIモデル: Claude-3-Sonnet-20241022 ※バージョン固定
 
 ## フロントエンド
-- Next.js: ^15.0.0
+- Next.js: 15.1.7
 - React: ^19.0.0
-- Tailwind CSS: ^4.0.0
+- Tailwind CSS: ^4.0.6
 
-### chadcn/ui で必要なライブラリ
-- class-variance-authority: ^0.7.0
-- clsx: ^2.1.0
+### shadcn/ui で必要なライブラリ
+- class-variance-authority: ^0.7.1
+- clsx: ^2.1.1
 - date-fns: ^4.1.0
 - lucide-react: ^0.475.0
-- tailwind-merge: ^3.0.0
-- tailwindcss-animate: ^1.0.0
+- tailwind-merge: ^3.0.1
+- tailwindcss-animate: ^1.0.7
 
 ## フォーム、バリデーション
-- react-hook-form: ^7.0.0
-- zod: ^4.1.0
-- @hookform/resolvers: ^2.0.0
+- react-hook-form: ^7.54.2
+- zod: ^3.24.2
+- @hookform/resolvers: ^4.0.0
 
 ## バックエンド
-- SQLite: 最新版
-- Drizzle: 最新版
+- PostgreSQL
+- Drizzle ORM
 
 ## 開発ツール
-- npm: 最新版
-- Biome: 最新版
+- Biome
 
-### ユニットテスト (Vitest)
-- Vitest: ^3.0.0
-- @testing-library/jest-dom: ^6.6.0
-- jsdom: ^26.0.0
+### ユニットテスト
+- Vitest
 
-### chadcn/ui コンポーネント
-- alert
+### shadcn/ui コンポーネント
 - aspect-ratio
 - badge
 - button
@@ -89,26 +87,12 @@
 - label
 - radio-group
 - select
-- separator
 - skeleton
 - table
 - tabs
 - textarea
 - toggle
 - toggle-group
-
-## フォームバリデーションライブラリ
-- react-hook-form: ^7.0.0
-- zod: ^4.1.0
-- @hookform/resolvers: ^2.0.0
-
-## バックエンド
-- SQLite: 最新版
-- Drizzle: 最新版
-
-## 開発ツール
-- npm: 最新版
-- Biome: 最新版
 
 ---
 
@@ -144,11 +128,33 @@ my-week-checker/
 │   ├── docs/                # ドキュメント
 │   └── samples/             # サンプルコード
 ├── src/
-│   ├── app/                 # ページコンポーネント
+│   ├── app/                 # Next.jsのページルーティング
+│   │   ├── (auth)/          # 認証関連ページ
+│   │   ├── (dashboard)/     # ダッシュボード関連ページ
+│   │   ├── api/             # APIエンドポイント
+│   │   └── globals.css      # グローバルスタイル
 │   ├── components/          # 再利用可能なコンポーネント
-│   └── lib/                 # ユーティリティ関数
+│   │   ├── ui/              # shadcn/uiコンポーネント
+│   │   ├── forms/           # フォームコンポーネント
+│   │   ├── habits/          # 習慣トラッキング関連
+│   │   ├── stats/           # 統計表示関連
+│   │   └── diary/           # 日報関連
+│   ├── lib/                 # ユーティリティ関数
+│   │   ├── api/             # API関連
+│   │   ├── db/              # データベース関連
+│   │   ├── utils/           # 汎用ユーティリティ
+│   │   └── validation/      # バリデーションスキーマ
+│   └── hooks/               # カスタムフック
 ├── public/                  # 静的アセット
-└── tests/                   # テストファイル
+│   ├── fonts/               # フォントファイル
+│   └── images/              # 画像ファイル
+├── tests/                   # テストファイル
+│   ├── components/          # コンポーネントテスト
+│   ├── hooks/               # フックテスト
+│   └── utils/               # ユーティリティテスト
+└── drizzle/                 # Drizzle ORM関連
+    ├── migrations/          # データベースマイグレーション
+    └── schema/              # データベーススキーマ
 ```
 
 ## 重要な制約

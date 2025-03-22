@@ -41,39 +41,43 @@ npm test
 
 ### コア技術
 
-- **Next.js**: フロントエンドフレームワーク
-- **React**: UIライブラリ
-- **TypeScript**: 型付きJavaScript
+- **Next.js**: Reactベースのフルスタックフレームワーク
+- **React**: UIコンポーネントライブラリ
+- **TypeScript**: 静的型付きJavaScript
 
-### スタイル
+### UI/スタイリング
 
 - **Tailwind CSS**: ユーティリティファーストCSSフレームワーク
-- **framer-motion**: アニメーションライブラリ
+- **tailwindcss-animate**: アニメーション拡張
+- **tailwind-merge**: クラス名競合解決
+- **shadcn/ui**: 再利用可能なUIコンポーネント
+- **next-themes**: テーマ切り替え機能
+- **framer-motion**: 高度なアニメーション
+- **sonner**: トースト通知
+- **lucide-react**: モダンアイコンセット
 
-### ユーティリティ
+### 状態管理/ユーティリティ
 
-- **date-fns**: 日付操作ライブラリ
-- **immer**: 不変データを扱うためのライブラリ
-- **clsx**: 条件付きクラス名を簡単に操作するためのライブラリ
-- **tailwind-merge**: Tailwind CSSのクラスをマージするためのライブラリ
-- **class-variance-authority**: クラスのバリアンスを管理するためのライブラリ
+- **date-fns**: 日付操作
+- **clsx**: 条件付きクラス名管理
+- **class-variance-authority**: コンポーネントバリエーション
 
-### フォーム管理
+### フォーム/バリデーション
 
-- **react-hook-form**: フォームの状態管理ライブラリ
-- **zod**: 型安全なスキーマバリデーションライブラリ
-- **@hookform/resolvers**: react-hook-form用のバリデーションライブラリ
+- **react-hook-form**: フォーム状態管理
+- **zod**: スキーマバリデーション
+- **@hookform/resolvers**: バリデーション連携
 
 ### テスト
 
-- **Vitest**: ユニットテストフレームワーク
-- **@testing-library/jest-dom**: Jest用のDOM拡張ライブラリ
-- **jsdom**: Node.js環境でDOMをシミュレートするためのライブラリ
+- **Vitest**: 高速ユニットテスト
+- **Testing Library**: DOMテスト
+- **jsdom**: ブラウザ環境シミュレーション
 
 ### 開発ツール
 
-- **npm**: パッケージマネージャー
-- **Biome**: コードリントとフォーマッター
+- **Biome**: 次世代リンター/フォーマッター
+- **npm**: パッケージ管理
 
 ## 注意事項
 
