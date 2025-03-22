@@ -1,6 +1,8 @@
-import Link from "next/link";
-import { type VariantProps, cva } from "class-variance-authority";
 import { cn } from "@/lib/utils";
+import { type VariantProps, cva } from "class-variance-authority";
+import Link from "next/link";
+
+import { COPYRIGHT_HOLDER } from "@/lib/constants";
 
 // フッターのバリアントを定義
 const footerVariants = cva("w-full border-t", {
@@ -51,7 +53,7 @@ export function Footer({
 	className,
 	variant,
 	size,
-	companyName = "株式会社〇〇",
+	companyName = COPYRIGHT_HOLDER,
 	links = [],
 	navGroups = [],
 	showCurrentYear = true,

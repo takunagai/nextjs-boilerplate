@@ -11,6 +11,11 @@ export const SITE_NAME =
 	process.env.NEXT_PUBLIC_SITE_NAME || "Next.js Boilerplate";
 
 /**
+ * 著作権所有者
+ */
+export const COPYRIGHT_HOLDER = "nagai-shouten.com";
+
+/**
  * アプリケーション情報
  */
 export const APP = {
