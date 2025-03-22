@@ -140,17 +140,7 @@ export function Header({
 									<span className="sr-only">メニューを開く</span>
 								</Button>
 							</SheetTrigger>
-							<SheetContent side="right" className="pt-12">
-								<div className="absolute right-4 top-4">
-									<Button
-										variant="ghost"
-										size="icon"
-										onClick={() => setIsOpen(false)}
-									>
-										<X className="h-5 w-5" />
-										<span className="sr-only">メニューを閉じる</span>
-									</Button>
-								</div>
+							<SheetContent side="right" className="pt-6">
 								<nav className="flex flex-col gap-4">
 									{navItems.map((item) => (
 										<Link
