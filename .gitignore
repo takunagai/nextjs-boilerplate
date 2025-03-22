@@ -12,31 +12,97 @@
 
 # testing
 /coverage
+/.nyc_output
+/cypress/screenshots
+/cypress/videos
+/playwright-report
+/test-results
 
 # next.js
 /.next/
 /out/
+.swc/
 
 # production
 /build
+/dist
 
 # misc
 .DS_Store
 *.pem
+Thumbs.db
+.directory
 
 # debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+*.log
 
 # env files (can opt-in for committing if needed)
 .env*
 !.env.example
 
+# deployment platforms
 # vercel
 .vercel
+# netlify
+.netlify
+/netlify
+# cloudflare
+.cloudflare
+.wrangler
+# firebase
+.firebase
+firebase-debug.log
+# aws
+.aws
+.serverless
+# gcp
+.gcp
+app.yaml
+.gcloudignore
+# supabase
+.supabase
+supabase/.branches
+supabase/.temp
+# neon
+.neon
+.neonctl
+neon.yaml
+
+# IDE
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+*.sublime-project
+*.sublime-workspace
+.project
+.classpath
+.c9/
+*.launch
+.settings/
 
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# cache & generated files
+.cache/
+.temp/
+.eslintcache
+.stylelintcache
+.turbo
+.contentlayer
+
+# local files
+*.local
+local/
+/public/sitemap*.xml
+/public/robots.txt
+/public/sw.js
+/public/workbox-*.js
