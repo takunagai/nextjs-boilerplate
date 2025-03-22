@@ -65,6 +65,40 @@ export function Header({
 }: HeaderProps) {
 	const pathname = usePathname();
 	const [isOpen, setIsOpen] = React.useState(false);
+	const [isDesktop, setIsDesktop] = React.useState(false);
+
+	// 画面サイズの変更を監視し、デスクトップサイズかどうかを判定
+	React.useEffect(() => {
+		const checkIsDesktop = () => {
+			// ブレークポイントに基づいてデスクトップかどうかを判定
+			let breakpointWidth = 768; // デフォルトはmd (768px)
+			switch (mobileMenuBreakpoint) {
+				case "sm": breakpointWidth = 640; break;
+				case "lg": breakpointWidth = 1024; break;
+				case "xl": breakpointWidth = 1280; break;
+				default: breakpointWidth = 768; // md
+			}
+			
+			const isDesktopView = window.innerWidth >= breakpointWidth;
+			setIsDesktop(isDesktopView);
+			
+			// デスクトップサイズになったらドロワーメニューを閉じる
+			if (isDesktopView && isOpen) {
+				setIsOpen(false);
+			}
+		};
+
+		// 初期チェック
+		checkIsDesktop();
+		
+		// リサイズイベントリスナーを追加
+		window.addEventListener('resize', checkIsDesktop);
+		
+		// クリーンアップ
+		return () => {
+			window.removeEventListener('resize', checkIsDesktop);
+		};
+	}, [mobileMenuBreakpoint, isOpen]);
 
 	// ナビゲーションアイテムにアクティブステートを追加
 	const navItems = React.useMemo(() => {
@@ -131,11 +165,29 @@ export function Header({
 						{rightContent && <div>{rightContent}</div>}
 					</div>
 
-					{/* モバイルメニュートグル */}
-					<div className={`${breakpointClass.replace("flex", "hidden")}`}>
-						<Sheet open={isOpen} onOpenChange={setIsOpen}>
+					{/* モバイルメニュートグル - デスクトップでは完全に非表示 */}
+					<div className={`${breakpointClass.replace("flex", "hidden")} ${isDesktop ? "hidden" : "block"}`}>
+						<Sheet 
+							open={isOpen} 
+							onOpenChange={(open) => {
+								// デスクトップサイズではドロワーメニューを開かない
+								if (!isDesktop) {
+									setIsOpen(open);
+								}
+							}}
+						>
 							<SheetTrigger asChild>
-								<Button variant="ghost" size="icon" className="-mr-2">
+								<Button 
+									variant="ghost" 
+									size="icon" 
+									className="-mr-2"
+									onClick={(e) => {
+										// デスクトップサイズではクリックイベントを無効化
+										if (isDesktop) {
+											e.preventDefault();
+										}
+									}}
+								>
 									<Menu className="h-5 w-5" />
 									<span className="sr-only">メニューを開く</span>
 								</Button>
