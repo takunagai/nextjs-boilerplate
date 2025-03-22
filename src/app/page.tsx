@@ -255,12 +255,20 @@ const features = [
 ];
 
 const technologies = [
-	{ id: "nextjs", name: "Next.js", logo: "/tech/nextjs.svg" },
-	{ id: "react", name: "React", logo: "/tech/react.svg" },
-	{ id: "typescript", name: "TypeScript", logo: "/tech/typescript.svg" },
-	{ id: "tailwindcss", name: "Tailwind CSS", logo: "/tech/tailwindcss.svg" },
-	{ id: "shadcn", name: "shadcn/ui", logo: "/tech/shadcn.svg" },
-	{ id: "biome", name: "Biome", logo: "/tech/biome.svg" },
+	{ id: "nextjs", name: "Next.js", logo: "/dummy-images/tech/nextjs.svg" },
+	{ id: "react", name: "React", logo: "/dummy-images/tech/react.svg" },
+	{
+		id: "typescript",
+		name: "TypeScript",
+		logo: "/dummy-images/tech/typescript.svg",
+	},
+	{
+		id: "tailwindcss",
+		name: "Tailwind CSS",
+		logo: "/dummy-images/tech/tailwindcss.svg",
+	},
+	{ id: "shadcn", name: "shadcn/ui", logo: "/dummy-images/tech/shadcn.svg" },
+	{ id: "biome", name: "Biome", logo: "/dummy-images/tech/biome.svg" },
 ];
 
 const featureList = [

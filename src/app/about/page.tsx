@@ -1,8 +1,13 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
-import Link from "next/link";
 
 export const metadata = {
 	title: "自己紹介 | Next.js Boilerplate",
@@ -17,7 +22,7 @@ export default function AboutPage() {
 				<div className="flex flex-col md:flex-row gap-8 items-center">
 					<div className="relative w-48 h-48 rounded-full overflow-hidden border-4 border-primary/20">
 						<Image
-							src="/profile-placeholder.jpg"
+							src="/dummy-images/profile-placeholder.jpg"
 							alt="プロフィール画像"
 							fill
 							className="object-cover"
@@ -44,9 +49,7 @@ export default function AboutPage() {
 				<Card>
 					<CardHeader>
 						<CardTitle>自己紹介</CardTitle>
-						<CardDescription>
-							私についての簡単な紹介です
-						</CardDescription>
+						<CardDescription>私についての簡単な紹介です</CardDescription>
 					</CardHeader>
 					<CardContent>
 						<p className="leading-7 mb-4">
@@ -66,71 +69,49 @@ export default function AboutPage() {
 				<Card>
 					<CardHeader>
 						<CardTitle>スキル</CardTitle>
-						<CardDescription>
-							技術スタックと専門知識
-						</CardDescription>
+						<CardDescription>技術スタックと専門知識</CardDescription>
 					</CardHeader>
 					<CardContent>
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 							<div>
-								<h3 className="text-lg font-semibold mb-3">
-									フロントエンド
-								</h3>
+								<h3 className="text-lg font-semibold mb-3">フロントエンド</h3>
 								<ul className="space-y-2">
 									<li className="flex items-center gap-2">
 										<Badge>Next.js</Badge>
-										<span className="text-sm text-muted-foreground">
-											上級
-										</span>
+										<span className="text-sm text-muted-foreground">上級</span>
 									</li>
 									<li className="flex items-center gap-2">
 										<Badge>React</Badge>
-										<span className="text-sm text-muted-foreground">
-											上級
-										</span>
+										<span className="text-sm text-muted-foreground">上級</span>
 									</li>
 									<li className="flex items-center gap-2">
 										<Badge>TypeScript</Badge>
-										<span className="text-sm text-muted-foreground">
-											中級
-										</span>
+										<span className="text-sm text-muted-foreground">中級</span>
 									</li>
 									<li className="flex items-center gap-2">
 										<Badge>Tailwind CSS</Badge>
-										<span className="text-sm text-muted-foreground">
-											上級
-										</span>
+										<span className="text-sm text-muted-foreground">上級</span>
 									</li>
 								</ul>
 							</div>
 							<div>
-								<h3 className="text-lg font-semibold mb-3">
-									バックエンド
-								</h3>
+								<h3 className="text-lg font-semibold mb-3">バックエンド</h3>
 								<ul className="space-y-2">
 									<li className="flex items-center gap-2">
 										<Badge>Node.js</Badge>
-										<span className="text-sm text-muted-foreground">
-											中級
-										</span>
+										<span className="text-sm text-muted-foreground">中級</span>
 									</li>
 									<li className="flex items-center gap-2">
 										<Badge>PostgreSQL</Badge>
-										<span className="text-sm text-muted-foreground">
-											初級
-										</span>
+										<span className="text-sm text-muted-foreground">初級</span>
 									</li>
 									<li className="flex items-center gap-2">
 										<Badge>REST API</Badge>
-										<span className="text-sm text-muted-foreground">
-											中級
-										</span>
+										<span className="text-sm text-muted-foreground">中級</span>
 									</li>
 									<li className="flex items-center gap-2">
 										<Badge>GraphQL</Badge>
-										<span className="text-sm text-muted-foreground">
-											初級
-										</span>
+										<span className="text-sm text-muted-foreground">初級</span>
 									</li>
 								</ul>
 							</div>
@@ -142,9 +123,7 @@ export default function AboutPage() {
 				<Card>
 					<CardHeader>
 						<CardTitle>経歴</CardTitle>
-						<CardDescription>
-							これまでの職歴と学歴
-						</CardDescription>
+						<CardDescription>これまでの職歴と学歴</CardDescription>
 					</CardHeader>
 					<CardContent>
 						<div className="space-y-6">
@@ -188,9 +167,7 @@ export default function AboutPage() {
 							<Separator />
 							<div>
 								<div className="flex justify-between items-start mb-1">
-									<h3 className="text-lg font-semibold">
-										東京工科大学
-									</h3>
+									<h3 className="text-lg font-semibold">東京工科大学</h3>
 									<span className="text-sm text-muted-foreground">
 										2014年 - 2018年
 									</span>
@@ -211,16 +188,12 @@ export default function AboutPage() {
 				<Card>
 					<CardHeader>
 						<CardTitle>お問い合わせ</CardTitle>
-						<CardDescription>
-							ご連絡はこちらからお願いします
-						</CardDescription>
+						<CardDescription>ご連絡はこちらからお願いします</CardDescription>
 					</CardHeader>
 					<CardContent>
 						<div className="flex flex-col md:flex-row gap-4 justify-between">
 							<div className="space-y-2">
-								<p className="text-sm text-muted-foreground">
-									メール
-								</p>
+								<p className="text-sm text-muted-foreground">メール</p>
 								<p>
 									<a
 										href="mailto:example@example.com"
@@ -231,9 +204,7 @@ export default function AboutPage() {
 								</p>
 							</div>
 							<div className="space-y-2">
-								<p className="text-sm text-muted-foreground">
-									SNS
-								</p>
+								<p className="text-sm text-muted-foreground">SNS</p>
 								<div className="flex gap-4">
 									<a
 										href="https://github.com/"
@@ -264,7 +235,6 @@ export default function AboutPage() {
 						</div>
 					</CardContent>
 				</Card>
-
 			</div>
 		</div>
 	);
