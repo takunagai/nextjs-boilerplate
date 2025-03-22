@@ -125,7 +125,11 @@
 # プロジェクト構造規約
 
 ```
-my-week-checker/
+nextjs-boilerplate/
+├── public/                  # 静的アセット
+│   ├── dummy-images/        # ダミー画像
+│   ├── (fonts)/             # フォントファイル
+│   └── (images)/            # 画像ファイル
 ├── reference/
 │   ├── docs/                # ドキュメント
 │   └── samples/             # サンプルコード
@@ -133,30 +137,29 @@ my-week-checker/
 │   ├── app/                 # Next.jsのページルーティング
 │   │   ├── (auth)/          # 認証関連ページ
 │   │   ├── (dashboard)/     # ダッシュボード関連ページ
-│   │   ├── api/             # APIエンドポイント
+│   │   ├── (api)/           # APIエンドポイント
 │   │   └── globals.css      # グローバルスタイル
 │   ├── components/          # 再利用可能なコンポーネント
-│   │   ├── ui/              # shadcn/uiコンポーネント
-│   │   ├── forms/           # フォームコンポーネント
-│   │   ├── habits/          # 習慣トラッキング関連
-│   │   ├── stats/           # 統計表示関連
-│   │   └── diary/           # 日報関連
+│   │   ├── layout/          # レイアウトコンポーネント(ヘッダー、フッター etc.)
+│   │   └── ui/              # shadcn/uiコンポーネント
 │   ├── lib/                 # ユーティリティ関数
-│   │   ├── api/             # API関連
-│   │   ├── db/              # データベース関連
-│   │   ├── utils/           # 汎用ユーティリティ
-│   │   └── validation/      # バリデーションスキーマ
-│   └── hooks/               # カスタムフック
-├── public/                  # 静的アセット
-│   ├── fonts/               # フォントファイル
-│   └── images/              # 画像ファイル
+│   │   ├── validation/      # バリデーションスキーマ
+│   │   ├── (api)/           # API関連
+│   │   ├── (db)/            # データベース関連
+│   │   ├── constants.ts     # 定数
+│   │   └── utils.ts         # 汎用ユーティリティ
+│   └── (hooks)/             # カスタムフック
 ├── tests/                   # テストファイル
-│   ├── components/          # コンポーネントテスト
-│   ├── hooks/               # フックテスト
-│   └── utils/               # ユーティリティテスト
-└── drizzle/                 # Drizzle ORM関連
-    ├── migrations/          # データベースマイグレーション
-    └── schema/              # データベーススキーマ
+│   ├── (components)/        # コンポーネントテスト
+│   ├── (hooks)/             # フックテスト
+│   └── (utils)/             # ユーティリティテスト
+├── .env.example             # 環境変数の例
+├── .gitignore               # Gitの除外設定
+├── biome.json               # Biome設定
+├── next.config.js           # Next.js設定
+├── package.json             # 依存関係と設定
+├── tailwind.config.ts       # Tailwind CSS設定
+└── tsconfig.json            # TypeScript設定
 ```
 
 ## 重要な制約

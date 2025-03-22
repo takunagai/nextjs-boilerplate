@@ -18,6 +18,7 @@
 ## 機能
 
 ### UI/UX
+
 - **レスポンシブデザイン** - Tailwind CSSによるモバイルファーストアプローチ
 - **ダークモード対応** - Next.js Themesによるシームレスなテーマ切り替え
 - **アニメーション** - Framer Motionによる洗練されたモーション
@@ -25,6 +26,7 @@
 - **UIコンポーネント** - shadcn/uiによる美しく再利用可能なコンポーネント
 
 ### 開発体験
+
 - **型安全性** - TypeScriptによる堅牢なコード
 - **高速開発** - Next.js App Routerとサーバーコンポーネント
 - **効率的な状態管理** - Immerによる不変性を維持した状態更新
@@ -32,6 +34,7 @@
 - **コード品質** - Biomeによるリンティングとフォーマット
 
 ### 事前構築済み
+
 - **ページテンプレート** - ホーム、説明、問い合わせ、プライバシーポリシー
 - **レイアウトコンポーネント** - ヘッダー、フッター、ナビゲーション
 - **ユーティリティ** - 定数管理、日付操作、クラス名ユーティリティ
@@ -40,11 +43,13 @@
 ## 技術スタック
 
 ### コア技術
+
 - **Next.js** (15.2.3) - Reactフレームワーク
 - **React** (19.0.0) - UIライブラリ
 - **TypeScript** (5) - 型付きJavaScript
 
 ### UI/スタイリング
+
 - **Tailwind CSS** (4.0.15) - ユーティリティファーストCSS
 - **shadcn/ui** - 再利用可能なUIコンポーネント
 - **next-themes** - テーマ切り替え
@@ -53,6 +58,7 @@
 - **lucide-react** - アイコンセット
 
 ### 状態管理/ユーティリティ
+
 - **immer** - 不変状態管理
 - **date-fns** - 日付操作
 - **class-variance-authority** - コンポーネントバリエーション
@@ -60,21 +66,25 @@
 - **tailwind-merge** - Tailwindクラス最適化
 
 ### フォーム/バリデーション
+
 - **react-hook-form** (7.54.2) - フォーム状態管理
 - **zod** (3.24.2) - スキーマバリデーション
 - **@hookform/resolvers** (4.1.3) - バリデーション連携
 
 ### テスト
+
 - **Vitest** (1.3.1) - 高速テストフレームワーク
 - **Testing Library** - DOMテスト
 - **jsdom** - ブラウザ環境シミュレーション
 
 ### 開発ツール
+
 - **Biome** (1.6.1) - リンター/フォーマッター
 
 ## セットアップ手順
 
 ### 前提条件
+
 - Node.js 20.x以上
 - npm 10.x以上
 
@@ -157,28 +167,40 @@ export default function MyComponent() {
 
 ```
 nextjs-boilerplate/
-├── public/                 # 静的アセット
+├── public/                  # 静的アセット
+│   ├── dummy-images/        # ダミー画像
+│   ├── (fonts)/             # フォントファイル
+│   └── (images)/            # 画像ファイル
+├── reference/
+│   ├── docs/                # ドキュメント
+│   └── samples/             # サンプルコード
 ├── src/
-│   ├── app/                # Next.js App Router
-│   │   ├── (auth)/         # 認証関連ページ
-│   │   ├── api/            # APIエンドポイント
-│   │   ├── layout.tsx      # ルートレイアウト
-│   │   └── page.tsx        # ホームページ
-│   ├── components/         # UIコンポーネント
-│   │   ├── layout/         # レイアウトコンポーネント
-│   │   └── ui/             # 再利用可能なUIコンポーネント
-│   ├── lib/                # ユーティリティ関数
-│   │   ├── constants.ts    # アプリケーション定数
-│   │   └── utils.ts        # ヘルパー関数
-│   └── types/              # TypeScript型定義
-├── tests/                  # テストファイル
-├── .env.example            # 環境変数の例
-├── .gitignore              # Gitの除外設定
-├── biome.json              # Biome設定
-├── next.config.js          # Next.js設定
-├── package.json            # 依存関係と設定
-├── tailwind.config.ts      # Tailwind CSS設定
-└── tsconfig.json           # TypeScript設定
+│   ├── app/                 # Next.jsのページルーティング
+│   │   ├── (auth)/          # 認証関連ページ
+│   │   ├── (dashboard)/     # ダッシュボード関連ページ
+│   │   ├── (api)/           # APIエンドポイント
+│   │   └── globals.css      # グローバルスタイル
+│   ├── components/          # 再利用可能なコンポーネント
+│   │   ├── layout/          # レイアウトコンポーネント(ヘッダー、フッター etc.)
+│   │   └── ui/              # shadcn/uiコンポーネント
+│   ├── lib/                 # ユーティリティ関数
+│   │   ├── validation/      # バリデーションスキーマ
+│   │   ├── (api)/           # API関連
+│   │   ├── (db)/            # データベース関連
+│   │   ├── constants.ts     # 定数
+│   │   └── utils.ts         # 汎用ユーティリティ
+│   └── (hooks)/             # カスタムフック
+├── tests/                   # テストファイル
+│   ├── (components)/        # コンポーネントテスト
+│   ├── (hooks)/             # フックテスト
+│   └── (utils)/             # ユーティリティテスト
+├── .env.example             # 環境変数の例
+├── .gitignore               # Gitの除外設定
+├── biome.json               # Biome設定
+├── next.config.js           # Next.js設定
+├── package.json             # 依存関係と設定
+├── tailwind.config.ts       # Tailwind CSS設定
+└── tsconfig.json            # TypeScript設定
 ```
 
 ## テスト
