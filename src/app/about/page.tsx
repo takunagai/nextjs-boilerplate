@@ -1,7 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
-import { Footer } from "@/components/layout/footer";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -266,8 +265,6 @@ export default function AboutPage() {
 					</CardContent>
 				</Card>
 
-				{/* フッター */}
-				<Footer />
 			</div>
 		</div>
 	);

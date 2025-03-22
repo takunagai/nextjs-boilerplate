@@ -1,6 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Footer } from "@/components/layout/footer";
 import Link from "next/link";
 
 export const metadata = {
@@ -215,8 +214,6 @@ export default function PrivacyPolicyPage() {
 					</CardContent>
 				</Card>
 
-				{/* フッター */}
-				<Footer />
 			</div>
 		</div>
 	);
