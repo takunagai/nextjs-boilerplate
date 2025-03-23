@@ -1,11 +1,9 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+import { generateMetadata, WebsiteJsonLd } from "@/components/seo";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
-import { generateMetadata } from "@/components/seo";
-import { WebsiteJsonLd } from "@/components/seo";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Container } from "@/components/ui/container";
 import { META } from "@/lib/constants";
 import type { Metadata } from "next";
-import Link from "next/link";
 
 export const metadata: Metadata = generateMetadata({
 	title: "プライバシーポリシー",
@@ -25,7 +23,7 @@ export default function PrivacyPolicyPage() {
 				description="当サイトにおける個人情報の取り扱いについて定めたプライバシーポリシーです。"
 				url={`${META.SITE_URL}/privacy`}
 			/>
-			<div className="container mx-auto py-12 px-4 max-w-4xl">
+			<Container size="md" paddingY="lg" paddingX="2xl">
 				<Breadcrumb
 					items={[
 						{ label: "ホーム", href: "/" },
@@ -234,7 +232,7 @@ export default function PrivacyPolicyPage() {
 					</Card>
 
 				</div>
-			</div>
+			</Container>
 		</>
 	);
 }
