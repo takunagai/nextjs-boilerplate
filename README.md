@@ -101,7 +101,7 @@
 1. リポジトリをクローンします
 
 ```bash
-git clone https://github.com/yourusername/nextjs-boilerplate.git
+git clone git@github.com:takunagai/nextjs-boilerplate.git
 cd nextjs-boilerplate
 ```
 
@@ -111,34 +111,30 @@ cd nextjs-boilerplate
 npm install
 ```
 
-3. 環境変数を設定します
-
-```bash
-cp .env.example .env.local
-```
-
-4. 開発サーバーを起動します
+3. 開発サーバーを起動します
 
 ```bash
 npm run dev
 ```
 
-5. ブラウザで [http://localhost:3000](http://localhost:3000) を開いて確認します
+4. ブラウザで [http://localhost:3000](http://localhost:3000) を開いて確認します
 
 ## 環境変数の設定
 
-`.env.example` ファイルを `.env.local` にコピーし、必要な環境変数を設定します。
+`.env.example` ファイルを `.env.local` にコピー。
+
+```bash
+cp .env.example .env.local
+```
+
+必要な環境変数を設定します(不要な環境変数は削除してください)。
 
 ```bash
 # アプリケーション設定
 NEXT_PUBLIC_APP_URL=http://localhost:3000
-NEXT_PUBLIC_SITE_NAME="Next.js Boilerplate"
-
-# データベース接続情報（必要な場合）
-DATABASE_URL="postgresql://postgres:password@localhost:5432/mydatabase"
+NEXT_PUBLIC_APP_NAME="Next.js Boilerplate"
+NEXT_PUBLIC_SITE_NAME="Next.js Boilerplate Sample Site"
 ```
-
-詳細は [環境変数のドキュメント](./docs/environment-variables.md) を参照してください。
 
 ## 使用方法
 
@@ -260,7 +256,8 @@ npm run test:e2e:report
 
 ### Vercelへのデプロイ
 
-このプロジェクトはVercelへの簡単なデプロイをサポートしています。
+このプロジェクトはVercelへの簡単なデプロイをサポートしています。  
+~~詳細は [デプロイガイド](./docs/deployment.md) を参照してください。~~
 
 [![Vercelにデプロイ](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fyourusername%2Fnextjs-boilerplate)
 
@@ -271,9 +268,11 @@ npm run test:e2e:report
 - [AWS Amplify](https://aws.amazon.com/amplify/)
 - [Google Cloud Run](https://cloud.google.com/run)
 
-詳細は [デプロイガイド](./docs/deployment.md) を参照してください。
-
 ## 貢献方法
+
+コントリビュートする場合は、以下の手順を参考にしてください。  
+※ウェブアプリ/ウェブサイト共通でベースとなるボイラープレートです。  
+　ウェブアプリ/ウェブサイトそれぞれに特化したものは別リポジトリで管理する予定です。
 
 1. このリポジトリをフォークします
 2. 機能ブランチを作成します (`git checkout -b feature/amazing-feature`)
