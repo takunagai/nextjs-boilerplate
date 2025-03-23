@@ -9,6 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { formExampleSchema, type FormExampleValues } from "@/lib/validation/form-example-schema";
 
 export default function FormExamplePage() {
@@ -53,6 +54,13 @@ export default function FormExamplePage() {
 
   return (
     <div>
+      <Breadcrumb
+        items={[
+          { label: "ホーム", href: "/" },
+          { label: "サンプル一覧", href: "/examples" },
+          { label: "フォームサンプル", href: "/examples/form", isCurrent: true },
+        ]}
+      />
       <h1 className="mb-8 text-3xl font-bold">フォームサンプル</h1>
       
       <Card className="max-w-2xl">
