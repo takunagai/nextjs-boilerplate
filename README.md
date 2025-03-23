@@ -198,19 +198,21 @@ export default function MyPage() {
       <div>複雑なレイアウト要素...</div>
     </Container>
 
-    // セマンティックなHTML要素として利用
+    // セマンティックなHTML要素として利用 (デフォルトはdiv)
     <Container as="section" size="lg" paddingY="xl" paddingX="md">
       <h2>セクションタイトル</h2>
       <p>セクションコンテンツ...</p>
     </Container>
 
-    // ヘッダーとして利用
+    // ヘッダーの実装例
     <Container as="header" size="full" paddingY="md" paddingX="lg" position="relative" zIndex="high">
       <nav>ナビゲーションメニュー...</nav>
     </Container>
   );
 }
 ```
+
+### 利用可能なパラメータ
 
 サイズバリエーション:
 
@@ -224,6 +226,10 @@ export default function MyPage() {
 
 - `position`: `default`, `relative`
 - `zIndex`: `none`, `base`, `high`, `highest`
+
+使用可能なHTML要素（`as`プロパティ）:
+
+- `div` (デフォルト), `section`, `header`, `footer`, `main`, `article`, `aside`, `figure`, `figcaption`, `summary`, `nav`
 
 ## ディレクトリ構造
 
@@ -252,7 +258,7 @@ nextjs-boilerplate/
 │   │   ├── (db)/            # データベース関連
 │   │   ├── constants.ts     # 定数
 │   │   └── utils.ts         # 汎用ユーティリティ
-│   └── (hooks)/             # カスタムフック
+│   └── hooks/               # カスタムフック
 ├── tests/                   # テストファイル
 │   ├── components/          # コンポーネントテスト
 │   ├── e2e/                 # Playwright E2Eテスト
