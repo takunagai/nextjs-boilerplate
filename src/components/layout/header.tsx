@@ -7,6 +7,7 @@ import * as React from "react";
 
 import { SITE_NAME } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import { ThemeSwitcher } from "@/components/theme/theme-switcher";
 import { DesktopNavigation } from "./header/desktop-navigation";
 import { MobileNavigation } from "./header/mobile-navigation";
 
@@ -153,14 +154,24 @@ export function Header({
 					{/* デスクトップメニュー */}
 					<DesktopNavigation
 						items={navItems}
-						rightContent={rightContent}
+						rightContent={
+							<div className="flex items-center gap-2">
+								<ThemeSwitcher />
+								{rightContent}
+							</div>
+						}
 						breakpointClass={breakpointClass}
 					/>
 
 					{/* モバイルメニュートグル */}
 					<MobileNavigation
 						items={navItems}
-						rightContent={rightContent}
+						rightContent={
+							<div className="flex items-center gap-2 mt-4">
+								<ThemeSwitcher />
+								{rightContent}
+							</div>
+						}
 						isOpen={isOpen}
 						setIsOpen={setIsOpen}
 						isDesktop={isDesktop}

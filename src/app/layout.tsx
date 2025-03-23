@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { ScrollToTop } from "@/components/ui/scroll-to-top";
+import { ThemeProvider } from "@/components/theme/theme-provider";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -26,26 +27,33 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="ja">
+		<html lang="ja" suppressHydrationWarning>
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 			>
-				<div className="flex flex-col min-h-screen">
-					<Header 
-						logoText="Next.js Boilerplate"
-						items={[
-							{ label: "ホーム", href: "/" },
-							{ label: "自己紹介", href: "/about" },
-							{ label: "お問い合わせ", href: "/contact" },
-							{ label: "プライバシーポリシー", href: "/privacy" },
-						]}
-					/>
-					<main className="flex-grow">
-						{children}
-					</main>
-					<Footer />
-					<ScrollToTop />
-				</div>
+				<ThemeProvider
+					attribute="class"
+					defaultTheme="light"
+					enableSystem
+					disableTransitionOnChange
+				>
+					<div className="flex flex-col min-h-screen">
+						<Header 
+							logoText="Next.js Boilerplate"
+							items={[
+								{ label: "ホーム", href: "/" },
+								{ label: "自己紹介", href: "/about" },
+								{ label: "お問い合わせ", href: "/contact" },
+								{ label: "プライバシーポリシー", href: "/privacy" },
+							]}
+						/>
+						<main className="flex-grow">
+							{children}
+						</main>
+						<Footer />
+						<ScrollToTop />
+					</div>
+				</ThemeProvider>
 			</body>
 		</html>
 	);
