@@ -1,4 +1,6 @@
+import { ArticleJsonLd, generateMetadata } from "@/components/seo";
 import { Badge } from "@/components/ui/badge";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
 import {
 	Card,
 	CardContent,
@@ -6,11 +8,9 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+import { Container } from "@/components/ui/container";
 import { Separator } from "@/components/ui/separator";
-import { Breadcrumb } from "@/components/ui/breadcrumb";
-import { generateMetadata } from "@/components/seo";
-import { ArticleJsonLd } from "@/components/seo";
-import { SITE_NAME, META } from "@/lib/constants";
+import { META } from "@/lib/constants";
 import type { Metadata } from "next";
 import Image from "next/image";
 
@@ -33,7 +33,7 @@ export default function AboutPage() {
 				dateModified="2023-01-01T00:00:00Z"
 				authorName="山田 太郎"
 			/>
-			<div className="container mx-auto py-12 px-4 max-w-4xl">
+			<Container size="md" paddingY="lg" paddingX="2xl">
 				<Breadcrumb
 					items={[
 						{ label: "ホーム", href: "/" },
@@ -259,7 +259,7 @@ export default function AboutPage() {
 						</CardContent>
 					</Card>
 				</div>
-			</div>
+			</Container>
 		</>
 	);
 }
