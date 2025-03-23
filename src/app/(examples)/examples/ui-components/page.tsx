@@ -155,7 +155,7 @@ export default function UIComponentsPage() {
                   <DialogTrigger asChild>
                     <Button>ダイアログを開く</Button>
                   </DialogTrigger>
-                  <DialogContent>
+                  <DialogContent className="sm:max-w-[425px]">
                     <DialogHeader>
                       <DialogTitle>ダイアログのタイトル</DialogTitle>
                       <DialogDescription>
