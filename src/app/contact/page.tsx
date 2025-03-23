@@ -1,14 +1,24 @@
 import { ContactForm } from "@/components/contact/contact-form";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
+import { generateMetadata } from "@/components/seo";
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-	title: "お問い合わせ | Next.js Boilerplate",
-	description: "Next.js Boilerplateプロジェクトのお問い合わせページです。",
-};
+export const metadata: Metadata = generateMetadata({
+	title: "お問い合わせ",
+	description: "ご質問やお問い合わせは、こちらのフォームからお気軽にご連絡ください。",
+	keywords: ["お問い合わせ", "コンタクト", "サポート", "フォーム"],
+	canonical: "/contact",
+});
 
 export default function ContactPage() {
 	return (
 		<div className="container mx-auto py-12 px-4 max-w-4xl">
+			<Breadcrumb
+				items={[
+					{ label: "ホーム", href: "/" },
+					{ label: "お問い合わせ", href: "/contact", isCurrent: true },
+				]}
+			/>
 			<div className="flex flex-col gap-8">
 				{/* ヘッダーセクション */}
 				<div className="text-center">
