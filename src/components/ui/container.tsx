@@ -59,12 +59,37 @@ const containerVariants = cva(
   }
 )
 
-export interface ContainerProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof containerVariants> {}
+// 許可されるHTML要素タイプを制限
+type AllowedElementType = 
+  | "div" 
+  | "section" 
+  | "header" 
+  | "footer" 
+  | "main" 
+  | "article" 
+  | "aside" 
+  | "figure" 
+  | "figcaption" 
+  | "summary" 
+  | "nav"
+
+// Containerコンポーネントの基本プロパティ
+export type ContainerVariantProps = VariantProps<typeof containerVariants>
+
+// asプロパティの型定義
+type AsProps = {
+  as?: AllowedElementType
+}
+
+// Containerのプロパティ型定義
+export interface ContainerProps extends
+  React.ComponentPropsWithoutRef<"div">,
+  ContainerVariantProps,
+  AsProps {}
 
 export function Container({
   className,
+  as: Component = "div",
   size,
   paddingY,
   paddingX,
@@ -73,7 +98,7 @@ export function Container({
   ...props
 }: ContainerProps) {
   return (
-    <div
+    <Component
       className={cn(containerVariants({ size, paddingY, paddingX, position, zIndex }), className)}
       {...props}
     />
