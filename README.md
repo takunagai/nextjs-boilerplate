@@ -9,6 +9,10 @@
 
 このプロジェクトは、モダンなウェブアプリケーション/サイト開発のためのNext.jsボイラープレートです。TypeScript、Tailwind CSS、shadcn/uiなどの最新技術を組み合わせ、開発の効率化と品質向上を実現します。
 
+## AI開発サポート
+
+このプロジェクトは、Windsurf IDE用の`.windsurfrules`ファイルを含んでいます。このファイルは[kinopeee/windsurfrules](https://github.com/kinopeee/windsurfrules)をベースに、AIアシスタントがプロジェクト構造、技術スタック、コード規約を正確に理解できるよう最適化されています。これにより、一貫性のある高品質なコード生成と効率的な開発サポートが可能になります。
+
 ## デモ
 
 デモサイト: [https://nextjs-boilerplate.example.com](https://nextjs-boilerplate.example.com)
