@@ -7,6 +7,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Suspense } from "react";
 
 // ユーザーの型定義
@@ -99,6 +100,13 @@ function ErrorDisplay({ error }: { error: Error }) {
 export default function DataFetchingPage() {
 	return (
 		<div>
+			<Breadcrumb
+				items={[
+					{ label: "ホーム", href: "/" },
+					{ label: "サンプル一覧", href: "/examples" },
+					{ label: "データ取得サンプル", href: "/examples/data-fetching", isCurrent: true },
+				]}
+			/>
 			<h1 className="mb-8 text-3xl font-bold">データ取得サンプル</h1>
 
 			<div className="mb-8">
