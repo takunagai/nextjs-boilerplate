@@ -1,5 +1,5 @@
 import { SITE_NAME, META } from "@/lib/constants";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 
 /**
  * メタタグ生成のためのプロパティ
@@ -96,5 +96,22 @@ export function generateMetadata({
       description,
       images: [ogImageUrl],
     },
+  };
+}
+
+/**
+ * Next.js 15のViewport APIを使用してビューポートを生成する
+ * @returns Viewport オブジェクト
+ */
+export function generateViewport(): Viewport {
+  return {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 5,
+    userScalable: true,
+    themeColor: [
+      { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+      { media: "(prefers-color-scheme: dark)", color: "#09090b" }
+    ]
   };
 }

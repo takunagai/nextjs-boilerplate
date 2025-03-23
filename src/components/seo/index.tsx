@@ -3,7 +3,7 @@
  */
 
 // メタタグ生成
-export { generateMetadata } from "./meta-tags";
+export { generateMetadata, generateViewport } from "./meta-tags";
 export type { MetaTagsProps } from "./meta-tags";
 
 // JSON-LD構造化データ

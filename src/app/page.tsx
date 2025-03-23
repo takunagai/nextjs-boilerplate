@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { APP, SITE_NAME, META } from "@/lib/constants";
-import { generateMetadata } from "@/components/seo";
+import { generateMetadata, generateViewport } from "@/components/seo";
 import { WebsiteJsonLd } from "@/components/seo";
 import { ArrowRight, CheckCircle, ExternalLink } from "lucide-react";
 import type { Metadata } from "next";
@@ -15,6 +15,8 @@ export const metadata: Metadata = generateMetadata({
   ogImage: "/images/og-image-home.jpg",
   canonical: "/",
 });
+
+export const viewport = generateViewport();
 
 export default function Home() {
   return (

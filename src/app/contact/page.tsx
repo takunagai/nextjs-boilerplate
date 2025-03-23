@@ -1,5 +1,5 @@
 import { ContactForm } from "@/components/contact/contact-form";
-import { generateMetadata } from "@/components/seo";
+import { generateMetadata, generateViewport } from "@/components/seo";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Container } from "@/components/ui/container";
 import type { Metadata } from "next";
@@ -10,6 +10,8 @@ export const metadata: Metadata = generateMetadata({
 	keywords: ["お問い合わせ", "コンタクト", "サポート", "フォーム"],
 	canonical: "/contact",
 });
+
+export const viewport = generateViewport();
 
 export default function ContactPage() {
 	return (

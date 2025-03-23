@@ -1,4 +1,4 @@
-import { generateMetadata, WebsiteJsonLd } from "@/components/seo";
+import { generateMetadata, generateViewport, WebsiteJsonLd } from "@/components/seo";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
@@ -11,6 +11,8 @@ export const metadata: Metadata = generateMetadata({
 	keywords: ["プライバシーポリシー", "個人情報保護方針", "個人情報の取り扱い"],
 	canonical: "/privacy",
 });
+
+export const viewport = generateViewport();
 
 export default function PrivacyPolicyPage() {
 	// 現在の年を取得

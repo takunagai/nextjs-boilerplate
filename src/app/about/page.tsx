@@ -1,4 +1,4 @@
-import { ArticleJsonLd, generateMetadata } from "@/components/seo";
+import { ArticleJsonLd, generateMetadata, generateViewport } from "@/components/seo";
 import { Badge } from "@/components/ui/badge";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import {
@@ -20,6 +20,8 @@ export const metadata: Metadata = generateMetadata({
 	keywords: ["自己紹介", "プロフィール", "フロントエンドエンジニア", "スキル", "経歴"],
 	canonical: "/about",
 });
+
+export const viewport = generateViewport();
 
 export default function AboutPage() {
 	return (
