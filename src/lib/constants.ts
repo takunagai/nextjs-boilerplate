@@ -45,6 +45,13 @@ export const META = {
 		"Next.js、TypeScript、Tailwind CSSを使用した最新のWebアプリケーション開発のためのボイラープレート",
 	SITE_URL: "https://nextjs-boilerplate.example.com",
 	OG_IMAGE: "/images/og-image.jpg",
+	LOCALE: "ja_JP",
+	TYPE: "website",
+	TWITTER_HANDLE: "@yourhandle",
+	TWITTER_CARD_TYPE: "summary_large_image",
+	FAVICON: "/favicon.ico",
+	APPLE_TOUCH_ICON: "/apple-touch-icon.png",
+	MANIFEST: "/site.webmanifest",
 } as const;
 
 /**

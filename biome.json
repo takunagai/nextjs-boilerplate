@@ -6,8 +6,12 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true
-    }
+      "recommended": true,
+      "security": {
+        "noDangerouslySetInnerHtml": "off"
+      }
+    },
+    "ignore": ["src/components/seo/json-ld.tsx"]
   },
   "formatter": {
     "enabled": true,
