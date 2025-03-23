@@ -1,6 +1,7 @@
 import { ContactForm } from "@/components/contact/contact-form";
-import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { generateMetadata } from "@/components/seo";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
+import { Container } from "@/components/ui/container";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = generateMetadata({
@@ -12,7 +13,7 @@ export const metadata: Metadata = generateMetadata({
 
 export default function ContactPage() {
 	return (
-		<div className="container mx-auto py-12 px-4 max-w-4xl">
+		<Container size="md" paddingY="lg" paddingX="2xl">
 			<Breadcrumb
 				items={[
 					{ label: "ホーム", href: "/" },
@@ -47,6 +48,6 @@ export default function ContactPage() {
 				{/* コンタクトフォームコンポーネント */}
 				<ContactForm />
 			</div>
-		</div>
+		</Container>
 	);
 }
