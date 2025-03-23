@@ -97,6 +97,17 @@ export const FEATURES = {
 } as const;
 
 /**
+ * テーマ設定
+ */
+export const THEME = {
+	/**
+	 * デフォルトテーマ
+	 * "light", "dark", "system" のいずれかを指定
+	 */
+	DEFAULT: "light",
+} as const;
+
+/**
  * ローカルストレージキー
  */
 export const STORAGE_KEYS = {

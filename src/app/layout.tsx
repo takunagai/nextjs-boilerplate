@@ -4,6 +4,7 @@ import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { ScrollToTop } from "@/components/ui/scroll-to-top";
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import { THEME } from "@/lib/constants";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -33,7 +34,7 @@ export default function RootLayout({
 			>
 				<ThemeProvider
 					attribute="class"
-					defaultTheme="light"
+					defaultTheme={THEME.DEFAULT}
 					enableSystem
 					disableTransitionOnChange
 				>
