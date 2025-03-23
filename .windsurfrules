@@ -169,10 +169,7 @@ nextjs-boilerplate/
 ├── package.json             # 依存関係と設定
 ├── playwright.config.ts     # Playwright設定
 ├── postcss.config.mjs       # PostCSS設定
-├── setupTests.ts            # テスト環境のグローバル設定
-├── tailwind.config.ts       # Tailwind CSS設定
-├── tsconfig.json            # TypeScript設定
-└── vite.config.ts           # Vite設定
+└── tailwind.config.ts       # Tailwind CSS設定
 ```
 
 ## 重要な制約
