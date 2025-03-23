@@ -12,6 +12,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Badge } from "@/components/ui/badge";
 import { Toggle } from "@/components/ui/toggle";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
 
 export default function UIComponentsPage() {
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -21,6 +22,13 @@ export default function UIComponentsPage() {
 
   return (
     <div>
+      <Breadcrumb
+        items={[
+          { label: "ホーム", href: "/" },
+          { label: "サンプル一覧", href: "/examples" },
+          { label: "UIコンポーネント", href: "/examples/ui-components", isCurrent: true },
+        ]}
+      />
       <h1 className="mb-8 text-3xl font-bold">UIコンポーネント</h1>
       <p className="mb-6 text-muted-foreground">
         shadcn/uiコンポーネントライブラリのサンプル集です。
