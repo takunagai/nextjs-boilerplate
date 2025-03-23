@@ -251,7 +251,7 @@ nextjs-boilerplate/
 │   ├── components/          # 再利用可能なコンポーネント
 │   │   ├── layout/          # レイアウトコンポーネント(ヘッダー、フッター etc.)
 │   │   ├── theme/           # テーマ(モード)コンポーネント
-│   │   └── ui/              # shadcn/uiコンポーネント
+│   │   └── ui/              # UIコンポーネント(shadcn/uiもここに保存)
 │   ├── lib/                 # ユーティリティ関数
 │   │   ├── validation/      # バリデーションスキーマ
 │   │   ├── (api)/           # API関連

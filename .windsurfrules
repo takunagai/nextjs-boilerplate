@@ -149,7 +149,7 @@ nextjs-boilerplate/
 │   ├── components/          # 再利用可能なコンポーネント
 │   │   ├── layout/          # レイアウトコンポーネント(ヘッダー、フッター etc.)
 │   │   ├── theme/           # テーマ(モード)コンポーネント
-│   │   └── ui/              # shadcn/uiコンポーネント
+│   │   └── ui/              # UIコンポーネント(shadcn/uiもここに保存)
 │   ├── lib/                 # ユーティリティ関数
 │   │   ├── validation/      # バリデーションスキーマ
 │   │   ├── (api)/           # API関連
@@ -183,7 +183,7 @@ nextjs-boilerplate/
    - AIモデルのバージョンは固定
 
 3. **コード配置**
-   - 共通処理は `lib/utils/` に配置
+   - 共通処理は `lib/utils.ts` に配置
    - UIコンポーネントは `components/ui/` に配置
    - APIエンドポイントは `api/[endpoint]/route.ts` に配置
    - テストは `tests/` に配置
@@ -215,7 +215,22 @@ nextjs-boilerplate/
 - コンポーネントテスト (React Testing Library)
 - E2Eテスト (Playwright)
 - パフォーマンステスト (Lighthouse)
-
+- aspect-ratio
+- badge
+- button
+- card
+- checkbox
+- dialog
+- input
+- label
+- radio-group
+- select
+- skeleton
+- table
+- tabs
+- textarea
+- toggle
+- toggle-group
 ## 4. 最終確認
 - 要件との整合性
 - コード品質
