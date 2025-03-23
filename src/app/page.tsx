@@ -31,7 +31,11 @@ export default function Home() {
 						</p>
 						<div className="flex flex-col sm:flex-row gap-4">
 							<Button asChild size="lg" className="gap-2">
-								<Link href="/docs">
+								<Link
+									href="https://github.com/takunagai/nextjs-boilerplate"
+									target="_blank"
+									rel="noopener noreferrer"
+								>
 									ドキュメントを見る
 									<ArrowRight className="h-4 w-4" />
 								</Link>
@@ -115,7 +119,7 @@ export default function Home() {
 						<div className="flex flex-col sm:flex-row gap-4">
 							<Button asChild size="lg" variant="secondary" className="gap-2">
 								<a
-									href="https://github.com/yourusername/nextjs-boilerplate"
+									href="https://github.com/takunagai/nextjs-boilerplate"
 									target="_blank"
 									rel="noopener noreferrer"
 								>
