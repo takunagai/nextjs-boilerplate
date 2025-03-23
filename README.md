@@ -197,6 +197,17 @@ export default function MyPage() {
     <Container size="2xl" paddingY="xl" paddingX="lg" position="relative" zIndex="high">
       <div>複雑なレイアウト要素...</div>
     </Container>
+
+    // セマンティックなHTML要素として利用
+    <Container as="section" size="lg" paddingY="xl" paddingX="md">
+      <h2>セクションタイトル</h2>
+      <p>セクションコンテンツ...</p>
+    </Container>
+
+    // ヘッダーとして利用
+    <Container as="header" size="full" paddingY="md" paddingX="lg" position="relative" zIndex="high">
+      <nav>ナビゲーションメニュー...</nav>
+    </Container>
   );
 }
 ```

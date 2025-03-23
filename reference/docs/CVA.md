@@ -37,10 +37,10 @@ function Button({ variant, size, className, ...props }) {
 
 CVA は、コンポーネントのバリエーションを**型安全**かつ**宣言的**に定義するためのユーティリティです。Tailwind CSS や他のユーティリティCSSフレームワークと組み合わせて使用することで、以下のメリットが得られます：
 
-- 🧩 **バリエーションの宣言的な定義**
-- 🔒 **TypeScriptによる型安全性**
-- 🧹 **条件付きスタイルの簡潔な記述**
-- 🔄 **再利用可能で保守性の高いコード**
+- **バリエーションの宣言的な定義**
+- **TypeScriptによる型安全性**
+- **条件付きスタイルの簡潔な記述**
+- **再利用可能で保守性の高いコード**
 
 ## 基本的な使い方
 
@@ -220,6 +220,105 @@ export function Container({
   重なり合う要素がある場合
 </Container>
 ```
+
+## 応用例：多相的（Polymorphic）コンポーネント
+
+CVAを活用したコンポーネントは、多相的（Polymorphic）な実装と組み合わせることで、より柔軟で再利用性の高いコンポーネントになります。多相的コンポーネントとは、使用時にHTML要素のタイプを変更できるコンポーネントのことです。
+
+例えば、以下のような `Container` コンポーネントの実装を考えてみましょう：
+
+```tsx
+import * as React from "react"
+import { cva, type VariantProps } from "class-variance-authority"
+import { cn } from "@/lib/utils"
+
+const containerVariants = cva(
+  "mx-auto w-full", // 基本スタイル
+  {
+    variants: {
+      size: {
+        sm: "max-w-sm sm:max-w-xl md:max-w-3xl",
+        md: "max-w-md sm:max-w-2xl md:max-w-4xl",
+        // 他のサイズバリエーション...
+      },
+      paddingY: {
+        none: "py-0",
+        md: "py-4 md:py-8",
+        // 他のパディングバリエーション...
+      },
+      // 他のバリエーション...
+    },
+    defaultVariants: {
+      size: "2xl",
+      paddingY: "md",
+      // その他のデフォルト値...
+    },
+  }
+)
+
+// 許可されるHTML要素タイプ
+type AsProps = {
+  as?: React.ElementType
+}
+
+// Containerのプロパティ型定義
+export interface ContainerProps extends
+  React.ComponentPropsWithoutRef<"div">,
+  VariantProps<typeof containerVariants>,
+  AsProps {}
+
+export function Container({
+  className,
+  as: Component = "div", // デフォルトはdiv要素
+  size,
+  paddingY,
+  paddingX,
+  position,
+  zIndex,
+  ...props
+}: ContainerProps) {
+  return (
+    <Component
+      className={cn(containerVariants({ size, paddingY, paddingX, position, zIndex }), className)}
+      {...props}
+    />
+  )
+}
+```
+
+この実装により、以下のように様々なHTML要素として `Container` を使用できます：
+
+```tsx
+// デフォルトのdiv要素として使用
+<Container size="md" paddingY="lg">
+  コンテンツ...
+</Container>
+
+// セクション要素として使用
+<Container as="section" size="lg" paddingY="xl">
+  <h2>セクションタイトル</h2>
+  <p>セクションの内容...</p>
+</Container>
+
+// ヘッダー要素として使用
+<Container as="header" size="full" paddingY="md" position="relative" zIndex="high">
+  <nav>ナビゲーション...</nav>
+</Container>
+
+// フッター要素として使用
+<Container as="footer" size="2xl" paddingY="lg">
+  <p>著作権情報...</p>
+</Container>
+```
+
+多相的なコンポーネントの利点：
+
+1. **セマンティックなHTML構造** - 適切なHTML要素を使用してアクセシビリティとSEOを向上
+2. **一貫したスタイリング** - 異なるHTML要素でも同じスタイルシステムを使用可能
+3. **柔軟な再利用性** - 同じコンポーネントを様々なコンテキストで再利用可能
+4. **型安全性の維持** - TypeScriptの型システムで安全に実装
+
+CVAと多相的コンポーネントを組み合わせることで、型安全でスタイルのバリエーションが豊富であり、かつセマンティックなHTMLを維持できる優れたコンポーネントを作成できます。
 
 ## CVAの実際の使用シーン
 
