@@ -85,6 +85,18 @@ export const PAGINATION = {
 } as const;
 
 /**
+ * 機能フラグ
+ * 機能のON/OFFを制御する定数
+ */
+export const FEATURES = {
+	/**
+	 * テーマ切り替え機能
+	 * falseに設定すると、テーマ切り替えボタンが非表示になり、デフォルトのテーマのみが使用されます
+	 */
+	THEME_SWITCHER: true,
+} as const;
+
+/**
  * ローカルストレージキー
  */
 export const STORAGE_KEYS = {

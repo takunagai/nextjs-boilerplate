@@ -4,8 +4,14 @@ import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { Sun, Moon, Laptop } from "lucide-react";
 import { useEffect, useState } from "react";
+import { FEATURES } from "@/lib/constants";
 
 export function ThemeSwitcher() {
+  // 機能フラグがOFFの場合は何も表示しない
+  if (!FEATURES.THEME_SWITCHER) {
+    return null;
+  }
+
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
