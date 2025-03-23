@@ -1,5 +1,6 @@
-import type { Metadata } from "next";
+import { Container } from "@/components/ui/container";
 import { SITE_NAME } from "@/lib/constants";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 export const metadata: Metadata = {
@@ -22,7 +23,7 @@ export default function ExamplesLayout({
   }
 
   return (
-    <div className="container mx-auto py-8">
+    <Container size="2xl" paddingY="md" paddingX="2xl">
       <div className="mb-8 rounded-lg border border-amber-200 bg-amber-50 p-4">
         <h1 className="mb-2 text-xl font-bold text-amber-800">
           サンプルページ
@@ -35,6 +36,6 @@ export default function ExamplesLayout({
         </p>
       </div>
       {children}
-    </div>
+    </Container>
   );
 }
