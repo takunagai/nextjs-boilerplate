@@ -28,6 +28,11 @@
   - ユーザー設定をlocalStorageに保存し、次回訪問時に復元
   - フラッシュ防止機能搭載（遷移アニメーションとトレードオフ）
   - テーマ機能のON/OFF切替オプション
+- **レスポンシブレイアウト** - CVAを活用したContainerコンポーネント
+  - 画面サイズに応じた最適なコンテンツ幅の自動調整
+  - サイズバリエーション（xs, sm, md, lg, xl, 2xl, full）
+  - 方向別パディング設定（paddingX, paddingY）
+  - 位置とz-indexの制御オプション
 - **アニメーション** - Framer Motionによる洗練されたモーション
 - **アクセシビリティ対応** - WAI-ARIAガイドラインに準拠
 - **UIコンポーネント** - shadcn/uiによる美しく再利用可能なコンポーネント
@@ -173,9 +178,45 @@ export default function MyComponent() {
 }
 ```
 
+### Containerコンポーネントの使用
+
+レスポンシブなレイアウトを簡単に実装するためのContainerコンポーネント：
+
+```tsx
+import { Container } from "@/components/ui/container";
+
+export default function MyPage() {
+  return (
+    // 基本的な使用方法
+    <Container size="md" paddingY="lg" paddingX="2xl">
+      <h1>コンテンツタイトル</h1>
+      <p>コンテンツの説明文...</p>
+    </Container>
+    
+    // 位置指定とz-indexの使用例
+    <Container size="2xl" paddingY="xl" paddingX="lg" position="relative" zIndex="high">
+      <div>複雑なレイアウト要素...</div>
+    </Container>
+  );
+}
+```
+
+サイズバリエーション:
+
+- `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `full` - コンテナの最大幅を制御
+
+パディングバリエーション（縦・横個別に設定可能）:
+
+- `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `4xl`
+
+位置とzIndexオプション:
+
+- `position`: `default`, `relative`
+- `zIndex`: `none`, `base`, `high`, `highest`
+
 ## ディレクトリ構造
 
-```
+```text
 nextjs-boilerplate/
 ├── public/                  # 静的アセット
 │   ├── dummy-images/        # ダミー画像
@@ -257,7 +298,7 @@ npm run test:e2e:report
 ### Vercelへのデプロイ
 
 このプロジェクトはVercelへの簡単なデプロイをサポートしています。  
-~~詳細は [デプロイガイド](./docs/deployment.md) を参照してください。~~
+[デプロイガイド](./docs/deployment.md) を参照してください。
 
 [![Vercelにデプロイ](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fyourusername%2Fnextjs-boilerplate)
 
