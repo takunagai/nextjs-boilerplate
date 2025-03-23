@@ -13,8 +13,6 @@
 
 デモサイト: [https://nextjs-boilerplate.example.com](https://nextjs-boilerplate.example.com)
 
-![スクリーンショット](./public/images/screenshot.png)
-
 ## 機能
 
 ### UI/UX
@@ -57,7 +55,7 @@
 
 - **Tailwind CSS** (4.0.15) - ユーティリティファーストCSS
 - **shadcn/ui** - 再利用可能なUIコンポーネント
-- **next-themes** - テーマ切り替え
+- **next-themes** - モード (テーマ) 切り替え
 - **framer-motion** - アニメーション
 - **sonner** - トースト通知
 - **lucide-react** - アイコンセット
@@ -140,6 +138,12 @@ DATABASE_URL="postgresql://postgres:password@localhost:5432/mydatabase"
 
 ## 使用方法
 
+### モード (テーマ) の切り替え設定
+
+- 有効/無効のトグルとデフォルトモードは `constants.ts` で定義
+- 3つのモード(ライト/ダーク/システム設定)を選択可能
+- 設定は localStorage に保存され、次回訪問時に自動適用
+
 ### 新しいページの追加
 
 App Routerを使用して新しいページを追加します：
@@ -188,6 +192,7 @@ nextjs-boilerplate/
 │   │   └── globals.css      # グローバルスタイル
 │   ├── components/          # 再利用可能なコンポーネント
 │   │   ├── layout/          # レイアウトコンポーネント(ヘッダー、フッター etc.)
+│   │   ├── theme/           # テーマ(モード)コンポーネント
 │   │   └── ui/              # shadcn/uiコンポーネント
 │   ├── lib/                 # ユーティリティ関数
 │   │   ├── validation/      # バリデーションスキーマ
@@ -203,10 +208,15 @@ nextjs-boilerplate/
 ├── .env.example             # 環境変数の例
 ├── .gitignore               # Gitの除外設定
 ├── biome.json               # Biome設定
+├── components.json          # shadcn/uiコンポーネント設定
 ├── next.config.js           # Next.js設定
 ├── package.json             # 依存関係と設定
 ├── playwright.config.ts     # Playwright設定
-└── tailwind.config.ts       # Tailwind CSS設定
+├── postcss.config.mjs       # PostCSS設定
+├── setupTests.ts            # テスト環境のグローバル設定
+├── tailwind.config.ts       # Tailwind CSS設定
+├── tsconfig.json            # TypeScript設定
+└── vite.config.ts           # Vite設定
 ```
 
 ## テスト
