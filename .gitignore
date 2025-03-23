@@ -106,3 +106,7 @@ local/
 /public/robots.txt
 /public/sw.js
 /public/workbox-*.js
+
+# Playwright
+/blob-report/
+/playwright/.cache/
