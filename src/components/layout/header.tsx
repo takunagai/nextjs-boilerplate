@@ -1,15 +1,14 @@
 "use client";
 
 import { type VariantProps, cva } from "class-variance-authority";
-import { Menu } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import * as React from "react";
 
-import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { SITE_NAME } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import { DesktopNavigation } from "./header/desktop-navigation";
+import { MobileNavigation } from "./header/mobile-navigation";
 
 // ヘッダーのバリアントを定義
 const headerVariants = cva("w-full border-b sticky top-0 z-50", {
@@ -152,81 +151,21 @@ export function Header({
 					</Link>
 
 					{/* デスクトップメニュー */}
-					<div className={`hidden ${breakpointClass} items-center gap-6`}>
-						<nav className="flex items-center gap-4">
-							{navItems.map((item) => (
-								<Link
-									key={item.href}
-									href={item.href}
-									target={item.external ? "_blank" : undefined}
-									rel={item.external ? "noopener noreferrer" : undefined}
-									className={cn(
-										"text-sm font-medium transition-colors hover:text-primary",
-										item.active ? "text-foreground" : "text-muted-foreground",
-									)}
-								>
-									{item.label}
-								</Link>
-							))}
-						</nav>
-						{rightContent && <div>{rightContent}</div>}
-					</div>
+					<DesktopNavigation
+						items={navItems}
+						rightContent={rightContent}
+						breakpointClass={breakpointClass}
+					/>
 
-					{/* モバイルメニュートグル - デスクトップでは完全に非表示 */}
-					<div
-						className={`${breakpointClass.replace("flex", "hidden")} ${isDesktop ? "hidden" : "block"}`}
-					>
-						<Sheet
-							open={isOpen}
-							onOpenChange={(open) => {
-								// デスクトップサイズではドロワーメニューを開かない
-								if (!isDesktop) {
-									setIsOpen(open);
-								}
-							}}
-						>
-							<SheetTrigger asChild>
-								<Button
-									variant="ghost"
-									size="icon"
-									className="-mr-2"
-									onClick={(e) => {
-										// デスクトップサイズではクリックイベントを無効化
-										if (isDesktop) {
-											e.preventDefault();
-										}
-									}}
-								>
-									<Menu className="h-5 w-5" />
-									<span className="sr-only">メニューを開く</span>
-								</Button>
-							</SheetTrigger>
-							<SheetContent side="right" className="pt-6">
-								<nav className="flex flex-col gap-4">
-									{navItems.map((item) => (
-										<Link
-											key={item.href}
-											href={item.href}
-											target={item.external ? "_blank" : undefined}
-											rel={item.external ? "noopener noreferrer" : undefined}
-											onClick={() => setIsOpen(false)}
-											className={cn(
-												"text-base font-medium transition-colors hover:text-primary py-2",
-												item.active
-													? "text-foreground"
-													: "text-muted-foreground",
-											)}
-										>
-											{item.label}
-										</Link>
-									))}
-								</nav>
-								{rightContent && (
-									<div className="mt-6 border-t pt-6">{rightContent}</div>
-								)}
-							</SheetContent>
-						</Sheet>
-					</div>
+					{/* モバイルメニュートグル */}
+					<MobileNavigation
+						items={navItems}
+						rightContent={rightContent}
+						isOpen={isOpen}
+						setIsOpen={setIsOpen}
+						isDesktop={isDesktop}
+						breakpointClass={breakpointClass}
+					/>
 				</div>
 			</div>
 		</header>
