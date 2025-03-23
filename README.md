@@ -11,11 +11,11 @@
 
 ## AI開発サポート
 
-このプロジェクトは、Windsurf IDE用の`.windsurfrules`ファイルを含んでいます。このファイルは[kinopeee/windsurfrules](https://github.com/kinopeee/windsurfrules)をベースに、AIアシスタントがプロジェクト構造、技術スタック、コード規約を正確に理解できるよう最適化されています。これにより、一貫性のある高品質なコード生成と効率的な開発サポートが可能になります。
+このプロジェクトは、[Windsurf IDE](https://codeium.com/windsurf) 用の`.windsurfrules`ファイルを含んでいます。このファイルは[kinopeee/windsurfrules](https://github.com/kinopeee/windsurfrules)をベースに、AIエージェント/アシスタントがプロジェクト構造、技術スタック、コード規約を正確に理解できるよう最適化されています。これにより、一貫性のある高品質なコード生成と効率的な開発サポートが可能になります。
 
 ## デモ
 
-デモサイト: [https://nextjs-boilerplate.example.com](https://nextjs-boilerplate.example.com)
+デモサイト: [https://nextjs-boilerplate-japanese.vercel.app](https://nextjs-boilerplate-japanese.vercel.app)
 
 ## 機能
 
