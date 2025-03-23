@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Container } from "@/components/ui/container";
 import { APP, SITE_NAME, META } from "@/lib/constants";
 import { generateMetadata } from "@/components/seo";
 import { WebsiteJsonLd } from "@/components/seo";
@@ -24,7 +25,7 @@ export default function Home() {
         <section className="relative py-20 md:py-32 overflow-hidden w-full">
           <div className="absolute inset-0 bg-gradient-to-b from-background to-background/80 z-10" />
           <div className="absolute inset-0 bg-grid-pattern opacity-10" />
-          <div className="container relative z-20 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <Container size="2xl" paddingY="xl" paddingX="lg" position="relative" zIndex="high">
             <div className="flex flex-col items-center text-center max-w-3xl mx-auto">
               <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6">
                 モダンな<span className="text-primary">Web開発</span>の
@@ -51,12 +52,12 @@ export default function Home() {
                 </Button>
               </div>
             </div>
-          </div>
+          </Container>
         </section>
 
         {/* 特徴セクション */}
         <section className="py-16 md:py-24 bg-muted/50 w-full">
-          <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <Container size="2xl" paddingY="xl" paddingX="lg">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">主な特徴</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -78,12 +79,12 @@ export default function Home() {
                 </div>
               ))}
             </div>
-          </div>
+          </Container>
         </section>
 
         {/* 使用技術セクション */}
         <section className="py-16 md:py-24 w-full">
-          <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <Container size="2xl" paddingY="xl" paddingX="lg">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">使用技術</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -106,12 +107,12 @@ export default function Home() {
                 </div>
               ))}
             </div>
-          </div>
+          </Container>
         </section>
 
         {/* CTAセクション */}
         <section className="py-16 md:py-24 bg-primary text-primary-foreground w-full">
-          <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <Container size="2xl" paddingY="xl" paddingX="lg">
             <div className="flex flex-col md:flex-row items-center justify-between gap-8">
               <div className="max-w-2xl">
                 <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -143,12 +144,12 @@ export default function Home() {
                 </Button>
               </div>
             </div>
-          </div>
+          </Container>
         </section>
 
         {/* 機能リストセクション */}
         <section className="py-16 md:py-24 bg-muted/30 w-full">
-          <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <Container size="2xl" paddingY="xl" paddingX="lg">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
               <div>
                 <h2 className="text-3xl md:text-4xl font-bold mb-6">
@@ -181,7 +182,7 @@ export default function Home() {
                 </ul>
               </div>
             </div>
-          </div>
+          </Container>
         </section>
       </main>
     </>
