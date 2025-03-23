@@ -76,6 +76,7 @@
 - **Vitest** (1.3.1) - 高速テストフレームワーク
 - **Testing Library** - DOMテスト
 - **jsdom** - ブラウザ環境シミュレーション
+- **Playwright** (1.42.0) - エンドツーエンド(E2E)テスト
 
 ### 開発ツール
 
@@ -191,16 +192,16 @@ nextjs-boilerplate/
 │   │   └── utils.ts         # 汎用ユーティリティ
 │   └── (hooks)/             # カスタムフック
 ├── tests/                   # テストファイル
-│   ├── (components)/        # コンポーネントテスト
-│   ├── (hooks)/             # フックテスト
-│   └── (utils)/             # ユーティリティテスト
+│   ├── components/          # コンポーネントテスト
+│   ├── e2e/                 # Playwright E2Eテスト
+│   └── unit/                # Vitestユニットテスト
 ├── .env.example             # 環境変数の例
 ├── .gitignore               # Gitの除外設定
 ├── biome.json               # Biome設定
 ├── next.config.js           # Next.js設定
 ├── package.json             # 依存関係と設定
-├── tailwind.config.ts       # Tailwind CSS設定
-└── tsconfig.json            # TypeScript設定
+├── playwright.config.ts     # Playwright設定
+└── tailwind.config.ts       # Tailwind CSS設定
 ```
 
 ## テスト
@@ -217,10 +218,23 @@ npm test
 npm test -- src/components/ui/button.test.tsx
 ```
 
-### カバレッジレポートの生成
+### E2Eテストの実行
 
 ```bash
-npm test -- --coverage
+# すべてのブラウザでE2Eテストを実行
+npm run test:e2e
+
+# UIモードでE2Eテストを実行（ビジュアルデバッグ用）
+npm run test:e2e:ui
+
+# Chromiumブラウザのみでテスト実行
+npm run test:e2e:chromium
+
+# デバッグモードでテスト実行
+npm run test:e2e:debug
+
+# テスト結果レポートの表示
+npm run test:e2e:report
 ```
 
 ## デプロイ

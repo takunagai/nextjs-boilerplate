@@ -78,6 +78,9 @@
 ### ユニットテスト
 - Vitest: ^1.3.1
 
+### E2Eテスト
+- Playwright: ^1.31.0
+
 ### shadcn/ui コンポーネント
 - aspect-ratio
 - badge
@@ -150,16 +153,16 @@ nextjs-boilerplate/
 │   │   └── utils.ts         # 汎用ユーティリティ
 │   └── (hooks)/             # カスタムフック
 ├── tests/                   # テストファイル
-│   ├── (components)/        # コンポーネントテスト
-│   ├── (hooks)/             # フックテスト
-│   └── (utils)/             # ユーティリティテスト
+│   ├── components/          # コンポーネントテスト
+│   ├── e2e/                 # Playwright E2Eテスト
+│   └── unit/                # Vitestユニットテスト
 ├── .env.example             # 環境変数の例
 ├── .gitignore               # Gitの除外設定
 ├── biome.json               # Biome設定
 ├── next.config.js           # Next.js設定
 ├── package.json             # 依存関係と設定
-├── tailwind.config.ts       # Tailwind CSS設定
-└── tsconfig.json            # TypeScript設定
+├── playwright.config.ts     # Playwright設定
+└── tailwind.config.ts       # Tailwind CSS設定
 ```
 
 ## 重要な制約
@@ -176,6 +179,7 @@ nextjs-boilerplate/
    - 共通処理は `lib/utils/` に配置
    - UIコンポーネントは `components/ui/` に配置
    - APIエンドポイントは `api/[endpoint]/route.ts` に配置
+   - テストは `tests/` に配置
 
 ---
 
@@ -200,9 +204,10 @@ nextjs-boilerplate/
 - コード品質の維持
 
 ## 3. 検証フェーズ
-- 単体テスト
-- 統合テスト
-- パフォーマンステスト
+- 単体テスト (Vitest)
+- コンポーネントテスト (React Testing Library)
+- E2Eテスト (Playwright)
+- パフォーマンステスト (Lighthouse)
 
 ## 4. 最終確認
 - 要件との整合性
