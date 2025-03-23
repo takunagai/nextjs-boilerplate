@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
@@ -57,15 +57,25 @@ export const metadata: Metadata = {
 		description: META.DEFAULT_DESCRIPTION,
 		images: [META.OG_IMAGE],
 	},
-	viewport: {
-		width: "device-width",
-		initialScale: 1,
-	},
+	metadataBase: new URL(META.SITE_URL),
+	// アイコンとマニフェストの設定
 	icons: {
 		icon: "/favicon.ico",
 		apple: "/apple-touch-icon.png",
 	},
 	manifest: "/site.webmanifest",
+};
+
+// viewportをmetadataから分離
+export const viewport: Viewport = {
+	width: "device-width",
+	initialScale: 1,
+	maximumScale: 5,
+	userScalable: true,
+	themeColor: [
+		{ media: "(prefers-color-scheme: light)", color: "#ffffff" },
+		{ media: "(prefers-color-scheme: dark)", color: "#09090b" }
+	]
 };
 
 export default function RootLayout({
