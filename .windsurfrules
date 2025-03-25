@@ -215,22 +215,7 @@ nextjs-boilerplate/
 - コンポーネントテスト (React Testing Library)
 - E2Eテスト (Playwright)
 - パフォーマンステスト (Lighthouse)
-- aspect-ratio
-- badge
-- button
-- card
-- checkbox
-- dialog
-- input
-- label
-- radio-group
-- select
-- skeleton
-- table
-- tabs
-- textarea
-- toggle
-- toggle-group
+
 ## 4. 最終確認
 - 要件との整合性
 - コード品質
