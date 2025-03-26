@@ -4,6 +4,7 @@ import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { ScrollToTop } from "@/components/ui/scroll-to-top";
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import { AuthProvider } from "@/components/auth/auth-provider";
 import { THEME, SITE_NAME, META } from "@/lib/constants";
 import { WebsiteJsonLd, OrganizationJsonLd } from "@/components/seo";
 import "./globals.css";
@@ -94,24 +95,26 @@ export default function RootLayout({
 					enableSystem
 					disableTransitionOnChange
 				>
-					<WebsiteJsonLd />
-					<OrganizationJsonLd />
-					<div className="flex flex-col min-h-screen">
-						<Header 
-							logoText={SITE_NAME}
-							items={[
-								{ label: "ホーム", href: "/" },
-								{ label: "自己紹介", href: "/about" },
-								{ label: "お問い合わせ", href: "/contact" },
-								{ label: "プライバシーポリシー", href: "/privacy" },
-							]}
-						/>
-						<main className="flex-grow">
-							{children}
-						</main>
-						<Footer />
-						<ScrollToTop />
-					</div>
+					<AuthProvider>
+						<WebsiteJsonLd />
+						<OrganizationJsonLd />
+						<div className="flex flex-col min-h-screen">
+							<Header 
+								logoText={SITE_NAME}
+								items={[
+									{ label: "ホーム", href: "/" },
+									{ label: "自己紹介", href: "/about" },
+									{ label: "お問い合わせ", href: "/contact" },
+									{ label: "プライバシーポリシー", href: "/privacy" },
+								]}
+							/>
+							<main className="flex-grow">
+								{children}
+							</main>
+							<Footer />
+							<ScrollToTop />
+						</div>
+					</AuthProvider>
 				</ThemeProvider>
 			</body>
 		</html>
