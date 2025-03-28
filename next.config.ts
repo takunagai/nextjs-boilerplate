@@ -2,14 +2,27 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
 	/* config options here */
-  
-  // 環境変数
-  env: {
-    // サンプルページを表示するかどうか
-    // 本番環境では NEXT_PUBLIC_SHOW_EXAMPLES=false に設定することで
-    // サンプルページを非表示にできます
-    NEXT_PUBLIC_SHOW_EXAMPLES: process.env.NEXT_PUBLIC_SHOW_EXAMPLES || "true",
-  },
+
+	// 環境変数
+	env: {
+		// サンプルページを表示するかどうか
+		// 本番環境では NEXT_PUBLIC_SHOW_EXAMPLES=false に設定することで
+		// サンプルページを非表示にできます
+		NEXT_PUBLIC_SHOW_EXAMPLES: process.env.NEXT_PUBLIC_SHOW_EXAMPLES || "true",
+	},
+
+	// 画像最適化の設定
+	images: {
+		// 外部ドメインの許可リスト
+		remotePatterns: [
+			{
+				protocol: "https",
+				hostname: "images.unsplash.com",
+				pathname: "/**",
+			},
+			// 将来的に他の外部画像ソースを追加する場合はここに追加
+		],
+	},
 };
 
 export default nextConfig;

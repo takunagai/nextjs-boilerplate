@@ -8,10 +8,10 @@ import type { Metadata } from "next";
 
 import { FeatureListSection } from "@/components/home/feature-list-section";
 import { FeaturesSection } from "@/components/home/features-section";
+import { GallerySection } from "@/components/home/gallery-section";
 import { HeroSection } from "@/components/home/hero-section";
 import { TechnologiesSection } from "@/components/home/technologies-section";
 import { CTASection } from "@/components/sections/cta-section";
-import { Container } from "@/components/ui/container";
 
 export const metadata: Metadata = generateMetadata({
 	title: "モダンなWebアプリケーション開発の出発点",
@@ -30,52 +30,14 @@ export const metadata: Metadata = generateMetadata({
 
 export const viewport = generateViewport();
 
+// ホームページコンポーネント
 export default function Home() {
 	return (
 		<>
 			<WebsiteJsonLd />
 			<main className="flex min-h-screen flex-col items-center">
 				<HeroSection />
-
-				{/* 追加のコンポーネント ここから */}
-				<section className="py-16 md:py-24 w-full bg-slate-50 dark:bg-slate-900">
-					<Container size="2xl" paddingY="xl" paddingX="lg">
-						<div className="text-center mb-16">
-							<h2 className="text-3xl md:text-4xl font-bold mb-4">
-								フォトギャラリー
-							</h2>
-							<p className="text-muted-foreground max-w-2xl mx-auto">
-								厳選された高品質な写真コレクションをご覧ください
-							</p>
-						</div>
-
-						<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-							{[1, 2, 3, 4, 5, 6].map((item) => (
-								<div
-									key={item}
-									className="group relative overflow-hidden rounded-sm shadow-md hover:shadow-xl transition-all duration-300"
-								>
-									<div className="aspect-[3/2] overflow-hidden bg-slate-200 dark:bg-slate-800">
-										<img
-											src={`https://picsum.photos/600/400?random=${item}`}
-											alt={`写真${item}`}
-										/>
-									</div>
-									<div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-										<h3 className="text-xl font-semibold text-white mb-2">
-											写真タイトル {item}
-										</h3>
-										<p className="text-white/80 text-sm">
-											美しい瞬間を切り取った一枚です
-										</p>
-									</div>
-								</div>
-							))}
-						</div>
-					</Container>
-				</section>
-				{/* 追加のコンポーネント ここまで */}
-
+				<GallerySection />
 				<FeaturesSection features={features} />
 				<TechnologiesSection technologies={technologies} />
 				<CTASection />
