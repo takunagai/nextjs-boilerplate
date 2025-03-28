@@ -5,33 +5,36 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import * as React from "react";
 
+import { ThemeSwitcher } from "@/components/theme/theme-switcher";
+import { useScroll } from "@/hooks/useScroll";
 import { SITE_NAME } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import { ThemeSwitcher } from "@/components/theme/theme-switcher";
 import { DesktopNavigation } from "./header/desktop-navigation";
 import { MobileNavigation } from "./header/mobile-navigation";
-import { useScroll } from "@/hooks/useScroll";
 
 // ヘッダーのバリアントを定義
-const headerVariants = cva("w-full border-b sticky top-0 z-50 transition-all duration-300", {
-	variants: {
-		variant: {
-			default: "bg-background",
-			primary: "bg-primary text-primary-foreground",
-			secondary: "bg-secondary",
-			transparent: "bg-transparent backdrop-blur-sm",
+const headerVariants = cva(
+	"w-full border-b sticky top-0 z-50 transition-all duration-300",
+	{
+		variants: {
+			variant: {
+				default: "bg-background",
+				primary: "bg-primary text-primary-foreground",
+				secondary: "bg-secondary",
+				transparent: "bg-transparent backdrop-blur-sm",
+			},
+			size: {
+				default: "h-16",
+				sm: "h-12",
+				lg: "h-20",
+			},
 		},
-		size: {
-			default: "h-16",
-			sm: "h-12",
-			lg: "h-20",
+		defaultVariants: {
+			variant: "default",
+			size: "default",
 		},
 	},
-	defaultVariants: {
-		variant: "default",
-		size: "default",
-	},
-});
+);
 
 // ナビゲーションリンク型定義
 export interface NavItem {
@@ -71,7 +74,7 @@ export function Header({
 	const pathname = usePathname();
 	const [isOpen, setIsOpen] = React.useState(false);
 	const [isDesktop, setIsDesktop] = React.useState(false);
-	
+
 	// スクロール状態を取得
 	const { visible, isAtTop, direction } = useScroll({
 		threshold: 5,
@@ -80,12 +83,15 @@ export function Header({
 
 	// メニューが開いているときはスクロール非表示を無効化
 	const shouldHide = hideOnScroll && !isOpen && !visible;
-	
+
 	// 背景透過の判定
 	const transparentBackground = isAtTop && variant === "transparent";
-	
+
 	// スクロール時の背景効果
-	const scrolledClass = !isAtTop && !transparentBackground ? "bg-background/90 backdrop-blur-sm shadow-sm" : "";
+	const scrolledClass =
+		!isAtTop && !transparentBackground
+			? "bg-background/90 backdrop-blur-sm shadow-sm"
+			: "";
 
 	// 画面サイズの変更を監視し、デスクトップサイズかどうかを判定
 	React.useEffect(() => {
@@ -199,11 +205,6 @@ export function Header({
 					/>
 				</div>
 			</div>
-			
-			{/* スクロール進捗バー（下スクロール時のみ表示） */}
-			{direction === "down" && !isAtTop && (
-				<div className="h-0.5 bg-primary w-full absolute bottom-0 left-0 animate-fade-in" />
-			)}
 		</header>
 	);
 }
