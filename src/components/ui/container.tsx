@@ -3,8 +3,9 @@ import type * as React from "react";
 
 import { cn } from "@/lib/utils";
 
+// コンテナのバリアント設定
 const containerVariants = cva(
-	"mx-auto w-full", // 基本スタイル（水平方向のオートマージンと幅100%）
+	"w-full", // 基本スタイル（幅100%）
 	{
 		variants: {
 			size: {
@@ -15,6 +16,7 @@ const containerVariants = cva(
 				xl: "max-w-xl sm:max-w-4xl md:max-w-6xl",
 				"2xl": "max-w-2xl sm:max-w-5xl md:max-w-7xl",
 				full: "max-w-full",
+				custom: "", // カスタム幅のためのプレースホルダー
 			},
 			paddingY: {
 				none: "py-0",
@@ -48,6 +50,10 @@ const containerVariants = cva(
 				high: "z-20",
 				highest: "z-50",
 			},
+			centered: {
+				true: "mx-auto",
+				false: "",
+			},
 		},
 		defaultVariants: {
 			size: "2xl",
@@ -55,6 +61,7 @@ const containerVariants = cva(
 			paddingX: "md",
 			position: "default",
 			zIndex: "none",
+			centered: true,
 		},
 	},
 );
@@ -76,16 +83,19 @@ type AllowedElementType =
 // Containerコンポーネントの基本プロパティ
 export type ContainerVariantProps = VariantProps<typeof containerVariants>;
 
-// asプロパティの型定義
-type AsProps = {
+// 拡張プロパティの型定義
+type ExtendedProps = {
 	as?: AllowedElementType;
+	fluid?: boolean;
+	customMaxWidth?: string;
+	innerClassName?: string;
 };
 
 // Containerのプロパティ型定義
 export interface ContainerProps
 	extends React.ComponentPropsWithoutRef<"div">,
 		ContainerVariantProps,
-		AsProps {}
+		ExtendedProps {}
 
 export function Container({
 	className,
@@ -95,15 +105,41 @@ export function Container({
 	paddingX,
 	position,
 	zIndex,
+	centered,
+	fluid = false,
+	customMaxWidth,
+	innerClassName,
+	children,
 	...props
 }: ContainerProps) {
+	// fluidがtrueの場合、sizeをfullに設定
+	const effectiveSize = fluid ? "full" : size;
+
+	// カスタムスタイルの設定
+	const customStyle =
+		size === "custom" && customMaxWidth ? { maxWidth: customMaxWidth } : {};
+
 	return (
 		<Component
 			className={cn(
-				containerVariants({ size, paddingY, paddingX, position, zIndex }),
+				containerVariants({
+					size: effectiveSize,
+					paddingY,
+					paddingX,
+					position,
+					zIndex,
+					centered,
+				}),
 				className,
 			)}
+			style={customStyle}
 			{...props}
-		/>
+		>
+			{innerClassName ? (
+				<div className={cn(innerClassName)}>{children}</div>
+			) : (
+				children
+			)}
+		</Component>
 	);
 }
