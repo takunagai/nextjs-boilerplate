@@ -14,7 +14,7 @@ import { MobileNavigation } from "./header/mobile-navigation";
 
 // ヘッダーのバリアントを定義
 const headerVariants = cva(
-	"w-full border-b sticky top-0 z-50 transition-all duration-300",
+	"w-full border-b fixed top-0 left-0 right-0 z-50 transition-all duration-300",
 	{
 		variants: {
 			variant: {
@@ -54,7 +54,6 @@ export interface HeaderProps
 	items?: NavItem[];
 	rightContent?: React.ReactNode;
 	mobileMenuBreakpoint?: "sm" | "md" | "lg" | "xl";
-	sticky?: boolean;
 	hideOnScroll?: boolean;
 }
 
@@ -67,7 +66,6 @@ export function Header({
 	items = [],
 	rightContent,
 	mobileMenuBreakpoint = "md",
-	sticky = true,
 	hideOnScroll = true,
 	...props
 }: HeaderProps) {
@@ -162,7 +160,6 @@ export function Header({
 				headerVariants({ variant, size }),
 				scrolledClass,
 				shouldHide ? "-translate-y-full" : "translate-y-0",
-				sticky ? "sticky" : "",
 				className,
 			)}
 			{...props}

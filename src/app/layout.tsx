@@ -1,11 +1,11 @@
-import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
-import { ScrollToTop } from "@/components/ui/scroll-to-top";
+import { OrganizationJsonLd, WebsiteJsonLd } from "@/components/seo";
 import { ThemeProvider } from "@/components/theme/theme-provider";
-import { THEME, SITE_NAME, META } from "@/lib/constants";
-import { WebsiteJsonLd, OrganizationJsonLd } from "@/components/seo";
+import { ScrollToTop } from "@/components/ui/scroll-to-top";
+import { META, SITE_NAME, THEME } from "@/lib/constants";
+import type { Metadata, Viewport } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -24,7 +24,13 @@ export const metadata: Metadata = {
 		template: META.TITLE_TEMPLATE,
 	},
 	description: META.DEFAULT_DESCRIPTION,
-	keywords: ["Next.js", "React", "TypeScript", "Tailwind CSS", "ボイラープレート"],
+	keywords: [
+		"Next.js",
+		"React",
+		"TypeScript",
+		"Tailwind CSS",
+		"ボイラープレート",
+	],
 	authors: [{ name: SITE_NAME }],
 	creator: SITE_NAME,
 	publisher: SITE_NAME,
@@ -74,8 +80,8 @@ export const viewport: Viewport = {
 	userScalable: true,
 	themeColor: [
 		{ media: "(prefers-color-scheme: light)", color: "#ffffff" },
-		{ media: "(prefers-color-scheme: dark)", color: "#09090b" }
-	]
+		{ media: "(prefers-color-scheme: dark)", color: "#09090b" },
+	],
 };
 
 export default function RootLayout({
@@ -97,7 +103,7 @@ export default function RootLayout({
 					<WebsiteJsonLd />
 					<OrganizationJsonLd />
 					<div className="flex flex-col min-h-screen">
-						<Header 
+						<Header
 							logoText={SITE_NAME}
 							items={[
 								{ label: "ホーム", href: "/" },
@@ -106,9 +112,7 @@ export default function RootLayout({
 								{ label: "プライバシーポリシー", href: "/privacy" },
 							]}
 						/>
-						<main className="flex-grow">
-							{children}
-						</main>
+						<main className="flex-grow">{children}</main>
 						<Footer />
 						<ScrollToTop />
 					</div>
