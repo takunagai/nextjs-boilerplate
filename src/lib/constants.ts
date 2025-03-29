@@ -41,6 +41,7 @@ export const ROUTES = {
 export const META = {
 	TITLE_TEMPLATE: `%s | ${SITE_NAME}`,
 	DEFAULT_TITLE: SITE_NAME,
+	DEFAULT_DESCRIPTION: APP.DESCRIPTION,
 	SITE_URL: "https://nextjs-boilerplate.example.com",
 	OG_IMAGE: "/images/og-image.jpg",
 	LOCALE: "ja_JP",
