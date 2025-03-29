@@ -91,17 +91,34 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="ja" suppressHydrationWarning>
+			<head>
+				<script
+					dangerouslySetInnerHTML={{
+						__html: `
+              // ページ読み込み時のテーマのフラッシュ問題が起きないよう
+              // Reactコンポーネントのマウント前にテーマを適用
+              (function() {
+                try {
+                  const theme = localStorage.getItem('theme');
+                  if (theme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                  } else {
+                    document.documentElement.classList.remove('dark');
+                  }
+                } catch (e) {
+                  console.error('テーマ初期化エラー:', e);
+                }
+              })();
+            `,
+					}}
+				/>
+				<WebsiteJsonLd />
+				<OrganizationJsonLd />
+			</head>
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 			>
-				<ThemeProvider
-					attribute="class"
-					defaultTheme={THEME.DEFAULT}
-					enableSystem
-					disableTransitionOnChange
-				>
-					<WebsiteJsonLd />
-					<OrganizationJsonLd />
+				<ThemeProvider defaultTheme={THEME.DEFAULT} disableTransitionOnChange>
 					<div className="flex flex-col min-h-screen">
 						<Header
 							logoText={SITE_NAME}

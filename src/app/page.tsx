@@ -186,7 +186,7 @@ const featureList = [
 	{
 		id: "dark-mode",
 		title: "ダークモード",
-		description: "next-themesを使用したテーマ切替機能",
+		description: "Tailwind CSS v4のネイティブダークモード機能",
 	},
 	{
 		id: "seo",

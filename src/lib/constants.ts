@@ -96,7 +96,7 @@ export const PAGINATION = {
  */
 export const FEATURES = {
 	/**
-	 * テーマ切り替え機能
+	 * テーマ切り替え機能 (ダークモード)
 	 * falseに設定すると、テーマ切り替えボタンが非表示になり、デフォルトのテーマのみが使用されます
 	 */
 	THEME_SWITCHER: true,
@@ -107,8 +107,7 @@ export const FEATURES = {
  */
 export const THEME = {
 	/**
-	 * デフォルトテーマ
-	 * "light", "dark", "system" のいずれかを指定
+	 * デフォルトテーマ ("light" or "dark")
 	 */
 	DEFAULT: "light",
 } as const;

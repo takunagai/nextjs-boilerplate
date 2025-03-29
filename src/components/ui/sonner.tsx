@@ -1,10 +1,28 @@
 "use client";
 
-import { useTheme } from "next-themes";
+import { STORAGE_KEYS } from "@/lib/constants";
 import { Toaster as Sonner, type ToasterProps } from "sonner";
+import { useEffect, useState } from "react";
+
+type Theme = "light" | "dark";
 
 const Toaster = ({ ...props }: ToasterProps) => {
-	const { theme = "system" } = useTheme();
+	const [theme, setTheme] = useState<Theme>("light");
+	const [mounted, setMounted] = useState(false);
+
+	useEffect(() => {
+		// localStorageからテーマを取得
+		const storedTheme = localStorage.getItem(STORAGE_KEYS.THEME) as Theme;
+		if (storedTheme) {
+			setTheme(storedTheme);
+		}
+		setMounted(true);
+	}, []);
+
+	// マウント前はデフォルト表示
+	if (!mounted) {
+		return null;
+	}
 
 	return (
 		<Sonner

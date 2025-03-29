@@ -14,7 +14,7 @@ import { MobileNavigation } from "./header/mobile-navigation";
 
 // ヘッダーのバリアントを定義
 const headerVariants = cva(
-	"w-full border-b fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+	"w-full border-b fixed top-0 left-0 right-0 z-50 transition-all ease-in-out duration-300",
 	{
 		variants: {
 			variant: {
@@ -91,6 +91,34 @@ export function Header({
 			? "bg-background/90 backdrop-blur-sm shadow-sm"
 			: "";
 
+	// スクロール方向に基づくアニメーションクラス
+	const scrollAnimationClass = React.useMemo(() => {
+		if (!hideOnScroll) return "translate-y-0";
+		
+		if (shouldHide) {
+			return "-translate-y-full";
+		}
+		
+		return "translate-y-0";
+	}, [hideOnScroll, shouldHide]);
+
+	// スクロール方向に応じたアニメーション効果
+	const scrollDirectionEffect = React.useMemo(() => {
+		if (!hideOnScroll) return "";
+		
+		// 上方向スクロール時は早めに表示
+		if (direction === "up") {
+			return "ease-out duration-200";
+		}
+		
+		// 下方向スクロール時はゆっくり隠す
+		if (direction === "down" && !isAtTop) {
+			return "ease-in duration-300";
+		}
+		
+		return "";
+	}, [hideOnScroll, direction, isAtTop]);
+
 	// 画面サイズの変更を監視し、デスクトップサイズかどうかを判定
 	React.useEffect(() => {
 		const checkIsDesktop = () => {
@@ -159,7 +187,8 @@ export function Header({
 			className={cn(
 				headerVariants({ variant, size }),
 				scrolledClass,
-				shouldHide ? "-translate-y-full" : "translate-y-0",
+				scrollAnimationClass,
+				scrollDirectionEffect,
 				className,
 			)}
 			{...props}

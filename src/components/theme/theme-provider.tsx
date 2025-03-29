@@ -1,14 +1,39 @@
 "use client";
 
-import { ThemeProvider as NextThemesProvider } from "next-themes";
-import type { ThemeProviderProps } from "next-themes";
-import { FEATURES } from "@/lib/constants";
+import { STORAGE_KEYS } from "@/lib/constants";
+import { useEffect } from "react";
 
-export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
-  // 機能フラグがOFFの場合はプロバイダーをスキップして直接子要素をレンダリング
-  if (!FEATURES.THEME_SWITCHER) {
-    return <>{children}</>;
-  }
+type Theme = "light" | "dark";
 
-  return <NextThemesProvider {...props}>{children}</NextThemesProvider>;
+interface ThemeProviderProps {
+  children: React.ReactNode;
+  defaultTheme: Theme;
+  disableTransitionOnChange?: boolean;
+}
+
+export function ThemeProvider({
+  children,
+  defaultTheme,
+  disableTransitionOnChange = false,
+}: ThemeProviderProps) {
+  useEffect(() => {
+    const storedTheme = localStorage.getItem(STORAGE_KEYS.THEME) as Theme;
+    const currentTheme = storedTheme || defaultTheme;
+
+    document.documentElement.classList.toggle("dark", currentTheme === "dark");
+
+    if (!storedTheme) {
+      localStorage.setItem(STORAGE_KEYS.THEME, defaultTheme);
+    }
+  }, [defaultTheme]);
+
+  useEffect(() => {
+    if (!disableTransitionOnChange) return;
+
+    const className = "[&_*]:!transition-none";
+    document.documentElement.classList.add(className);
+    return () => document.documentElement.classList.remove(className);
+  }, [disableTransitionOnChange]);
+
+  return <>{children}</>;
 }

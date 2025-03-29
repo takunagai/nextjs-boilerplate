@@ -1,28 +1,33 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Laptop, Moon, Sun } from "lucide-react";
-import { useTheme } from "next-themes";
+import { STORAGE_KEYS } from "@/lib/constants";
+import { Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
 
+type Theme = "light" | "dark";
+
 export default function ThemeSwitcherContent() {
-	const { theme, setTheme } = useTheme();
+	const [theme, setThemeState] = useState<Theme>("light");
 	const [mounted, setMounted] = useState(false);
 
-	// コンポーネントがマウントされるまでレンダリングを遅延
 	useEffect(() => {
+		const storedTheme = localStorage.getItem(STORAGE_KEYS.THEME) as Theme;
+		if (storedTheme) {
+			setThemeState(storedTheme);
+		}
 		setMounted(true);
 	}, []);
 
-	// 次のテーマに切り替える関数
+	const setTheme = (newTheme: Theme) => {
+		setThemeState(newTheme);
+		localStorage.setItem(STORAGE_KEYS.THEME, newTheme);
+		document.documentElement.classList.toggle("dark", newTheme === "dark");
+	};
+
 	const toggleTheme = () => {
-		if (theme === "light") {
-			setTheme("dark");
-		} else if (theme === "dark") {
-			setTheme("system");
-		} else {
-			setTheme("light");
-		}
+		const nextTheme = theme === "light" ? "dark" : "light";
+		setTheme(nextTheme);
 	};
 
 	if (!mounted) {
@@ -33,56 +38,31 @@ export default function ThemeSwitcherContent() {
 		);
 	}
 
+	const iconClasses = "h-[1.2rem] w-[1.2rem] transition-all";
+	const activeIconClasses = "opacity-100";
+	const inactiveIconClasses = "opacity-0 absolute";
+
 	return (
 		<Button
 			variant="ghost"
 			size="icon"
 			className="h-9 w-9 relative"
 			onClick={toggleTheme}
-			title={
-				theme === "light"
-					? "ライトモード（クリックで切替）"
-					: theme === "dark"
-						? "ダークモード（クリックで切替）"
-						: "システム設定（クリックで切替）"
-			}
+			title={`${theme === "light" ? "ライト" : "ダーク"}モード（クリックで切替）`}
 		>
-			{/* ライトモードのアイコン */}
 			<Sun
-				className={`h-5 w-5 transition-all ${
-					theme === "light"
-						? "scale-100 rotate-0"
-						: "scale-0 -rotate-90 absolute"
+				className={`${iconClasses} ${
+					theme === "light" ? activeIconClasses : inactiveIconClasses
 				}`}
+				aria-label="ライトテーマ"
 			/>
-
-			{/* ダークモードのアイコン */}
 			<Moon
-				className={`h-5 w-5 transition-all ${
-					theme === "dark"
-						? "scale-100 rotate-0"
-						: "scale-0 -rotate-90 absolute"
+				className={`${iconClasses} ${
+					theme === "dark" ? activeIconClasses : inactiveIconClasses
 				}`}
+				aria-label="ダークテーマ"
 			/>
-
-			{/* システム設定のアイコン */}
-			<Laptop
-				className={`h-5 w-5 transition-all ${
-					theme === "system"
-						? "scale-100 rotate-0"
-						: "scale-0 -rotate-90 absolute"
-				}`}
-			/>
-
-			<span className="sr-only">
-				テーマを切り替える（現在:
-				{theme === "light"
-					? "ライトモード"
-					: theme === "dark"
-						? "ダークモード"
-						: "システム設定"}
-				）
-			</span>
+			<span className="sr-only">テーマを切り替える</span>
 		</Button>
 	);
 }
