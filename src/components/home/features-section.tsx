@@ -1,12 +1,12 @@
 import { Container } from "@/components/ui/container";
-import type { LucideIcon } from "lucide-react";
+import type { IconType } from "react-icons";
 import type { ReactNode } from "react";
 
 type Feature = {
   id: string;
   title: string;
   description: string;
-  icon: LucideIcon | (({ className }: { className?: string }) => ReactNode);
+  icon: IconType | (({ className }: { className?: string }) => ReactNode);
 };
 
 interface FeaturesSectionProps {

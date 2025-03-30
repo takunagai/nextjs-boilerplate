@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { STORAGE_KEYS } from "@/lib/constants";
-import { Moon, Sun } from "lucide-react";
+import { FaSun, FaMoon } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 
 type Theme = "light" | "dark";
@@ -80,13 +80,13 @@ export default function ThemeSwitcherContent() {
 			onClick={toggleTheme}
 			title={`${theme === "light" ? "ライト" : "ダーク"}モード（クリックで切替）`}
 		>
-			<Sun
+			<FaSun
 				className={`${iconClasses} ${
 					theme === "light" ? activeIconClasses : inactiveIconClasses
 				}`}
 				aria-label="ライトテーマ"
 			/>
-			<Moon
+			<FaMoon
 				className={`${iconClasses} ${
 					theme === "dark" ? activeIconClasses : inactiveIconClasses
 				}`}

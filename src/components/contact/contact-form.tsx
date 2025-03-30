@@ -3,7 +3,7 @@
 import { ContactEmailForm } from "@/components/contact/contact-mailform";
 import { ContactPhoneAndLine } from "@/components/contact/contact-phone-and-line";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Mail, PhoneCall } from "lucide-react";
+import { FaEnvelope, FaPhone } from "react-icons/fa6";
 
 /**
  * お問い合わせフォームのメインコンポーネント
@@ -15,11 +15,11 @@ export function ContactForm() {
 			<Tabs defaultValue="mail" className="w-full">
 				<TabsList className="grid w-full grid-cols-2">
 					<TabsTrigger value="mail" className="flex items-center gap-2">
-						<Mail className="h-4 w-4" />
+						<FaEnvelope className="h-4 w-4" />
 						<span>メール</span>
 					</TabsTrigger>
 					<TabsTrigger value="phone-line" className="flex items-center gap-2">
-						<PhoneCall className="h-4 w-4" />
+						<FaPhone className="h-4 w-4" />
 						<span>電話・LINE</span>
 					</TabsTrigger>
 				</TabsList>

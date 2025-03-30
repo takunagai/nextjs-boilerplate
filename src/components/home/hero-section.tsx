@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
-import { ArrowRight } from "lucide-react";
+import { FaArrowRight } from "react-icons/fa6";
 import Link from "next/link";
 
 export function HeroSection() {
@@ -49,7 +49,7 @@ export function HeroSection() {
 								rel="noopener noreferrer"
 							>
 								ドキュメントを見る
-								<ArrowRight className="h-4 w-4" />
+								<FaArrowRight className="h-4 w-4" />
 							</Link>
 						</Button>
 						<Button asChild variant="outline" size="lg" className="gap-2">

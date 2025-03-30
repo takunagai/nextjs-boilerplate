@@ -9,7 +9,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { ExternalLink, Phone } from "lucide-react";
+import { FaPhone, FaLine, FaArrowUpRightFromSquare } from "react-icons/fa6";
 
 /**
  * 電話とLINEでのお問い合わせ方法を表示するコンポーネント
@@ -23,7 +23,7 @@ export function ContactPhoneAndLine() {
 				<ContactMethodCard
 					title="お電話でのお問い合わせ"
 					description="平日10:00〜17:00にて電話でのお問い合わせを受け付けております。"
-					icon={<Phone className="h-5 w-5" />}
+					icon={<FaPhone className="h-5 w-5" />}
 					content={
 						<div className="space-y-2">
 							<p className="text-lg font-semibold">03-1234-5678</p>
@@ -52,16 +52,7 @@ export function ContactPhoneAndLine() {
 				<ContactMethodCard
 					title="LINEでのお問い合わせ"
 					description="LINE公式アカウントからもお問い合わせいただけます。"
-					icon={
-						<svg
-							className="h-5 w-5"
-							viewBox="0 0 24 24"
-							fill="currentColor"
-							aria-hidden="true"
-						>
-							<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8 0-4.41 3.59-8 8-8s8 3.59 8 8c0 4.41-3.59 8-8 8zm-1-13h2v5h-2zm0 7h2v2h-2z" />
-						</svg>
-					}
+					icon={<FaLine className="h-5 w-5" />}
 					content={
 						<div className="space-y-2">
 							<p className="text-sm text-muted-foreground">
@@ -81,7 +72,7 @@ export function ContactPhoneAndLine() {
 							}}
 						>
 							<span>友だち追加</span>
-							<ExternalLink className="h-4 w-4" />
+							<FaArrowUpRightFromSquare className="h-4 w-4" />
 						</Button>
 					}
 				/>

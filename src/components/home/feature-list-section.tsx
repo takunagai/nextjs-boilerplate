@@ -1,6 +1,6 @@
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, CheckCircle } from "lucide-react";
+import { FaArrowRight, FaCircleCheck } from "react-icons/fa6";
 import Link from "next/link";
 
 type FeatureItem = {
@@ -29,7 +29,7 @@ export function FeatureListSection({ featureList }: FeatureListSectionProps) {
             <Button asChild variant="outline" className="gap-2">
               <Link href="/docs/features">
                 すべての機能を見る
-                <ArrowRight className="h-4 w-4" />
+                <FaArrowRight className="h-4 w-4" />
               </Link>
             </Button>
           </div>
@@ -37,7 +37,7 @@ export function FeatureListSection({ featureList }: FeatureListSectionProps) {
             <ul className="space-y-4">
               {featureList.map((feature) => (
                 <li key={feature.id} className="flex items-start gap-3">
-                  <CheckCircle className="h-6 w-6 text-primary flex-shrink-0 mt-0.5" />
+                  <FaCircleCheck className="h-6 w-6 text-primary flex-shrink-0 mt-0.5" />
                   <div>
                     <h3 className="font-semibold">{feature.title}</h3>
                     <p className="text-muted-foreground">

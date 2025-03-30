@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu } from "lucide-react";
+import { FaBars } from "react-icons/fa6";
 import Link from "next/link";
 import type * as React from "react";
 
@@ -51,7 +51,7 @@ export function MobileNavigation({
 							}
 						}}
 					>
-						<Menu className="h-5 w-5" />
+						<FaBars className="h-5 w-5" />
 						<span className="sr-only">メニューを開く</span>
 					</Button>
 				</SheetTrigger>

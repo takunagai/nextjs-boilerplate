@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
-import { ExternalLink } from "lucide-react";
+import { FaArrowUpRightFromSquare } from "react-icons/fa6";
 import Link from "next/link";
 
 interface CTASectionProps {
@@ -39,7 +39,7 @@ export function CTASection({
                   rel="noopener noreferrer"
                 >
                   {primaryButtonText}
-                  <ExternalLink className="h-4 w-4" />
+                  <FaArrowUpRightFromSquare className="h-4 w-4" />
                 </a>
               ) : (
                 <Link href={primaryButtonHref}>{primaryButtonText}</Link>

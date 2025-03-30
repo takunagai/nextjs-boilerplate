@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { ChevronUp } from "lucide-react";
+import { FaChevronUp } from "react-icons/fa6";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
@@ -70,7 +70,7 @@ export function ScrollToTop({
       aria-label="ページトップへスクロール"
       {...props}
     >
-      <ChevronUp className="h-5 w-5" />
+      <FaChevronUp className="h-5 w-5" />
     </Button>
   );
 }
