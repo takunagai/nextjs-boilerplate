@@ -12,10 +12,17 @@ export default function ThemeSwitcherContent() {
 	const [mounted, setMounted] = useState(false);
 
 	useEffect(() => {
+		// 初期テーマの取得
 		const storedTheme = localStorage.getItem(STORAGE_KEYS.THEME) as Theme;
+		const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+		
+		// 保存されたテーマがあればそれを使用、なければシステム設定を確認
 		if (storedTheme) {
 			setThemeState(storedTheme);
+		} else if (prefersDark) {
+			setThemeState("dark");
 		}
+		
 		setMounted(true);
 	}, []);
 
@@ -29,6 +36,29 @@ export default function ThemeSwitcherContent() {
 		const nextTheme = theme === "light" ? "dark" : "light";
 		setTheme(nextTheme);
 	};
+
+	// システムテーマの変更を監視
+	useEffect(() => {
+		const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+		const handleChange = (e: MediaQueryListEvent) => {
+			// ユーザーが明示的にテーマを設定していない場合のみ適用
+			if (!localStorage.getItem(STORAGE_KEYS.THEME)) {
+				const newTheme = e.matches ? "dark" : "light";
+				setThemeState(newTheme);
+				document.documentElement.classList.toggle("dark", e.matches);
+			}
+		};
+
+		// イベントリスナーの追加（ブラウザ互換性対応）
+		if (typeof mediaQuery.addEventListener === 'function') {
+			mediaQuery.addEventListener('change', handleChange);
+			return () => mediaQuery.removeEventListener('change', handleChange);
+		}
+		
+		// 古いブラウザ向け
+		mediaQuery.addListener(handleChange);
+		return () => mediaQuery.removeListener(handleChange);
+	}, []);
 
 	if (!mounted) {
 		return (
