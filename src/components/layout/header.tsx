@@ -2,6 +2,7 @@
 
 import { type VariantProps, cva } from "class-variance-authority";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import * as React from "react";
 
@@ -61,7 +62,16 @@ export function Header({
 	className,
 	variant,
 	size,
-	logo,
+	logo = (
+		<Image
+			src="https://avatars.githubusercontent.com/u/3456089?s=48&v=4"
+			alt={SITE_NAME}
+			width={32}
+			height={32}
+			className="rounded-full"
+			priority
+		/>
+	),
 	logoText = SITE_NAME,
 	items = [],
 	rightContent,
