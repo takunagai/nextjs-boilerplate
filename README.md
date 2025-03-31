@@ -72,11 +72,11 @@
 ### UI/スタイリング
 
 - **Tailwind CSS** (4.0.15) - ユーティリティファーストCSS
+- **tw-animate-css** (1.2.5) - アニメーション
 - **shadcn/ui** - 再利用可能なUIコンポーネント
-- **next-themes** - モード (テーマ) 切り替え
 - **framer-motion** - アニメーション
 - **sonner** - トースト通知
-- **lucide-react** - アイコンセット
+- **react-icons** - アイコンセット
 
 ### 状態管理/ユーティリティ
 
