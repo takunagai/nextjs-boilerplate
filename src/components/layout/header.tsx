@@ -1,8 +1,8 @@
 "use client";
 
 import { type VariantProps, cva } from "class-variance-authority";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import * as React from "react";
 
@@ -63,8 +63,9 @@ export function Header({
 	variant,
 	size,
 	logo = (
+		// ロゴが不要な場合は代入を削除
 		<Image
-			src="https://avatars.githubusercontent.com/u/3456089?s=48&v=4"
+			src="/images/logo.png"
 			alt={SITE_NAME}
 			width={32}
 			height={32}
@@ -104,28 +105,28 @@ export function Header({
 	// スクロール方向に基づくアニメーションクラス
 	const scrollAnimationClass = React.useMemo(() => {
 		if (!hideOnScroll) return "translate-y-0";
-		
+
 		if (shouldHide) {
 			return "-translate-y-full";
 		}
-		
+
 		return "translate-y-0";
 	}, [hideOnScroll, shouldHide]);
 
 	// スクロール方向に応じたアニメーション効果
 	const scrollDirectionEffect = React.useMemo(() => {
 		if (!hideOnScroll) return "";
-		
+
 		// 上方向スクロール時は早めに表示
 		if (direction === "up") {
 			return "ease-out duration-200";
 		}
-		
+
 		// 下方向スクロール時はゆっくり隠す
 		if (direction === "down" && !isAtTop) {
 			return "ease-in duration-300";
 		}
-		
+
 		return "";
 	}, [hideOnScroll, direction, isAtTop]);
 
