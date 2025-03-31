@@ -1,8 +1,8 @@
 import { COPYRIGHT_HOLDER, SITE_NAME } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { type VariantProps, cva } from "class-variance-authority";
-import { FaTwitter, FaYoutube } from "react-icons/fa6";
 import Link from "next/link";
+import { FaInstagram, FaXTwitter, FaYoutube } from "react-icons/fa6";
 
 // フッターのバリアントを定義
 const footerVariants = cva("w-full border-t", {
@@ -55,7 +55,7 @@ export function Footer({
 	variant,
 	size,
 	companyName = COPYRIGHT_HOLDER,
-	description = "仮想通貨の確定申告。もっと簡単に。確定申告に必要な仮想通貨の損益を自動で計算。ポートフォリオ管理も、これひとつで",
+	description = "このボイラープレートは、Next.js で構築されたウェブアプリケーションの基盤を提供します。",
 	logoText = SITE_NAME,
 	navGroups = [],
 	showCurrentYear = true,
@@ -69,27 +69,28 @@ export function Footer({
 	// デフォルトのナビゲーショングループ
 	const defaultNavGroups: FooterNavGroup[] = [
 		{
-			title: "クリプタクト",
+			title: "サービス",
 			links: [
-				{ label: "特長", href: "/features" },
-				{ label: "料金", href: "/pricing" },
-				{ label: "税理士向けプラン", href: "/for-accountants" },
-				{ label: "利用規約", href: "/terms" },
+				{ label: "機能紹介", href: "/features" },
+				{ label: "料金プラン", href: "/pricing" },
+				{ label: "導入事例", href: "/case-studies" },
+				{ label: "お問い合わせ", href: "/contact" },
 			],
 		},
 		{
-			title: "リソース",
+			title: "サポート",
 			links: [
-				{ label: "ニュース", href: "/news" },
-				{ label: "ブログ", href: "/blog" },
-				{ label: "ヘルプページ", href: "/help" },
+				{ label: "ドキュメント", href: "/docs" },
+				{ label: "FAQ", href: "/faq" },
+				{ label: "開発者向け", href: "/developers" },
 			],
 		},
 		{
-			title: "運営会社",
+			title: "会社情報",
 			links: [
-				{ label: "会社概要", href: "/company" },
-				{ label: "フィンタクト", href: "/fintact" },
+				{ label: "About Us", href: "/about" },
+				{ label: "採用情報", href: "/careers" },
+				{ label: "プライバシーポリシー", href: "/privacy" },
 			],
 		},
 	];
@@ -108,12 +109,20 @@ export function Footer({
 			<p className="text-sm mb-6 max-w-md">{description}</p>
 			<div className="flex gap-4 mb-6">
 				<Link
-					href="https://x.com"
+					href="https://x.com/nagataku_ai"
 					target="_blank"
 					rel="noopener noreferrer"
 					className="hover:opacity-80"
 				>
-					<FaTwitter className="h-5 w-5" />
+					<FaXTwitter className="h-5 w-5" />
+				</Link>
+				<Link
+					href="https://www.instagram.com/nagataku33/"
+					target="_blank"
+					rel="noopener noreferrer"
+					className="hover:opacity-80"
+				>
+					<FaInstagram className="h-5 w-5" />
 				</Link>
 				<Link
 					href="https://youtube.com"
@@ -149,7 +158,9 @@ export function Footer({
 					>
 						{footerNavGroups.map((group) => (
 							<div key={group.title}>
-								<h3 className="font-medium text-sm mb-3">{group.title}</h3>
+								<h3 className="font-bold text-xs mb-3 text-foreground/50">
+									{group.title}
+								</h3>
 								<ul className="space-y-2">
 									{group.links.map((link) => (
 										<li key={link.href}>
@@ -181,7 +192,7 @@ export function Footer({
 
 				{/* コピーライト表示 */}
 				<div className="pt-6 border-t mt-6">
-					<div className="text-sm">
+					<div className="text-sm text-center">
 						{showCurrentYear
 							? `© ${companyName} ${currentYear}`
 							: `© ${companyName}`}
