@@ -64,5 +64,13 @@
     "typescript": "^5",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.0.9"
-  }
+  },
+  "browserslist": [
+    "Chrome >= 111",
+    "Edge >= 111",
+    "Safari >= 16.4",
+    "Firefox >= 128",
+    "iOS >= 16",
+    "Android >= 13"
+  ]
 }
