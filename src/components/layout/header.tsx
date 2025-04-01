@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import * as React from "react";
-import { useIsClient, useMediaQuery } from "usehooks-ts";
+import { useIsClient, useLocalStorage, useMediaQuery } from "usehooks-ts";
 
 import { ThemeSwitcher } from "@/components/theme/theme-switcher";
 import { useScroll } from "@/hooks/useScroll";
@@ -105,6 +105,22 @@ export function Header({
 
 	const isDesktop = useMediaQuery(mediaQueryString);
 
+	// ローカルストレージに画面サイズ情報を保存
+	const [storedViewportInfo, setStoredViewportInfo] = useLocalStorage<{
+		isDesktop: boolean;
+		timestamp: number;
+	}>("viewport-info", { isDesktop: false, timestamp: 0 });
+
+	// 画面サイズ情報を更新（クライアントサイドのみ）
+	React.useEffect(() => {
+		if (isClient && isDesktop !== undefined) {
+			setStoredViewportInfo({
+				isDesktop,
+				timestamp: Date.now(),
+			});
+		}
+	}, [isClient, isDesktop, setStoredViewportInfo]);
+
 	// スクロール状態を取得
 	const { visible, isAtTop, direction } = useScroll({
 		threshold: 5,
@@ -140,12 +156,12 @@ export function Header({
 
 		// 上方向スクロール時は早めに表示
 		if (direction === "up") {
-			return "ease-out duration-200";
+			return "ease-out duration-20";
 		}
 
 		// 下方向スクロール時はゆっくり隠す
 		if (direction === "down" && !isAtTop) {
-			return "ease-in duration-300";
+			return "ease-in duration-100";
 		}
 
 		return "";
