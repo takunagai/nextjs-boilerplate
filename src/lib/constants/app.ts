@@ -1,27 +1,27 @@
 /**
- * アプリケーション全般の設定に関する定数
- */
-
-/**
- * サイト名
- * 環境変数 NEXT_PUBLIC_SITE_NAME から取得し、未設定の場合はデフォルト値を使用
- */
-export const SITE_NAME =
-  process.env.NEXT_PUBLIC_SITE_NAME || "Next.js Boilerplate";
-
-/**
- * 著作権所有者
- */
-export const COPYRIGHT_HOLDER = "nagai-shouten.com";
-
-/**
  * アプリケーション情報
  */
 export const APP = {
-  NAME: SITE_NAME,
+  /**
+   * アプリケーション名
+   */
+  NAME: "Next.js Boilerplate",
+  
+  /**
+   * バージョン番号
+   */
+  VERSION: "0.1.0",
+  
+  /**
+   * アプリケーションの説明
+   */
   DESCRIPTION:
     "Next.js、TypeScript、Tailwind CSSを組み合わせた最新のボイラープレートで、高速で美しいWebアプリケーションを構築しましょう。",
-  VERSION: "0.1.0",
+  
+  /**
+   * 著作権所有者
+   */
+  COPYRIGHT_HOLDER: "nagai-shouten.com"
 } as const;
 
 /**
@@ -29,9 +29,14 @@ export const APP = {
  * 機能のON/OFFを制御する定数
  */
 export const FEATURES = {
-  /**
-   * テーマ切り替え機能 (ダークモード)
-   * falseに設定すると、テーマ切り替えボタンが非表示になり、デフォルトのテーマのみが使用されます
-   */
-  THEME_SWITCHER: true,
+	/**
+	 * テーマ切り替え機能 (ダークモード)
+	 * falseに設定すると、テーマ切り替えボタンが非表示になり、デフォルトのテーマのみが使用されます
+	 */
+	THEME_SWITCHER: true,
+
+	/**
+	 * サンプル機能の表示
+	 */
+	SHOW_EXAMPLES: true,
 } as const;

@@ -4,7 +4,12 @@
  */
 
 // アプリケーション全般
-export { SITE_NAME, COPYRIGHT_HOLDER, APP, FEATURES } from './app';
+import { APP } from './app';
+export { APP, FEATURES } from './app';
+
+// APP定数からの再エクスポート（後方互換性のため）
+export const SITE_NAME = APP.NAME;
+export const COPYRIGHT_HOLDER = APP.COPYRIGHT_HOLDER;
 
 // ルート
 export { ROUTES } from './routes';

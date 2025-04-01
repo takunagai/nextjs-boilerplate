@@ -2,15 +2,15 @@
  * メタデータに関する定数
  */
 
-import { SITE_NAME } from './app';
+import { APP } from './app';
 
 /**
  * メタデータ設定
  */
 export const META = {
-  TITLE_TEMPLATE: `%s | ${SITE_NAME}`,
-  DEFAULT_TITLE: SITE_NAME,
-  DEFAULT_DESCRIPTION: "Next.js、TypeScript、Tailwind CSSを組み合わせた最新のボイラープレート",
+  TITLE_TEMPLATE: `%s | ${APP.NAME}`,
+  DEFAULT_TITLE: APP.NAME,
+  DEFAULT_DESCRIPTION: APP.DESCRIPTION,
   SITE_URL: "https://nextjs-boilerplate.example.com",
   OG_IMAGE: "/images/og-image.jpg",
   LOCALE: "ja_JP",
