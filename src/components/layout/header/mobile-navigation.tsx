@@ -14,8 +14,8 @@ export interface MobileNavigationProps {
 	rightContent?: React.ReactNode;
 	isOpen: boolean;
 	setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-	isDesktop: boolean;
-	breakpointClass: string;
+	isDesktop?: boolean;
+	breakpointClass?: string;
 }
 
 export function MobileNavigation({
@@ -23,18 +23,19 @@ export function MobileNavigation({
 	rightContent,
 	isOpen,
 	setIsOpen,
-	isDesktop,
-	breakpointClass,
+	isDesktop = false,
+	breakpointClass = "md:flex",
 }: MobileNavigationProps) {
+	// ドロワーメニューを表示するかどうかの判定
+	const showDrawer = !isDesktop;
+
 	return (
-		<div
-			className={`${breakpointClass.replace("flex", "hidden")} ${isDesktop ? "hidden" : "block"}`}
-		>
+		<div>
 			<Sheet
 				open={isOpen}
 				onOpenChange={(open) => {
 					// デスクトップサイズではドロワーメニューを開かない
-					if (!isDesktop) {
+					if (showDrawer) {
 						setIsOpen(open);
 					}
 				}}

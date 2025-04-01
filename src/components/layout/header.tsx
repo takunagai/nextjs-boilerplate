@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import * as React from "react";
+import { useIsClient, useMediaQuery } from "usehooks-ts";
 
 import { ThemeSwitcher } from "@/components/theme/theme-switcher";
 import { useScroll } from "@/hooks/useScroll";
@@ -82,7 +83,27 @@ export function Header({
 }: HeaderProps) {
 	const pathname = usePathname();
 	const [isOpen, setIsOpen] = React.useState(false);
-	const [isDesktop, setIsDesktop] = React.useState(false);
+
+	// クライアントサイドでのレンダリングかを判定
+	const isClient = useIsClient();
+
+	// メディアクエリに基づいてデスクトップかどうかを判定
+	let mediaQueryString: string;
+	switch (mobileMenuBreakpoint) {
+		case "sm":
+			mediaQueryString = "(min-width: 640px)";
+			break;
+		case "lg":
+			mediaQueryString = "(min-width: 1024px)";
+			break;
+		case "xl":
+			mediaQueryString = "(min-width: 1280px)";
+			break;
+		default:
+			mediaQueryString = "(min-width: 768px)"; // md
+	}
+
+	const isDesktop = useMediaQuery(mediaQueryString);
 
 	// スクロール状態を取得
 	const { visible, isAtTop, direction } = useScroll({
@@ -130,45 +151,12 @@ export function Header({
 		return "";
 	}, [hideOnScroll, direction, isAtTop]);
 
-	// 画面サイズの変更を監視し、デスクトップサイズかどうかを判定
+	// デスクトップサイズになったらドロワーメニューを閉じる
 	React.useEffect(() => {
-		const checkIsDesktop = () => {
-			// ブレークポイントに基づいてデスクトップかどうかを判定
-			let breakpointWidth = 768; // デフォルトはmd (768px)
-			switch (mobileMenuBreakpoint) {
-				case "sm":
-					breakpointWidth = 640;
-					break;
-				case "lg":
-					breakpointWidth = 1024;
-					break;
-				case "xl":
-					breakpointWidth = 1280;
-					break;
-				default:
-					breakpointWidth = 768; // md
-			}
-
-			const isDesktopView = window.innerWidth >= breakpointWidth;
-			setIsDesktop(isDesktopView);
-
-			// デスクトップサイズになったらドロワーメニューを閉じる
-			if (isDesktopView && isOpen) {
-				setIsOpen(false);
-			}
-		};
-
-		// 初期チェック
-		checkIsDesktop();
-
-		// リサイズイベントリスナーを追加
-		window.addEventListener("resize", checkIsDesktop);
-
-		// クリーンアップ
-		return () => {
-			window.removeEventListener("resize", checkIsDesktop);
-		};
-	}, [mobileMenuBreakpoint, isOpen]);
+		if (isDesktop && isOpen) {
+			setIsOpen(false);
+		}
+	}, [isDesktop, isOpen]);
 
 	// ナビゲーションアイテムにアクティブステートを追加
 	const navItems = React.useMemo(() => {
@@ -177,21 +165,6 @@ export function Header({
 			active: item.active ?? pathname === item.href,
 		}));
 	}, [items, pathname]);
-
-	const breakpointClass = React.useMemo(() => {
-		switch (mobileMenuBreakpoint) {
-			case "sm":
-				return "sm:flex";
-			case "md":
-				return "md:flex";
-			case "lg":
-				return "lg:flex";
-			case "xl":
-				return "xl:flex";
-			default:
-				return "md:flex";
-		}
-	}, [mobileMenuBreakpoint]);
 
 	return (
 		<header
@@ -204,43 +177,54 @@ export function Header({
 			)}
 			{...props}
 		>
-			<div className="container mx-auto px-4 h-full">
-				<div className="flex items-center justify-between h-full">
-					{/* ロゴ */}
+			<div className="container mx-auto px-4 h-full flex items-center justify-between">
+				{/* ロゴ部分 */}
+				<div className="flex items-center gap-2">
 					<Link href="/" className="flex items-center gap-2">
 						{logo}
 						{logoText && (
-							<span className="font-semibold text-lg">{logoText}</span>
+							<span className="font-bold text-lg tracking-tighter">
+								{logoText}
+							</span>
 						)}
 					</Link>
-
-					{/* デスクトップメニュー */}
-					<DesktopNavigation
-						items={navItems}
-						rightContent={
-							<div className="flex items-center gap-2">
-								<ThemeSwitcher />
-								{rightContent}
-							</div>
-						}
-						breakpointClass={breakpointClass}
-					/>
-
-					{/* モバイルメニュートグル */}
-					<MobileNavigation
-						items={navItems}
-						rightContent={
-							<div className="flex items-center gap-2 mt-4">
-								<ThemeSwitcher />
-								{rightContent}
-							</div>
-						}
-						isOpen={isOpen}
-						setIsOpen={setIsOpen}
-						isDesktop={isDesktop}
-						breakpointClass={breakpointClass}
-					/>
 				</div>
+
+				{/* ナビゲーションと右側コンテンツ */}
+				{isClient ? (
+					<div className="flex items-center justify-end gap-4">
+						{isDesktop && <DesktopNavigation items={navItems} />}
+						<div className="flex items-center gap-2">
+							{rightContent}
+							<ThemeSwitcher />
+							{!isDesktop && (
+								<MobileNavigation
+									items={navItems}
+									isOpen={isOpen}
+									setIsOpen={setIsOpen}
+								/>
+							)}
+						</div>
+					</div>
+				) : (
+					// SSR時のスケルトンUI - レイアウトシフトを防止
+					<div className="flex items-center justify-end gap-4">
+						{/* デスクトップナビゲーションのスケルトン */}
+						<div className="hidden md:flex items-center gap-4">
+							{["menu-item-1", "menu-item-2", "menu-item-3"].map((id) => (
+								<div
+									key={id}
+									className="h-4 w-16 bg-muted animate-pulse rounded"
+								/>
+							))}
+						</div>
+						{/* 右側コンテンツとテーマスイッチャーのスケルトン */}
+						<div className="flex items-center gap-2">
+							<div className="h-8 w-8 bg-muted animate-pulse rounded-full" />
+							<div className="h-8 w-8 bg-muted animate-pulse rounded-full" />
+						</div>
+					</div>
+				)}
 			</div>
 		</header>
 	);

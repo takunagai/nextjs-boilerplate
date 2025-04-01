@@ -9,16 +9,16 @@ import type { NavItem } from "../header";
 export interface DesktopNavigationProps {
 	items: NavItem[];
 	rightContent?: React.ReactNode;
-	breakpointClass: string;
+	breakpointClass?: string;
 }
 
 export function DesktopNavigation({
 	items,
 	rightContent,
-	breakpointClass,
+	breakpointClass = "md:flex",
 }: DesktopNavigationProps) {
 	return (
-		<div className={`hidden ${breakpointClass} items-center gap-6`}>
+		<div className="flex items-center gap-6">
 			<nav className="flex items-center gap-4">
 				{items.map((item) => (
 					<Link
