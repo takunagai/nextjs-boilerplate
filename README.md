@@ -79,14 +79,15 @@
 
 ### コア技術
 
-- **Next.js** (15.2.3) - Reactフレームワーク
-- **React** (19.0.0) - UIライブラリ
-- **TypeScript** (5) - 型付きJavaScript
+- **Node.js** - 開発環境、バックエンド
+- **TypeScript** - 型付きJavaScript
+- **Next.js** - Reactフレームワーク
+- **React** - UIライブラリ
 
 ### UI/スタイリング
 
-- **Tailwind CSS** (4.0.15) - ユーティリティファーストCSS
-- **tw-animate-css** (1.2.5) - アニメーション
+- **Tailwind CSS** - ユーティリティファーストCSS
+- **tw-animate-css** - アニメーション
 - **shadcn/ui** - 再利用可能なUIコンポーネント
 - **framer-motion** - アニメーション
 - **sonner** - トースト通知
@@ -99,29 +100,35 @@
 - **class-variance-authority** - コンポーネントバリエーション
 - **clsx** - 条件付きクラス名
 - **tailwind-merge** - Tailwindクラス最適化
+- **usehooks-ts** - 有用なReactフックコレクション
 
 ### フォーム/バリデーション
 
-- **react-hook-form** (7.54.2) - フォーム状態管理
-- **zod** (3.24.2) - スキーマバリデーション
-- **@hookform/resolvers** (4.1.3) - バリデーション連携
+- **react-hook-form** - フォーム状態管理
+- **zod** - スキーマバリデーション
+- **@hookform/resolvers** - バリデーション連携
 
-### テスト
+### バックエンド
 
-- **Vitest** (1.3.1) - 高速テストフレームワーク
-- **Testing Library** - DOMテスト
-- **jsdom** - ブラウザ環境シミュレーション
-- **Playwright** (1.42.0) - エンドツーエンド(E2E)テスト
+- (**PostgreSQL** - データベース) ※後で追加予定
+- (**Drizzle ORM** - ORM) ※後で追加予定
 
 ### 開発ツール
 
-- **Biome** (1.6.1) - リンター/フォーマッター
+- **Biome** - リンター/フォーマッター
+
+### テスト
+
+- **Vitest** - ユニットテスト
+- **Playwright** - E2Eテスト
+- (**Testing Library** - DOMテスト) ※後で追加予定
+- **jsdom** - ブラウザ環境シミュレーション
 
 ## セットアップ手順
 
 ### 前提条件
 
-- Node.js 20.x以上
+- Node.js 23.x以上
 - npm 10.x以上
 
 ### インストール
