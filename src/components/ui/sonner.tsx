@@ -1,29 +1,21 @@
 "use client";
 
-import { STORAGE_KEYS } from "@/lib/constants";
 import { Toaster as Sonner, type ToasterProps } from "sonner";
-import { useEffect, useState } from "react";
+import { useThemeToggle } from "@/hooks/use-theme-toggle";
 
-type Theme = "light" | "dark";
+/**
+ * Sonnerトースト通知用のコンポーネント
+ * テーマに合わせてスタイルを自動調整します
+ */
+const Toaster = (props: ToasterProps) => {
+	const { theme, mounted } = useThemeToggle();
 
-const Toaster = ({ ...props }: ToasterProps) => {
-	const [theme, setTheme] = useState<Theme>("light");
-	const [mounted, setMounted] = useState(false);
-
-	useEffect(() => {
-		// localStorageからテーマを取得
-		const storedTheme = localStorage.getItem(STORAGE_KEYS.THEME) as Theme;
-		if (storedTheme) {
-			setTheme(storedTheme);
-		}
-		setMounted(true);
-	}, []);
-
-	// マウント前はデフォルト表示
+	// マウント前は何も表示しない
 	if (!mounted) {
 		return null;
 	}
 
+	// テーマに合わせてスタイルを適用
 	return (
 		<Sonner
 			theme={theme as ToasterProps["theme"]}
