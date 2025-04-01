@@ -21,22 +21,28 @@ export { META } from './meta';
 export { THEME, THEME_STORAGE_KEY } from './theme';
 
 // 問い合わせ
-export { CONTACT } from './contact';
+// 現在コメントアウトされているため、エクスポートしない
+// export { CONTACT } from './contact';
 
 // ストレージ
-export { STORAGE_KEYS } from './storage';
+// 現在コメントアウトされているため、エクスポートしない
+// export { STORAGE_KEYS } from './storage';
 
 // API
-export { API } from './api';
+// 現在コメントアウトされているため、エクスポートしない
+// export { API } from './api';
 
 // 日付
-export { DATE_FORMAT } from './date';
+// 現在コメントアウトされているため、エクスポートしない
+// export { DATE_FORMAT } from './date';
 
 // UI
-export { 
-  IMAGE_SIZES, 
-  PAGINATION
-} from './ui';
+// 現在コメントアウトされているため、エクスポートしない
+// export { 
+//   IMAGE_SIZES, 
+//   PAGINATION
+// } from './ui';
 
 // リンク
-export { SOCIAL_LINKS } from './links';
+// 現在コメントアウトされているため、エクスポートしない
+// export { SOCIAL_LINKS } from './links';
