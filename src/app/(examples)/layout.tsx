@@ -1,10 +1,10 @@
 import { Container } from "@/components/ui/container";
-import { SITE_NAME } from "@/lib/constants";
+import { APP } from "@/lib/constants";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 export const metadata: Metadata = {
-  title: `サンプル | ${SITE_NAME}`,
+  title: `サンプル | ${APP.NAME}`,
   description: "Next.jsボイラープレートのサンプルページです。",
 };
 

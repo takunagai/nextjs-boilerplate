@@ -1,4 +1,4 @@
-import { SITE_NAME, META } from "@/lib/constants";
+import { APP, META } from "@/lib/constants";
 import type { Metadata, Viewport } from "next";
 
 /**
@@ -45,7 +45,7 @@ export function generateMetadata({
   noIndex = false,
 }: MetaTagsProps): Metadata {
   // タイトルの生成
-  const metaTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME;
+  const metaTitle = title ? `${title} | ${APP.NAME}` : APP.NAME;
   
   // 完全なOGP画像URLの生成
   const ogImageUrl = ogImage.startsWith("http")
@@ -78,7 +78,7 @@ export function generateMetadata({
       title: metaTitle,
       description,
       url: META.SITE_URL,
-      siteName: SITE_NAME,
+      siteName: APP.NAME,
       images: [
         {
           url: ogImageUrl,

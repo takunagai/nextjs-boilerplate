@@ -8,7 +8,7 @@ import * as React from "react";
 
 import { ThemeSwitcher } from "@/components/theme/theme-switcher";
 import { useScroll } from "@/hooks/useScroll";
-import { SITE_NAME } from "@/lib/constants";
+import { APP } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { DesktopNavigation } from "./header/desktop-navigation";
 import { MobileNavigation } from "./header/mobile-navigation";
@@ -66,14 +66,14 @@ export function Header({
 		// ロゴが不要な場合は代入を削除
 		<Image
 			src="/images/logo.png"
-			alt={SITE_NAME}
+			alt={APP.NAME}
 			width={32}
 			height={32}
 			className="rounded-full"
 			priority
 		/>
 	),
-	logoText = SITE_NAME,
+	logoText = APP.NAME,
 	items = [],
 	rightContent,
 	mobileMenuBreakpoint = "md",

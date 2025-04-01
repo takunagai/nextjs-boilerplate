@@ -1,10 +1,10 @@
-import { SITE_NAME, META } from "@/lib/constants";
+import { APP, META } from "@/lib/constants";
 
 /**
  * WebサイトのJSON-LD構造化データ
  */
 export function WebsiteJsonLd({
-  name = SITE_NAME,
+  name = APP.NAME,
   description = META.DEFAULT_DESCRIPTION,
   url = META.SITE_URL,
 }: {
@@ -32,7 +32,7 @@ export function WebsiteJsonLd({
  * 組織のJSON-LD構造化データ
  */
 export function OrganizationJsonLd({
-  name = SITE_NAME,
+  name = APP.NAME,
   url = META.SITE_URL,
   logo = `${META.SITE_URL}/images/logo.png`,
   sameAs = [],
@@ -97,7 +97,7 @@ export function ArticleJsonLd({
           },
           publisher: {
             "@type": "Organization",
-            name: SITE_NAME,
+            name: APP.NAME,
             logo: {
               "@type": "ImageObject",
               url: `${META.SITE_URL}/images/logo.png`,

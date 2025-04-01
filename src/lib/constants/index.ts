@@ -4,21 +4,16 @@
  */
 
 // アプリケーション全般
-import { APP } from './app';
-export { APP, FEATURES } from './app';
-
-// APP定数からの再エクスポート（後方互換性のため）
-export const SITE_NAME = APP.NAME;
-export const COPYRIGHT_HOLDER = APP.COPYRIGHT_HOLDER;
+export { APP, FEATURES } from "./app";
 
 // ルート
-export { ROUTES } from './routes';
+export { ROUTES } from "./routes";
 
 // メタデータ
-export { META } from './meta';
+export { META } from "./meta";
 
 // テーマ
-export { THEME, THEME_STORAGE_KEY } from './theme';
+export { THEME, THEME_STORAGE_KEY } from "./theme";
 
 // 問い合わせ
 // 現在コメントアウトされているため、エクスポートしない
@@ -38,8 +33,8 @@ export { THEME, THEME_STORAGE_KEY } from './theme';
 
 // UI
 // 現在コメントアウトされているため、エクスポートしない
-// export { 
-//   IMAGE_SIZES, 
+// export {
+//   IMAGE_SIZES,
 //   PAGINATION
 // } from './ui';
 

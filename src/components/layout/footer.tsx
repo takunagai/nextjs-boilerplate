@@ -1,4 +1,4 @@
-import { COPYRIGHT_HOLDER, SITE_NAME } from "@/lib/constants";
+import { APP } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { type VariantProps, cva } from "class-variance-authority";
 import Link from "next/link";
@@ -54,9 +54,9 @@ export function Footer({
 	className,
 	variant,
 	size,
-	companyName = COPYRIGHT_HOLDER,
+	companyName = APP.COPYRIGHT_HOLDER,
 	description = "このボイラープレートは、Next.js で構築されたウェブアプリケーションの基盤を提供します。",
-	logoText = SITE_NAME,
+	logoText = APP.NAME,
 	navGroups = [],
 	showCurrentYear = true,
 	logoOnBottom = false,

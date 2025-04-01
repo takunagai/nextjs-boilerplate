@@ -3,7 +3,7 @@ import { Header } from "@/components/layout/header";
 import { OrganizationJsonLd, WebsiteJsonLd } from "@/components/seo";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { ScrollToTop } from "@/components/ui/scroll-to-top";
-import { META, SITE_NAME } from "@/lib/constants";
+import { APP, META } from "@/lib/constants";
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -20,7 +20,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
 	title: {
-		default: SITE_NAME,
+		default: APP.NAME,
 		template: META.TITLE_TEMPLATE,
 	},
 	description: META.DEFAULT_DESCRIPTION,
@@ -31,9 +31,9 @@ export const metadata: Metadata = {
 		"Tailwind CSS",
 		"ボイラープレート",
 	],
-	authors: [{ name: SITE_NAME }],
-	creator: SITE_NAME,
-	publisher: SITE_NAME,
+	authors: [{ name: APP.NAME }],
+	creator: APP.NAME,
+	publisher: APP.NAME,
 	robots: {
 		index: true,
 		follow: true,
@@ -45,15 +45,15 @@ export const metadata: Metadata = {
 		type: "website",
 		locale: "ja_JP",
 		url: META.SITE_URL,
-		siteName: SITE_NAME,
-		title: SITE_NAME,
+		siteName: APP.NAME,
+		title: APP.NAME,
 		description: META.DEFAULT_DESCRIPTION,
 		images: [
 			{
 				url: `${META.SITE_URL}${META.OG_IMAGE}`,
 				width: 1200,
 				height: 630,
-				alt: SITE_NAME,
+				alt: APP.NAME,
 			},
 		],
 	},
@@ -61,7 +61,7 @@ export const metadata: Metadata = {
 		card: "summary_large_image",
 		site: META.TWITTER_HANDLE,
 		creator: META.TWITTER_HANDLE,
-		title: SITE_NAME,
+		title: APP.NAME,
 		description: META.DEFAULT_DESCRIPTION,
 		images: [`${META.SITE_URL}${META.OG_IMAGE}`],
 	},
@@ -100,7 +100,7 @@ export default function RootLayout({
 				<ThemeProvider>
 					<div className="flex flex-col min-h-screen">
 						<Header
-							logoText={SITE_NAME}
+							logoText={APP.NAME}
 							items={[
 								{ label: "ホーム", href: "/" },
 								{ label: "自己紹介", href: "/about" },
