@@ -9,6 +9,22 @@
 
 このプロジェクトは、モダンなウェブアプリケーション/サイト開発のためのNext.jsボイラープレートです。TypeScript、Tailwind CSS、shadcn/uiなどの最新技術を組み合わせ、開発の効率化と品質向上を実現します。
 
+## 対応ブラウザ
+
+このプロジェクトは、以下のモダンブラウザをサポートしています：
+
+### デスクトップブラウザ
+
+- Chrome: 111以降
+- Edge: Chromiumベースのバージョン
+- Safari: 16.4以降
+- Firefox: 128以降
+
+### モバイルブラウザ
+
+- Safari: iOS 16以降
+- Chrome: Android 13以降
+
 ## AI開発サポート
 
 このプロジェクトは、[Windsurf IDE](https://codeium.com/windsurf) 用の`.windsurfrules`ファイルを含んでいます。このファイルは[kinopeee/windsurfrules](https://github.com/kinopeee/windsurfrules)をベースに、AIエージェント/アシスタントがプロジェクト構造、技術スタック、コード規約を正確に理解できるよう最適化されています。これにより、一貫性のある高品質なコード生成と効率的な開発サポートが可能になります。
@@ -223,20 +239,20 @@ export default function MyPage() {
 
 ### 利用可能なパラメータ
 
-サイズバリエーション:
+サイズバリエーション：
 
 - `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `full` - コンテナの最大幅を制御
 
-パディングバリエーション（縦・横個別に設定可能）:
+パディングバリエーション（縦・横個別に設定可能）：
 
 - `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `4xl`
 
-位置とzIndexオプション:
+位置とzIndexオプション：
 
 - `position`: `default`, `relative`
 - `zIndex`: `none`, `base`, `high`, `highest`
 
-使用可能なHTML要素（`as`プロパティ）:
+使用可能なHTML要素（`as`プロパティ）：
 
 - `div` (デフォルト), `section`, `header`, `footer`, `main`, `article`, `aside`, `figure`, `figcaption`, `summary`, `nav`
 
