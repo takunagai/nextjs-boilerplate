@@ -41,3 +41,6 @@ export { THEME, THEME_STORAGE_KEY } from "./theme";
 // リンク
 // 現在コメントアウトされているため、エクスポートしない
 // export { SOCIAL_LINKS } from './links';
+
+// フッターナビゲーション
+export { FOOTER_NAVIGATION, type FooterLink, type FooterNavGroup } from "./footer-navigation";

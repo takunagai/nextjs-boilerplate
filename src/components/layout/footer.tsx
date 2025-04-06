@@ -1,4 +1,4 @@
-import { APP } from "@/lib/constants";
+import { APP, FOOTER_NAVIGATION, type FooterNavGroup } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { type VariantProps, cva } from "class-variance-authority";
 import Link from "next/link";
@@ -24,19 +24,6 @@ const footerVariants = cva("w-full border-t", {
 	},
 });
 
-// フッターのナビゲーションリンク型定義
-export interface FooterLink {
-	label: string;
-	href: string;
-	external?: boolean;
-}
-
-// フッターのナビゲーショングループ型定義
-export interface FooterNavGroup {
-	title: string;
-	links: FooterLink[];
-}
-
 // フッターのプロパティ型定義
 export interface FooterProps
 	extends React.HTMLAttributes<HTMLElement>,
@@ -57,7 +44,7 @@ export function Footer({
 	companyName = APP.COPYRIGHT_HOLDER,
 	description = "このボイラープレートは、Next.js で構築されたウェブアプリケーションの基盤を提供します。",
 	logoText = APP.NAME,
-	navGroups = [],
+	navGroups = FOOTER_NAVIGATION,
 	showCurrentYear = true,
 	logoOnBottom = false,
 	children,
@@ -65,38 +52,6 @@ export function Footer({
 }: FooterProps) {
 	// 現在の年を取得
 	const currentYear = new Date().getFullYear();
-
-	// デフォルトのナビゲーショングループ
-	const defaultNavGroups: FooterNavGroup[] = [
-		{
-			title: "サービス",
-			links: [
-				{ label: "機能紹介", href: "/features" },
-				{ label: "料金プラン", href: "/pricing" },
-				{ label: "導入事例", href: "/case-studies" },
-				{ label: "お問い合わせ", href: "/contact" },
-			],
-		},
-		{
-			title: "サポート",
-			links: [
-				{ label: "ドキュメント", href: "/docs" },
-				{ label: "FAQ", href: "/faq" },
-				{ label: "開発者向け", href: "/developers" },
-			],
-		},
-		{
-			title: "会社情報",
-			links: [
-				{ label: "About Us", href: "/about" },
-				{ label: "採用情報", href: "/careers" },
-				{ label: "プライバシーポリシー", href: "/privacy" },
-			],
-		},
-	];
-
-	// 提供されたナビゲーショングループがない場合はデフォルトのグループを使用
-	const footerNavGroups = navGroups.length > 0 ? navGroups : defaultNavGroups;
 
 	// ロゴと説明部分のコンポーネント
 	const LogoSection = () => (
@@ -156,7 +111,7 @@ export function Footer({
 					<div
 						className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 order-1 lg:order-2 ${logoOnBottom ? "" : "lg:col-span-3"}`}
 					>
-						{footerNavGroups.map((group) => (
+						{navGroups.map((group) => (
 							<div key={group.title}>
 								<h3 className="font-bold text-xs mb-3 text-foreground/50">
 									{group.title}
