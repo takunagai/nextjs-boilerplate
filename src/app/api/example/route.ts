@@ -4,8 +4,8 @@
  * サーバーサイドユーティリティを使用したAPIルートの実装例です。
  */
 
-import { successResponse, errorResponse, createApiError } from '@/lib/server/api/response';
-import { type NextRequest } from 'next/server';
+import { validateRequest, successResponse, errorResponse, createApiError } from '@/lib/server';
+import type { NextRequest } from 'next/server';
 import { z } from 'zod';
 
 // リクエストのバリデーションスキーマ
@@ -43,25 +43,10 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     // リクエストボディをJSONとして解析
-    const body = await request.json();
+    const body = await request.json().catch(() => ({}));
     
-    // Zodを使用したバリデーション
-    const result = MessageSchema.safeParse(body);
-    
-    // バリデーションエラーの処理
-    if (!result.success) {
-      const fieldErrors = result.error.errors.reduce((acc, err) => {
-        const path = err.path.join('.');
-        acc[path] = err.message;
-        return acc;
-      }, {} as Record<string, string>);
-      
-      return errorResponse(
-        createApiError.validation('入力データが無効です', { fieldErrors })
-      );
-    }
-    
-    const validatedData = result.data;
+    // 新しいvalidateRequestユーティリティを使用したバリデーション
+    const validatedData = await validateRequest(MessageSchema, body);
     
     // 処理実行（例: データベースへの保存など）
     // ここではサンプルレスポンスを返す
@@ -72,6 +57,19 @@ export async function POST(request: NextRequest) {
     
   } catch (error) {
     console.error('POST リクエストエラー:', error);
+    
+    // validateRequestから投げられたエラーは自動的に処理
+    if (error instanceof z.ZodError) {
+      return errorResponse(
+        createApiError.validation('入力データが無効です', { 
+          fieldErrors: error.errors.reduce((acc, err) => {
+            const path = err.path.join('.');
+            acc[path] = err.message;
+            return acc;
+          }, {} as Record<string, string>)
+        })
+      );
+    }
     
     // リクエスト本文のパース中にエラーが発生した場合
     if (error instanceof SyntaxError) {

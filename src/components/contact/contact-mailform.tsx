@@ -21,6 +21,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
+import { submitContactForm } from "@/app/actions/contact-form";
+import { isActionError, isActionSuccess } from "@/lib/server";
 import type { ContactFormValues } from "@/lib/validation/contact-schema";
 import { contactFormSchema } from "@/lib/validation/contact-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -60,19 +62,39 @@ export function ContactEmailForm() {
 		setSubmitStatus({ type: null, message: "" });
 
 		try {
-			// 実際の送信処理はここに実装
-			console.log(values);
+			// サーバーアクションを呼び出す
+			const result = await submitContactForm(values);
 
-			// 送信成功を模擬（実際の実装では適切なAPIコールに置き換え）
-			await new Promise((resolve) => setTimeout(resolve, 1000));
-
-			// フォームをリセット
-			form.reset();
-			setSubmitStatus({
-				type: "success",
-				message: "お問い合わせを受け付けました。3営業日以内に返信いたします。",
-			});
+			if (isActionSuccess(result)) {
+				// 送信成功
+				form.reset();
+				setSubmitStatus({
+					type: "success",
+					message: result.data.message,
+				});
+			} else if (isActionError(result)) {
+				// エラー処理
+				if (result.error.code === "VALIDATION_ERROR" && result.error.details?.fieldErrors) {
+					// バリデーションエラーをフォームに設定
+					const fieldErrors = result.error.details.fieldErrors as Record<string, string>;
+					for (const [field, message] of Object.entries(fieldErrors)) {
+						form.setError(field as keyof ContactFormValues, { message });
+					}
+					setSubmitStatus({
+						type: "error",
+						message: "入力内容に問題があります。修正してください。",
+					});
+				} else {
+					// その他のエラー
+					setSubmitStatus({
+						type: "error",
+						message: result.error.message || "送信に失敗しました。後ほど再度お試しください。",
+					});
+				}
+			}
 		} catch (error) {
+			// 予期しないエラー
+			console.error("お問い合わせ送信エラー:", error);
 			setSubmitStatus({
 				type: "error",
 				message: "送信に失敗しました。後ほど再度お試しください。",
