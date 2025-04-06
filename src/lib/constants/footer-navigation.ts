@@ -11,8 +11,18 @@ export interface FooterNavGroup {
 	links: FooterLink[];
 }
 
-// デフォルトのナビゲーショングループ
-export const FOOTER_NAVIGATION: FooterNavGroup[] = [
+// 要素数を最大4つに制限するタプル型
+export type MaxFourNavGroups =
+	| [FooterNavGroup]
+	| [FooterNavGroup, FooterNavGroup]
+	| [FooterNavGroup, FooterNavGroup, FooterNavGroup]
+	| [FooterNavGroup, FooterNavGroup, FooterNavGroup, FooterNavGroup];
+
+/**
+ * フッターナビゲーションの定数
+ * @note 配列の最大数は4です。これを超える場合、最初の4つのみが表示されます。
+ */
+export const FOOTER_NAVIGATION: MaxFourNavGroups = [
 	{
 		title: "サービス",
 		links: [
