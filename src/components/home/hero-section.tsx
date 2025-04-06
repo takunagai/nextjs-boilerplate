@@ -1,9 +1,15 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { FaArrowRight } from "react-icons/fa6";
+import { FaChevronDown } from "react-icons/fa";
 import Link from "next/link";
+import { useIsClient } from "usehooks-ts";
 
 export function HeroSection() {
+	const isClient = useIsClient();
+	
 	return (
 		<section className="relative h-screen w-full flex items-center overflow-hidden">
 			{/* モダンな背景グラデーション */}
@@ -58,6 +64,14 @@ export function HeroSection() {
 					</div>
 				</div>
 			</Container>
+			
+			{/* スクロールインジケーター - SSRでのハイドレーションエラー防止のためにisClientを使用 */}
+			{isClient && (
+				<div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
+					<span className="text-sm text-muted-foreground mb-1">スクロールして続きを見る</span>
+					<FaChevronDown className="h-5 w-5 text-primary/70 animate-pulse" />
+				</div>
+			)}
 		</section>
 	);
 }
