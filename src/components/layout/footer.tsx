@@ -118,7 +118,7 @@ export function Footer({
 							href={href}
 							target="_blank"
 							rel="noopener noreferrer"
-							className="hover:opacity-80"
+							className="hover:text-foreground text-foreground/60"
 							aria-label={`${platform.toLowerCase()} へのリンク`}
 						>
 							<Icon className="h-5 w-5" />
@@ -134,7 +134,7 @@ export function Footer({
 			className={cn(footerVariants({ variant, size }), className)}
 			{...props}
 		>
-			<div className="container mx-auto px-12 sm:px-6">
+			<div className="container mx-auto px-12 md:px-6 xl:px-0">
 				<div
 					className={`grid gap-8 ${
 						logoOnBottom ? "md:grid-cols-1" : "md:grid-cols-[1fr_3fr]"
@@ -203,7 +203,7 @@ export function Footer({
 
 				{/* コピーライト表示 */}
 				<div className="pt-6 border-t mt-6">
-					<div className="text-sm text-center">
+					<div className="text-sm text-foreground/60 text-center">
 						{showCurrentYear
 							? `© ${companyName} ${currentYear}`
 							: `© ${companyName}`}
