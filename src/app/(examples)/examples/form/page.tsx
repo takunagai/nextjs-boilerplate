@@ -11,6 +11,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { formExampleSchema, type FormExampleValues } from "@/lib/validation/form-example-schema";
+import { submitExampleForm } from "@/app/actions/form-example";
+import { isActionError, isActionSuccess } from "@/lib/server";
 
 export default function FormExamplePage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -31,21 +33,36 @@ export default function FormExamplePage() {
     setSubmitResult(null);
     
     try {
-      // 送信をシミュレート
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      // サーバーアクションを使用してフォームを送信
+      const result = await submitExampleForm(data);
       
-      console.log("フォーム送信データ:", data);
-      
-      setSubmitResult({
-        success: true,
-        message: "フォームが正常に送信されました。",
-      });
-      
-      form.reset();
+      if (isActionSuccess(result)) {
+        setSubmitResult({
+          success: true,
+          message: result.data.message,
+        });
+        form.reset();
+      } else if (isActionError(result)) {
+        setSubmitResult({
+          success: false,
+          message: result.error.message,
+        });
+        
+        // フィールドエラーがある場合はフォームのエラーステートに設定
+        const fieldErrors = result.error.details?.fieldErrors as Record<string, string> | undefined;
+        if (fieldErrors) {
+          for (const [field, message] of Object.entries(fieldErrors)) {
+            form.setError(field as keyof FormExampleValues, {
+              type: "server",
+              message,
+            });
+          }
+        }
+      }
     } catch (error) {
       setSubmitResult({
         success: false,
-        message: "送信中にエラーが発生しました。",
+        message: "送信中に予期しないエラーが発生しました。",
       });
     } finally {
       setIsSubmitting(false);
@@ -68,6 +85,7 @@ export default function FormExamplePage() {
           <CardTitle>お問い合わせフォーム</CardTitle>
           <CardDescription>
             react-hook-formとzodを使用した入力フォームのサンプルです。
+            サーバーアクションを使用したサーバーサイド処理の例を含みます。
           </CardDescription>
         </CardHeader>
         
@@ -184,8 +202,9 @@ export default function FormExamplePage() {
           </Form>
         </CardContent>
         
-        <CardFooter className="flex justify-between text-sm text-muted-foreground">
-          <p>※このフォームはサンプルです。実際には送信されません。</p>
+        <CardFooter className="flex flex-col text-sm text-muted-foreground">
+          <p className="mb-2">※このフォームはサンプルです。実際のデータは保存されません。</p>
+          <p>サーバーアクションを使用して、サーバーサイドでの処理を実装しています。</p>
         </CardFooter>
       </Card>
     </div>
