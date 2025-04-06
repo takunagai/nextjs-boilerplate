@@ -1,5 +1,4 @@
 import { APP, FOOTER_NAVIGATION, type FooterNavGroup } from "@/lib/constants";
-import { DISPLAYED_SOCIAL_PLATFORMS, SOCIAL_ICONS, SOCIAL_LINKS, type SocialPlatform } from "@/lib/constants/links";
 import { cn } from "@/lib/utils";
 import { type VariantProps, cva } from "class-variance-authority";
 import Link from "next/link";
@@ -10,6 +9,36 @@ import {
 	FaXTwitter,
 	FaYoutube,
 } from "react-icons/fa6";
+
+// ソーシャルメディアプラットフォームの定義
+type SocialPlatform = "GITHUB" | "X" | "INSTAGRAM" | "FACEBOOK" | "YOUTUBE";
+
+// ソーシャルリンク定義
+const SOCIAL_LINKS = {
+	GITHUB: "https://github.com/example/nextjs-boilerplate",
+	X: "https://x.com/nagataku_ai",
+	INSTAGRAM: "https://www.instagram.com/nagataku33/",
+	FACEBOOK: "https://www.facebook.com/takuya.nagai.12",
+	YOUTUBE: "https://youtube.com",
+} as const;
+
+// ソーシャルアイコン定義
+const SOCIAL_ICONS = {
+	GITHUB: FaGithub,
+	X: FaXTwitter,
+	INSTAGRAM: FaInstagram,
+	FACEBOOK: FaFacebook,
+	YOUTUBE: FaYoutube,
+} as const;
+
+// 表示するソーシャルメディアリスト
+const DISPLAYED_SOCIAL_PLATFORMS: SocialPlatform[] = [
+	"GITHUB",
+	"X",
+	"INSTAGRAM",
+	"FACEBOOK",
+	"YOUTUBE",
+];
 
 // フッターのバリアントを定義
 const footerVariants = cva("w-full border-t", {
@@ -105,51 +134,63 @@ export function Footer({
 			className={cn(footerVariants({ variant, size }), className)}
 			{...props}
 		>
-			<div className="container mx-auto px-4">
+			<div className="container mx-auto px-12 sm:px-6">
 				<div
 					className={`grid gap-8 ${
-						logoOnBottom ? "lg:grid-cols-1" : "lg:grid-cols-[1fr_3fr]"
+						logoOnBottom ? "md:grid-cols-1" : "md:grid-cols-[1fr_3fr]"
 					}`}
 				>
-					{/* PC表示時、ロゴエリアが上にくる場合 */}
+					{/* ロゴエリア（PC表示時に上部） */}
 					{!logoOnBottom && (
-						<div className="order-2 lg:order-1">
+						<div className="order-2 md:order-1">
 							<LogoSection />
 						</div>
 					)}
 
 					{/* ナビゲーショングループのエリア */}
-					<div className="grid order-1 lg:order-2 gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-						{adjustedNavGroups.map((group) => (
-							<div key={group.title || Math.random().toString()}>
-								{group.title && (
-									<h3 className="font-bold text-xs mb-3 text-foreground/50">
-										{group.title}
-									</h3>
-								)}
-								{group.links.length > 0 && (
-									<ul className="space-y-2">
-										{group.links.map((link) => (
-											<li key={link.href}>
-												<Link
-													href={link.href}
-													target={link.external ? "_blank" : undefined}
-													rel={
-														link.external ? "noopener noreferrer" : undefined
-													}
-													className="text-sm hover:underline"
-												>
-													{link.label}
-												</Link>
-											</li>
-										))}
-									</ul>
-								)}
-							</div>
-						))}
+					<div className="grid order-1 lg:order-2 gap-8 md:gap-4 grid-cols-2 sm:grid-cols-2 md:grid-cols-[1fr_3fr_3fr_3fr] lg:grid-cols-4">
+						{adjustedNavGroups.map((group, index) => {
+							// 空要素かどうかを判定
+							const isEmpty =
+								!group.title && (!group.links || group.links.length === 0);
+							// 空要素の場合は非表示にする（ただし、グリッドには残す）
+							return (
+								<div
+									key={group.title || `empty-group-${index}`}
+									className={cn(
+										"px-0 sm:px-2 md:px-3",
+										isEmpty ? "hidden md:block md:invisible" : "",
+									)}
+								>
+									{group.title && (
+										<h3 className="font-bold text-xs mb-3 text-foreground/50">
+											{group.title}
+										</h3>
+									)}
+									{group.links && group.links.length > 0 && (
+										<ul className="space-y-2">
+											{group.links.map((link) => (
+												<li key={link.href}>
+													<Link
+														href={link.href}
+														target={link.external ? "_blank" : undefined}
+														rel={
+															link.external ? "noopener noreferrer" : undefined
+														}
+														className="text-sm hover:underline"
+													>
+														{link.label}
+													</Link>
+												</li>
+											))}
+										</ul>
+									)}
+								</div>
+							);
+						})}
 					</div>
 
-					{/* PC表示時、ロゴエリアが下にくる場合 */}
+					{/* ロゴエリア（PC表示時に下部） */}
 					{logoOnBottom && (
 						<div className="order-3">
 							<LogoSection />
@@ -158,7 +199,7 @@ export function Footer({
 				</div>
 
 				{/* カスタムコンテンツ */}
-				{children && <div className="mb-6">{children}</div>}
+				{children && <div className="mt-8 mb-6">{children}</div>}
 
 				{/* コピーライト表示 */}
 				<div className="pt-6 border-t mt-6">
