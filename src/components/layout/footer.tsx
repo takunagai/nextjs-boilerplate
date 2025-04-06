@@ -1,8 +1,15 @@
 import { APP, FOOTER_NAVIGATION, type FooterNavGroup } from "@/lib/constants";
+import { DISPLAYED_SOCIAL_PLATFORMS, SOCIAL_ICONS, SOCIAL_LINKS, type SocialPlatform } from "@/lib/constants/links";
 import { cn } from "@/lib/utils";
 import { type VariantProps, cva } from "class-variance-authority";
 import Link from "next/link";
-import { FaInstagram, FaXTwitter, FaYoutube } from "react-icons/fa6";
+import {
+	FaFacebook,
+	FaGithub,
+	FaInstagram,
+	FaXTwitter,
+	FaYoutube,
+} from "react-icons/fa6";
 
 // フッターのバリアントを定義
 const footerVariants = cva("w-full border-t", {
@@ -53,6 +60,16 @@ export function Footer({
 	// 現在の年を取得
 	const currentYear = new Date().getFullYear();
 
+	// ナビゲーショングループを最大4つに調整（足りない場合は空のグループで埋める）
+	const adjustedNavGroups = [...navGroups];
+	const emptyGroupsNeeded = Math.max(0, 4 - adjustedNavGroups.length);
+
+	// 空要素を先頭に追加（メニューが右側に寄るように）
+	if (emptyGroupsNeeded > 0) {
+		const emptyGroups = Array(emptyGroupsNeeded).fill({ title: "", links: [] });
+		adjustedNavGroups.unshift(...emptyGroups);
+	}
+
 	// ロゴと説明部分のコンポーネント
 	const LogoSection = () => (
 		<div className="flex flex-col">
@@ -63,30 +80,22 @@ export function Footer({
 			</div>
 			<p className="text-sm mb-6 max-w-md">{description}</p>
 			<div className="flex gap-4 mb-6">
-				<Link
-					href="https://x.com/nagataku_ai"
-					target="_blank"
-					rel="noopener noreferrer"
-					className="hover:opacity-80"
-				>
-					<FaXTwitter className="h-5 w-5" />
-				</Link>
-				<Link
-					href="https://www.instagram.com/nagataku33/"
-					target="_blank"
-					rel="noopener noreferrer"
-					className="hover:opacity-80"
-				>
-					<FaInstagram className="h-5 w-5" />
-				</Link>
-				<Link
-					href="https://youtube.com"
-					target="_blank"
-					rel="noopener noreferrer"
-					className="hover:opacity-80"
-				>
-					<FaYoutube className="h-5 w-5" />
-				</Link>
+				{DISPLAYED_SOCIAL_PLATFORMS.map((platform) => {
+					const Icon = SOCIAL_ICONS[platform];
+					const href = SOCIAL_LINKS[platform];
+					return (
+						<Link
+							key={platform}
+							href={href}
+							target="_blank"
+							rel="noopener noreferrer"
+							className="hover:opacity-80"
+							aria-label={`${platform.toLowerCase()} へのリンク`}
+						>
+							<Icon className="h-5 w-5" />
+						</Link>
+					);
+				})}
 			</div>
 		</div>
 	);
@@ -98,7 +107,9 @@ export function Footer({
 		>
 			<div className="container mx-auto px-4">
 				<div
-					className={`grid gap-8 ${logoOnBottom ? "lg:grid-cols-1" : "lg:grid-cols-4"}`}
+					className={`grid gap-8 ${
+						logoOnBottom ? "lg:grid-cols-1" : "lg:grid-cols-[1fr_3fr]"
+					}`}
 				>
 					{/* PC表示時、ロゴエリアが上にくる場合 */}
 					{!logoOnBottom && (
@@ -108,28 +119,32 @@ export function Footer({
 					)}
 
 					{/* ナビゲーショングループのエリア */}
-					<div
-						className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 order-1 lg:order-2 ${logoOnBottom ? "" : "lg:col-span-3"}`}
-					>
-						{navGroups.map((group) => (
-							<div key={group.title}>
-								<h3 className="font-bold text-xs mb-3 text-foreground/50">
-									{group.title}
-								</h3>
-								<ul className="space-y-2">
-									{group.links.map((link) => (
-										<li key={link.href}>
-											<Link
-												href={link.href}
-												target={link.external ? "_blank" : undefined}
-												rel={link.external ? "noopener noreferrer" : undefined}
-												className="text-sm hover:underline"
-											>
-												{link.label}
-											</Link>
-										</li>
-									))}
-								</ul>
+					<div className="grid order-1 lg:order-2 gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+						{adjustedNavGroups.map((group) => (
+							<div key={group.title || Math.random().toString()}>
+								{group.title && (
+									<h3 className="font-bold text-xs mb-3 text-foreground/50">
+										{group.title}
+									</h3>
+								)}
+								{group.links.length > 0 && (
+									<ul className="space-y-2">
+										{group.links.map((link) => (
+											<li key={link.href}>
+												<Link
+													href={link.href}
+													target={link.external ? "_blank" : undefined}
+													rel={
+														link.external ? "noopener noreferrer" : undefined
+													}
+													className="text-sm hover:underline"
+												>
+													{link.label}
+												</Link>
+											</li>
+										))}
+									</ul>
+								)}
 							</div>
 						))}
 					</div>
