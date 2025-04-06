@@ -134,7 +134,7 @@ export function Footer({
 			className={cn(footerVariants({ variant, size }), className)}
 			{...props}
 		>
-			<div className="container mx-auto px-12 md:px-6 xl:px-0">
+			<div className="container mx-auto px-10">
 				<div
 					className={`grid gap-8 ${
 						logoOnBottom ? "md:grid-cols-1" : "md:grid-cols-[1fr_3fr]"
