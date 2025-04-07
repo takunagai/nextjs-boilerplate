@@ -13,6 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { Toggle } from "@/components/ui/toggle";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
+import { createBreadcrumbs } from "@/lib/utils";
 
 export default function UIComponentsPage() {
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -20,15 +21,19 @@ export default function UIComponentsPage() {
   const [toggleState, setToggleState] = useState(false);
   const [toggleGroupValue, setToggleGroupValue] = useState<string[]>([]);
 
+  // パンくずリストの基本データを定義
+  const breadcrumbItems = [
+    { title: "ホーム", path: "/" },
+    { title: "サンプル一覧", path: "/examples" },
+    { title: "UIコンポーネント", path: "/examples/ui-components", current: true },
+  ];
+
+  // UI表示用のデータのみを生成
+  const { ui: uiBreadcrumbs } = createBreadcrumbs(breadcrumbItems);
+
   return (
     <div>
-      <Breadcrumb
-        items={[
-          { label: "ホーム", href: "/" },
-          { label: "サンプル一覧", href: "/examples" },
-          { label: "UIコンポーネント", href: "/examples/ui-components", isCurrent: true },
-        ]}
-      />
+      <Breadcrumb items={uiBreadcrumbs} />
       <h1 className="mb-8 text-3xl font-bold">UIコンポーネント</h1>
       <p className="mb-6 text-muted-foreground">
         shadcn/uiコンポーネントライブラリのサンプル集です。

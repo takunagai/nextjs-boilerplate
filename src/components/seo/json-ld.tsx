@@ -118,11 +118,14 @@ export function ArticleJsonLd({
  */
 export function BreadcrumbJsonLd({
   items,
+  baseUrl = META.SITE_URL || "https://example.com",
 }: {
   items: {
     name: string;
-    item?: string;
+    href?: string;
+    url?: string;
   }[];
+  baseUrl?: string;
 }) {
   return (
     <script
@@ -135,7 +138,7 @@ export function BreadcrumbJsonLd({
             "@type": "ListItem",
             position: index + 1,
             name: item.name,
-            item: item.item,
+            item: item.url || (item.href ? `${baseUrl}${item.href.startsWith("/") ? item.href : `/${item.href}`}` : undefined),
           })),
         }),
       }}

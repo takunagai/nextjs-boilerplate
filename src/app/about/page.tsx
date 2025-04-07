@@ -1,4 +1,4 @@
-import { ArticleJsonLd, generateMetadata, generateViewport } from "@/components/seo";
+import { ArticleJsonLd, BreadcrumbJsonLd, generateMetadata, generateViewport } from "@/components/seo";
 import { Badge } from "@/components/ui/badge";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import {
@@ -13,6 +13,7 @@ import { Separator } from "@/components/ui/separator";
 import { META } from "@/lib/constants";
 import type { Metadata } from "next";
 import Image from "next/image";
+import { createBreadcrumbs } from "@/lib/utils";
 
 export const metadata: Metadata = generateMetadata({
 	title: "自己紹介",
@@ -24,6 +25,15 @@ export const metadata: Metadata = generateMetadata({
 export const viewport = generateViewport();
 
 export default function AboutPage() {
+	// パンくずリストの基本データを定義
+	const breadcrumbItems = [
+		{ title: "ホーム", path: "/" },
+		{ title: "自己紹介", path: "/about", current: true },
+	];
+
+	// UI表示用とJSON-LD用のデータを生成
+	const { ui: uiBreadcrumbs, jsonLd: jsonLdBreadcrumbs } = createBreadcrumbs(breadcrumbItems);
+
 	return (
 		<>
 			<ArticleJsonLd
@@ -35,13 +45,9 @@ export default function AboutPage() {
 				dateModified="2023-01-01T00:00:00Z"
 				authorName="山田 太郎"
 			/>
+			<BreadcrumbJsonLd items={jsonLdBreadcrumbs} />
 			<Container size="md" paddingY="lg" paddingX="2xl">
-				<Breadcrumb
-					items={[
-						{ label: "ホーム", href: "/" },
-						{ label: "自己紹介", href: "/about", isCurrent: true },
-					]}
-				/>
+				<Breadcrumb items={uiBreadcrumbs} />
 				<div className="flex flex-col gap-8">
 					{/* ヘッダーセクション */}
 					<div className="flex flex-col md:flex-row gap-8 items-center">

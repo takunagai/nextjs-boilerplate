@@ -1,8 +1,9 @@
-import { generateMetadata, generateViewport, WebsiteJsonLd } from "@/components/seo";
+import { BreadcrumbJsonLd, generateMetadata, generateViewport, WebsiteJsonLd } from "@/components/seo";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
 import { META } from "@/lib/constants";
+import { createBreadcrumbs } from "@/lib/utils";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = generateMetadata({
@@ -18,6 +19,15 @@ export default function PrivacyPolicyPage() {
 	// 現在の年を取得
 	const currentYear = new Date().getFullYear();
 
+	// パンくずリストの基本データを定義
+	const breadcrumbItems = [
+		{ title: "ホーム", path: "/" },
+		{ title: "プライバシーポリシー", path: "/privacy", current: true },
+	];
+
+	// UI表示用とJSON-LD用のデータを生成
+	const { ui: uiBreadcrumbs, jsonLd: jsonLdBreadcrumbs } = createBreadcrumbs(breadcrumbItems);
+
 	return (
 		<>
 			<WebsiteJsonLd
@@ -25,13 +35,9 @@ export default function PrivacyPolicyPage() {
 				description="当サイトにおける個人情報の取り扱いについて定めたプライバシーポリシーです。"
 				url={`${META.SITE_URL}/privacy`}
 			/>
+			<BreadcrumbJsonLd items={jsonLdBreadcrumbs} />
 			<Container size="md" paddingY="lg" paddingX="2xl">
-				<Breadcrumb
-					items={[
-						{ label: "ホーム", href: "/" },
-						{ label: "プライバシーポリシー", href: "/privacy", isCurrent: true },
-					]}
-				/>
+				<Breadcrumb items={uiBreadcrumbs} />
 				<div className="flex flex-col gap-8">
 					{/* ヘッダー */}
 					<div className="text-center">

@@ -1,7 +1,5 @@
-import { BreadcrumbJsonLd } from "@/components/seo";
-import { META } from "@/lib/constants";
+import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { FaChevronRight, FaHouse } from "react-icons/fa6";
 
 export type BreadcrumbItem = {
 	label: string;
@@ -9,69 +7,102 @@ export type BreadcrumbItem = {
 	isCurrent?: boolean;
 };
 
-interface BreadcrumbProps {
+export type BreadcrumbProps = {
 	items: BreadcrumbItem[];
-	showJsonLd?: boolean;
-}
+	className?: string;
+};
 
-/**
- * パンくずリストコンポーネント
- * SEO対策としても重要な要素
- */
-export function Breadcrumb({ items, showJsonLd = true }: BreadcrumbProps) {
-	// 最初のアイテムがホームページでない場合は、ホームページを追加
-	const breadcrumbItems: BreadcrumbItem[] =
-		items[0]?.href === "/" ? items : [{ label: "ホーム", href: "/" }, ...items];
-
-	// JSON-LD用のアイテム配列を作成
-	const jsonLdItems = breadcrumbItems.map((item) => ({
-		name: item.label,
-		item: item.href.startsWith("http")
-			? item.href
-			: `${META.SITE_URL}${item.href}`,
-	}));
+export function Breadcrumb({
+	items,
+	className,
+}: BreadcrumbProps) {
+	// 項目が1つの場合（ホームのみ）は表示しない
+	if (items.length <= 1) {
+		return null;
+	}
 
 	return (
 		<>
-			{showJsonLd && <BreadcrumbJsonLd items={jsonLdItems} />}
-			<nav aria-label="パンくずリスト" className="py-3">
-				<ol className="flex flex-wrap items-center gap-1 text-sm">
-					{breadcrumbItems.map((item, index) => {
-						const isLast = index === breadcrumbItems.length - 1;
+			<nav aria-label="パンくずリスト" className={cn("py-4", className)}>
+				<ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-balance">
+					{items.map((item, i) => {
+						const isFirst = i === 0;
+						const isLast = i === items.length - 1;
+						// 中間項目（最初と最後以外）で、項目数が3つ以上ある場合
+						const isMobileHiddenItem = !isFirst && !isLast && items.length > 3;
 
 						return (
-							<li key={item.href} className="flex items-center">
-								{index > 0 && (
-									<FaChevronRight
-										className="h-4 w-4 mx-1 text-muted-foreground"
-										aria-hidden="true"
-									/>
+							<li
+								key={`breadcrumb-${item.href}`}
+								className={cn(
+									"flex items-center",
+									// スマホサイズでの中間項目非表示
+									isMobileHiddenItem && "hidden sm:flex",
 								)}
-
-								{isLast ? (
+							>
+								{!item.isCurrent ? (
+									// リンク項目
+									<>
+										<Link
+											href={item.href}
+											className="text-muted-foreground hover:text-foreground transition-colors"
+										>
+											<span
+												className={cn(
+													// 長さに応じたテキスト省略
+													item.label.length > 15
+														? "overflow-hidden text-ellipsis whitespace-nowrap max-w-[8rem] md:max-w-[12rem] lg:max-w-none inline-block"
+														: "inline-block",
+												)}
+											>
+												{item.label}
+											</span>
+										</Link>
+										{!isLast && (
+											<span
+												className="mx-2 text-muted-foreground"
+												aria-hidden="true"
+											>
+												/
+											</span>
+										)}
+									</>
+								) : (
+									// 現在のページ（最後の項目）
 									<span
-										className="font-medium text-foreground"
+										className={cn(
+											"font-medium",
+											// 長さに応じたテキスト省略
+											item.label.length > 20
+												? "overflow-hidden text-ellipsis whitespace-nowrap max-w-[10rem] sm:max-w-[15rem] md:max-w-none inline-block"
+												: "inline-block",
+										)}
 										aria-current="page"
 									>
 										{item.label}
 									</span>
-								) : (
-									<Link
-										href={item.href}
-										className="text-muted-foreground hover:text-foreground transition-colors flex items-center"
-									>
-										{index === 0 && (
-											<FaHouse
-												className="h-3.5 w-3.5 mr-1"
-												aria-hidden="true"
-											/>
-										)}
-										{item.label}
-									</Link>
 								)}
 							</li>
 						);
 					})}
+
+					{/* モバイルでのみ表示する省略記号（中間項目が3つ以上ある場合） */}
+					{items.length > 3 && (
+						<li className="flex sm:hidden items-center">
+							<span className="text-muted-foreground mx-2" aria-hidden="true">
+								/
+							</span>
+							<span
+								className="text-muted-foreground"
+								aria-label="省略された項目"
+							>
+								...
+							</span>
+							<span className="mx-2 text-muted-foreground" aria-hidden="true">
+								/
+							</span>
+						</li>
+					)}
 				</ol>
 			</nav>
 		</>

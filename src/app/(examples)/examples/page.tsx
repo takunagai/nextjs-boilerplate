@@ -2,9 +2,10 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
-import { generateMetadata } from "@/components/seo";
+import { BreadcrumbJsonLd, generateMetadata } from "@/components/seo";
 import { WebsiteJsonLd } from "@/components/seo";
 import { META } from "@/lib/constants";
+import { createBreadcrumbs } from "@/lib/utils";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = generateMetadata({
@@ -15,6 +16,15 @@ export const metadata: Metadata = generateMetadata({
 });
 
 export default function ExamplesPage() {
+  // パンくずリストの基本データを定義
+  const breadcrumbItems = [
+    { title: "ホーム", path: "/" },
+    { title: "サンプル一覧", path: "/examples", current: true },
+  ];
+
+  // UI表示用とJSON-LD用のデータを生成
+  const { ui: uiBreadcrumbs, jsonLd: jsonLdBreadcrumbs } = createBreadcrumbs(breadcrumbItems);
+
   const examples = [
     {
       title: "フォームサンプル",
@@ -40,13 +50,9 @@ export default function ExamplesPage() {
         description="Next.jsボイラープレートのサンプル集です。フォーム、データ取得、UIコンポーネントなどの実装例を紹介しています。"
         url={`${META.SITE_URL}/examples`}
       />
+      <BreadcrumbJsonLd items={jsonLdBreadcrumbs} />
       <div>
-        <Breadcrumb
-          items={[
-            { label: "ホーム", href: "/" },
-            { label: "サンプル一覧", href: "/examples", isCurrent: true },
-          ]}
-        />
+        <Breadcrumb items={uiBreadcrumbs} />
         <h1 className="mb-8 text-3xl font-bold">サンプル一覧</h1>
         
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">

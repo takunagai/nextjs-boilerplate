@@ -8,6 +8,9 @@ import {
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
+import { BreadcrumbJsonLd, WebsiteJsonLd } from "@/components/seo";
+import { META } from "@/lib/constants";
+import { createBreadcrumbs } from "@/lib/utils";
 import { Suspense } from "react";
 
 // ユーザーの型定義
@@ -98,30 +101,42 @@ function ErrorDisplay({ error }: { error: Error }) {
 
 // メインページコンポーネント
 export default function DataFetchingPage() {
+	// パンくずリストの基本データを定義
+	const breadcrumbItems = [
+		{ title: "ホーム", path: "/" },
+		{ title: "サンプル一覧", path: "/examples" },
+		{ title: "データ取得サンプル", path: "/examples/data-fetching", current: true },
+	];
+
+	// UI表示用とJSON-LD用のデータを生成
+	const { ui: uiBreadcrumbs, jsonLd: jsonLdBreadcrumbs } = createBreadcrumbs(breadcrumbItems);
+
 	return (
-		<div>
-			<Breadcrumb
-				items={[
-					{ label: "ホーム", href: "/" },
-					{ label: "サンプル一覧", href: "/examples" },
-					{ label: "データ取得サンプル", href: "/examples/data-fetching", isCurrent: true },
-				]}
+		<>
+			<WebsiteJsonLd
+				name={`データ取得サンプル | ${META.DEFAULT_TITLE}`}
+				description="Next.jsのサーバーコンポーネントとReact Suspenseを使用したデータ取得サンプルです。"
+				url={`${META.SITE_URL}/examples/data-fetching`}
 			/>
-			<h1 className="mb-8 text-3xl font-bold">データ取得サンプル</h1>
+			<BreadcrumbJsonLd items={jsonLdBreadcrumbs} />
+			<div>
+				<Breadcrumb items={uiBreadcrumbs} />
+				<h1 className="mb-8 text-3xl font-bold">データ取得サンプル</h1>
 
-			<div className="mb-8">
-				<h2 className="mb-4 text-xl font-semibold">
-					React Suspenseを使用したデータ取得
-				</h2>
-				<p className="mb-6 text-muted-foreground">
-					このサンプルでは、Next.jsのサーバーコンポーネントとReact
-					Suspenseを使用して、 データ取得中のローディング状態を処理しています。
-				</p>
+				<div className="mb-8">
+					<h2 className="mb-4 text-xl font-semibold">
+						React Suspenseを使用したデータ取得
+					</h2>
+					<p className="mb-6 text-muted-foreground">
+						このサンプルでは、Next.jsのサーバーコンポーネントとReact
+						Suspenseを使用して、 データ取得中のローディング状態を処理しています。
+					</p>
 
-				<Suspense fallback={<UserListSkeleton />}>
-					<UserList />
-				</Suspense>
+					<Suspense fallback={<UserListSkeleton />}>
+						<UserList />
+					</Suspense>
+				</div>
 			</div>
-		</div>
+		</>
 	);
 }

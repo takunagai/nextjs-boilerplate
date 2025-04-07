@@ -11,10 +11,21 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { formExampleSchema, type FormExampleValues } from "@/lib/validation/form-example-schema";
+import { createBreadcrumbs } from "@/lib/utils";
 
 export default function FormExamplePage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitResult, setSubmitResult] = useState<{ success: boolean; message: string } | null>(null);
+
+  // パンくずリストの基本データを定義
+  const breadcrumbItems = [
+    { title: "ホーム", path: "/" },
+    { title: "サンプル一覧", path: "/examples" },
+    { title: "フォームサンプル", path: "/examples/form", current: true },
+  ];
+
+  // UI表示用のデータのみを生成
+  const { ui: uiBreadcrumbs } = createBreadcrumbs(breadcrumbItems);
 
   const form = useForm<FormExampleValues>({
     resolver: zodResolver(formExampleSchema),
@@ -54,13 +65,7 @@ export default function FormExamplePage() {
 
   return (
     <div>
-      <Breadcrumb
-        items={[
-          { label: "ホーム", href: "/" },
-          { label: "サンプル一覧", href: "/examples" },
-          { label: "フォームサンプル", href: "/examples/form", isCurrent: true },
-        ]}
-      />
+      <Breadcrumb items={uiBreadcrumbs} />
       <h1 className="mb-8 text-3xl font-bold">フォームサンプル</h1>
       
       <Card className="max-w-2xl">
