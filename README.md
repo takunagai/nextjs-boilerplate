@@ -51,6 +51,67 @@
 - **アクセシビリティ対応** - WAI-ARIAガイドラインに準拠
 - **UIコンポーネント** - shadcn/uiによる美しく再利用可能なコンポーネント
 
+### サーバーサイドユーティリティ
+
+- **標準化APIレスポンス** - クライアント側での一貫した処理を実現
+  - 成功・エラーレスポンス形式の統一
+  - エラーコード・メッセージの一元管理
+  - レスポンスステータスコードの適切な設定
+  - ペイロードの型安全な受け渡し
+- **バリデーションユーティリティ** - Zodによる堅牢な入力検証
+  - APIリクエストデータの厳密な検証
+  - カスタムバリデーションルールの簡単な作成
+  - クライアント・サーバー間で共有可能なスキーマ定義
+  - 多言語対応エラーメッセージ
+- **サーバーアクション** - 型安全なサーバー側処理
+  - フォーム送信とデータ処理の統合
+  - 楽観的なUI更新との連携
+  - エラーハンドリングの一元化
+
+### 認証システム
+
+- **Auth.js (NextAuth v5)** - 認証基盤
+- **JWT認証** - Auth.js (NextAuth v5) による安全な認証基盤
+  - セッション管理（JWTベース）
+  - ユーザーログイン・登録フロー
+  - ロールベースのアクセス制御（RBAC）
+  - 認証状態の永続化と更新
+- **Next.js SSR完全対応** - サーバーコンポーネントとの統合
+  - App Routerアーキテクチャに最適化
+  - RSCでのセッション取得と認証状態確認
+  - ミドルウェアによるルート保護
+  - 認証情報のプリフェッチとレンダリング最適化
+- **セキュリティ対策** - 高度なセキュリティ機能
+  - CSRFプロテクション
+  - レート制限によるブルートフォース攻撃対策
+  - セキュリティヘッダーの自動設定
+  - エラーメッセージの適切な抽象化
+- **ユーザー体験** - フレンドリーな認証フロー
+  - ログイン状態の保持
+  - リダイレクト処理の最適化
+  - フォームバリデーションとエラー表示
+  - アクセス制限ページへの適切な誘導
+
+### 認証情報
+
+> **注**: 現在の実装では、`src/lib/auth/test-data.ts` にテスト用のユーザーアカウントが2つハードコーディングされています。データベース連携や本格的なユーザー登録機能は今後追加予定です。
+
+### テストユーザー情報
+
+開発環境では、以下のテストアカウントでログインできます：
+
+1. **一般ユーザー**
+   - メールアドレス: `user@example.com`
+   - パスワード: `password123`
+   - 権限: 一般ユーザー
+
+2. **管理者ユーザー**
+   - メールアドレス: `admin@example.com`
+   - パスワード: `password123`
+   - 権限: 管理者
+
+> **セキュリティ注意**: これらは開発・テスト専用のアカウントです。本番環境では必ず削除してください。
+
 ### SEO最適化
 
 - **メタデータ管理** - Next.js Metadata APIによる動的SEOメタタグ生成
@@ -107,6 +168,10 @@
 - **react-hook-form** - フォーム状態管理
 - **zod** - スキーマバリデーション
 - **@hookform/resolvers** - バリデーション連携
+
+### 認証/セキュリティ
+
+- **Auth.js (NextAuth v5)** - 認証基盤
 
 ### バックエンド
 
@@ -169,6 +234,22 @@ cp .env.example .env.local
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 NEXT_PUBLIC_APP_NAME="Next.js Boilerplate"
 NEXT_PUBLIC_SITE_NAME="Next.js Boilerplate Sample Site"
+
+# 認証設定 (Auth.js / NextAuth)
+AUTH_SECRET=your-auth-secret-key-min-32-chars
+AUTH_URL=http://localhost:3000
+# Credentials Provider（メール/パスワード認証）はデフォルトで有効
+
+# セッション設定
+# SESSION_MAXAGE=2592000 # 30日（秒単位）、デフォルト値は30日
+# SESSION_STRATEGY=jwt # デフォルト値はjwt
+# SESSION_UPDATEAGE=86400 # 1日（秒単位）、デフォルト値は1日
+
+# 追加の認証プロバイダー設定 (必要に応じて)
+# GITHUB_ID=your-github-id
+# GITHUB_SECRET=your-github-secret
+# GOOGLE_ID=your-google-id
+# GOOGLE_SECRET=your-google-secret
 ```
 
 ## 使用方法
@@ -268,27 +349,49 @@ nextjs-boilerplate/
 ├── public/                  # 静的アセット
 │   ├── dummy-images/        # ダミー画像
 │   ├── (fonts)/             # フォントファイル
-│   └── (images)/            # 画像ファイル
+│   ├── images/             # 画像ファイル
+│   └── site.webmanifest     # サイトマニフェスト
 ├── reference/
+│   ├── code/                # コード
 │   ├── docs/                # ドキュメント
 │   └── samples/             # サンプルコード
 ├── src/
 │   ├── app/                 # Next.jsのページルーティング
-│   │   ├── (auth)/          # 認証関連ページ
-│   │   ├── (dashboard)/     # ダッシュボード関連ページ
-│   │   ├── (api)/           # APIエンドポイント
+│   │   ├── 各ページのディレクトリ/
+│   │   ├── (examples)/      # サンプル例ページ
+│   │   ├── api/           # APIエンドポイント
+│   │   │   ├── auth/       # 認証関連
+│   │   │   │   ├── login/  # ログインページ
+│   │   │   │   └── register/ # 登録ページ
+│   │   │   └── example/    # サンプル例ページ
+│   │   ├── auth/          # 認証関連ページ
+│   │   │   ├── login/       # ログインページ
+│   │   │   └── register/    # 登録ページ
+│   │   ├── dashboard/     # ダッシュボード関連ページ
 │   │   └── globals.css      # グローバルスタイル
-│   ├── components/          # 再利用可能なコンポーネント
+│   ├── components/        # 再利用可能なコンポーネント
+│   │   ├── auth/            # 認証関連コンポーネント
+│   │   ├── contact/         # コンタクトコンポーネント
+│   │   ├── home/            # ホームコンポーネント
 │   │   ├── layout/          # レイアウトコンポーネント(ヘッダー、フッター etc.)
+│   │   ├── sections/        # セクションコンポーネント
+│   │   ├── seo/             # SEO関連コンポーネント
 │   │   ├── theme/           # テーマ(モード)コンポーネント
 │   │   └── ui/              # UIコンポーネント(shadcn/uiもここに保存)
+│   ├── hooks/               # カスタムフック
 │   ├── lib/                 # ユーティリティ関数
+│   │   ├── auth/            # 認証関連
+│   │   ├── constants/       # 定数
+│   │   ├── server/          # サーバーサイド
+│   │   │   ├── actions/     # サーバーアクション
+│   │   │   ├── api/         # APIルート
+│   │   │   └── utils/       # サーバーサイドユーティリティ
 │   │   ├── validation/      # バリデーションスキーマ
 │   │   ├── (api)/           # API関連
 │   │   ├── (db)/            # データベース関連
-│   │   ├── constants.ts     # 定数
 │   │   └── utils.ts         # 汎用ユーティリティ
-│   └── hooks/               # カスタムフック
+│   └── middleware.ts    # ミドルウェア
+├── tests-results/           # テスト結果
 ├── tests/                   # テストファイル
 │   ├── components/          # コンポーネントテスト
 │   ├── e2e/                 # Playwright E2Eテスト
@@ -297,15 +400,16 @@ nextjs-boilerplate/
 ├── .gitignore               # Gitの除外設定
 ├── biome.json               # Biome設定
 ├── components.json          # shadcn/uiコンポーネント設定
+├── next-env.d.ts            # Next.js環境設定
 ├── next.config.js           # Next.js設定
 ├── package.json             # 依存関係と設定
 ├── playwright.config.ts     # Playwright設定
 ├── postcss.config.mjs       # PostCSS設定
+├── README.md                # READMEファイル
 ├── setupTests.ts            # テスト環境のグローバル設定
 ├── tailwind.config.ts       # Tailwind CSS設定
 ├── tsconfig.json            # TypeScript設定
-└── vite.config.ts           # Vite設定
-```
+└── vitest.config.ts         # Vitest設定
 
 ## テスト
 
