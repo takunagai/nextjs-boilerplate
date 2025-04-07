@@ -1,0 +1,145 @@
+import type { NextAuthConfig } from "next-auth";
+import NextAuth from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+
+// NextAuth型拡張
+declare module "next-auth" {
+	interface User {
+		id?: string;
+		name?: string | null;
+		email?: string | null;
+		image?: string | null;
+		role?: string | null;
+	}
+
+	interface Session {
+		user: {
+			id?: string;
+			name?: string | null;
+			email?: string | null;
+			image?: string | null;
+			role?: string | null;
+		};
+	}
+
+	// JWT型拡張（Next-Auth v5ではnext-auth内に統合されています）
+	interface JWT {
+		id?: string;
+		name?: string | null;
+		email?: string | null;
+		picture?: string | null; // NextAuth内部では 'picture' を使用
+		role?: string | null;
+	}
+}
+
+/**
+ * 認証基盤の中核設定
+ */
+export const authConfig: NextAuthConfig = {
+	// セッションを JWT で管理
+	session: {
+		strategy: "jwt",
+	},
+	// カスタムログインページ設定
+	pages: {
+		signIn: "/auth/login",
+	},
+	// 認証プロバイダー設定
+	providers: [
+		// メールとパスワードによる認証
+		CredentialsProvider({
+			name: "Credentials",
+			credentials: {
+				email: { label: "メールアドレス", type: "email" },
+				password: { label: "パスワード", type: "password" },
+			},
+			async authorize(credentials) {
+				// 注意: これはデモ目的の仮実装です
+				// 実際の実装ではデータベースでユーザーを検索・検証する必要があります
+
+				// 入力チェック
+				if (!credentials?.email || !credentials?.password) {
+					return null;
+				}
+
+				// テスト用のハードコードされたユーザー情報
+				// 実際の実装ではデータベースからユーザーを検索する
+				const testUsers = [
+					{
+						id: "1",
+						name: "永井 拓也",
+						email: "tak_na@icloud.com",
+						password: "123456",
+						role: "admin",
+					},
+					{
+						id: "2",
+						name: "テストユーザー",
+						email: "test@example.com",
+						password: "123456",
+						role: "user",
+					},
+				];
+
+				// メールアドレスとパスワードが一致するユーザーを検索
+				const user = testUsers.find(
+					(user) =>
+						user.email === credentials.email &&
+						user.password === credentials.password,
+				);
+
+				// ユーザーが見つからなければnullを返す（認証失敗）
+				if (!user) {
+					console.log(
+						"認証失敗: ユーザーが見つからないかパスワードが一致しません",
+					);
+					return null;
+				}
+
+				// 認証成功: パスワードを除外したユーザー情報を返す
+				const { password, ...userWithoutPassword } = user;
+				console.log("認証成功:", userWithoutPassword);
+				return userWithoutPassword;
+			},
+		}),
+		// 追加のプロバイダーはここに設定可能
+		// GoogleProvider({
+		//   clientId: process.env.GOOGLE_CLIENT_ID!,
+		//   clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+		// }),
+	],
+	callbacks: {
+		// JWTトークンにユーザー情報を追加
+		jwt: async ({ token, user }) => {
+			if (user) {
+				token.id = user.id;
+				token.role = user.role;
+			}
+			return token;
+		},
+		// セッションにユーザー情報を追加
+		session: async ({ session, token }) => {
+			if (token && session.user) {
+				session.user.id = token.id as string;
+				session.user.role = token.role as string;
+			}
+			return session;
+		},
+		// 認可チェック（特定のルートへのアクセス制御）
+		authorized: ({ auth, request }) => {
+			// 現時点ではシンプルな認可チェックのみ実装
+			// 後でmiddlewareで詳細な制御を行う
+			const isLoggedIn = !!auth?.user;
+			const isOnAuthPage = request.nextUrl.pathname.startsWith("/auth/");
+
+			if (!isLoggedIn && !isOnAuthPage) {
+				return false; // 非認証ユーザーは認証ページ以外アクセス不可
+			}
+
+			return true;
+		},
+	},
+};
+
+// Auth.jsの初期化
+export const { handlers, auth, signIn, signOut } = NextAuth(authConfig);
