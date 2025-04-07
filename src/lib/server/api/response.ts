@@ -96,6 +96,33 @@ export function errorResponse(
 }
 
 /**
+ * 成功レスポンスを簡単に作成するためのヘルパー関数
+ * 
+ * @param options - 成功レスポンスのオプション
+ * @returns NextResponse
+ */
+export function createApiResponse<T>(options: {
+  success: boolean;
+  message?: string;
+  data?: T;
+  status?: number;
+  headers?: HeadersInit;
+}) {
+  const { success, message, data, status, headers } = options;
+  
+  const responseBody = {
+    success,
+    message,
+    data,
+  };
+  
+  return NextResponse.json(responseBody, {
+    status: status || (success ? 200 : 400),
+    headers,
+  });
+}
+
+/**
  * 一般的なエラーレスポンスの作成ヘルパー関数
  */
 export const createApiError = {
