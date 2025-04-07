@@ -3,9 +3,12 @@ import { Header } from "@/components/layout/header";
 import { OrganizationJsonLd, WebsiteJsonLd } from "@/components/seo";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { ScrollToTop } from "@/components/ui/scroll-to-top";
+import { UserAuthMenu } from "@/components/auth/user-auth-menu";
 import { APP, META } from "@/lib/constants";
+import { auth } from "@/lib/auth";
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { SessionProvider } from "next-auth/react";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -83,11 +86,14 @@ export const viewport: Viewport = {
 	],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+	// セッション情報を取得
+	const session = await auth();
+
 	return (
 		<html lang="ja" suppressHydrationWarning>
 			<head>
@@ -98,20 +104,23 @@ export default function RootLayout({
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 			>
 				<ThemeProvider>
-					<div className="flex flex-col min-h-screen">
-						<Header
-							logoText={APP.NAME}
-							items={[
-								{ label: "ホーム", href: "/" },
-								{ label: "自己紹介", href: "/about" },
-								{ label: "お問い合わせ", href: "/contact" },
-								{ label: "プライバシーポリシー", href: "/privacy" },
-							]}
-						/>
-						<main className="flex-grow">{children}</main>
-						<Footer />
-						<ScrollToTop />
-					</div>
+					<SessionProvider session={session}>
+						<div className="flex flex-col min-h-screen">
+							<Header
+								logoText={APP.NAME}
+								items={[
+									{ label: "ホーム", href: "/" },
+									{ label: "自己紹介", href: "/about" },
+									{ label: "お問い合わせ", href: "/contact" },
+									{ label: "プライバシーポリシー", href: "/privacy" },
+								]}
+								rightContent={<UserAuthMenu />}
+							/>
+							<main className="flex-grow">{children}</main>
+							<Footer />
+							<ScrollToTop />
+						</div>
+					</SessionProvider>
 				</ThemeProvider>
 			</body>
 		</html>
