@@ -152,8 +152,8 @@
 nextjs-boilerplate/
 ├── public/                  # 静的アセット
 │   ├── dummy-images/        # ダミー画像
-│   ├── (fonts)/             # フォントファイル
-│   ├── images/             # 画像ファイル
+│   ├── {fonts}/             # フォントファイル（追加予定）
+│   ├── images/              # 画像ファイル
 │   └── site.webmanifest     # サイトマニフェスト
 ├── reference/
 │   ├── code/                # コード
@@ -163,17 +163,17 @@ nextjs-boilerplate/
 │   ├── app/                 # Next.jsのページルーティング
 │   │   ├── 各ページのディレクトリ/
 │   │   ├── (examples)/      # サンプル例ページ
-│   │   ├── api/           # APIエンドポイント
-│   │   │   ├── auth/       # 認証関連
-│   │   │   │   ├── login/  # ログインページ
+│   │   ├── api/             # APIエンドポイント
+│   │   │   ├── auth/        # 認証関連
+│   │   │   │   ├── login/   # ログインページ
 │   │   │   │   └── register/ # 登録ページ
-│   │   │   └── example/    # サンプル例ページ
-│   │   ├── auth/          # 認証関連ページ
+│   │   │   └── example/     # サンプル例ページ
+│   │   ├── auth/            # 認証関連ページ
 │   │   │   ├── login/       # ログインページ
 │   │   │   └── register/    # 登録ページ
-│   │   ├── dashboard/     # ダッシュボード関連ページ
+│   │   ├── dashboard/       # ダッシュボード関連ページ
 │   │   └── globals.css      # グローバルスタイル
-│   ├── components/        # 再利用可能なコンポーネント
+│   ├── components/          # 再利用可能なコンポーネント
 │   │   ├── auth/            # 認証関連コンポーネント
 │   │   ├── contact/         # コンタクトコンポーネント
 │   │   ├── home/            # ホームコンポーネント
@@ -191,10 +191,10 @@ nextjs-boilerplate/
 │   │   │   ├── api/         # APIルート
 │   │   │   └── utils/       # サーバーサイドユーティリティ
 │   │   ├── validation/      # バリデーションスキーマ
-│   │   ├── (api)/           # API関連
-│   │   ├── (db)/            # データベース関連
-│   │   └── utils.ts         # 汎用ユーティリティ
-│   └── middleware.ts    # ミドルウェア
+│   │   ├── {api}/           # API関連（追加予定）
+│   │   ├── {db}/            # データベース関連（追加予定）
+│   │   └── utils.ts         # 污用ユーティリティ
+│   └── middleware.ts        # ミドルウェア
 ├── tests-results/           # テスト結果
 ├── tests/                   # テストファイル
 │   ├── components/          # コンポーネントテスト
@@ -218,18 +218,18 @@ nextjs-boilerplate/
 
 ## 重要な制約
 1. **変更禁止ファイル**
-   - `app/lib/api/client.ts`
-   - `app/lib/api/types.ts`
-   - `app/lib/api/config.ts`
+   - `src/app/lib/api/client.ts`
+   - `src/app/lib/api/types.ts`
+   - `src/app/lib/api/config.ts`
 
 2. **バージョン管理**
    - 技術スタックのバージョン変更は要承認
    - AIモデルのバージョンは固定
 
 3. **コード配置**
-   - 共通処理は `lib/utils.ts` に配置
-   - UIコンポーネントは `components/ui/` に配置
-   - APIエンドポイントは `api/[endpoint]/route.ts` に配置
+   - 共通処理は `src/lib/utils/` に配置
+   - UIコンポーネントは `src/components/ui/` に配置
+   - APIエンドポイントは `src/app/api/[endpoint]/route.ts` に配置
    - テストは `tests/` に配置
 
 ---
@@ -256,7 +256,7 @@ nextjs-boilerplate/
 
 ## 3. 検証フェーズ
 - 単体テスト (Vitest)
-- コンポーネントテスト (React Testing Library)
+- コンポーネントテスト (React Testing Library) （追加予定）
 - E2Eテスト (Playwright)
 - パフォーマンステスト (Lighthouse)
 

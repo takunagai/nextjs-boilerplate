@@ -1,9 +1,16 @@
 # Next.js ボイラープレート
 
-![Next.js](https://img.shields.io/badge/Next.js-15.2.3-black?style=for-the-badge&logo=next.js)
-![React](https://img.shields.io/badge/React-19.0.0-blue?style=for-the-badge&logo=react)
+![Node.js](https://img.shields.io/badge/Node.js-23-blue?style=for-the-badge&logo=node.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=for-the-badge&logo=typescript)
+![React](https://img.shields.io/badge/React-19.0.0-blue?style=for-the-badge&logo=react)
+![Next.js](https://img.shields.io/badge/Next.js-15.2.3-black?style=for-the-badge&logo=next.js)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0.15-38B2AC?style=for-the-badge&logo=tailwind-css)
+![shadcn/ui](https://img.shields.io/badge/shadcn/ui-1.2.5-blue?style=for-the-badge&logo=shadcn)
+![Auth.js](https://img.shields.io/badge/Auth.js-1.2.5-blue?style=for-the-badge&logo=authjs)
+![Biome](https://img.shields.io/badge/Biome-1.6.1-blue?style=for-the-badge&logo=biome)
+![Zod](https://img.shields.io/badge/zod-3.24.2-blue?style=for-the-badge&logo=zod)
+![Vitest](https://img.shields.io/badge/Vitest-1.3.1-blue?style=for-the-badge&logo=vitest)
+![Playwright](https://img.shields.io/badge/Playwright-1.31.0-blue?style=for-the-badge&logo=playwright)
 
 ## 概要
 
@@ -25,7 +32,7 @@
 
 ## AI開発サポート
 
-このプロジェクトは、[Windsurf IDE](https://codeium.com/windsurf) 用の`.windsurfrules`ファイルを含んでいます。このファイルは[kinopeee/windsurfrules](https://github.com/kinopeee/windsurfrules)をベースに、AIエージェント/アシスタントがプロジェクト構造、技術スタック、コード規約を正確に理解できるよう最適化されています。これにより、一貫性のある高品質なコード生成と効率的な開発サポートが可能になります。
+このプロジェクトは、[Windsurf IDE](https://codeium.com/windsurf) 用の`.windsurfrules`ファイルを含んでいます。このファイルは [kinopeee/windsurfrules](https://github.com/kinopeee/windsurfrules) をベースに、AIエージェント/アシスタントがプロジェクト構造、技術スタック、コード規約を正確に理解できるよう最適化されています。これにより、一貫性のある高品質なコード生成と効率的な開発サポートが可能になります。
 
 ## デモ
 
@@ -35,21 +42,17 @@
 
 ### UI/UX
 
-- **レスポンシブデザイン** - Tailwind CSSによるモバイルファーストアプローチ
-- **ダークモード対応** - Tailwind CSS v4のネイティブダークモード機能
+- **レスポンシブデザイン** - Tailwind CSS によるモバイルファーストアプローチ
+- **ダークモード対応** - Tailwind CSS v4 のネイティブダークモード機能
   - ライトモード/ダークモードの2つの切替モード
-  - ヘッダーのアイコンクリックで切替
-  - ユーザー設定をlocalStorageに保存し、次回訪問時に復元
+  - ユーザー設定を localStorage に保存し、次回訪問時に復元
   - フラッシュ防止機能搭載（遷移アニメーションとトレードオフ）
   - テーマ機能のON/OFF切替オプション
-- **レスポンシブレイアウト** - CVAを活用したContainerコンポーネント
-  - 画面サイズに応じた最適なコンテンツ幅の自動調整
-  - サイズバリエーション（xs, sm, md, lg, xl, 2xl, full）
-  - 方向別パディング設定（paddingX, paddingY）
-  - 位置とz-indexの制御オプション
-- **アニメーション** - Framer Motionによる洗練されたモーション
-- **アクセシビリティ対応** - WAI-ARIAガイドラインに準拠
-- **UIコンポーネント** - shadcn/uiによる美しく再利用可能なコンポーネント
+- **レスポンシブレイアウト** - ビューポート幅に応じた最適なスタイル調整
+  - CVA を活用した Container コンポーネント
+- **アニメーション** - Framer Motion によるモーション
+- **アクセシビリティ対応** - WAI-ARIA ガイドラインに準拠
+- **UIコンポーネント** - shadcn/ui による再利用可能なコンポーネント
 
 ### サーバーサイドユーティリティ
 
@@ -71,7 +74,7 @@
 ### 認証システム
 
 - **Auth.js (NextAuth v5)** - 認証基盤
-- **JWT認証** - Auth.js (NextAuth v5) による安全な認証基盤
+- **JWT認証** - Auth.js による安全な認証基盤
   - セッション管理（JWTベース）
   - ユーザーログイン・登録フロー
   - ロールベースのアクセス制御（RBAC）
@@ -94,9 +97,10 @@
 
 ### 認証情報
 
-> **注**: 現在の実装では、`src/lib/auth/test-data.ts` にテスト用のユーザーアカウントが2つハードコーディングされています。データベース連携や本格的なユーザー登録機能は今後追加予定です。
+> **注**: `src/lib/auth/test-data.ts` にテスト用のユーザーアカウントが2つハードコーディングされています。データベース連携や本格的なユーザー登録機能は今後追加予定です。
+> **※ 本番環境では必ず削除してください。**
 
-### テストユーザー情報
+#### テストユーザー情報
 
 開発環境では、以下のテストアカウントでログインできます：
 
@@ -110,31 +114,29 @@
    - パスワード: `password123`
    - 権限: 管理者
 
-> **セキュリティ注意**: これらは開発・テスト専用のアカウントです。本番環境では必ず削除してください。
-
 ### SEO最適化
 
-- **メタデータ管理** - Next.js Metadata APIによる動的SEOメタタグ生成
+- **メタデータ管理** - Next.js Metadata API による動的SEOメタタグ生成
 - **構造化データ** - JSON-LD形式のリッチスニペット対応（ウェブサイト、組織、記事など）
 - **パンくずリスト** - ユーザビリティ向上とSEO対応の階層ナビゲーション
-- **サイトマップ自動生成** - 検索エンジンのクロール効率化
+- {**サイトマップ自動生成**} - 検索エンジンのクロール効率化（追加予定）
 - **robots.txt** - クローラー制御とインデックス最適化
 - **正規URL設定** - 重複コンテンツ問題の防止
 
 ### 開発体験
 
-- **型安全性** - TypeScriptによる堅牢なコード
-- **高速開発** - Next.js App Routerとサーバーコンポーネント
-- **効率的な状態管理** - Immerによる不変性を維持した状態更新
-- **フォームハンドリング** - React Hook FormとZodによる型安全なバリデーション
-- **コード品質** - Biomeによるリンティングとフォーマット
+- **型安全性** - TypeScript による堅牢なコード
+- **高速開発** - Next.js App Router とサーバーコンポーネント
+- **効率的な状態管理** - Immer による不変性を維持した状態更新
+- **フォームハンドリング** - React Hook Form と Zod による型安全なバリデーション
+- **コード品質** - Biome によるリンティングとフォーマット
 
 ### 事前構築済み
 
 - **ページテンプレート** - ホーム、説明、問い合わせ、プライバシーポリシー
 - **レイアウトコンポーネント** - ヘッダー、フッター、ナビゲーション
 - **ユーティリティ** - 定数管理、日付操作、クラス名ユーティリティ
-- **テスト環境** - Vitestによる高速なユニットテスト
+- **テスト環境** - Vitest による高速なユニットテスト
 - **サーバーサイドユーティリティ** - API応答の標準化、バリデーション、エラーハンドリング
 - **認証システム** - Auth.js (NextAuth v5) によるJWT認証と保護されたルート
 
@@ -223,43 +225,22 @@ npm run dev
 
 ## 環境変数の設定
 
-`.env.example` ファイルを `.env.local` にコピー。
+1. `.env.example` ファイルを `.env.local` にコピー。
 
-```bash
-cp .env.example .env.local
-```
+   ```bash
+   cp .env.example .env.local
+   ```
 
-必要な環境変数を設定します(不要な環境変数は削除してください)。
-
-```bash
-# アプリケーション設定
-NEXT_PUBLIC_APP_URL=http://localhost:3000
-NEXT_PUBLIC_APP_NAME="Next.js Boilerplate"
-NEXT_PUBLIC_SITE_NAME="Next.js Boilerplate Sample Site"
-
-# 認証設定 (Auth.js / NextAuth)
-AUTH_SECRET=your-auth-secret-key-min-32-chars
-AUTH_URL=http://localhost:3000
-# Credentials Provider（メール/パスワード認証）はデフォルトで有効
-
-# セッション設定
-# SESSION_MAXAGE=2592000 # 30日（秒単位）、デフォルト値は30日
-# SESSION_STRATEGY=jwt # デフォルト値はjwt
-# SESSION_UPDATEAGE=86400 # 1日（秒単位）、デフォルト値は1日
-
-# 追加の認証プロバイダー設定 (必要に応じて)
-# GITHUB_ID=your-github-id
-# GITHUB_SECRET=your-github-secret
-# GOOGLE_ID=your-google-id
-# GOOGLE_SECRET=your-google-secret
-```
+2. `.env.example` を参考に、必要な環境変数を設定します(不要な環境変数は削除してください)。
 
 ## 使用方法
 
 ### モード (テーマ) の切り替え設定
 
-- 有効/無効のトグルとデフォルトモードは `constants.ts` で定義
-- 2つのモード(ライト/ダーク)を選択可能
+テーマ設定は `src/lib/constants/theme.ts` で定義
+
+- テーマ機能自体の有効/無効の切り替え
+- ライト or ダークモードを選択可能
 - 設定は localStorage に保存され、次回訪問時に自動適用
 
 ### 新しいページの追加
@@ -279,7 +260,7 @@ export default function NewPage() {
 
 ### コンポーネントの使用
 
-shadcn/uiコンポーネントを使用する例：
+shadcn/ui コンポーネントを使用する例：
 
 ```tsx
 import { Button } from "@/components/ui/button";
@@ -350,8 +331,8 @@ export default function MyPage() {
 nextjs-boilerplate/
 ├── public/                  # 静的アセット
 │   ├── dummy-images/        # ダミー画像
-│   ├── (fonts)/             # フォントファイル
-│   ├── images/             # 画像ファイル
+│   ├── {fonts}/             # フォントファイル（追加予定）
+│   ├── images/              # 画像ファイル
 │   └── site.webmanifest     # サイトマニフェスト
 ├── reference/
 │   ├── code/                # コード
@@ -361,17 +342,17 @@ nextjs-boilerplate/
 │   ├── app/                 # Next.jsのページルーティング
 │   │   ├── 各ページのディレクトリ/
 │   │   ├── (examples)/      # サンプル例ページ
-│   │   ├── api/           # APIエンドポイント
-│   │   │   ├── auth/       # 認証関連
-│   │   │   │   ├── login/  # ログインページ
+│   │   ├── api/             # APIエンドポイント
+│   │   │   ├── auth/        # 認証関連
+│   │   │   │   ├── login/   # ログインページ
 │   │   │   │   └── register/ # 登録ページ
-│   │   │   └── example/    # サンプル例ページ
-│   │   ├── auth/          # 認証関連ページ
+│   │   │   └── example/     # サンプル例ページ
+│   │   ├── auth/            # 認証関連ページ
 │   │   │   ├── login/       # ログインページ
 │   │   │   └── register/    # 登録ページ
-│   │   ├── dashboard/     # ダッシュボード関連ページ
+│   │   ├── dashboard/       # ダッシュボード関連ページ
 │   │   └── globals.css      # グローバルスタイル
-│   ├── components/        # 再利用可能なコンポーネント
+│   ├── components/          # 再利用可能なコンポーネント
 │   │   ├── auth/            # 認証関連コンポーネント
 │   │   ├── contact/         # コンタクトコンポーネント
 │   │   ├── home/            # ホームコンポーネント
@@ -389,10 +370,10 @@ nextjs-boilerplate/
 │   │   │   ├── api/         # APIルート
 │   │   │   └── utils/       # サーバーサイドユーティリティ
 │   │   ├── validation/      # バリデーションスキーマ
-│   │   ├── (api)/           # API関連
-│   │   ├── (db)/            # データベース関連
-│   │   └── utils.ts         # 汎用ユーティリティ
-│   └── middleware.ts    # ミドルウェア
+│   │   ├── {api}/           # API関連（追加予定）
+│   │   ├── {db}/            # データベース関連（追加予定）
+│   │   └── utils.ts         # 污用ユーティリティ
+│   └── middleware.ts        # ミドルウェア
 ├── tests-results/           # テスト結果
 ├── tests/                   # テストファイル
 │   ├── components/          # コンポーネントテスト
@@ -412,6 +393,7 @@ nextjs-boilerplate/
 ├── tailwind.config.ts       # Tailwind CSS設定
 ├── tsconfig.json            # TypeScript設定
 └── vitest.config.ts         # Vitest設定
+```
 
 ## テスト
 
@@ -480,10 +462,11 @@ npm run test:e2e:report
 
 ## 謝辞
 
-- [Next.js](https://nextjs.org/) チーム
-- [Vercel](https://vercel.com/) プラットフォーム
-- [shadcn/ui](https://ui.shadcn.com/) コンポーネント
-- [Tailwind CSS](https://tailwindcss.com/) チーム
+- [Next.js](https://nextjs.org) チーム
+- [Tailwind CSS](https://tailwindcss.com) チーム
+- [shadcn/ui](https://ui.shadcn.com) コンポーネント
+- [Auth.js](https://authjs.dev) 認証
+- [Vercel](https://vercel.com) プラットフォーム
 - すべてのオープンソースコントリビューター
 
 ---
