@@ -1,4 +1,9 @@
-import { ArticleJsonLd, BreadcrumbJsonLd, generateMetadata, generateViewport } from "@/components/seo";
+import {
+	ArticleJsonLd,
+	BreadcrumbJsonLd,
+	generateMetadata,
+	generateViewport,
+} from "@/components/seo";
 import { Badge } from "@/components/ui/badge";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import {
@@ -11,14 +16,21 @@ import {
 import { Container } from "@/components/ui/container";
 import { Separator } from "@/components/ui/separator";
 import { META } from "@/lib/constants";
+import { createBreadcrumbs } from "@/lib/utils";
 import type { Metadata } from "next";
 import Image from "next/image";
-import { createBreadcrumbs } from "@/lib/utils";
 
 export const metadata: Metadata = generateMetadata({
 	title: "自己紹介",
-	description: "フロントエンドエンジニアとしての経歴、スキル、実績についてご紹介します。",
-	keywords: ["自己紹介", "プロフィール", "フロントエンドエンジニア", "スキル", "経歴"],
+	description:
+		"フロントエンドエンジニアとしての経歴、スキル、実績についてご紹介します。",
+	keywords: [
+		"自己紹介",
+		"プロフィール",
+		"フロントエンドエンジニア",
+		"スキル",
+		"経歴",
+	],
 	canonical: "/about",
 });
 
@@ -32,7 +44,8 @@ export default function AboutPage() {
 	];
 
 	// UI表示用とJSON-LD用のデータを生成
-	const { ui: uiBreadcrumbs, jsonLd: jsonLdBreadcrumbs } = createBreadcrumbs(breadcrumbItems);
+	const { ui: uiBreadcrumbs, jsonLd: jsonLdBreadcrumbs } =
+		createBreadcrumbs(breadcrumbItems);
 
 	return (
 		<>
@@ -46,8 +59,11 @@ export default function AboutPage() {
 				authorName="山田 太郎"
 			/>
 			<BreadcrumbJsonLd items={jsonLdBreadcrumbs} />
-			<Container size="md" paddingY="lg" paddingX="2xl">
+
+			<Container className="mt-8">
 				<Breadcrumb items={uiBreadcrumbs} />
+			</Container>
+			<Container size="md" paddingY="lg" paddingX="2xl">
 				<div className="flex flex-col gap-8">
 					{/* ヘッダーセクション */}
 					<div className="flex flex-col md:flex-row gap-8 items-center">
@@ -77,12 +93,10 @@ export default function AboutPage() {
 					<Separator />
 
 					{/* 自己紹介セクション */}
-					<Card>
-						<CardHeader>
-							<CardTitle>自己紹介</CardTitle>
-							<CardDescription>私についての簡単な紹介です</CardDescription>
-						</CardHeader>
-						<CardContent>
+					<section className="mb-12">
+						<h2 className="text-3xl font-bold tracking-tight mb-3 border-b pb-2">自己紹介</h2>
+						<p className="text-muted-foreground mb-4">私についての簡単な紹介です</p>
+						<div className="mt-6">
 							<p className="leading-7 mb-4">
 								はじめまして、山田太郎と申します。フロントエンドエンジニアとして5年間の経験があり、
 								モダンなWebアプリケーション開発に情熱を持っています。
@@ -93,127 +107,135 @@ export default function AboutPage() {
 								趣味は読書、ハイキング、写真撮影です。新しい技術を学ぶことが大好きで、
 								常に最新のウェブ開発トレンドについて学んでいます。
 							</p>
-						</CardContent>
-					</Card>
+						</div>
+					</section>
 
 					{/* スキルセクション */}
-					<Card>
-						<CardHeader>
-							<CardTitle>スキル</CardTitle>
-							<CardDescription>技術スタックと専門知識</CardDescription>
-						</CardHeader>
-						<CardContent>
-							<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-								<div>
-									<h3 className="text-lg font-semibold mb-3">フロントエンド</h3>
-									<ul className="space-y-2">
-										<li className="flex items-center gap-2">
-											<Badge>Next.js</Badge>
-											<span className="text-sm text-muted-foreground">上級</span>
-										</li>
-										<li className="flex items-center gap-2">
-											<Badge>React</Badge>
-											<span className="text-sm text-muted-foreground">上級</span>
-										</li>
-										<li className="flex items-center gap-2">
-											<Badge>TypeScript</Badge>
-											<span className="text-sm text-muted-foreground">中級</span>
-										</li>
-										<li className="flex items-center gap-2">
-											<Badge>Tailwind CSS</Badge>
-											<span className="text-sm text-muted-foreground">上級</span>
-										</li>
-									</ul>
-								</div>
-								<div>
-									<h3 className="text-lg font-semibold mb-3">バックエンド</h3>
-									<ul className="space-y-2">
-										<li className="flex items-center gap-2">
-											<Badge>Node.js</Badge>
-											<span className="text-sm text-muted-foreground">中級</span>
-										</li>
-										<li className="flex items-center gap-2">
-											<Badge>PostgreSQL</Badge>
-											<span className="text-sm text-muted-foreground">初級</span>
-										</li>
-										<li className="flex items-center gap-2">
-											<Badge>REST API</Badge>
-											<span className="text-sm text-muted-foreground">中級</span>
-										</li>
-										<li className="flex items-center gap-2">
-											<Badge>GraphQL</Badge>
-											<span className="text-sm text-muted-foreground">初級</span>
-										</li>
-									</ul>
-								</div>
+					<section className="mb-12">
+						<h2 className="text-3xl font-bold tracking-tight mb-3 border-b pb-2">スキル</h2>
+						<p className="text-muted-foreground mb-4">技術スタックと専門知識</p>
+						<div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+							<div>
+								<h3 className="text-lg font-semibold mb-3">フロントエンド</h3>
+								<ul className="space-y-2">
+									<li className="flex items-center gap-2">
+										<Badge>Next.js</Badge>
+										<span className="text-sm text-muted-foreground">
+											上級
+										</span>
+									</li>
+									<li className="flex items-center gap-2">
+										<Badge>React</Badge>
+										<span className="text-sm text-muted-foreground">
+											上級
+										</span>
+									</li>
+									<li className="flex items-center gap-2">
+										<Badge>TypeScript</Badge>
+										<span className="text-sm text-muted-foreground">
+											中級
+										</span>
+									</li>
+									<li className="flex items-center gap-2">
+										<Badge>Tailwind CSS</Badge>
+										<span className="text-sm text-muted-foreground">
+											上級
+										</span>
+									</li>
+								</ul>
 							</div>
-						</CardContent>
-					</Card>
+							<div>
+								<h3 className="text-lg font-semibold mb-3">バックエンド</h3>
+								<ul className="space-y-2">
+									<li className="flex items-center gap-2">
+										<Badge>Node.js</Badge>
+										<span className="text-sm text-muted-foreground">
+											中級
+										</span>
+									</li>
+									<li className="flex items-center gap-2">
+										<Badge>PostgreSQL</Badge>
+										<span className="text-sm text-muted-foreground">
+											初級
+										</span>
+									</li>
+									<li className="flex items-center gap-2">
+										<Badge>REST API</Badge>
+										<span className="text-sm text-muted-foreground">
+											中級
+										</span>
+									</li>
+									<li className="flex items-center gap-2">
+										<Badge>GraphQL</Badge>
+										<span className="text-sm text-muted-foreground">
+											初級
+										</span>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</section>
 
 					{/* 経歴セクション */}
-					<Card>
-						<CardHeader>
-							<CardTitle>経歴</CardTitle>
-							<CardDescription>これまでの職歴と学歴</CardDescription>
-						</CardHeader>
-						<CardContent>
-							<div className="space-y-6">
-								<div>
-									<div className="flex justify-between items-start mb-1">
-										<h3 className="text-lg font-semibold">
-											株式会社テックイノベーション
-										</h3>
-										<span className="text-sm text-muted-foreground">
-											2020年 - 現在
-										</span>
-									</div>
-									<p className="text-muted-foreground mb-2">
-										シニアフロントエンドエンジニア
-									</p>
-									<p className="text-sm">
-										大規模なWebアプリケーションの開発と保守を担当。
-										Next.jsとTypeScriptを使用したプロジェクトのリード。
-										パフォーマンス最適化とアクセシビリティ改善に注力。
-									</p>
+					<section className="mb-12">
+						<h2 className="text-3xl font-bold tracking-tight mb-3 border-b pb-2">経歴</h2>
+						<p className="text-muted-foreground mb-4">これまでの職歴と学歴</p>
+						<div className="mt-6 space-y-6">
+							<div>
+								<div className="flex justify-between items-start mb-1">
+									<h3 className="text-lg font-semibold">
+										株式会社テックイノベーション
+									</h3>
+									<span className="text-sm text-muted-foreground">
+										2020年 - 現在
+									</span>
 								</div>
-								<Separator />
-								<div>
-									<div className="flex justify-between items-start mb-1">
-										<h3 className="text-lg font-semibold">
-											株式会社デジタルクリエイト
-										</h3>
-										<span className="text-sm text-muted-foreground">
-											2018年 - 2020年
-										</span>
-									</div>
-									<p className="text-muted-foreground mb-2">
-										フロントエンドエンジニア
-									</p>
-									<p className="text-sm">
-										Reactを使用したSPAの開発。
-										UIコンポーネントライブラリの構築と保守。
-										チームでのコードレビューとベストプラクティスの共有。
-									</p>
-								</div>
-								<Separator />
-								<div>
-									<div className="flex justify-between items-start mb-1">
-										<h3 className="text-lg font-semibold">東京工科大学</h3>
-										<span className="text-sm text-muted-foreground">
-											2014年 - 2018年
-										</span>
-									</div>
-									<p className="text-muted-foreground mb-2">
-										情報工学部 情報システム学科
-									</p>
-									<p className="text-sm">
-										Webアプリケーション開発と情報システム設計を専攻。
-										卒業プロジェクトでは学内イベント管理システムを開発。
-									</p>
-								</div>
+								<p className="text-muted-foreground mb-2">
+									シニアフロントエンドエンジニア
+								</p>
+								<p className="text-sm">
+									大規模なWebアプリケーションの開発と保守を担当。
+									Next.jsとTypeScriptを使用したプロジェクトのリード。
+									パフォーマンス最適化とアクセシビリティ改善に注力。
+								</p>
 							</div>
-						</CardContent>
-					</Card>
+							<Separator />
+							<div>
+								<div className="flex justify-between items-start mb-1">
+									<h3 className="text-lg font-semibold">
+										株式会社デジタルクリエイト
+									</h3>
+									<span className="text-sm text-muted-foreground">
+										2018年 - 2020年
+									</span>
+								</div>
+								<p className="text-muted-foreground mb-2">
+									フロントエンドエンジニア
+								</p>
+								<p className="text-sm">
+									Reactを使用したSPAの開発。
+									UIコンポーネントライブラリの構築と保守。
+									チームでのコードレビューとベストプラクティスの共有。
+								</p>
+							</div>
+							<Separator />
+							<div>
+								<div className="flex justify-between items-start mb-1">
+									<h3 className="text-lg font-semibold">東京工科大学</h3>
+									<span className="text-sm text-muted-foreground">
+										2014年 - 2018年
+									</span>
+								</div>
+								<p className="text-muted-foreground mb-2">
+									情報工学部 情報システム学科
+								</p>
+								<p className="text-sm">
+									Webアプリケーション開発と情報システム設計を専攻。
+									卒業プロジェクトでは学内イベント管理システムを開発。
+								</p>
+							</div>
+						</div>
+					</section>
 
 					{/* お問い合わせセクション */}
 					<Card>
