@@ -1,8 +1,7 @@
 'use client';
 
-import { useAuth } from "@/hooks/useAuth";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,88 +10,119 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Skeleton } from "@/components/ui/skeleton";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
+} from '@/components/ui/dropdown-menu';
+import { Skeleton } from '@/components/ui/skeleton';
+import { useAuth } from '@/hooks/useAuth';
+import { useRouter } from 'next/navigation';
+import { FaUser, FaGear, FaRightFromBracket, FaShieldHalved, FaChartLine, FaUsers } from 'react-icons/fa6';
 
 /**
  * ユーザー認証メニューコンポーネント
- * ログイン状態に応じて表示を切り替える
+ * ユーザーの認証状態に応じて適切なメニューを表示
  */
 export function UserAuthMenu() {
-  const { user, isLoading, isAuthenticated, logout } = useAuth();
+  const { user, isAuthenticated, isLoading, logout } = useAuth();
   const router = useRouter();
-
-  // ログアウト処理
-  const handleLogout = async () => {
-    const result = await logout();
-    if (result.success) {
-      toast.success("ログアウトしました");
-      router.push("/");
-      router.refresh(); // ページをリフレッシュして認証状態を更新
-    } else {
-      toast.error("ログアウト処理中にエラーが発生しました");
-    }
-  };
-
-  // ローディング中はスケルトンUIを表示
-  if (isLoading) {
-    return <Skeleton className="h-10 w-10 rounded-full" />;
+  
+  // ユーザーがログインしていない場合
+  if (!isAuthenticated && !isLoading) {
+    return (
+      <Button variant="ghost" onClick={() => router.push('/auth/login')} className="gap-2">
+        <FaUser className="h-4 w-4" />
+        <span>ログイン</span>
+      </Button>
+    );
   }
-
-  // ログインしていない場合はログインボタンを表示
-  if (!isAuthenticated) {
+  
+  // 読み込み中の場合はスケルトンローディングを表示
+  if (isLoading) {
     return (
       <div className="flex items-center gap-2">
-        <Button variant="outline" size="sm" asChild>
-          <Link href="/auth/login">ログイン</Link>
-        </Button>
-        <Button size="sm" asChild>
-          <Link href="/auth/register">新規登録</Link>
-        </Button>
+        <Skeleton className="h-8 w-8 rounded-full" />
+        <Skeleton className="h-4 w-24" />
       </div>
     );
   }
-
-  // ユーザー名の最初の文字を取得（フォールバック用）
-  const userInitial = user?.name?.charAt(0) || user?.email?.charAt(0) || "U";
-
-  // ログイン済みの場合はユーザーメニューを表示
+  
+  // ユーザー名の頭文字を取得（アバターのフォールバック用）
+  const getInitials = () => {
+    if (!user?.name) return 'U';
+    return user.name
+      .split(' ')
+      .map(part => part.charAt(0))
+      .join('')
+      .toUpperCase();
+  };
+  
+  // 管理者かどうかを確認
+  const isAdmin = user?.role === 'admin';
+  
+  const handleLogout = async () => {
+    const result = await logout();
+    if (result.success) {
+      router.push('/'); // ホームページにリダイレクト
+      router.refresh(); // ページを更新して状態を反映
+    }
+  };
+  
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-10 w-10 rounded-full">
-          <Avatar>
-            <AvatarImage src={user?.image || ""} />
-            <AvatarFallback>{userInitial.toUpperCase()}</AvatarFallback>
+        <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+          <Avatar className="h-8 w-8">
+            <AvatarImage src={user?.image || ''} alt={user?.name || 'ユーザー'} />
+            <AvatarFallback>{getInitials()}</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-56">
-        <DropdownMenuLabel>
+      <DropdownMenuContent className="w-56" align="end" forceMount>
+        <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">{user?.name || "ユーザー"}</p>
-            <p className="text-xs leading-none text-muted-foreground">
-              {user?.email || ""}
-            </p>
+            <p className="text-sm font-medium leading-none">{user?.name || 'ユーザー'}</p>
+            <p className="text-xs leading-none text-muted-foreground">{user?.email || ''}</p>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem asChild>
-            <Link href="/dashboard">ダッシュボード</Link>
+          <DropdownMenuItem onClick={() => router.push('/profile')}>
+            <FaUser className="mr-2 h-4 w-4" />
+            <span>プロフィール</span>
           </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link href="/profile">プロフィール</Link>
+          <DropdownMenuItem onClick={() => router.push('/dashboard')}>
+            <FaChartLine className="mr-2 h-4 w-4" />
+            <span>ダッシュボード</span>
           </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link href="/settings">設定</Link>
+          <DropdownMenuItem onClick={() => router.push('/settings')}>
+            <FaGear className="mr-2 h-4 w-4" />
+            <span>設定</span>
           </DropdownMenuItem>
         </DropdownMenuGroup>
+        
+        {/* 管理者向けメニュー */}
+        {isAdmin && (
+          <>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DropdownMenuItem onClick={() => router.push('/admin')}>
+                <FaShieldHalved className="mr-2 h-4 w-4" />
+                <span>管理画面</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => router.push('/admin/users')}>
+                <FaUsers className="mr-2 h-4 w-4" />
+                <span>ユーザー管理</span>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+          </>
+        )}
+        
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={handleLogout}>ログアウト</DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={handleLogout}
+          className="text-destructive focus:bg-destructive focus:text-destructive-foreground"
+        >
+          <FaRightFromBracket className="mr-2 h-4 w-4" />
+          <span>ログアウト</span>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
