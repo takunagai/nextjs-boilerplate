@@ -1,34 +1,20 @@
 import type { NextAuthConfig } from "next-auth";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import type { CommonUserAttributes, DBUser } from "./types";
 
 // NextAuth型拡張
 declare module "next-auth" {
-	interface User {
-		id?: string;
-		name?: string | null;
-		email?: string | null;
-		image?: string | null;
-		role?: string | null;
-	}
+	// CommonUserAttributesを継承して型の重複を削減
+	interface User extends CommonUserAttributes {}
 
 	interface Session {
-		user: {
-			id?: string;
-			name?: string | null;
-			email?: string | null;
-			image?: string | null;
-			role?: string | null;
-		};
+		user: CommonUserAttributes;
 	}
 
 	// JWT型拡張（Next-Auth v5ではnext-auth内に統合されています）
-	interface JWT {
-		id?: string;
-		name?: string | null;
-		email?: string | null;
+	interface JWT extends CommonUserAttributes {
 		picture?: string | null; // NextAuth内部では 'picture' を使用
-		role?: string | null;
 	}
 }
 
@@ -62,24 +48,9 @@ export const authConfig: NextAuthConfig = {
 					return null;
 				}
 
-				// テスト用のハードコードされたユーザー情報
-				// 実際の実装ではデータベースからユーザーを検索する
-				const testUsers = [
-					{
-						id: "1",
-						name: "永井 拓也",
-						email: "tak_na@icloud.com",
-						password: "123456",
-						role: "admin",
-					},
-					{
-						id: "2",
-						name: "テストユーザー",
-						email: "test@example.com",
-						password: "123456",
-						role: "user",
-					},
-				];
+				// テストデータを別ファイルから取得
+				const { getTestUsers } = await import("./test-data");
+				const testUsers = getTestUsers();
 
 				// メールアドレスとパスワードが一致するユーザーを検索
 				const user = testUsers.find(
