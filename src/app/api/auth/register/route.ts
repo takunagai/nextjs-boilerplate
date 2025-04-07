@@ -1,4 +1,4 @@
-import { createApiError, createApiResponse } from '@/lib/server/api/response';
+import { createApiError, createApiResponse, errorResponse } from '@/lib/server/api/response';
 import { z } from 'zod';
 import type { NextRequest } from 'next/server';
 
@@ -18,9 +18,9 @@ export async function POST(req: NextRequest) {
 
     // バリデーションエラーの場合
     if (!validationResult.success) {
-      return createApiError.validation('入力データが無効です', {
+      return errorResponse(createApiError.validation('入力データが無効です', {
         errors: validationResult.error.errors,
-      });
+      }));
     }
 
     const { name, email, password } = validationResult.data;
@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
     // メールアドレスの重複チェック（仮実装）
     // 実際の実装ではデータベースで確認する
     if (email === 'test@example.com') {
-      return createApiError.custom('EMAIL_IN_USE', 'このメールアドレスは既に登録されています');
+      return errorResponse(createApiError.custom('EMAIL_IN_USE', 'このメールアドレスは既に登録されています'));
     }
 
     // ユーザー登録処理
@@ -47,6 +47,6 @@ export async function POST(req: NextRequest) {
     });
   } catch (error) {
     console.error('ユーザー登録エラー:', error);
-    return createApiError.internal();
+    return errorResponse(createApiError.internal());
   }
 }
