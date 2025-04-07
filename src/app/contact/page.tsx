@@ -33,8 +33,10 @@ export default function ContactPage() {
 				url={`${META.SITE_URL}/contact`}
 			/>
 			<BreadcrumbJsonLd items={jsonLdBreadcrumbs} />
-			<Container size="md" paddingY="lg" paddingX="2xl">
+			<Container className="mt-8">
 				<Breadcrumb items={uiBreadcrumbs} />
+			</Container>
+			<Container size="md" paddingY="lg" paddingX="2xl">
 				<div className="flex flex-col gap-8">
 					{/* ヘッダーセクション */}
 					<div className="text-center">

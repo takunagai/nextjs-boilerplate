@@ -36,8 +36,10 @@ export default function PrivacyPolicyPage() {
 				url={`${META.SITE_URL}/privacy`}
 			/>
 			<BreadcrumbJsonLd items={jsonLdBreadcrumbs} />
-			<Container size="md" paddingY="lg" paddingX="2xl">
+			<Container className="mt-8">
 				<Breadcrumb items={uiBreadcrumbs} />
+			</Container>
+			<Container size="md" paddingY="lg" paddingX="2xl">
 				<div className="flex flex-col gap-8">
 					{/* ヘッダー */}
 					<div className="text-center">

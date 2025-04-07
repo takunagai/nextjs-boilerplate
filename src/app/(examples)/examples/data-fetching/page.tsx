@@ -12,6 +12,7 @@ import { BreadcrumbJsonLd, WebsiteJsonLd } from "@/components/seo";
 import { META } from "@/lib/constants";
 import { createBreadcrumbs } from "@/lib/utils";
 import { Suspense } from "react";
+import { Container } from "@/components/ui/container";
 
 // ユーザーの型定義
 interface User {
@@ -119,8 +120,11 @@ export default function DataFetchingPage() {
 				url={`${META.SITE_URL}/examples/data-fetching`}
 			/>
 			<BreadcrumbJsonLd items={jsonLdBreadcrumbs} />
-			<div>
+			
+			<Container className="mt-8">
 				<Breadcrumb items={uiBreadcrumbs} />
+			</Container>
+			<Container size="md" paddingY="lg" paddingX="2xl">
 				<h1 className="mb-8 text-3xl font-bold">データ取得サンプル</h1>
 
 				<div className="mb-8">
@@ -136,7 +140,7 @@ export default function DataFetchingPage() {
 						<UserList />
 					</Suspense>
 				</div>
-			</div>
+			</Container>
 		</>
 	);
 }

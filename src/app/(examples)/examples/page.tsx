@@ -7,6 +7,7 @@ import { WebsiteJsonLd } from "@/components/seo";
 import { META } from "@/lib/constants";
 import { createBreadcrumbs } from "@/lib/utils";
 import type { Metadata } from "next";
+import { Container } from "@/components/ui/container";
 
 export const metadata: Metadata = generateMetadata({
   title: "サンプル一覧",
@@ -51,8 +52,11 @@ export default function ExamplesPage() {
         url={`${META.SITE_URL}/examples`}
       />
       <BreadcrumbJsonLd items={jsonLdBreadcrumbs} />
-      <div>
+      
+      <Container className="mt-8">
         <Breadcrumb items={uiBreadcrumbs} />
+      </Container>
+      <Container size="md" paddingY="lg" paddingX="2xl">
         <h1 className="mb-8 text-3xl font-bold">サンプル一覧</h1>
         
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -70,7 +74,7 @@ export default function ExamplesPage() {
             </Card>
           ))}
         </div>
-      </div>
+      </Container>
     </>
   );
 }
