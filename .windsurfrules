@@ -127,6 +127,7 @@
 ## 1. コード品質
 - TypeScript の厳格な型チェック
 - [Biome のルールのデフォルト設定](https://biomejs.dev/formatter/#options)に従う
+   - ただし、Markdown のリント警告(Markdownlint)に限ってはしゅうせい無視すること。
 - コードの一貫性を維持
 
 ## 2. パフォーマンス
