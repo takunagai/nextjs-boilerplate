@@ -272,9 +272,9 @@ export default function MyComponent() {
 }
 ```
 
-### Containerコンポーネントの使用
+### Container コンポーネントの使用
 
-レスポンシブなレイアウトを簡単に実装するためのContainerコンポーネント：
+レスポンシブなレイアウトを簡単に実装するための Container コンポーネント。
 
 ```tsx
 import { Container } from "@/components/ui/container";
@@ -282,44 +282,45 @@ import { Container } from "@/components/ui/container";
 export default function MyPage() {
   return (
     // 基本的な使用方法
-    <Container size="md" paddingY="lg" paddingX="2xl">
+    <Container width="2xl" paddingY="lg" paddingX="2xl">
       <h1>コンテンツタイトル</h1>
       <p>コンテンツの説明文...</p>
     </Container>
     
-    // 位置指定とz-indexの使用例
-    <Container size="2xl" paddingY="xl" paddingX="lg" position="relative" zIndex="high">
+    // クラス名でスタイルを追加する例
+    <Container width="2xl" paddingY="xl" paddingX="lg" className="bg-gray-50 relative z-50">
       <div>複雑なレイアウト要素...</div>
     </Container>
 
     // セマンティックなHTML要素として利用 (デフォルトはdiv)
-    <Container as="section" size="lg" paddingY="xl" paddingX="md">
+    <Container as="section" width="lg">
       <h2>セクションタイトル</h2>
       <p>セクションコンテンツ...</p>
     </Container>
 
-    // ヘッダーの実装例
-    <Container as="header" size="full" paddingY="md" paddingX="lg" position="relative" zIndex="high">
-      <nav>ナビゲーションメニュー...</nav>
+    // カスタム最大幅の指定
+    <Container fluid customMaxWidth="1440px" paddingY="md" paddingX="lg">
+      <div>カスタム幅のコンテナ</div>
     </Container>
   );
 }
 ```
 
-### 利用可能なパラメータ
+#### パラメータ
 
-サイズバリエーション：
+幅のバリエーション：
 
-- `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `full` - コンテナの最大幅を制御
+- `xs`, `sm`, `md`, `lg`, `xl`, `2xl` - コンテナの最大幅を制御
 
 パディングバリエーション（縦・横個別に設定可能）：
 
 - `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `4xl`
 
-位置とzIndexオプション：
+その他のオプション：
 
-- `position`: `default`, `relative`
-- `zIndex`: `none`, `base`, `high`, `highest`
+- `fluid`: 最大幅制限なしで幅100%に（モバイルでの余白は維持）
+- `customMaxWidth`: CSSカスタム変数を使用したカスタム最大幅の指定
+- `className`: 追加のTailwindクラスを直接指定
 
 使用可能なHTML要素（`as`プロパティ）：
 
@@ -372,7 +373,7 @@ nextjs-boilerplate/
 │   │   ├── validation/      # バリデーションスキーマ
 │   │   ├── {api}/           # API関連（追加予定）
 │   │   ├── {db}/            # データベース関連（追加予定）
-│   │   └── utils.ts         # 污用ユーティリティ
+│   │   └── utils.ts         # 汚用ユーティリティ
 │   └── middleware.ts        # ミドルウェア
 ├── tests-results/           # テスト結果
 ├── tests/                   # テストファイル
@@ -433,7 +434,6 @@ npm run test:e2e:report
 ### Vercelへのデプロイ
 
 このプロジェクトはVercelへの簡単なデプロイをサポートしています。  
-~~詳細は [デプロイガイド](./docs/deployment.md) を参照してください。~~
 
 [![Vercelにデプロイ](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fyourusername%2Fnextjs-boilerplate)
 
