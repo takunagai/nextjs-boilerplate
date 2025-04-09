@@ -7,6 +7,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+import { Container } from "@/components/ui/container";
 import { auth } from "@/lib/auth";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -35,7 +36,7 @@ export default async function DashboardPage() {
 	const user = session.user;
 
 	return (
-		<div className="container py-8">
+		<Container className="mt-16">
 			<h1 className="text-3xl font-bold mb-6">ダッシュボード</h1>
 
 			<div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -113,6 +114,6 @@ export default async function DashboardPage() {
 					</CardContent>
 				</Card>
 			</div>
-		</div>
+		</Container>
 	);
 }
