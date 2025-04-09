@@ -7,7 +7,7 @@ import { Gallery } from "@/components/ui/gallery";
 export function GallerySection() {
 	return (
 		<section className="py-16 md:py-24 w-full bg-slate-50 dark:bg-slate-900">
-			<Container size="2xl" paddingY="xl" paddingX="lg">
+			<Container width="2xl" paddingY="xl" paddingX="lg">
 				<div className="text-center mb-16">
 					<h2 className="text-3xl md:text-4xl font-bold mb-4">
 						フォトギャラリー

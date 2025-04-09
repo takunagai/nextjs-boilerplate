@@ -1,3 +1,5 @@
+import { BreadcrumbJsonLd, WebsiteJsonLd } from "@/components/seo";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
 import {
 	Card,
 	CardContent,
@@ -6,13 +8,11 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+import { Container } from "@/components/ui/container";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Breadcrumb } from "@/components/ui/breadcrumb";
-import { BreadcrumbJsonLd, WebsiteJsonLd } from "@/components/seo";
 import { META } from "@/lib/constants";
 import { createBreadcrumbs } from "@/lib/utils";
 import { Suspense } from "react";
-import { Container } from "@/components/ui/container";
 
 // ユーザーの型定義
 interface User {
@@ -106,11 +106,16 @@ export default function DataFetchingPage() {
 	const breadcrumbItems = [
 		{ title: "ホーム", path: "/" },
 		{ title: "サンプル一覧", path: "/examples" },
-		{ title: "データ取得サンプル", path: "/examples/data-fetching", current: true },
+		{
+			title: "データ取得サンプル",
+			path: "/examples/data-fetching",
+			current: true,
+		},
 	];
 
 	// UI表示用とJSON-LD用のデータを生成
-	const { ui: uiBreadcrumbs, jsonLd: jsonLdBreadcrumbs } = createBreadcrumbs(breadcrumbItems);
+	const { ui: uiBreadcrumbs, jsonLd: jsonLdBreadcrumbs } =
+		createBreadcrumbs(breadcrumbItems);
 
 	return (
 		<>
@@ -120,11 +125,11 @@ export default function DataFetchingPage() {
 				url={`${META.SITE_URL}/examples/data-fetching`}
 			/>
 			<BreadcrumbJsonLd items={jsonLdBreadcrumbs} />
-			
+
 			<Container className="mt-8">
 				<Breadcrumb items={uiBreadcrumbs} />
 			</Container>
-			<Container size="md" paddingY="lg" paddingX="2xl">
+			<Container width="2xl" paddingY="xl" paddingX="lg">
 				<h1 className="mb-8 text-3xl font-bold">データ取得サンプル</h1>
 
 				<div className="mb-8">
@@ -133,7 +138,8 @@ export default function DataFetchingPage() {
 					</h2>
 					<p className="mb-6 text-muted-foreground">
 						このサンプルでは、Next.jsのサーバーコンポーネントとReact
-						Suspenseを使用して、 データ取得中のローディング状態を処理しています。
+						Suspenseを使用して、
+						データ取得中のローディング状態を処理しています。
 					</p>
 
 					<Suspense fallback={<UserListSkeleton />}>

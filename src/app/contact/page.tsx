@@ -1,5 +1,10 @@
 import { ContactForm } from "@/components/contact/contact-form";
-import { BreadcrumbJsonLd, generateMetadata, generateViewport, WebsiteJsonLd } from "@/components/seo";
+import {
+	BreadcrumbJsonLd,
+	WebsiteJsonLd,
+	generateMetadata,
+	generateViewport,
+} from "@/components/seo";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Container } from "@/components/ui/container";
 import { META } from "@/lib/constants";
@@ -8,7 +13,8 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = generateMetadata({
 	title: "お問い合わせ",
-	description: "ご質問やお問い合わせは、こちらのフォームからお気軽にご連絡ください。",
+	description:
+		"ご質問やお問い合わせは、こちらのフォームからお気軽にご連絡ください。",
 	keywords: ["お問い合わせ", "コンタクト", "サポート", "フォーム"],
 	canonical: "/contact",
 });
@@ -23,7 +29,8 @@ export default function ContactPage() {
 	];
 
 	// UI表示用とJSON-LD用のデータを生成
-	const { ui: uiBreadcrumbs, jsonLd: jsonLdBreadcrumbs } = createBreadcrumbs(breadcrumbItems);
+	const { ui: uiBreadcrumbs, jsonLd: jsonLdBreadcrumbs } =
+		createBreadcrumbs(breadcrumbItems);
 
 	return (
 		<>
@@ -36,7 +43,7 @@ export default function ContactPage() {
 			<Container className="mt-8">
 				<Breadcrumb items={uiBreadcrumbs} />
 			</Container>
-			<Container size="md" paddingY="lg" paddingX="2xl">
+			<Container className="mt-8" paddingY="lg" paddingX="2xl">
 				<div className="flex flex-col gap-8">
 					{/* ヘッダーセクション */}
 					<div className="text-center">

@@ -1,4 +1,9 @@
-import { BreadcrumbJsonLd, generateMetadata, generateViewport, WebsiteJsonLd } from "@/components/seo";
+import {
+	BreadcrumbJsonLd,
+	WebsiteJsonLd,
+	generateMetadata,
+	generateViewport,
+} from "@/components/seo";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
@@ -8,7 +13,8 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = generateMetadata({
 	title: "プライバシーポリシー",
-	description: "当サイトにおける個人情報の取り扱いについて定めたプライバシーポリシーです。",
+	description:
+		"当サイトにおける個人情報の取り扱いについて定めたプライバシーポリシーです。",
 	keywords: ["プライバシーポリシー", "個人情報保護方針", "個人情報の取り扱い"],
 	canonical: "/privacy",
 });
@@ -26,7 +32,8 @@ export default function PrivacyPolicyPage() {
 	];
 
 	// UI表示用とJSON-LD用のデータを生成
-	const { ui: uiBreadcrumbs, jsonLd: jsonLdBreadcrumbs } = createBreadcrumbs(breadcrumbItems);
+	const { ui: uiBreadcrumbs, jsonLd: jsonLdBreadcrumbs } =
+		createBreadcrumbs(breadcrumbItems);
 
 	return (
 		<>
@@ -39,7 +46,7 @@ export default function PrivacyPolicyPage() {
 			<Container className="mt-8">
 				<Breadcrumb items={uiBreadcrumbs} />
 			</Container>
-			<Container size="md" paddingY="lg" paddingX="2xl">
+			<Container className="mt-8" paddingY="lg" paddingX="2xl">
 				<div className="flex flex-col gap-8">
 					{/* ヘッダー */}
 					<div className="text-center">
@@ -156,7 +163,8 @@ export default function PrivacyPolicyPage() {
 								Analyticsはトラフィックデータの収集のためにCookieを使用しています。このトラフィックデータは匿名で収集されており、個人を特定するものではありません。
 							</p>
 							<p>
-								Google Analyticsの利用規約およびプライバシーポリシーに関する詳細は、Google
+								Google
+								Analyticsの利用規約およびプライバシーポリシーに関する詳細は、Google
 								Analyticsのサイトをご覧ください。
 							</p>
 						</CardContent>
@@ -190,7 +198,9 @@ export default function PrivacyPolicyPage() {
 							<CardTitle>9. お客様の権利</CardTitle>
 						</CardHeader>
 						<CardContent className="space-y-4">
-							<p>お客様は、ご自身の個人情報について以下の権利を有しています：</p>
+							<p>
+								お客様は、ご自身の個人情報について以下の権利を有しています：
+							</p>
 							<ul className="list-disc pl-6 space-y-2">
 								<li>個人情報へのアクセス</li>
 								<li>個人情報の訂正</li>
@@ -240,7 +250,6 @@ export default function PrivacyPolicyPage() {
 							</div>
 						</CardContent>
 					</Card>
-
 				</div>
 			</Container>
 		</>

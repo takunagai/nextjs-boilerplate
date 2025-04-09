@@ -63,7 +63,7 @@ export default function AboutPage() {
 			<Container className="mt-8">
 				<Breadcrumb items={uiBreadcrumbs} />
 			</Container>
-			<Container size="md" paddingY="lg" paddingX="2xl">
+			<Container className="mt-8" paddingY="lg" paddingX="2xl">
 				<div className="flex flex-col gap-8">
 					{/* ヘッダーセクション */}
 					<div className="flex flex-col md:flex-row gap-8 items-center">
@@ -94,8 +94,12 @@ export default function AboutPage() {
 
 					{/* 自己紹介セクション */}
 					<section className="mb-12">
-						<h2 className="text-3xl font-bold tracking-tight mb-3 border-b pb-2">自己紹介</h2>
-						<p className="text-muted-foreground mb-4">私についての簡単な紹介です</p>
+						<h2 className="text-3xl font-bold tracking-tight mb-3 border-b pb-2">
+							自己紹介
+						</h2>
+						<p className="text-muted-foreground mb-4">
+							私についての簡単な紹介です
+						</p>
 						<div className="mt-6">
 							<p className="leading-7 mb-4">
 								はじめまして、山田太郎と申します。フロントエンドエンジニアとして5年間の経験があり、
@@ -112,7 +116,9 @@ export default function AboutPage() {
 
 					{/* スキルセクション */}
 					<section className="mb-12">
-						<h2 className="text-3xl font-bold tracking-tight mb-3 border-b pb-2">スキル</h2>
+						<h2 className="text-3xl font-bold tracking-tight mb-3 border-b pb-2">
+							スキル
+						</h2>
 						<p className="text-muted-foreground mb-4">技術スタックと専門知識</p>
 						<div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
 							<div>
@@ -120,27 +126,19 @@ export default function AboutPage() {
 								<ul className="space-y-2">
 									<li className="flex items-center gap-2">
 										<Badge>Next.js</Badge>
-										<span className="text-sm text-muted-foreground">
-											上級
-										</span>
+										<span className="text-sm text-muted-foreground">上級</span>
 									</li>
 									<li className="flex items-center gap-2">
 										<Badge>React</Badge>
-										<span className="text-sm text-muted-foreground">
-											上級
-										</span>
+										<span className="text-sm text-muted-foreground">上級</span>
 									</li>
 									<li className="flex items-center gap-2">
 										<Badge>TypeScript</Badge>
-										<span className="text-sm text-muted-foreground">
-											中級
-										</span>
+										<span className="text-sm text-muted-foreground">中級</span>
 									</li>
 									<li className="flex items-center gap-2">
 										<Badge>Tailwind CSS</Badge>
-										<span className="text-sm text-muted-foreground">
-											上級
-										</span>
+										<span className="text-sm text-muted-foreground">上級</span>
 									</li>
 								</ul>
 							</div>
@@ -149,27 +147,19 @@ export default function AboutPage() {
 								<ul className="space-y-2">
 									<li className="flex items-center gap-2">
 										<Badge>Node.js</Badge>
-										<span className="text-sm text-muted-foreground">
-											中級
-										</span>
+										<span className="text-sm text-muted-foreground">中級</span>
 									</li>
 									<li className="flex items-center gap-2">
 										<Badge>PostgreSQL</Badge>
-										<span className="text-sm text-muted-foreground">
-											初級
-										</span>
+										<span className="text-sm text-muted-foreground">初級</span>
 									</li>
 									<li className="flex items-center gap-2">
 										<Badge>REST API</Badge>
-										<span className="text-sm text-muted-foreground">
-											中級
-										</span>
+										<span className="text-sm text-muted-foreground">中級</span>
 									</li>
 									<li className="flex items-center gap-2">
 										<Badge>GraphQL</Badge>
-										<span className="text-sm text-muted-foreground">
-											初級
-										</span>
+										<span className="text-sm text-muted-foreground">初級</span>
 									</li>
 								</ul>
 							</div>
@@ -178,7 +168,9 @@ export default function AboutPage() {
 
 					{/* 経歴セクション */}
 					<section className="mb-12">
-						<h2 className="text-3xl font-bold tracking-tight mb-3 border-b pb-2">経歴</h2>
+						<h2 className="text-3xl font-bold tracking-tight mb-3 border-b pb-2">
+							経歴
+						</h2>
 						<p className="text-muted-foreground mb-4">これまでの職歴と学歴</p>
 						<div className="mt-6 space-y-6">
 							<div>
