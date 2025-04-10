@@ -10,6 +10,8 @@ import {
 	FaYoutube,
 } from "react-icons/fa6";
 
+import { Container } from "@/components/ui/container";
+
 // ソーシャルメディアプラットフォームの定義
 type SocialPlatform = "GITHUB" | "X" | "INSTAGRAM" | "FACEBOOK" | "YOUTUBE";
 
@@ -134,7 +136,7 @@ export function Footer({
 			className={cn(footerVariants({ variant, size }), className)}
 			{...props}
 		>
-			<div className="container mx-auto px-10">
+			<Container paddingX="xl" paddingY="md">
 				<div
 					className={`grid gap-8 ${
 						logoOnBottom ? "md:grid-cols-1" : "md:grid-cols-[1fr_3fr]"
@@ -209,7 +211,7 @@ export function Footer({
 							: `© ${companyName}`}
 					</div>
 				</div>
-			</div>
+			</Container>
 		</footer>
 	);
 }

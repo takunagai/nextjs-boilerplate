@@ -8,6 +8,7 @@ import * as React from "react";
 import { useIsClient, useLocalStorage, useMediaQuery } from "usehooks-ts";
 
 import { ThemeSwitcher } from "@/components/theme/theme-switcher";
+import { Container } from "@/components/ui/container";
 import { useScroll } from "@/hooks/useScroll";
 import { APP } from "@/lib/constants";
 import { cn } from "@/lib/utils";
@@ -193,55 +194,57 @@ export function Header({
 			)}
 			{...props}
 		>
-			<div className="container mx-auto px-4 h-full flex items-center justify-between">
-				{/* ロゴ部分 */}
-				<div className="flex items-center gap-2">
-					<Link href="/" className="flex items-center gap-2">
-						{logo}
-						{logoText && (
-							<span className="font-bold text-lg tracking-tighter">
-								{logoText}
-							</span>
-						)}
-					</Link>
-				</div>
-
-				{/* ナビゲーションと右側コンテンツ */}
-				{isClient ? (
-					<div className="flex items-center justify-end gap-4">
-						{isDesktop && <DesktopNavigation items={navItems} />}
-						<div className="flex items-center gap-2">
-							{rightContent}
-							<ThemeSwitcher />
-							{!isDesktop && (
-								<MobileNavigation
-									items={navItems}
-									isOpen={isOpen}
-									setIsOpen={setIsOpen}
-								/>
+			<Container paddingX="md" paddingY="none" as="div" className="h-full">
+				<div className="flex items-center justify-between h-full">
+					{/* ロゴ部分 */}
+					<div className="flex items-center gap-2">
+						<Link href="/" className="flex items-center gap-2">
+							{logo}
+							{logoText && (
+								<span className="font-bold text-lg tracking-tighter">
+									{logoText}
+								</span>
 							)}
-						</div>
+						</Link>
 					</div>
-				) : (
-					// SSR時のスケルトンUI - レイアウトシフトを防止
-					<div className="flex items-center justify-end gap-4">
-						{/* デスクトップナビゲーションのスケルトン */}
-						<div className="hidden md:flex items-center gap-4">
-							{["menu-item-1", "menu-item-2", "menu-item-3"].map((id) => (
-								<div
-									key={id}
-									className="h-4 w-16 bg-muted animate-pulse rounded"
-								/>
-							))}
+
+					{/* ナビゲーションと右側コンテンツ */}
+					{isClient ? (
+						<div className="flex items-center justify-end gap-4">
+							{isDesktop && <DesktopNavigation items={navItems} />}
+							<div className="flex items-center gap-2">
+								{rightContent}
+								<ThemeSwitcher />
+								{!isDesktop && (
+									<MobileNavigation
+										items={navItems}
+										isOpen={isOpen}
+										setIsOpen={setIsOpen}
+									/>
+								)}
+							</div>
 						</div>
-						{/* 右側コンテンツとテーマスイッチャーのスケルトン */}
-						<div className="flex items-center gap-2">
-							<div className="h-8 w-8 bg-muted animate-pulse rounded-full" />
-							<div className="h-8 w-8 bg-muted animate-pulse rounded-full" />
+					) : (
+						// SSR時のスケルトンUI - レイアウトシフトを防止
+						<div className="flex items-center justify-end gap-4">
+							{/* デスクトップナビゲーションのスケルトン */}
+							<div className="hidden md:flex items-center gap-4">
+								{["menu-item-1", "menu-item-2", "menu-item-3"].map((id) => (
+									<div
+										key={id}
+										className="h-4 w-16 bg-muted animate-pulse rounded"
+									/>
+								))}
+							</div>
+							{/* 右側コンテンツとテーマスイッチャーのスケルトン */}
+							<div className="flex items-center gap-2">
+								<div className="h-8 w-8 bg-muted animate-pulse rounded-full" />
+								<div className="h-8 w-8 bg-muted animate-pulse rounded-full" />
+							</div>
 						</div>
-					</div>
-				)}
-			</div>
+					)}
+				</div>
+			</Container>
 		</header>
 	);
 }
