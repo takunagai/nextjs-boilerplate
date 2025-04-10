@@ -55,21 +55,24 @@ export function MobileNavigation({
 					<Button
 						variant="ghost"
 						size="icon"
-						className="-mr-2"
+						className="-mr-2 focus-visible:ring-2 focus-visible:ring-primary"
 						onClick={(e) => {
 							// デスクトップサイズではクリックイベントを無効化
 							if (isDesktop) {
 								e.preventDefault();
 							}
 						}}
+						aria-label="メニューを開く"
 					>
-						<FaBars className="h-5 w-5" />
-						<span className="sr-only">メニューを開く</span>
+						<FaBars className="size-5" />
 					</Button>
 				</SheetTrigger>
-				<SheetContent side="right" className="px-6 pt-8 pb-6">
+				<SheetContent 
+					side="right" 
+					className="px-6 py-8 flex flex-col gap-6"
+				>
 					<SheetTitle className="sr-only">サイトナビゲーション</SheetTitle>
-					<nav className="flex flex-col gap-4">
+					<nav className="flex flex-col gap-1.5 w-full">
 						{items.map((item) => {
 							// サブメニューがある場合はアコーディオンを使用
 							if (item.children?.length) {
@@ -78,16 +81,19 @@ export function MobileNavigation({
 										key={item.href}
 										type="single"
 										collapsible
-										className="border-0"
+										className="border-0 w-full"
 									>
-										<AccordionItem value="submenu" className="border-0">
+										<AccordionItem 
+											value={item.href} 
+											className="border-0"
+										>
 											<AccordionTrigger 
-												className="py-3 px-0 text-base font-medium hover:no-underline data-[state=open]:text-primary"
+												className="py-3.5 px-0 text-base font-medium hover:no-underline data-[state=open]:text-primary"
 											>
 												{item.label}
 											</AccordionTrigger>
-											<AccordionContent className="pl-2 pt-2">
-												<div className="flex flex-col gap-3 pl-2 border-l border-muted/50">
+											<AccordionContent className="pt-2 pl-2">
+												<div className="flex flex-col gap-2 pl-3 border-l border-muted data-[state=open]:animate-in data-[state=closed]:animate-out">
 													{item.children.map((child) => (
 														<Link
 															key={child.href}
@@ -100,7 +106,7 @@ export function MobileNavigation({
 															}
 															onClick={() => setIsOpen(false)}
 															className={cn(
-																"text-sm transition-colors hover:text-primary py-1 px-3",
+																"text-sm transition-colors hover:text-primary focus:text-primary py-2.5 px-3 rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
 																child.active
 																	? "text-foreground"
 																	: "text-muted-foreground",
@@ -125,7 +131,7 @@ export function MobileNavigation({
 									rel={item.external ? "noopener noreferrer" : undefined}
 									onClick={() => setIsOpen(false)}
 									className={cn(
-										"text-base font-medium transition-colors hover:text-primary py-3",
+										"text-base font-medium transition-colors hover:text-primary focus:text-primary py-3.5 rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
 										item.active
 											? "text-foreground"
 											: "text-muted-foreground",
@@ -136,7 +142,11 @@ export function MobileNavigation({
 							);
 						})}
 					</nav>
-					{rightContent && <div className="mt-8 border-t pt-6">{rightContent}</div>}
+					{rightContent && (
+						<div className="mt-auto border-t pt-6">
+							{rightContent}
+						</div>
+					)}
 				</SheetContent>
 			</Sheet>
 		</div>
