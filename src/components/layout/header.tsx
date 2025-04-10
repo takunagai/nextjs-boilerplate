@@ -11,6 +11,7 @@ import { ThemeSwitcher } from "@/components/theme/theme-switcher";
 import { Container } from "@/components/ui/container";
 import { useScroll } from "@/hooks/useScroll";
 import { APP } from "@/lib/constants";
+import type { HeaderLink } from "@/lib/constants/header-navigation";
 import { cn } from "@/lib/utils";
 import { DesktopNavigation } from "./header/desktop-navigation";
 import { MobileNavigation } from "./header/mobile-navigation";
@@ -54,7 +55,7 @@ export interface HeaderProps
 		VariantProps<typeof headerVariants> {
 	logo?: React.ReactNode;
 	logoText?: string;
-	items?: NavItem[];
+	items?: HeaderLink[];
 	rightContent?: React.ReactNode;
 	mobileMenuBreakpoint?: "sm" | "md" | "lg" | "xl";
 	hideOnScroll?: boolean;
@@ -177,10 +178,16 @@ export function Header({
 
 	// ナビゲーションアイテムにアクティブステートを追加
 	const navItems = React.useMemo(() => {
-		return items.map((item) => ({
-			...item,
-			active: item.active ?? pathname === item.href,
-		}));
+		// HeaderLinkからNavItemに変換する関数
+		const convertToNavItem = (item: HeaderLink): NavItem => ({
+			label: item.label,
+			href: item.href,
+			external: item.external,
+			active: pathname === item.href,
+			children: item.submenu?.map(convertToNavItem),
+		});
+
+		return items.map(convertToNavItem);
 	}, [items, pathname]);
 
 	return (
