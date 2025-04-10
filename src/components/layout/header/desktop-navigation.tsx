@@ -19,8 +19,8 @@ export function DesktopNavigation({
 	breakpointClass = "md:flex",
 }: DesktopNavigationProps) {
 	return (
-		<div className="flex items-center gap-6">
-			<nav className="flex items-center gap-4">
+		<div className="flex flex-row items-center gap-6">
+			<nav className="flex flex-row items-center gap-4">
 				{items.map((item) => {
 					// サブメニューがある場合はドロップダウンを表示
 					if (item.children?.length) {
@@ -30,13 +30,25 @@ export function DesktopNavigation({
 								className="relative group"
 							>
 								{/* メインリンク */}
-								<div className="flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary py-2 cursor-pointer">
+								<button 
+									className="flex flex-row items-center gap-1 text-sm font-medium transition-colors hover:text-primary focus:text-primary py-2"
+									aria-haspopup="true"
+									aria-expanded="false"
+									type="button"
+								>
 									<span>{item.label}</span>
 									<FaChevronDown className="h-3 w-3 opacity-70" />
-								</div>
+								</button>
 
 								{/* サブメニュー（CSSのみでホバー制御） */}
-								<div className="absolute left-0 w-48 py-2 bg-background border rounded-md shadow-md mt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-50">
+								<div 
+									className="absolute left-0 min-w-[12rem] py-2 bg-background border-border rounded-md shadow-md mt-1 
+                                           opacity-0 invisible 
+                                           group-hover:opacity-100 group-focus-within:opacity-100 
+                                           group-hover:visible group-focus-within:visible 
+                                           transition-all duration-150 z-50"
+									role="menu"
+								>
 									{item.children.map((child) => (
 										<Link
 											key={child.href}
@@ -44,11 +56,12 @@ export function DesktopNavigation({
 											target={child.external ? "_blank" : undefined}
 											rel={child.external ? "noopener noreferrer" : undefined}
 											className={cn(
-												"block px-4 py-2 text-sm hover:bg-accent hover:text-accent-foreground",
+												"block px-4 py-2 text-sm hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground outline-none",
 												child.active
 													? "text-foreground"
 													: "text-muted-foreground",
 											)}
+											role="menuitem"
 										>
 											{child.label}
 										</Link>
@@ -66,7 +79,7 @@ export function DesktopNavigation({
 							target={item.external ? "_blank" : undefined}
 							rel={item.external ? "noopener noreferrer" : undefined}
 							className={cn(
-								"text-sm font-medium transition-colors hover:text-primary py-2",
+								"text-sm font-medium transition-colors hover:text-primary focus:text-primary py-2 outline-none",
 								item.active ? "text-foreground" : "text-muted-foreground",
 							)}
 						>
@@ -75,7 +88,7 @@ export function DesktopNavigation({
 					);
 				})}
 			</nav>
-			{rightContent && <div>{rightContent}</div>}
+			{rightContent && <div className="flex-shrink-0">{rightContent}</div>}
 		</div>
 	);
 }
