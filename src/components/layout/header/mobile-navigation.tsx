@@ -25,8 +25,6 @@ export interface MobileNavigationProps {
 	rightContent?: React.ReactNode;
 	isOpen: boolean;
 	setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-	isDesktop?: boolean;
-	breakpointClass?: string;
 }
 
 export function MobileNavigation({
@@ -34,21 +32,13 @@ export function MobileNavigation({
 	rightContent,
 	isOpen,
 	setIsOpen,
-	isDesktop = false,
-	breakpointClass = "md:flex",
 }: MobileNavigationProps) {
-	// ドロワーメニューを表示するかどうかの判定
-	const showDrawer = !isDesktop;
-
 	return (
 		<div>
 			<Sheet
 				open={isOpen}
 				onOpenChange={(open) => {
-					// デスクトップサイズではドロワーメニューを開かない
-					if (showDrawer) {
-						setIsOpen(open);
-					}
+					setIsOpen(open);
 				}}
 			>
 				<SheetTrigger asChild>
@@ -56,12 +46,6 @@ export function MobileNavigation({
 						variant="ghost"
 						size="icon"
 						className="-mr-2 focus-visible:ring-2 focus-visible:ring-primary"
-						onClick={(e) => {
-							// デスクトップサイズではクリックイベントを無効化
-							if (isDesktop) {
-								e.preventDefault();
-							}
-						}}
 						aria-label="メニューを開く"
 					>
 						<FaBars className="size-5" />
