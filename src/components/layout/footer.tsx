@@ -150,7 +150,7 @@ export function Footer({
 					)}
 
 					{/* ナビゲーショングループのエリア */}
-					<div className="grid order-1 lg:order-2 gap-8 md:gap-4 grid-cols-2 sm:grid-cols-2 md:grid-cols-[1fr_3fr_3fr_3fr] lg:grid-cols-4">
+					<div className="grid order-1 lg:order-2 gap-8 md:gap-4 grid-cols-2 sm:grid-cols-2 md:grid-cols-4">
 						{adjustedNavGroups.map((group, index) => {
 							// 空要素かどうかを判定
 							const isEmpty =
