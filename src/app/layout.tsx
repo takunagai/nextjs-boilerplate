@@ -1,14 +1,14 @@
+import { UserAuthMenu } from "@/components/auth/user-auth-menu";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { OrganizationJsonLd, WebsiteJsonLd } from "@/components/seo";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { ScrollToTop } from "@/components/ui/scroll-to-top";
-import { UserAuthMenu } from "@/components/auth/user-auth-menu";
-import { APP, META } from "@/lib/constants";
 import { auth } from "@/lib/auth";
+import { APP, META } from "@/lib/constants";
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -107,6 +107,7 @@ export default async function RootLayout({
 					<SessionProvider session={session}>
 						<div className="flex flex-col min-h-screen">
 							<Header
+								background="transparent"
 								logoText={APP.NAME}
 								items={[
 									{ label: "ホーム", href: "/" },

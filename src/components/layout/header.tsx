@@ -17,24 +17,24 @@ import { MobileNavigation } from "./header/mobile-navigation";
 
 // ヘッダーのバリアントを定義
 const headerVariants = cva(
-	"w-full border-b fixed top-0 left-0 right-0 z-50 transition-all ease-in-out duration-300",
+	"w-full fixed top-0 left-0 right-0 z-50 transition-all ease-in-out duration-300",
 	{
 		variants: {
-			variant: {
+			background: {
 				default: "bg-background",
 				primary: "bg-primary text-primary-foreground",
 				secondary: "bg-secondary",
-				transparent: "bg-transparent backdrop-blur-sm",
+				transparent: "bg-transparent",
 			},
-			size: {
+			height: {
 				default: "h-16",
 				sm: "h-12",
 				lg: "h-20",
 			},
 		},
 		defaultVariants: {
-			variant: "default",
-			size: "default",
+			background: "default",
+			height: "default",
 		},
 	},
 );
@@ -62,8 +62,8 @@ export interface HeaderProps
 
 export function Header({
 	className,
-	variant,
-	size,
+	background,
+	height,
 	logo = (
 		// ロゴが不要な場合は代入を削除
 		<Image
@@ -132,7 +132,7 @@ export function Header({
 	const shouldHide = hideOnScroll && !isOpen && !visible;
 
 	// 背景透過の判定
-	const transparentBackground = isAtTop && variant === "transparent";
+	const transparentBackground = isAtTop && background === "transparent";
 
 	// スクロール時の背景効果
 	const scrolledClass =
@@ -186,7 +186,7 @@ export function Header({
 	return (
 		<header
 			className={cn(
-				headerVariants({ variant, size }),
+				headerVariants({ background, height }),
 				scrolledClass,
 				scrollAnimationClass,
 				scrollDirectionEffect,
