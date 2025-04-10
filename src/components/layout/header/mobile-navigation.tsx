@@ -67,7 +67,7 @@ export function MobileNavigation({
 						<span className="sr-only">メニューを開く</span>
 					</Button>
 				</SheetTrigger>
-				<SheetContent side="right" className="pt-6">
+				<SheetContent side="right" className="px-6 pt-8 pb-6">
 					<SheetTitle className="sr-only">サイトナビゲーション</SheetTitle>
 					<nav className="flex flex-col gap-4">
 						{items.map((item) => {
@@ -81,11 +81,13 @@ export function MobileNavigation({
 										className="border-0"
 									>
 										<AccordionItem value="submenu" className="border-0">
-											<AccordionTrigger className="py-2 text-base font-medium hover:no-underline">
+											<AccordionTrigger 
+												className="py-3 px-0 text-base font-medium hover:no-underline data-[state=open]:text-primary"
+											>
 												{item.label}
 											</AccordionTrigger>
-											<AccordionContent>
-												<div className="flex flex-col gap-2 pl-4">
+											<AccordionContent className="pl-2 pt-2">
+												<div className="flex flex-col gap-3 pl-2 border-l border-muted/50">
 													{item.children.map((child) => (
 														<Link
 															key={child.href}
@@ -98,7 +100,7 @@ export function MobileNavigation({
 															}
 															onClick={() => setIsOpen(false)}
 															className={cn(
-																"text-sm transition-colors hover:text-primary py-1",
+																"text-sm transition-colors hover:text-primary py-1 px-3",
 																child.active
 																	? "text-foreground"
 																	: "text-muted-foreground",
@@ -123,7 +125,7 @@ export function MobileNavigation({
 									rel={item.external ? "noopener noreferrer" : undefined}
 									onClick={() => setIsOpen(false)}
 									className={cn(
-										"text-base font-medium transition-colors hover:text-primary py-2",
+										"text-base font-medium transition-colors hover:text-primary py-3",
 										item.active
 											? "text-foreground"
 											: "text-muted-foreground",
@@ -134,7 +136,7 @@ export function MobileNavigation({
 							);
 						})}
 					</nav>
-					{rightContent && <div className="mt-6 border-t pt-6">{rightContent}</div>}
+					{rightContent && <div className="mt-8 border-t pt-6">{rightContent}</div>}
 				</SheetContent>
 			</Sheet>
 		</div>
