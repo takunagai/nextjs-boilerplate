@@ -11,7 +11,12 @@ import {
 	AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { 
+	Sheet, 
+	SheetContent, 
+	SheetTitle,
+	SheetTrigger 
+} from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import type { NavItem } from "../header";
 
@@ -63,6 +68,7 @@ export function MobileNavigation({
 					</Button>
 				</SheetTrigger>
 				<SheetContent side="right" className="pt-6">
+					<SheetTitle className="sr-only">サイトナビゲーション</SheetTitle>
 					<nav className="flex flex-col gap-4">
 						{items.map((item) => {
 							// サブメニューがある場合はアコーディオンを使用
