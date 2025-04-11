@@ -28,15 +28,16 @@ async function getFilteredNews(category?: string) {
 export default async function NewsPage({
 	searchParams,
 }: {
-	searchParams: { [key: string]: string | string[] | undefined };
+	searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
 	// クエリパラメータの取得
-	const selectedCategory = typeof searchParams[QUERY_PARAMS.category] === "string" 
-		? searchParams[QUERY_PARAMS.category] as string 
+	const resolvedSearchParams = await searchParams;
+	const selectedCategory = typeof resolvedSearchParams[QUERY_PARAMS.category] === "string" 
+		? resolvedSearchParams[QUERY_PARAMS.category] as string 
 		: undefined;
 	
 	// ページ番号の取得（デフォルトは1ページ目）
-	const pageParam = searchParams[QUERY_PARAMS.page];
+	const pageParam = resolvedSearchParams[QUERY_PARAMS.page];
 	const currentPage = pageParam ? Number.parseInt(pageParam as string, 10) : 1;
 	
 	// データ取得

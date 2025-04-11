@@ -15,9 +15,10 @@ import { getNewsById, getAllNews } from "@/lib/data/news";
 export async function generateMetadata({
 	params,
 }: {
-	params: { id: string };
+	params: Promise<{ id: string }>;
 }): Promise<Metadata> {
-	const news = await getNewsById(params.id);
+	const resolvedParams = await params;
+	const news = await getNewsById(resolvedParams.id);
 
 	// 存在しない場合
 	if (!news) {
@@ -53,9 +54,10 @@ export async function generateStaticParams() {
 export default async function NewsDetailPage({
 	params,
 }: {
-	params: { id: string };
+	params: Promise<{ id: string }>;
 }) {
-	const news = await getNewsById(params.id);
+	const resolvedParams = await params;
+	const news = await getNewsById(resolvedParams.id);
 
 	// 存在しない場合は404ページへ
 	if (!news) {
@@ -63,13 +65,13 @@ export default async function NewsDetailPage({
 	}
 
 	const formattedDate = format(news.date, "yyyy年MM月dd日");
-	const url = `${process.env.NEXT_PUBLIC_SITE_URL || "https://example.com"}/news/${params.id}`;
+	const url = `${process.env.NEXT_PUBLIC_SITE_URL || "https://example.com"}/news/${resolvedParams.id}`;
 
 	// パンくずリストの項目
 	const breadcrumbItems = [
 		{ label: "ホーム", href: "/" },
 		{ label: "お知らせ", href: "/news" },
-		{ label: news.title, href: `/news/${params.id}`, isCurrent: true },
+		{ label: news.title, href: `/news/${resolvedParams.id}`, isCurrent: true },
 	];
 
 	return (
