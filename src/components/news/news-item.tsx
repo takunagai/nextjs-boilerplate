@@ -30,18 +30,18 @@ export function NewsItem({
         className
       )}
     >
-      <div className="flex flex-wrap items-center gap-3">
+      <div className="flex flex-row items-center gap-3 md:w-auto md:min-w-52 md:flex-nowrap">
         <time
           dateTime={date.toISOString()}
-          className="text-slate-500 font-medium w-24"
+          className="text-slate-500 font-medium min-w-24"
         >
           {formattedDate}
         </time>
-        <Badge variant="outline" className="text-xs">
+        <Badge variant="outline" className="text-xs whitespace-nowrap">
           {category}
         </Badge>
       </div>
-      <h3 className="font-medium text-slate-900 dark:text-slate-100 md:ml-4 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+      <h3 className="font-medium text-slate-900 dark:text-slate-100 md:flex-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
         {title}
       </h3>
     </Card>
