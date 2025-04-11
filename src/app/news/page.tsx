@@ -1,7 +1,7 @@
 import { NewsList } from "@/components/news/news-list";
 import { Container } from "@/components/ui/container";
 import { Separator } from "@/components/ui/separator";
-import { getAllNews, getNewsCategories } from "@/lib/data/news";
+import { getAllNews, getNewsCategories, getNewsByCategory } from "@/lib/data/news";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -10,10 +10,27 @@ export const metadata: Metadata = {
 		"当サイトに関するお知らせやプレスリリース、アップデート情報などをご覧いただけます。",
 };
 
-export default async function NewsPage() {
+// カテゴリフィルタリングのためのサーバーアクション
+async function getFilteredNews(category?: string) {
+	"use server";
+	
+	if (!category || category === "all") {
+		return await getAllNews();
+	}
+	
+	return await getNewsByCategory(category);
+}
+
+export default async function NewsPage({
+	searchParams,
+}: {
+	searchParams: { category?: string };
+}) {
+	const selectedCategory = searchParams.category;
+	
 	// データ取得
 	const [newsItems, categories] = await Promise.all([
-		getAllNews(),
+		selectedCategory ? getNewsByCategory(selectedCategory) : getAllNews(),
 		getNewsCategories(),
 	]);
 
@@ -36,27 +53,42 @@ export default async function NewsPage() {
 
 					<div className="mb-8">
 						<div className="flex gap-4 overflow-x-auto pb-2">
-							<button
-								type="button"
-								className="bg-blue-600 text-white px-4 py-2 rounded-full text-sm whitespace-nowrap"
+							<a
+								href="/news"
+								className={`px-4 py-2 rounded-full text-sm whitespace-nowrap transition-colors ${
+									!selectedCategory
+										? "bg-blue-600 text-white"
+										: "bg-white hover:bg-slate-100 text-slate-700 border border-slate-200"
+								}`}
 							>
-								ALL
-							</button>
+								すべて
+							</a>
 							{categories.map((category) => (
-								<button
+								<a
 									key={category}
-									type="button"
-									className="bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 px-4 py-2 rounded-full text-sm whitespace-nowrap transition-colors"
+									href={`/news?category=${encodeURIComponent(category)}`}
+									className={`px-4 py-2 rounded-full text-sm whitespace-nowrap transition-colors ${
+										selectedCategory === category
+											? "bg-blue-600 text-white"
+											: "bg-white hover:bg-slate-100 text-slate-700 border border-slate-200"
+									}`}
 								>
 									{category}
-								</button>
+								</a>
 							))}
 						</div>
 					</div>
 
 					<Separator className="mb-8" />
 
-					<NewsList items={newsItemsWithLinks} />
+					{newsItemsWithLinks.length > 0 ? (
+						<NewsList items={newsItemsWithLinks} />
+					) : (
+						<div className="py-12 text-center text-slate-500">
+							<p className="mb-2 text-lg">該当するお知らせはありません</p>
+							<p className="text-sm">別のカテゴリを選択してください</p>
+						</div>
+					)}
 				</div>
 			</Container>
 		</main>
