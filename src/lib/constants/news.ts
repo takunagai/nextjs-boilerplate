@@ -2,8 +2,13 @@
  * お知らせ関連の定数設定
  */
 
-// 1ページあたりの最大表示件数
-export const NEWS_PER_PAGE = 2;
+// トップページに表示するお知らせの件数
+export const LATEST_NEWS_COUNT = 5;
+
+// 一覧ページ関連
+
+// 1ページあたりの最大表示件数 (ページネーション確認のために少なくしてある)
+export const NEWS_PER_PAGE = 3;
 
 // ページネーション設定
 export const PAGINATION_CONFIG = {

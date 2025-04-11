@@ -10,6 +10,7 @@ import { FeatureListSection } from "@/components/home/feature-list-section";
 import { FeaturesSection } from "@/components/home/features-section";
 import { GallerySection } from "@/components/home/gallery-section";
 import { HeroSection } from "@/components/home/hero-section";
+import { LatestNewsSection } from "@/components/home/latest-news-section";
 import { TechnologiesSection } from "@/components/home/technologies-section";
 import { CTASection } from "@/components/sections/cta-section";
 
@@ -37,6 +38,7 @@ export default function Home() {
 			<WebsiteJsonLd />
 			<main className="flex min-h-screen flex-col items-center">
 				<HeroSection />
+				<LatestNewsSection />
 				<GallerySection />
 				<FeaturesSection features={features} />
 				<TechnologiesSection technologies={technologies} />
