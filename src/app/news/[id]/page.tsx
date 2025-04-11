@@ -2,6 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { Separator } from "@/components/ui/separator";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { NewsJsonLd } from "@/components/seo/news-jsonld";
 import { FaArrowLeft } from "react-icons/fa6";
 import Link from "next/link";
@@ -64,6 +65,13 @@ export default async function NewsDetailPage({
 	const formattedDate = format(news.date, "yyyy年MM月dd日");
 	const url = `${process.env.NEXT_PUBLIC_SITE_URL || "https://example.com"}/news/${params.id}`;
 
+	// パンくずリストの項目
+	const breadcrumbItems = [
+		{ label: "ホーム", href: "/" },
+		{ label: "お知らせ", href: "/news" },
+		{ label: news.title, href: `/news/${params.id}`, isCurrent: true },
+	];
+
 	return (
 		<main className="pb-16">
 			{/* 構造化データ（JSON-LD）を追加 */}
@@ -75,7 +83,10 @@ export default async function NewsDetailPage({
 			/>
 
 			<Container width="md">
-				<div className="py-8 md:py-16">
+				{/* パンくずリスト */}
+				<Breadcrumb items={breadcrumbItems} className="pt-4 pb-0" />
+
+				<div className="py-8 md:py-12">
 					{/* 戻るボタン */}
 					<div className="mb-8">
 						<Link href="/news">
