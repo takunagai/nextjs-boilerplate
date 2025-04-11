@@ -163,6 +163,10 @@ nextjs-boilerplate/
 ├── src/
 │   ├── app/                 # Next.jsのページルーティング
 │   │   ├── 各ページのディレクトリ/
+│   │   ├── news/            # お知らせ
+│   │   │   ├── [id]/
+│   │   │   │   └── page.tsx # 個別ページ
+│   │   │   └── page.tsx     # 一覧
 │   │   ├── (examples)/      # サンプル例ページ
 │   │   ├── api/             # APIエンドポイント
 │   │   │   ├── auth/        # 認証関連
@@ -179,6 +183,7 @@ nextjs-boilerplate/
 │   │   ├── contact/         # コンタクトコンポーネント
 │   │   ├── home/            # ホームコンポーネント
 │   │   ├── layout/          # レイアウトコンポーネント(ヘッダー、フッター etc.)
+│   │   ├── news/            # お知らせコンポーネント
 │   │   ├── sections/        # セクションコンポーネント
 │   │   ├── seo/             # SEO関連コンポーネント
 │   │   ├── theme/           # テーマ(モード)コンポーネント
@@ -187,6 +192,7 @@ nextjs-boilerplate/
 │   ├── lib/                 # ユーティリティ関数
 │   │   ├── auth/            # 認証関連
 │   │   ├── constants/       # 定数
+│   │   ├── data/            # データ (お知らせの仮データなど)
 │   │   ├── server/          # サーバーサイド
 │   │   │   ├── actions/     # サーバーアクション
 │   │   │   ├── api/         # APIルート
@@ -194,7 +200,7 @@ nextjs-boilerplate/
 │   │   ├── validation/      # バリデーションスキーマ
 │   │   ├── {api}/           # API関連（追加予定）
 │   │   ├── {db}/            # データベース関連（追加予定）
-│   │   └── utils.ts         # 污用ユーティリティ
+│   │   └── utils.ts         # 汚用ユーティリティ
 │   └── middleware.ts        # ミドルウェア
 ├── tests-results/           # テスト結果
 ├── tests/                   # テストファイル
