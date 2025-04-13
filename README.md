@@ -14,7 +14,7 @@
 
 ## 概要
 
-このプロジェクトは、モダンなウェブアプリケーション/サイト開発のためのNext.jsボイラープレートです。TypeScript、Tailwind CSS、shadcn/uiなどの最新技術を組み合わせ、開発の効率化と品質向上を実現します。
+このプロジェクトは、モダンなウェブアプリケーション/サイト開発のための Next.js ボイラープレートです。TypeScript、Tailwind CSS、shadcn/ui などの最新技術を組み合わせ、開発の効率化と品質向上を実現します。
 
 ## 対応ブラウザ
 
@@ -32,7 +32,8 @@
 
 ## AI開発サポート
 
-このプロジェクトは、[Windsurf IDE](https://codeium.com/windsurf) 用の`.windsurfrules`ファイルを含んでいます。このファイルは [kinopeee/windsurfrules](https://github.com/kinopeee/windsurfrules) をベースに、AIエージェント/アシスタントがプロジェクト構造、技術スタック、コード規約を正確に理解できるよう最適化されています。これにより、一貫性のある高品質なコード生成と効率的な開発サポートが可能になります。
+このプロジェクトは、[Windsurf IDE](https://codeium.com/windsurf) 用の `.windsurfrules` ファイルを含んでいます。このファイルは [kinopeee/windsurfrules](https://github.com/kinopeee/windsurfrules) をベースに、AIエージェント/アシスタントがプロジェクト構造、技術スタック、コード規約を正確に理解できるよう最適化されています。これにより、一貫性のある高品質なコード生成と効率的な開発サポートが可能になります。  
+※ Cursor, Cline, Github Copilot など他の AIエージェントの場合は、`.windsurfrules` ファイルを参考に適宜調整してください。
 
 ## デモ
 
@@ -130,6 +131,7 @@
 - **効率的な状態管理** - Immer による不変性を維持した状態更新
 - **フォームハンドリング** - React Hook Form と Zod による型安全なバリデーション
 - **コード品質** - Biome によるリンティングとフォーマット
+- **開発用サンプルページ** - 開発環境のみで表示、本番環境では環境変数で非表示に
 
 ### 事前構築済み
 
@@ -156,6 +158,10 @@
 - **tw-animate-css** - アニメーション
 - **shadcn/ui** - 再利用可能なUIコンポーネント
 - **framer-motion** - アニメーション
+- **embla-carousel-react** - カルーセル
+  - embla-carousel-autoplay
+  - embla-carousel-class-names
+  - embla-carousel-fade
 - **sonner** - トースト通知
 - **react-icons** - アイコンセット
 
