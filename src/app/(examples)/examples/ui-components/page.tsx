@@ -17,9 +17,25 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+	Timeline,
+	TimelineContent,
+	TimelineDate,
+	TimelineDescription,
+	TimelineIcon,
+	TimelineItem,
+	TimelineTitle,
+} from "@/components/ui/timeline";
 import { Toggle } from "@/components/ui/toggle";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useState } from "react";
+import { 
+	FaCheckCircle, 
+	FaExclamationCircle, 
+	FaInfoCircle, 
+	FaStar, 
+	FaUserCircle 
+} from "react-icons/fa";
 
 export default function UIComponentsPage() {
 	const [dialogOpen, setDialogOpen] = useState(false);
@@ -41,6 +57,7 @@ export default function UIComponentsPage() {
 					<TabsTrigger value="inputs">入力</TabsTrigger>
 					<TabsTrigger value="dialogs">ダイアログ</TabsTrigger>
 					<TabsTrigger value="toggles">トグル</TabsTrigger>
+					<TabsTrigger value="timeline">タイムライン</TabsTrigger>
 				</TabsList>
 
 				<TabsContent value="buttons">
@@ -235,6 +252,237 @@ export default function UIComponentsPage() {
 								<p className="mt-2 text-sm text-gray-500">
 									選択された値: {toggleGroupValue.join(", ") || "なし"}
 								</p>
+							</div>
+						</div>
+					</div>
+				</TabsContent>
+
+				<TabsContent value="timeline">
+					<div className="border rounded-lg p-6 space-y-6">
+						<div>
+							<h2 className="text-xl font-semibold mb-2">タイムラインコンポーネント</h2>
+							<p className="text-gray-600 mb-4">
+								時系列の流れを視覚的に表現するためのタイムラインコンポーネント
+							</p>
+						</div>
+						
+						<div className="space-y-8">
+							<div>
+								<h3 className="text-lg font-medium mb-3">基本的なタイムライン</h3>
+								<Timeline>
+									<TimelineItem>
+										<TimelineIcon>
+											<FaInfoCircle className="h-4 w-4" />
+										</TimelineIcon>
+										<TimelineContent>
+											<TimelineTitle>プロジェクト開始</TimelineTitle>
+											<TimelineDate>2024年4月1日</TimelineDate>
+											<TimelineDescription>
+												プロジェクトの計画と要件の収集を開始しました。
+											</TimelineDescription>
+										</TimelineContent>
+									</TimelineItem>
+									<TimelineItem>
+										<TimelineIcon>
+											<FaUserCircle className="h-4 w-4" />
+										</TimelineIcon>
+										<TimelineContent>
+											<TimelineTitle>チーム結成</TimelineTitle>
+											<TimelineDate>2024年4月5日</TimelineDate>
+											<TimelineDescription>
+												プロジェクトのメンバーが集まり、初回ミーティングを実施しました。
+											</TimelineDescription>
+										</TimelineContent>
+									</TimelineItem>
+									<TimelineItem>
+										<TimelineIcon>
+											<FaCheckCircle className="h-4 w-4" />
+										</TimelineIcon>
+										<TimelineContent>
+											<TimelineTitle>設計フェーズ完了</TimelineTitle>
+											<TimelineDate>2024年4月15日</TimelineDate>
+											<TimelineDescription>
+												アプリケーションの設計と基本仕様の策定が完了しました。
+											</TimelineDescription>
+										</TimelineContent>
+									</TimelineItem>
+								</Timeline>
+							</div>
+
+							<div>
+								<h3 className="text-lg font-medium mb-3">カラーバリアント</h3>
+								<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+									<Timeline>
+										<TimelineItem variant="primary">
+											<TimelineIcon variant="primary">
+												<FaInfoCircle className="h-4 w-4" />
+											</TimelineIcon>
+											<TimelineContent>
+												<TimelineTitle>プライマリカラー</TimelineTitle>
+												<TimelineDate>2024年4月1日</TimelineDate>
+											</TimelineContent>
+										</TimelineItem>
+										<TimelineItem variant="primary">
+											<TimelineIcon variant="primary">
+												<FaCheckCircle className="h-4 w-4" />
+											</TimelineIcon>
+											<TimelineContent>
+												<TimelineTitle>第2ステップ</TimelineTitle>
+												<TimelineDate>2024年4月5日</TimelineDate>
+											</TimelineContent>
+										</TimelineItem>
+									</Timeline>
+
+									<Timeline>
+										<TimelineItem variant="secondary">
+											<TimelineIcon variant="secondary">
+												<FaInfoCircle className="h-4 w-4" />
+											</TimelineIcon>
+											<TimelineContent>
+												<TimelineTitle>セカンダリカラー</TimelineTitle>
+												<TimelineDate>2024年4月1日</TimelineDate>
+											</TimelineContent>
+										</TimelineItem>
+										<TimelineItem variant="secondary">
+											<TimelineIcon variant="secondary">
+												<FaCheckCircle className="h-4 w-4" />
+											</TimelineIcon>
+											<TimelineContent>
+												<TimelineTitle>第2ステップ</TimelineTitle>
+												<TimelineDate>2024年4月5日</TimelineDate>
+											</TimelineContent>
+										</TimelineItem>
+									</Timeline>
+
+									<Timeline>
+										<TimelineItem variant="success">
+											<TimelineIcon variant="success">
+												<FaCheckCircle className="h-4 w-4" />
+											</TimelineIcon>
+											<TimelineContent>
+												<TimelineTitle>成功カラー</TimelineTitle>
+												<TimelineDate>2024年4月1日</TimelineDate>
+											</TimelineContent>
+										</TimelineItem>
+										<TimelineItem variant="success">
+											<TimelineIcon variant="success">
+												<FaStar className="h-4 w-4" />
+											</TimelineIcon>
+											<TimelineContent>
+												<TimelineTitle>第2ステップ</TimelineTitle>
+												<TimelineDate>2024年4月5日</TimelineDate>
+											</TimelineContent>
+										</TimelineItem>
+									</Timeline>
+
+									<Timeline>
+										<TimelineItem variant="danger">
+											<TimelineIcon variant="danger">
+												<FaExclamationCircle className="h-4 w-4" />
+											</TimelineIcon>
+											<TimelineContent>
+												<TimelineTitle>警告カラー</TimelineTitle>
+												<TimelineDate>2024年4月1日</TimelineDate>
+											</TimelineContent>
+										</TimelineItem>
+										<TimelineItem variant="danger">
+											<TimelineIcon variant="danger">
+												<FaExclamationCircle className="h-4 w-4" />
+											</TimelineIcon>
+											<TimelineContent>
+												<TimelineTitle>第2ステップ</TimelineTitle>
+												<TimelineDate>2024年4月5日</TimelineDate>
+											</TimelineContent>
+										</TimelineItem>
+									</Timeline>
+								</div>
+							</div>
+
+							<div>
+								<h3 className="text-lg font-medium mb-3">アイコン位置バリアント</h3>
+								<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+									<Timeline>
+										<TimelineItem>
+											<TimelineIcon position="left">
+												<FaInfoCircle className="h-4 w-4" />
+											</TimelineIcon>
+											<TimelineContent>
+												<TimelineTitle>左位置アイコン（デフォルト）</TimelineTitle>
+												<TimelineDate>2024年4月1日</TimelineDate>
+											</TimelineContent>
+										</TimelineItem>
+										<TimelineItem>
+											<TimelineIcon position="center">
+												<FaInfoCircle className="h-4 w-4" />
+											</TimelineIcon>
+											<TimelineContent>
+												<TimelineTitle>中央位置アイコン</TimelineTitle>
+												<TimelineDate>2024年4月5日</TimelineDate>
+											</TimelineContent>
+										</TimelineItem>
+										<TimelineItem>
+											<TimelineIcon position="right">
+												<FaCheckCircle className="h-4 w-4" />
+											</TimelineIcon>
+											<TimelineContent>
+												<TimelineTitle>右位置アイコン</TimelineTitle>
+												<TimelineDate>2024年4月10日</TimelineDate>
+											</TimelineContent>
+										</TimelineItem>
+									</Timeline>
+								</div>
+							</div>
+
+							<div>
+								<h3 className="text-lg font-medium mb-3">カードスタイル</h3>
+								<Timeline>
+									<TimelineItem variant="primary">
+										<TimelineIcon variant="primary">
+											<FaInfoCircle className="h-4 w-4" />
+										</TimelineIcon>
+										<TimelineContent variant="card">
+											<div className="flex justify-between items-start">
+												<TimelineTitle>カードスタイル</TimelineTitle>
+												<TimelineDate>2024年4月1日</TimelineDate>
+											</div>
+											<TimelineDescription className="mt-2">
+												ボーダーとシャドウを使用したカード形式のコンテンツです。
+											</TimelineDescription>
+										</TimelineContent>
+									</TimelineItem>
+									<TimelineItem variant="primary">
+										<TimelineIcon variant="primary">
+											<img 
+												src="/dummy-images/profile-placeholder.jpg" 
+												alt="プロフィール" 
+												className="h-full w-full object-cover rounded-full" 
+											/>
+										</TimelineIcon>
+										<TimelineContent variant="card">
+											<div className="flex justify-between items-start">
+												<TimelineTitle>画像を使用したアイコン</TimelineTitle>
+												<TimelineDate>2024年4月5日</TimelineDate>
+											</div>
+											<TimelineDescription className="mt-2">
+												アイコン部分に画像を使用することもできます。画像は丸くトリミングされます。
+											</TimelineDescription>
+										</TimelineContent>
+									</TimelineItem>
+									<TimelineItem variant="primary">
+										<TimelineIcon variant="primary">
+											<FaCheckCircle className="h-4 w-4" />
+										</TimelineIcon>
+										<TimelineContent variant="card">
+											<div className="flex justify-between items-start">
+												<TimelineTitle>最終ステップ</TimelineTitle>
+												<TimelineDate>2024年4月15日</TimelineDate>
+											</div>
+											<TimelineDescription className="mt-2">
+												タイムラインの最終ステップです。さまざまなスタイルやバリアントを組み合わせて使用できます。
+											</TimelineDescription>
+										</TimelineContent>
+									</TimelineItem>
+								</Timeline>
 							</div>
 						</div>
 					</div>
