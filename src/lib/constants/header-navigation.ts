@@ -29,6 +29,10 @@ export const HEADER_NAVIGATION: HeaderLink[] = [
 		],
 	},
 	{
+		label: "サンプル",
+		href: "/examples",
+	},
+	{
 		label: "お知らせ",
 		href: "/news",
 	},
