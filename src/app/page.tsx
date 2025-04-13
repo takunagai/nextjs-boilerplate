@@ -14,6 +14,7 @@ import { LatestNewsSection } from "@/components/home/latest-news-section";
 import { ServiceFeaturesSection } from "@/components/home/service-features-section";
 import { TechnologiesSection } from "@/components/home/technologies-section";
 import { CTASection } from "@/components/sections/cta-section";
+import type { ContentItem } from "@/components/ui/content-items";
 
 export const metadata: Metadata = generateMetadata({
 	title: "モダンなWebアプリケーション開発の出発点",
@@ -52,7 +53,7 @@ export default function Home() {
 }
 
 // ダミーデータ
-const serviceFeatures = [
+const serviceFeatures: ContentItem[] = [
 	{
 		id: "quality-service",
 		title: "品質へのこだわり",

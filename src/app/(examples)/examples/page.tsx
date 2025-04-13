@@ -4,6 +4,12 @@ import Link from "next/link";
 export default function ExamplesPage() {
 	const examples = [
 		{
+			title: "ContentItems コンポーネント",
+			description:
+				"ContentItemsコンポーネントの全バリエーションを表示するサンプルページです。",
+			href: "/examples/content-items",
+		},
+		{
 			title: "カルーセル",
 			description: "カルーセル (Embla Carousel) のサンプルです。",
 			href: "/examples/carousel",
