@@ -11,6 +11,7 @@ import { FeaturesSection } from "@/components/home/features-section";
 import { GallerySection } from "@/components/home/gallery-section";
 import { HeroSection } from "@/components/home/hero-section";
 import { LatestNewsSection } from "@/components/home/latest-news-section";
+import { ServiceFeaturesSection } from "@/components/home/service-features-section";
 import { TechnologiesSection } from "@/components/home/technologies-section";
 import { CTASection } from "@/components/sections/cta-section";
 
@@ -39,6 +40,7 @@ export default function Home() {
 			<main className="flex min-h-screen flex-col items-center">
 				<HeroSection />
 				<LatestNewsSection />
+				<ServiceFeaturesSection features={serviceFeatures} />
 				<GallerySection />
 				<FeaturesSection features={features} />
 				<TechnologiesSection technologies={technologies} />
@@ -50,6 +52,27 @@ export default function Home() {
 }
 
 // ダミーデータ
+const serviceFeatures = [
+	{
+		id: "quality-service",
+		title: "品質へのこだわり",
+		description: "お客様に最高品質のサービスを提供するため、細部まで妥協せずこだわりを持って対応いたします。",
+		imageUrl: "/dummy-images/street-photo-01.jpg",
+	},
+	{
+		id: "professional-support",
+		title: "専門家のサポート",
+		description: "経験豊富な専門スタッフが、お客様の要望に合わせた最適なソリューションを提案します。",
+		imageUrl: "/dummy-images/street-photo-02.jpg",
+	},
+	{
+		id: "customer-satisfaction",
+		title: "お客様満足度の追求",
+		description: "お客様のフィードバックを大切にし、常にサービスの改善と向上に努めています。",
+		imageUrl: "/dummy-images/street-photo-03.jpg",
+	},
+];
+
 const features = [
 	{
 		id: "performance",
