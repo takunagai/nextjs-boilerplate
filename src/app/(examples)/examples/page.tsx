@@ -1,50 +1,20 @@
-import {
-	BreadcrumbJsonLd,
-	generateMetadata,
-	WebsiteJsonLd,
-} from "@/components/seo";
-import { Breadcrumb } from "@/components/ui/breadcrumb";
-import { Button } from "@/components/ui/button";
-import {
-	Card,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
-import { META } from "@/lib/constants";
-import { createBreadcrumbs } from "@/lib/utils";
-import type { Metadata } from "next";
 import Link from "next/link";
 
-export const metadata: Metadata = generateMetadata({
-	title: "サンプル一覧",
-	description:
-		"Next.jsボイラープレートのサンプル集です。フォーム、データ取得、UIコンポーネントなどの実装例を紹介しています。",
-	keywords: ["サンプル", "例", "フォーム", "データ取得", "UIコンポーネント"],
-	canonical: "/examples",
-});
-
 export default function ExamplesPage() {
-	// パンくずリストの基本データを定義
-	const breadcrumbItems = [
-		{ title: "ホーム", path: "/" },
-		{ title: "サンプル一覧", path: "/examples", current: true },
-	];
-
-	// UI表示用とJSON-LD用のデータを生成
-	const { ui: uiBreadcrumbs, jsonLd: jsonLdBreadcrumbs } =
-		createBreadcrumbs(breadcrumbItems);
-
 	const examples = [
 		{
-			title: "フォームサンプル",
+			title: "カルーセル",
+			description: "カルーセル (Embla Carousel) のサンプルです。",
+			href: "/examples/carousel",
+		},
+		{
+			title: "フォーム",
 			description: "react-hook-formとzodを使用した入力フォームのサンプルです。",
 			href: "/examples/form",
 		},
 		{
-			title: "データ取得サンプル",
+			title: "データ取得",
 			description: "Next.jsのデータ取得パターンを示すサンプルです。",
 			href: "/examples/data-fetching",
 		},
@@ -56,36 +26,24 @@ export default function ExamplesPage() {
 	];
 
 	return (
-		<>
-			<WebsiteJsonLd
-				name={`サンプル一覧 | ${META.DEFAULT_TITLE}`}
-				description="Next.jsボイラープレートのサンプル集です。フォーム、データ取得、UIコンポーネントなどの実装例を紹介しています。"
-				url={`${META.SITE_URL}/examples`}
-			/>
-			<BreadcrumbJsonLd items={jsonLdBreadcrumbs} />
+		<Container className="mt-8" paddingY="lg" paddingX="2xl">
+			<h1 className="mb-8 text-3xl font-bold">サンプル一覧</h1>
 
-			<Container className="mt-8">
-				<Breadcrumb items={uiBreadcrumbs} />
-			</Container>
-			<Container className="mt-8" paddingY="lg" paddingX="2xl">
-				<h1 className="mb-8 text-3xl font-bold">サンプル一覧</h1>
-
-				<div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-					{examples.map((example) => (
-						<Card key={example.href} className="flex flex-col">
-							<CardHeader>
-								<CardTitle>{example.title}</CardTitle>
-								<CardDescription>{example.description}</CardDescription>
-							</CardHeader>
-							<CardFooter className="mt-auto">
-								<Button asChild>
-									<Link href={example.href}>表示する</Link>
-								</Button>
-							</CardFooter>
-						</Card>
-					))}
-				</div>
-			</Container>
-		</>
+			<ul className="space-y-4 list-disc pl-5">
+				{examples.map((example) => (
+					<li key={example.href} className="pl-2">
+						<h2 className="text-lg font-bold">
+							<Link
+								href={example.href}
+								className="underline hover:text-blue-600"
+							>
+								{example.title}
+							</Link>
+						</h2>
+						<p className="mt-1 text-gray-600">{example.description}</p>
+					</li>
+				))}
+			</ul>
+		</Container>
 	);
 }

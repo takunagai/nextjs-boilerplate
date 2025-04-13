@@ -1,17 +1,5 @@
-import { BreadcrumbJsonLd, WebsiteJsonLd } from "@/components/seo";
-import { Breadcrumb } from "@/components/ui/breadcrumb";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
 import { Skeleton } from "@/components/ui/skeleton";
-import { META } from "@/lib/constants";
-import { createBreadcrumbs } from "@/lib/utils";
 import { Suspense } from "react";
 
 // ユーザーの型定義
@@ -44,24 +32,21 @@ async function UserList() {
 	return (
 		<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
 			{users.map((user: User) => (
-				<Card key={user.id}>
-					<CardHeader>
-						<CardTitle>{user.name}</CardTitle>
-						<CardDescription>{user.email}</CardDescription>
-					</CardHeader>
-					<CardContent>
+				<div key={user.id} className="border rounded-md p-4">
+					<h3 className="text-lg font-bold">{user.name}</h3>
+					<p className="text-sm text-gray-500">{user.email}</p>
+					<div className="mt-2">
 						<p className="text-sm">
 							<span className="font-semibold">会社:</span> {user.company.name}
 						</p>
 						<p className="text-sm">
-							<span className="font-semibold">ウェブサイト:</span>{" "}
-							{user.website}
+							<span className="font-semibold">ウェブサイト:</span> {user.website}
 						</p>
-					</CardContent>
-					<CardFooter>
-						<p className="text-xs text-muted-foreground">ID: {user.id}</p>
-					</CardFooter>
-				</Card>
+					</div>
+					<div className="mt-3 text-right">
+						<span className="text-xs text-gray-400">ID: {user.id}</span>
+					</div>
+				</div>
 			))}
 		</div>
 	);
@@ -69,22 +54,28 @@ async function UserList() {
 
 // ローディングコンポーネント
 function UserListSkeleton() {
+	// スケルトンアイテムの固定ID
+	const skeletonIds = [
+		"user-1",
+		"user-2",
+		"user-3",
+		"user-4",
+		"user-5",
+		"user-6",
+	];
+
 	return (
 		<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-			{Array.from({ length: 6 }).map((_, i) => (
-				<Card key={`skeleton-${crypto.randomUUID()}`}>
-					<CardHeader>
-						<Skeleton className="h-6 w-3/4" />
-						<Skeleton className="h-4 w-1/2" />
-					</CardHeader>
-					<CardContent>
-						<Skeleton className="mb-2 h-4 w-full" />
-						<Skeleton className="h-4 w-2/3" />
-					</CardContent>
-					<CardFooter>
-						<Skeleton className="h-3 w-1/4" />
-					</CardFooter>
-				</Card>
+			{skeletonIds.map((id) => (
+				<div key={id} className="border rounded-md p-4">
+					<Skeleton className="h-6 w-3/4 mb-2" />
+					<Skeleton className="h-4 w-1/2 mb-4" />
+					<Skeleton className="mb-2 h-4 w-full" />
+					<Skeleton className="h-4 w-2/3" />
+					<div className="mt-3 text-right">
+						<Skeleton className="h-3 w-1/4 ml-auto" />
+					</div>
+				</div>
 			))}
 		</div>
 	);
@@ -102,51 +93,24 @@ function ErrorDisplay({ error }: { error: Error }) {
 
 // メインページコンポーネント
 export default function DataFetchingPage() {
-	// パンくずリストの基本データを定義
-	const breadcrumbItems = [
-		{ title: "ホーム", path: "/" },
-		{ title: "サンプル一覧", path: "/examples" },
-		{
-			title: "データ取得サンプル",
-			path: "/examples/data-fetching",
-			current: true,
-		},
-	];
-
-	// UI表示用とJSON-LD用のデータを生成
-	const { ui: uiBreadcrumbs, jsonLd: jsonLdBreadcrumbs } =
-		createBreadcrumbs(breadcrumbItems);
-
 	return (
-		<>
-			<WebsiteJsonLd
-				name={`データ取得サンプル | ${META.DEFAULT_TITLE}`}
-				description="Next.jsのサーバーコンポーネントとReact Suspenseを使用したデータ取得サンプルです。"
-				url={`${META.SITE_URL}/examples/data-fetching`}
-			/>
-			<BreadcrumbJsonLd items={jsonLdBreadcrumbs} />
+		<Container width="2xl" paddingY="xl" paddingX="lg">
+			<h1 className="mb-8 text-3xl font-bold">データ取得サンプル</h1>
 
-			<Container className="mt-8">
-				<Breadcrumb items={uiBreadcrumbs} />
-			</Container>
-			<Container width="2xl" paddingY="xl" paddingX="lg">
-				<h1 className="mb-8 text-3xl font-bold">データ取得サンプル</h1>
+			<div className="mb-8">
+				<h2 className="mb-4 text-xl font-semibold">
+					React Suspenseを使用したデータ取得
+				</h2>
+				<p className="mb-6 text-gray-600">
+					このサンプルでは、Next.jsのサーバーコンポーネントとReact
+					Suspenseを使用して、
+					データ取得中のローディング状態を処理しています。
+				</p>
 
-				<div className="mb-8">
-					<h2 className="mb-4 text-xl font-semibold">
-						React Suspenseを使用したデータ取得
-					</h2>
-					<p className="mb-6 text-muted-foreground">
-						このサンプルでは、Next.jsのサーバーコンポーネントとReact
-						Suspenseを使用して、
-						データ取得中のローディング状態を処理しています。
-					</p>
-
-					<Suspense fallback={<UserListSkeleton />}>
-						<UserList />
-					</Suspense>
-				</div>
-			</Container>
-		</>
+				<Suspense fallback={<UserListSkeleton />}>
+					<UserList />
+				</Suspense>
+			</div>
+		</Container>
 	);
 }
