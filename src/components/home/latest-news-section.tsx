@@ -1,9 +1,9 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
+import { LATEST_NEWS_COUNT } from "@/lib/constants/news";
 import type { NewsItem } from "@/lib/data/news";
 import { getAllNews } from "@/lib/data/news";
-import { LATEST_NEWS_COUNT } from "@/lib/constants/news";
 import { format } from "date-fns";
 import Link from "next/link";
 import { IoArrowForward, IoInformationCircle } from "react-icons/io5";
@@ -45,14 +45,14 @@ export async function LatestNewsSection({ className }: LatestNewsSectionProps) {
 				</div>
 				<ul className="divide-y divide-slate-200 dark:divide-slate-800">
 					{latestNews.map((news: NewsItem) => (
-						<li key={news.id} className="py-3">
+						<li key={news.id} className="py-3 text-sm">
 							<Link
 								href={`/news/${news.id}`}
 								className="block group"
 								aria-label={`${news.title}の詳細を見る`}
 							>
 								<div className="flex flex-col md:flex-row md:items-center gap-3">
-									<div className="flex items-center gap-3 md:w-auto md:min-w-52 md:flex-nowrap">
+									<div className="flex items-center md:gap-3 md:w-auto md:min-w-52 md:flex-nowrap">
 										<time
 											dateTime={news.date.toISOString()}
 											className="text-slate-500 font-medium min-w-24"
