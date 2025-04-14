@@ -4,6 +4,11 @@ import Link from "next/link";
 export default function ExamplesPage() {
 	const examples = [
 		{
+			title: "リスト",
+			description: "SimpleListとNumberedListのサンプルです。",
+			href: "/examples/list",
+		},
+		{
 			title: "特徴紹介セクション",
 			description: "特徴を効果的に紹介するためのレイアウトコンポーネント",
 			href: "/examples/feature-items",
