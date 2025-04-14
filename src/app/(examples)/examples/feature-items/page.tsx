@@ -114,6 +114,7 @@ export default function FeatureItemsPage() {
 								items={[item]}
 								variant="overlay"
 								overlayStyle="dark"
+								overlayHeight="auto"
 								spacing="small"
 							/>
 						))}
@@ -131,9 +132,75 @@ export default function FeatureItemsPage() {
 								items={[item]}
 								variant="overlay"
 								overlayStyle="gradient"
+								overlayHeight="auto"
 								spacing="small"
 							/>
 						))}
+					</div>
+				</div>
+
+				<div className="mt-16 border-t pt-12">
+					<h2 className="text-2xl font-bold mb-8">
+						オーバーレイ高さバリエーション
+					</h2>
+					<div className="mb-8">
+						<h3 className="text-xl font-medium mb-4">1/3サイズ (third)</h3>
+						<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+							<FeatureItems
+								items={[featureItems[0]]}
+								variant="overlay"
+								overlayStyle="dark"
+								overlayHeight="third"
+								spacing="small"
+							/>
+							<FeatureItems
+								items={[featureItems[1]]}
+								variant="overlay"
+								overlayStyle="gradient"
+								overlayHeight="third"
+								spacing="small"
+							/>
+						</div>
+					</div>
+					
+					<div className="mb-8">
+						<h3 className="text-xl font-medium mb-4">1/2サイズ (half)</h3>
+						<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+							<FeatureItems
+								items={[featureItems[2]]}
+								variant="overlay"
+								overlayStyle="dark"
+								overlayHeight="half"
+								spacing="small"
+							/>
+							<FeatureItems
+								items={[featureItems[3]]}
+								variant="overlay"
+								overlayStyle="gradient"
+								overlayHeight="half"
+								spacing="small"
+							/>
+						</div>
+					</div>
+					
+					<div>
+						<h3 className="text-xl font-medium mb-4">全体 (full)</h3>
+						<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+							<FeatureItems
+								items={[featureItems[0]]}
+								variant="overlay"
+								overlayStyle="dark"
+								overlayHeight="full"
+								spacing="small"
+							/>
+							<FeatureItems
+								items={[featureItems[1]]}
+								variant="overlay"
+								overlayStyle="gradient"
+								overlayHeight="full"
+								spacing="small"
+							/>
+						</div>
 					</div>
 				</div>
 

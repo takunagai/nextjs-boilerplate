@@ -4,6 +4,11 @@ import Link from "next/link";
 export default function ExamplesPage() {
 	const examples = [
 		{
+			title: "特徴紹介セクション",
+			description: "特徴を効果的に紹介するためのレイアウトコンポーネント",
+			href: "/examples/feature-items",
+		},
+		{
 			title: "ContentItems コンポーネント",
 			description:
 				"ContentItemsコンポーネントの全バリエーションを表示するサンプルページです。",

@@ -50,6 +50,7 @@ export interface FeatureItemsProps extends VariantProps<typeof featureItemsVaria
 	className?: string;
 	alternateLayout?: boolean;
 	overlayStyle?: "dark" | "light" | "gradient";
+	overlayHeight?: "auto" | "full" | "half" | "third";
 	renderItem?: (item: FeatureItem, index: number) => ReactNode;
 }
 
@@ -63,6 +64,7 @@ export const FeatureItems = ({
 	className,
 	alternateLayout = true,
 	overlayStyle = "dark",
+	overlayHeight,
 	renderItem,
 }: FeatureItemsProps) => {
 	// cvaを使用してコンテナクラスを生成
@@ -90,6 +92,7 @@ export const FeatureItems = ({
 								key={item.id}
 								item={item}
 								overlayStyle={overlayStyle}
+								overlayHeight={overlayHeight}
 							/>
 						);
 					case "simple":
