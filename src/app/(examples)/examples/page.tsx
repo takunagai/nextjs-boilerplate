@@ -4,6 +4,11 @@ import Link from "next/link";
 export default function ExamplesPage() {
 	const examples = [
 		{
+			title: "カラムレイアウト",
+			description: "2カラム（左+メイン、メイン+右）・3カラムのサンプルです。",
+			href: "/examples/column-layout",
+		},
+		{
 			title: "リスト",
 			description: "SimpleListとNumberedListのサンプルです。",
 			href: "/examples/list",
