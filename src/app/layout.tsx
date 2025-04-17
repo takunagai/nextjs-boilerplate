@@ -1,4 +1,5 @@
 import { UserAuthMenu } from "@/components/auth/user-auth-menu";
+import { WhalesAnimation } from "@/components/background/whales-animation";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { OrganizationJsonLd, WebsiteJsonLd } from "@/components/seo";
@@ -106,6 +107,7 @@ export default async function RootLayout({
 			>
 				<ThemeProvider>
 					<SessionProvider session={session}>
+						<WhalesAnimation />
 						<div className="flex flex-col min-h-screen">
 							<Header
 								background="transparent"
