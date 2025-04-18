@@ -1,12 +1,11 @@
-import ColumnLayout from "@/components/layout/column-layout";
 import {
 	BreadcrumbJsonLd,
-	WebsiteJsonLd,
 	generateMetadata,
 	generateViewport,
+	WebsiteJsonLd,
 } from "@/components/seo";
+import { ContentItems } from "@/components/services/content-items"; // 追加
 import { Breadcrumb } from "@/components/ui/breadcrumb";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
 import { META } from "@/lib/constants";
 import { createBreadcrumbs } from "@/lib/utils";
@@ -49,71 +48,75 @@ export default function ServicesPage() {
 				<p className="text-muted-foreground">弊社のサービスをご紹介します。</p>
 			</div>
 
-			<Container className="mt-8" paddingY="lg">
-				<ColumnLayout variant="2col-right" gap="gap-8">
-					<ColumnLayout.Main className="space-y-8">
-						<p className="text-2xl font-semibold">
-							お客様のビジネスを成功に導く多彩なサービスを提供しています。
-						</p>
-						<ul className="list-disc list-inside space-y-2 text-base">
-							<li>最新技術を活用した高品質なウェブサイト・アプリ開発</li>
-							<li>UI/UX設計から運用・保守までワンストップ対応</li>
-							<li>ビジネス課題を解決するコンサルティングサービス</li>
-						</ul>
+			<Container className="mt-8" width="lg">
+				<p className="text-2xl font-bold">
+					お客様のビジネスを成功に導く多彩なサービスを提供しています。
+				</p>
+				<ul className="mt-6 list-disc list-inside space-y-2">
+					<li>最新技術を活用した高品質なウェブサイト・アプリ開発</li>
+					<li>UI/UX設計から運用・保守までワンストップ対応</li>
+					<li>ビジネス課題を解決するコンサルティングサービス</li>
+				</ul>
 
-						<Card className="bg-gradient-to-r from-primary/10 to-secondary/10 border-0">
-							<CardContent className="py-6">
-								<div className="text-center">
-									<span className="text-xl font-bold text-primary">
-										無料相談受付中！
-									</span>
-									<p className="mt-2 text-base text-muted-foreground">
-										ご相談・お見積りはお気軽にお問い合わせください。
-									</p>
-									<Link
-										href="/contact"
-										className="inline-block mt-4 px-6 py-2 bg-primary text-background rounded font-semibold shadow hover:bg-primary/90 transition"
-									>
-										お問い合わせはこちら
-									</Link>
-								</div>
-							</CardContent>
-						</Card>
-					</ColumnLayout.Main>
-					<ColumnLayout.Right className="space-y-6">
-						<Card>
-							<CardHeader>
-								<CardTitle>サービスカテゴリ</CardTitle>
-							</CardHeader>
-							<CardContent className="flex flex-col gap-3">
-								<Link
-									href="/services"
-									className="font-medium hover:underline text-primary"
-								>
-									サービス一覧
-								</Link>
-								<Link
-									href="/services/web-development"
-									className="font-medium hover:underline text-primary"
-								>
-									ウェブ制作
-								</Link>
-								<Link
-									href="/services/app-development"
-									className="font-medium hover:underline text-primary"
-								>
-									アプリ開発
-								</Link>
-								<Link
-									href="/services/consulting"
-									className="font-medium hover:underline text-primary"
-								>
-									コンサルティング
-								</Link>
-							</CardContent>
-						</Card>
-					</ColumnLayout.Right>
-				</ColumnLayout>
+				<div className="mt-8">
+					<ContentItems
+						items={[
+							{
+								title: "ウェブ制作",
+								description:
+									"最新の技術とデザインを活かした高品質なウェブサイト制作サービスを提供します。コーポレートサイト、ECサイトなど様々なニーズに対応します。",
+								image: "/dummy-images/street-photo-01.jpg",
+								imageAlt: "ウェブ制作のイメージ",
+								link: {
+									href: "/services/web-development",
+									text: "詳細を見る →",
+								},
+							},
+							{
+								title: "アプリ開発",
+								description:
+									"iOS/Android対応のネイティブアプリから、クロスプラットフォームアプリまで、幅広いモバイルアプリケーション開発サービスを提供します。",
+								image: "/dummy-images/street-photo-02.jpg",
+								imageAlt: "アプリ開発のイメージ",
+								link: {
+									href: "/services/app-development",
+									text: "詳細を見る →",
+								},
+							},
+							{
+								title: "コンサルティング",
+								description:
+									"ビジネス課題を解決するためのITコンサルティングサービスを提供します。デジタルトランスフォーメーションの推進をサポートします。",
+								image: "/dummy-images/street-photo-03.jpg",
+								imageAlt: "コンサルティングのイメージ",
+								link: {
+									href: "/services/consulting",
+									text: "詳細を見る →",
+								},
+							},
+						]}
+						columns={3}
+						className="gap-6"
+						imageHeight={200}
+					/>
+				</div>
+
+				<div className="mt-12 py-6 px-6 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-lg">
+					<div className="text-center">
+						<span className="text-xl font-bold text-primary">
+							無料相談受付中！
+						</span>
+						<p className="mt-2 text-base text-muted-foreground">
+							ご相談・お見積りはお気軽にお問い合わせください。
+						</p>
+						<Link
+							href="/contact"
+							className="inline-block mt-4 px-6 py-2 bg-primary text-background rounded font-bold shadow hover:bg-primary/90 transition"
+						>
+							お問い合わせはこちら
+						</Link>
+					</div>
+				</div>
 			</Container>
 		</>
 	);
