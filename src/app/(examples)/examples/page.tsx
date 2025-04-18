@@ -9,6 +9,11 @@ export default function ExamplesPage() {
 			href: "/examples/column-layout",
 		},
 		{
+			title: "見出し",
+			description: "見出しコンポーネントのサンプルです。",
+			href: "/examples/heading",
+		},
+		{
 			title: "リスト",
 			description: "SimpleListとNumberedListのサンプルです。",
 			href: "/examples/list",
