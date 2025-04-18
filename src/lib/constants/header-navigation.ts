@@ -23,14 +23,15 @@ export const HEADER_NAVIGATION: HeaderLink[] = [
 		label: "サービス",
 		href: "/services",
 		submenu: [
+			{ label: "サービス一覧", href: "/services" },
 			{ label: "ウェブ制作", href: "/services/web-development" },
 			{ label: "アプリ開発", href: "/services/app-development" },
 			{ label: "コンサルティング", href: "/services/consulting" },
 		],
 	},
 	{
-		label: "サンプル",
-		href: "/examples",
+		label: "制作実績",
+		href: "/portfolio",
 	},
 	{
 		label: "お知らせ",
@@ -39,5 +40,9 @@ export const HEADER_NAVIGATION: HeaderLink[] = [
 	{
 		label: "お問合せ",
 		href: "/contact",
+	},
+	{
+		label: "サンプル",
+		href: "/examples",
 	},
 ];
