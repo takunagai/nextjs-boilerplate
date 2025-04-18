@@ -1,7 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
 
-interface ContentItem {
+// コンテンツアイテムの型定義
+export type ContentItem = {
 	title: string;
 	description: string;
 	image?: string;
@@ -10,25 +11,30 @@ interface ContentItem {
 		href: string;
 		text: string;
 	};
-}
+};
 
-interface ContentItemsProps {
+// コンポーネントのProps
+type ContentItemsProps = {
 	items: ContentItem[];
 	columns?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 	className?: string;
-	imageHeight?: number;
-	link?: {
-		href: string;
-		text: string;
-	};
-}
+	imageHeight?: number; // 後方互換性のため残す
+	aspectRatio?: string;
+};
 
+/**
+ * コンテンツアイテムのグリッドを表示するコンポーネント
+ */
 export function ContentItems({
 	items,
 	columns = 2,
 	className = "",
-	imageHeight = 160,
+	imageHeight, // 使用しないが後方互換性のため残す
+	aspectRatio = "2/3",
 }: ContentItemsProps) {
+	// アスペクト比をTailwind用の形式に変換
+	const aspectRatioClass = `aspect-[${aspectRatio}]`;
+
 	const getGridCols = () => {
 		switch (columns) {
 			case 1:
@@ -69,8 +75,7 @@ export function ContentItems({
 				>
 					{item.image && (
 						<div
-							className="relative w-full"
-							style={{ height: `${imageHeight}px` }}
+							className={`relative w-full ${aspectRatioClass}`}
 						>
 							<Image
 								src={item.image}
