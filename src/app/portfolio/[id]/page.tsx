@@ -9,19 +9,38 @@ import { Badge } from "@/components/ui/badge";
 import { META } from "@/lib/constants";
 import { portfolioItems } from "@/lib/data/portfolio-data";
 import { createBreadcrumbs } from "@/lib/utils";
-import type { Metadata } from "next";
+import type { Metadata, ResolvingMetadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MdArrowBack, MdOutlineWeb } from "react-icons/md";
 
+// 動的ルーティングのパラメータ型定義
+type PageParams = {
+	id: string;
+};
+
+// Next.js 15のApp Routerの正確なPageProps型
+interface PageProps {
+  params: Promise<PageParams> | undefined;
+  searchParams?: Promise<any>;
+}
+
 // 動的メタデータの生成
-export async function generateMetadata({
-	params,
-}: {
-	params: { id: string };
-}): Promise<Metadata> {
-	const portfolio = portfolioItems.find((item) => item.id === params.id);
+export async function generateMetadata(
+  { params }: PageProps,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+	// paramsがPromiseなので、解決する
+	if (!params) {
+		return {
+			title: "ポートフォリオが見つかりません",
+			description: "指定されたポートフォリオが見つかりませんでした。",
+		};
+	}
+
+	const resolvedParams = await params;
+	const portfolio = portfolioItems.find((item) => item.id === resolvedParams.id);
 
 	if (!portfolio) {
 		return {
@@ -35,7 +54,7 @@ export async function generateMetadata({
 		description: portfolio.description || `${portfolio.title}の制作実績`,
 		keywords: ["ポートフォリオ", "制作実績", portfolio.category],
 		alternates: {
-			canonical: `/portfolio/${params.id}`,
+			canonical: `/portfolio/${resolvedParams.id}`,
 		}
 	};
 }
@@ -43,18 +62,23 @@ export async function generateMetadata({
 export const viewport = generateViewport();
 
 // 静的パラメータの生成
-export function generateStaticParams() {
+export async function generateStaticParams(): Promise<PageParams[]> {
 	return portfolioItems.map((item) => ({
 		id: item.id,
 	}));
 }
 
-export default function PortfolioDetailPage({
-	params,
-}: {
-	params: { id: string };
-}) {
-	const portfolio = portfolioItems.find((item) => item.id === params.id);
+// Next.js 15のApp Routerに適したページコンポーネント
+// paramsはPromiseとして扱われる
+export default async function Page({ params }: PageProps) {
+	// paramsが存在しているとするが、型のためPromiseとして扱う
+	if (!params) {
+		notFound();
+	}
+	
+	// Promiseからパラメータを解決
+	const resolvedParams = await params;
+	const portfolio = portfolioItems.find((item) => item.id === resolvedParams.id);
 
 	// ポートフォリオが見つからない場合は404ページを表示
 	if (!portfolio) {
@@ -65,7 +89,7 @@ export default function PortfolioDetailPage({
 	const breadcrumbItems = [
 		{ title: "ホーム", path: "/" },
 		{ title: "ポートフォリオ", path: "/portfolio" },
-		{ title: portfolio.title, path: `/portfolio/${params.id}`, current: true },
+		{ title: portfolio.title, path: `/portfolio/${resolvedParams.id}`, current: true },
 	];
 	const { ui: uiBreadcrumbs, jsonLd: jsonLdBreadcrumbs } =
 		createBreadcrumbs(breadcrumbItems);
@@ -95,7 +119,7 @@ export default function PortfolioDetailPage({
 			<WebsiteJsonLd
 				name={`${portfolio.title} | ${META.DEFAULT_TITLE}`}
 				description={portfolio.description || `${portfolio.title}の制作実績`}
-				url={`${META.SITE_URL}/portfolio/${params.id}`}
+				url={`${META.SITE_URL}/portfolio/${resolvedParams.id}`}
 			/>
 			<BreadcrumbJsonLd items={jsonLdBreadcrumbs} />
 			<Container className="mt-8">
