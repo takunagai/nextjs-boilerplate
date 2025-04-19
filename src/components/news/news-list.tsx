@@ -7,16 +7,12 @@ interface NewsListProps {
 
 export function NewsList({ items, className }: NewsListProps) {
 	if (items.length === 0) {
-		return (
-			<div className="p-8 text-center text-slate-500">
-				お知らせはありません。
-			</div>
-		);
+		return <p className="p-8 text-center">お知らせはありません。</p>;
 	}
 
 	return (
 		<div className={className}>
-			<div className="space-y-4">
+			<ul className="space-y-1">
 				{items.map((item) => (
 					<NewsItem
 						key={item.id}
@@ -27,7 +23,7 @@ export function NewsList({ items, className }: NewsListProps) {
 						link={item.link}
 					/>
 				))}
-			</div>
+			</ul>
 		</div>
 	);
 }
