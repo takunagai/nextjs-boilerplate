@@ -1,5 +1,5 @@
 import { clsx } from "clsx";
-import { Children, isValidElement, type ReactNode } from "react";
+import { Children, type ReactNode, isValidElement } from "react";
 
 /**
  * 見出しのサイズバリエーション
@@ -79,7 +79,7 @@ const headingLevelSizeMap: Record<string, HeadingSize> = {
  */
 function getBorderClass(
 	position: BorderPosition,
-	borderClass: string = "border-2 border-gray-200/50",
+	borderClass = "border-2 border-gray-200/50",
 ): string {
 	if (position === "none" || position === "between") return "";
 
