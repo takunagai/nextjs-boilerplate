@@ -1,4 +1,5 @@
 import ColumnLayout from "@/components/layout/column-layout";
+import { PageHeader } from "@/components/ui/page-header";
 
 /**
  * ColumnLayout サンプルページ
@@ -9,9 +10,7 @@ import ColumnLayout from "@/components/layout/column-layout";
 export default function ColumnLayoutExamplePage() {
 	return (
 		<main className="space-y-12 p-6">
-			<h1 className="text-2xl font-bold mb-6">
-				ColumnLayout コンポーネント サンプル
-			</h1>
+			<PageHeader title="カラムレイアウト例" />
 
 			{/* モバイルでのレスポンシブ挙動の説明 */}
 			<section className="mt-10">

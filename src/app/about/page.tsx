@@ -14,6 +14,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
+import { PageHeader } from "@/components/ui/page-header";
 import { Separator } from "@/components/ui/separator";
 import { META } from "@/lib/constants";
 import { createBreadcrumbs } from "@/lib/utils";
@@ -77,7 +78,7 @@ export default function AboutPage() {
 							/>
 						</div>
 						<div className="text-center md:text-left">
-							<h1 className="text-4xl font-bold mb-2">山田 太郎</h1>
+							<PageHeader title="山田 太郎" />
 							<p className="text-xl text-muted-foreground mb-4">
 								フロントエンドエンジニア
 							</p>

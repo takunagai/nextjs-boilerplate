@@ -7,6 +7,7 @@ import {
 } from "@/components/seo";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Container } from "@/components/ui/container";
+import { PageHeader } from "@/components/ui/page-header";
 import { META } from "@/lib/constants";
 import { createBreadcrumbs } from "@/lib/utils";
 import type { Metadata } from "next";
@@ -47,7 +48,7 @@ export default function ContactPage() {
 				<div className="flex flex-col gap-8">
 					{/* ヘッダーセクション */}
 					<div className="text-center">
-						<h1 className="text-4xl font-bold mb-4">お問い合わせ</h1>
+						<PageHeader title="お問い合わせ" />
 						<div className="max-w-2xl mx-auto space-y-4 mb-6">
 							<p className="text-muted-foreground">
 								ご質問やお問い合わせは、以下のいずれかの方法でお気軽にご連絡ください。

@@ -1,6 +1,7 @@
 import { Container } from "@/components/ui/container";
 import { Table } from "@/components/ui/table";
 import { FaCaretDown } from "react-icons/fa6";
+import { PageHeader } from "@/components/ui/page-header";
 
 import type { Metadata } from "next";
 
@@ -177,9 +178,7 @@ export default function TableExamplePage() {
 	return (
 		<Container>
 			<div className="py-10">
-				<h1 className="mb-2 text-3xl font-bold tracking-tight">
-					テーブルコンポーネント サンプル集
-				</h1>
+				<PageHeader title="テーブルコンポーネント サンプル集" />
 				<p className="text-lg text-muted-foreground mb-8">
 					様々なバリエーションと組み合わせのテーブルサンプルです。
 				</p>

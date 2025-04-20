@@ -1,4 +1,5 @@
 import { LoginForm } from "@/components/auth/login-form";
+import { PageHeader } from "@/components/ui/page-header";
 import type { Metadata } from "next";
 
 // メタデータ
@@ -15,7 +16,7 @@ export default function LoginPage() {
 		<div className="container flex h-screen w-screen flex-col items-center justify-center">
 			<div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
 				<div className="flex flex-col space-y-2 text-center">
-					<h1 className="text-2xl font-semibold tracking-tight">ログイン</h1>
+					<PageHeader title="ログイン" />
 					<p className="text-sm text-muted-foreground">
 						アカウントにログインしてください
 					</p>

@@ -6,6 +6,7 @@ import {
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Container } from "@/components/ui/container";
 import { Badge } from "@/components/ui/badge";
+import { PageHeader } from "@/components/ui/page-header";
 import { META } from "@/lib/constants";
 import { portfolioItems } from "@/lib/data/portfolio-data";
 import { createBreadcrumbs } from "@/lib/utils";
@@ -23,7 +24,7 @@ type PageParams = {
 // Next.js 15のApp Routerの正確なPageProps型
 interface PageProps {
   params: Promise<PageParams> | undefined;
-  searchParams?: Promise<any>;
+  searchParams?: Promise<Record<string, string | string[]>>;
 }
 
 // 動的メタデータの生成
@@ -150,7 +151,7 @@ export default async function Page({ params }: PageProps) {
 
 					{/* 詳細情報エリア */}
 					<div>
-						<h1 className="text-3xl font-bold mb-4">{portfolio.title}</h1>
+						<PageHeader title={portfolio.title} />
 						<div className="mb-4">
 							<span className="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-sm">
 								{getCategoryName(portfolio.category)}

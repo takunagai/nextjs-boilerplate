@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
+import { PageHeader } from "@/components/ui/page-header";
 import Link from "next/link";
 import { FaArrowLeft } from "react-icons/fa6";
 
@@ -7,9 +8,7 @@ export default function NotFound() {
 	return (
 		<Container>
 			<div className="py-16 md:py-24 text-center">
-				<h1 className="text-6xl md:text-8xl font-bold mb-4 text-slate-900 dark:text-slate-100">
-					404
-				</h1>
+				<PageHeader title="404" />
 				<h2 className="text-2xl md:text-3xl font-semibold mb-6 text-slate-800 dark:text-slate-200">
 					ページが見つかりません
 				</h2>

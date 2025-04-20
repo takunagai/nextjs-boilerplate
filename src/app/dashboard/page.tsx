@@ -12,6 +12,7 @@ import { auth } from "@/lib/auth";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { PageHeader } from "@/components/ui/page-header";
 
 // メタデータ
 export const metadata: Metadata = {
@@ -37,7 +38,7 @@ export default async function DashboardPage() {
 
 	return (
 		<Container className="mt-16">
-			<h1 className="text-3xl font-bold mb-6">ダッシュボード</h1>
+			<PageHeader title="ダッシュボード" />
 
 			<div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
 				{/* ユーザー情報カード */}

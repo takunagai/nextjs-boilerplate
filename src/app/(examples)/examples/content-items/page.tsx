@@ -10,6 +10,7 @@ import {
 	FiShield,
 	FiZap,
 } from "react-icons/fi";
+import { PageHeader } from "@/components/ui/page-header";
 
 export const metadata = {
 	title: "ContentItems コンポーネント - サンプル",
@@ -73,9 +74,7 @@ export default function ContentItemsExamplePage() {
 		<div className="min-h-screen">
 			{/* ページヘッダー */}
 			<div className="py-12 space-y-2">
-				<h1 className="text-4xl font-bold tracking-tighter">
-					ContentItems コンポーネント
-				</h1>
+				<PageHeader title="ContentItems コンポーネント" />
 				<p className="text-xl text-muted-foreground">
 					ContentItemsコンポーネントの全バリエーションを表示するサンプルページです。
 				</p>

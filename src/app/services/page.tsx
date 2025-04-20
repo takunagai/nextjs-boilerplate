@@ -7,6 +7,7 @@ import {
 import { ContentItems } from "@/components/services/content-items"; // 追加
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Container } from "@/components/ui/container";
+import { PageHeader } from "@/components/ui/page-header";
 import { META } from "@/lib/constants";
 import { createBreadcrumbs } from "@/lib/utils";
 import type { Metadata } from "next";
@@ -44,7 +45,7 @@ export default function ServicesPage() {
 			</Container>
 
 			<div className="text-center">
-				<h1 className="text-3xl font-bold mb-2">サービス</h1>
+				<PageHeader title="サービス" />
 				<p className="text-muted-foreground">弊社のサービスをご紹介します。</p>
 			</div>
 

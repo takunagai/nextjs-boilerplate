@@ -1,6 +1,7 @@
 import { Container } from "@/components/ui/container";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Suspense } from "react";
+import { PageHeader } from "@/components/ui/page-header";
 
 // ユーザーの型定義
 interface User {
@@ -95,7 +96,7 @@ function ErrorDisplay({ error }: { error: Error }) {
 export default function DataFetchingPage() {
 	return (
 		<Container width="2xl" paddingY="xl" paddingX="lg">
-			<h1 className="mb-8 text-3xl font-bold">データ取得サンプル</h1>
+			<PageHeader title="データフェッチ例" />
 
 			<div className="mb-8">
 				<h2 className="mb-4 text-xl font-semibold">

@@ -2,11 +2,12 @@
 
 import { Heading } from "@/components/ui/heading";
 import { FaPuzzlePiece } from "react-icons/fa6";
+import { PageHeader } from "@/components/ui/page-header";
 
 export default function HeadingExamplesPage() {
 	return (
 		<div className="px-8 py-12 space-y-12">
-			<h1 className="text-3xl font-bold">Heading コンポーネントのサンプル</h1>
+			<PageHeader title="Heading コンポーネントのサンプル" />
 
 			{/* Default */}
 			<section className="space-y-2">

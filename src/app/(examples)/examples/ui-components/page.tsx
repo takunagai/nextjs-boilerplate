@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PageHeader } from "@/components/ui/page-header";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -45,7 +46,7 @@ export default function UIComponentsPage() {
 
 	return (
 		<Container className="my-8" paddingY="lg" paddingX="2xl">
-			<h1 className="mb-8 text-3xl font-bold">UIコンポーネント</h1>
+			<PageHeader title="UIコンポーネント" />
 			<p className="mb-6 text-gray-600">
 				shadcn/uiコンポーネントライブラリのサンプル集です。
 				これらのコンポーネントは、アクセシビリティを考慮した再利用可能なUIコンポーネントです。

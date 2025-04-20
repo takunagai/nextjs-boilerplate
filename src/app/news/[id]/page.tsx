@@ -10,6 +10,7 @@ import { notFound } from "next/navigation";
 import { format } from "date-fns";
 import type { Metadata } from "next";
 import { getNewsById, getAllNews } from "@/lib/data/news";
+import { PageHeader } from "@/components/ui/page-header";
 
 // 動的メタデータの生成（SEO対策）
 export async function generateMetadata({
@@ -111,9 +112,7 @@ export default async function NewsDetailPage({
 					</div>
 
 					{/* タイトル */}
-					<h1 className="text-2xl md:text-3xl font-bold mb-8 text-slate-900 dark:text-slate-100">
-						{news.title}
-					</h1>
+					<PageHeader title={news.title} />
 
 					<Separator className="mb-8" />
 

@@ -1,4 +1,5 @@
 import { Container } from "@/components/ui/container";
+import { PageHeader } from "@/components/ui/page-header";
 import Link from "next/link";
 
 export default function ExamplesPage() {
@@ -59,7 +60,7 @@ export default function ExamplesPage() {
 
 	return (
 		<Container className="mt-8" paddingY="lg" paddingX="2xl">
-			<h1 className="mb-8 text-3xl font-bold">サンプル一覧</h1>
+			<PageHeader title="サンプル集" />
 
 			<ul className="space-y-4 list-disc pl-5">
 				{examples.map((example) => (

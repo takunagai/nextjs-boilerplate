@@ -1,4 +1,5 @@
 import { EmblaCarousel } from "@/components/ui/carousel/embla-carousel";
+import { PageHeader } from "@/components/ui/page-header";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -29,7 +30,7 @@ const slides = [
 export default function CarouselPage() {
 	return (
 		<div className="container mx-auto py-12 px-4">
-			<h1 className="text-3xl font-bold mb-6">カルーセルサンプル</h1>
+			<PageHeader title="カルーセルの例" />
 
 			<h2 className="text-xl font-semibold mb-2">
 				Embla Carousel (embla-carousel-react) とそのプラグイン３つを採用

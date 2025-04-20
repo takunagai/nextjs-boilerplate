@@ -10,6 +10,7 @@ import { Container } from "@/components/ui/container";
 import { META } from "@/lib/constants";
 import { createBreadcrumbs } from "@/lib/utils";
 import type { Metadata } from "next";
+import { PageHeader } from "@/components/ui/page-header";
 
 export const metadata: Metadata = generateMetadata({
 	title: "プライバシーポリシー",
@@ -50,7 +51,7 @@ export default function PrivacyPolicyPage() {
 				<div className="flex flex-col gap-8">
 					{/* ヘッダー */}
 					<div className="text-center">
-						<h1 className="text-3xl font-bold mb-2">プライバシーポリシー</h1>
+						<PageHeader title="プライバシーポリシー" />
 						<p className="text-muted-foreground">
 							最終更新日: {currentYear}年3月22日
 						</p>

@@ -14,6 +14,7 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { PageHeader } from "@/components/ui/page-header";
 import { Textarea } from "@/components/ui/textarea";
 import { isActionError, isActionSuccess } from "@/lib/server";
 import {
@@ -86,7 +87,7 @@ export default function FormExamplePage() {
 
 	return (
 		<Container width="2xl" paddingY="xl" paddingX="lg">
-			<h1 className="mb-8 text-3xl font-bold">フォームサンプル</h1>
+			<PageHeader title="フォームサンプル" />
 
 			<div className="max-w-2xl">
 				<div className="mb-6">

@@ -6,6 +6,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+import { PageHeader } from "@/components/ui/page-header";
 import type { Metadata } from "next";
 
 // メタデータ
@@ -22,9 +23,7 @@ export default function RegisterPage() {
 		<div className="container flex h-screen w-screen flex-col items-center justify-center">
 			<div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[400px]">
 				<div className="flex flex-col space-y-2 text-center">
-					<h1 className="text-2xl font-semibold tracking-tight">
-						アカウント登録
-					</h1>
+					<PageHeader title="新規登録" />
 					<p className="text-sm text-muted-foreground">
 						必要情報を入力してアカウントを作成してください
 					</p>

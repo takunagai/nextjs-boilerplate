@@ -10,6 +10,7 @@ import { ServiceSidebar } from "@/components/services/service-sidebar";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Card, CardContent } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
+import { PageHeader } from "@/components/ui/page-header";
 import { META } from "@/lib/constants";
 import { createBreadcrumbs } from "@/lib/utils";
 import type { Metadata } from "next";
@@ -60,7 +61,7 @@ export default function WebDevelopmentPage() {
 			</Container>
 
 			<div className="text-center">
-				<h1 className="text-3xl font-bold mb-2">ウェブ制作サービス</h1>
+				<PageHeader title="ウェブ制作サービス" />
 				<p className="text-muted-foreground">
 					お客様のビジネスを成功に導く高品質なウェブサイト制作
 				</p>

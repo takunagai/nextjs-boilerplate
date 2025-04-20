@@ -7,6 +7,8 @@ import {
 import { ContentItems } from "@/components/services/content-items";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Container } from "@/components/ui/container";
+import { Heading } from "@/components/ui/heading";
+import { PageHeader } from "@/components/ui/page-header";
 import { META } from "@/lib/constants";
 import { 
 	portfolioItems, 
@@ -53,11 +55,7 @@ export default function PortfolioPage() {
 				<Breadcrumb items={uiBreadcrumbs} />
 			</Container>
 
-			<div className="text-center">
-				<h1 className="text-3xl font-bold mb-2">ポートフォリオ</h1>
-				<p className="text-muted-foreground">これまでの制作実績をご紹介します。</p>
-			</div>
-
+			<PageHeader title="ポートフォリオ" />
 			<Container className="mt-8" width="lg">
 				<p className="text-2xl font-bold">
 					お客様に合わせた最適なソリューションをご提供しています

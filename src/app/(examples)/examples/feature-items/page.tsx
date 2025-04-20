@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { FeatureItems, FeatureSplit } from "@/components/ui/feature-items";
+import { PageHeader } from "@/components/ui/page-header";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { FiBarChart2, FiCode, FiGlobe, FiMapPin } from "react-icons/fi";
@@ -59,7 +60,7 @@ export default function FeatureItemsPage() {
 		<div className="py-12">
 			<Container width="lg">
 				<div className="mb-12 text-center">
-					<h1 className="text-4xl font-bold mb-4">特徴紹介セクション</h1>
+					<PageHeader title="特徴紹介セクション" />
 					<p className="text-xl text-muted-foreground">
 						特徴を効果的に紹介するためのレイアウトコンポーネント
 					</p>

@@ -1,6 +1,6 @@
 import { NewsList } from "@/components/news/news-list";
 import { Container } from "@/components/ui/container";
-import { Heading } from "@/components/ui/heading";
+import { PageHeader } from "@/components/ui/page-header";
 import { NewsPagination } from "@/components/ui/news-pagination";
 import {
 	NEWS_PER_PAGE,
@@ -80,18 +80,7 @@ export default async function NewsPage({
 		<main className="pb-16">
 			<Container width="md">
 				<div className="py-8 md:py-16">
-					<Heading
-						as="h1"
-						align="center"
-						borderPosition="between"
-						borderClass="w-[10em] mx-auto border border-foreground/10"
-						className="py-12"
-					>
-						お知らせ
-						<Heading.Lead>
-							当サイトに関するお知らせやプレスリリース、アップデート情報などをご覧いただけます。
-						</Heading.Lead>
-					</Heading>
+					<PageHeader title="お知らせ" />
 
 					{/* カテゴリフィルター */}
 					<div className="mb-8">
