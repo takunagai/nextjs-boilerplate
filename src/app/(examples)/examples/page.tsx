@@ -19,6 +19,12 @@ export default function ExamplesPage() {
 			href: "/examples/list",
 		},
 		{
+			title: "テーブル",
+			description:
+				"様々なバリエーションを持つテーブルコンポーネントのサンプル集",
+			href: "/examples/table",
+		},
+		{
 			title: "特徴紹介セクション",
 			description: "特徴を効果的に紹介するためのレイアウトコンポーネント",
 			href: "/examples/feature-items",
