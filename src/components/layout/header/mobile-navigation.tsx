@@ -55,7 +55,7 @@ export function MobileNavigation({
 			<SheetContent side="right" className="px-6 py-8 flex flex-col gap-6">
 				<SheetTitle className="sr-only">サイトナビゲーション</SheetTitle>
 				<nav className="flex flex-col gap-1.5 w-full">
-					{items.map((item) => 
+					{items.map((item) =>
 						item.children?.length ? (
 							<Accordion
 								key={item.href}
@@ -74,12 +74,16 @@ export function MobileNavigation({
 													key={child.href}
 													href={child.href}
 													target={child.external ? "_blank" : undefined}
-													rel={child.external ? "noopener noreferrer" : undefined}
+													rel={
+														child.external ? "noopener noreferrer" : undefined
+													}
 													onClick={() => setIsOpen(false)}
 													className={cn(
 														linkStyles.base,
 														linkStyles.sub,
-														child.active ? "text-foreground" : "text-muted-foreground"
+														child.active
+															? "text-foreground"
+															: "text-muted-foreground",
 													)}
 												>
 													{child.label}
@@ -99,12 +103,12 @@ export function MobileNavigation({
 								className={cn(
 									linkStyles.base,
 									linkStyles.main,
-									item.active ? "text-foreground" : "text-muted-foreground"
+									item.active ? "text-foreground" : "text-muted-foreground",
 								)}
 							>
 								{item.label}
 							</Link>
-						)
+						),
 					)}
 				</nav>
 				{rightContent && (

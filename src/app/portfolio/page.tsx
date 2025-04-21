@@ -10,10 +10,10 @@ import { Container } from "@/components/ui/container";
 import { Heading } from "@/components/ui/heading";
 import { PageHeader } from "@/components/ui/page-header";
 import { META } from "@/lib/constants";
-import { 
-	portfolioItems, 
-	portfolioCategories, 
-	getAllServiceTags, 
+import {
+	portfolioItems,
+	portfolioCategories,
+	getAllServiceTags,
 	getPortfolioItemsByTag,
 } from "@/lib/data/portfolio-data";
 import { createBreadcrumbs } from "@/lib/utils";
@@ -25,7 +25,14 @@ export const metadata: Metadata = generateMetadata({
 	title: "ポートフォリオ",
 	description:
 		"これまでに制作したウェブサイト、ロゴデザイン、ECサイトなどの実績をご紹介します。",
-	keywords: ["ポートフォリオ", "制作実績", "ウェブ制作", "ロゴデザイン", "写真撮影", "WordPress"],
+	keywords: [
+		"ポートフォリオ",
+		"制作実績",
+		"ウェブ制作",
+		"ロゴデザイン",
+		"写真撮影",
+		"WordPress",
+	],
 	canonical: "/portfolio",
 });
 
@@ -60,16 +67,18 @@ export default function PortfolioPage() {
 				<p className="text-2xl font-bold">
 					お客様に合わせた最適なソリューションをご提供しています
 				</p>
-				
+
 				{/* カテゴリー紹介 */}
 				<div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
 					{portfolioCategories.map((category) => (
-						<div 
+						<div
 							key={category.id}
 							className="p-4 border rounded-md bg-card hover:bg-accent/50 transition-colors"
 						>
 							<h2 className="text-lg font-semibold">{category.name}</h2>
-							<p className="text-sm text-muted-foreground mt-1">{category.description}</p>
+							<p className="text-sm text-muted-foreground mt-1">
+								{category.description}
+							</p>
 						</div>
 					))}
 				</div>
@@ -90,7 +99,7 @@ export default function PortfolioPage() {
 				<div className="mt-10">
 					<h2 className="text-2xl font-bold mb-6">主な制作実績</h2>
 					<ContentItems
-						items={portfolioItems.map(item => ({
+						items={portfolioItems.map((item) => ({
 							title: item.title,
 							description: item.clientName || "",
 							image: item.image,

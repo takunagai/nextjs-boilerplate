@@ -23,14 +23,14 @@ type PageParams = {
 
 // Next.js 15のApp Routerの正確なPageProps型
 interface PageProps {
-  params: Promise<PageParams> | undefined;
-  searchParams?: Promise<Record<string, string | string[]>>;
+	params: Promise<PageParams> | undefined;
+	searchParams?: Promise<Record<string, string | string[]>>;
 }
 
 // 動的メタデータの生成
 export async function generateMetadata(
-  { params }: PageProps,
-  parent: ResolvingMetadata
+	{ params }: PageProps,
+	parent: ResolvingMetadata,
 ): Promise<Metadata> {
 	// paramsがPromiseなので、解決する
 	if (!params) {
@@ -41,7 +41,9 @@ export async function generateMetadata(
 	}
 
 	const resolvedParams = await params;
-	const portfolio = portfolioItems.find((item) => item.id === resolvedParams.id);
+	const portfolio = portfolioItems.find(
+		(item) => item.id === resolvedParams.id,
+	);
 
 	if (!portfolio) {
 		return {
@@ -56,7 +58,7 @@ export async function generateMetadata(
 		keywords: ["ポートフォリオ", "制作実績", portfolio.category],
 		alternates: {
 			canonical: `/portfolio/${resolvedParams.id}`,
-		}
+		},
 	};
 }
 
@@ -76,10 +78,12 @@ export default async function Page({ params }: PageProps) {
 	if (!params) {
 		notFound();
 	}
-	
+
 	// Promiseからパラメータを解決
 	const resolvedParams = await params;
-	const portfolio = portfolioItems.find((item) => item.id === resolvedParams.id);
+	const portfolio = portfolioItems.find(
+		(item) => item.id === resolvedParams.id,
+	);
 
 	// ポートフォリオが見つからない場合は404ページを表示
 	if (!portfolio) {
@@ -90,7 +94,11 @@ export default async function Page({ params }: PageProps) {
 	const breadcrumbItems = [
 		{ title: "ホーム", path: "/" },
 		{ title: "ポートフォリオ", path: "/portfolio" },
-		{ title: portfolio.title, path: `/portfolio/${resolvedParams.id}`, current: true },
+		{
+			title: portfolio.title,
+			path: `/portfolio/${resolvedParams.id}`,
+			current: true,
+		},
 	];
 	const { ui: uiBreadcrumbs, jsonLd: jsonLdBreadcrumbs } =
 		createBreadcrumbs(breadcrumbItems);
@@ -138,9 +146,7 @@ export default async function Page({ params }: PageProps) {
 
 				<div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8">
 					{/* 画像エリア */}
-					<div 
-						className="relative w-full aspect-[2/3]"
-					>
+					<div className="relative w-full aspect-[2/3]">
 						<Image
 							src={portfolio.image}
 							alt={portfolio.imageAlt || `${portfolio.title}のイメージ`}
@@ -157,38 +163,46 @@ export default async function Page({ params }: PageProps) {
 								{getCategoryName(portfolio.category)}
 							</span>
 						</div>
-						
+
 						{portfolio.description && (
-							<p className="text-lg leading-relaxed mb-6">{portfolio.description}</p>
+							<p className="text-lg leading-relaxed mb-6">
+								{portfolio.description}
+							</p>
 						)}
 
 						{/* プロジェクト情報 */}
 						<div className="space-y-4 mt-8">
 							{portfolio.clientName && (
 								<div className="grid grid-cols-[120px_1fr] gap-2">
-									<span className="font-semibold text-muted-foreground">クライアント:</span>
+									<span className="font-semibold text-muted-foreground">
+										クライアント:
+									</span>
 									<span>{portfolio.clientName}</span>
 								</div>
 							)}
-							
+
 							{portfolio.websiteUrl && (
 								<div className="grid grid-cols-[120px_1fr] gap-2">
-									<span className="font-semibold text-muted-foreground">Webサイト:</span>
-									<a 
-										href={portfolio.websiteUrl} 
-										target="_blank" 
+									<span className="font-semibold text-muted-foreground">
+										Webサイト:
+									</span>
+									<a
+										href={portfolio.websiteUrl}
+										target="_blank"
 										rel="noopener noreferrer"
 										className="inline-flex items-center text-primary hover:underline"
 									>
 										<MdOutlineWeb className="mr-1" />
-										{portfolio.websiteUrl.replace(/^https?:\/\//, '')}
+										{portfolio.websiteUrl.replace(/^https?:\/\//, "")}
 									</a>
 								</div>
 							)}
-							
+
 							{portfolio.servicesTags && portfolio.servicesTags.length > 0 && (
 								<div className="grid grid-cols-[120px_1fr] gap-2">
-									<span className="font-semibold text-muted-foreground">提供サービス:</span>
+									<span className="font-semibold text-muted-foreground">
+										提供サービス:
+									</span>
 									<div className="flex flex-wrap gap-2">
 										{portfolio.servicesTags.map((tag) => (
 											<Badge
@@ -212,9 +226,9 @@ export default async function Page({ params }: PageProps) {
 					<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 						{portfolioItems
 							.filter(
-								(item) => 
-									item.category === portfolio.category && 
-									item.id !== portfolio.id
+								(item) =>
+									item.category === portfolio.category &&
+									item.id !== portfolio.id,
 							)
 							.slice(0, 3)
 							.map((item) => (
@@ -222,9 +236,7 @@ export default async function Page({ params }: PageProps) {
 									key={item.id}
 									className="border rounded-md overflow-hidden hover:shadow-md transition-shadow bg-card"
 								>
-									<div
-										className="relative w-full aspect-[2/3]"
-									>
+									<div className="relative w-full aspect-[2/3]">
 										<Image
 											src={item.image}
 											alt={item.imageAlt || `${item.title}のイメージ`}
@@ -234,9 +246,7 @@ export default async function Page({ params }: PageProps) {
 									</div>
 									<div className="p-5">
 										<h3 className="text-lg font-semibold mb-2">{item.title}</h3>
-										<p className="text-muted-foreground">
-											{item.clientName}
-										</p>
+										<p className="text-muted-foreground">{item.clientName}</p>
 										<Link
 											href={`/portfolio/${item.id}`}
 											className="inline-block mt-4 text-primary hover:underline font-medium"

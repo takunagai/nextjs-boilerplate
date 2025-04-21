@@ -27,8 +27,8 @@ export function ServiceSidebar({ currentPath }: ServiceSidebarProps) {
 						const isActive = currentPath === link.href;
 						return (
 							<li key={link.href} className="flex items-center">
-								<MdChevronRight 
-									className={`mr-1 text-sm ${isActive ? "text-primary" : "text-muted-foreground"}`} 
+								<MdChevronRight
+									className={`mr-1 text-sm ${isActive ? "text-primary" : "text-muted-foreground"}`}
 									aria-hidden="true"
 								/>
 								<Link

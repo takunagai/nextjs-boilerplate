@@ -14,31 +14,33 @@ export interface ContentPanelProps {
 	isReversed?: boolean;
 }
 
-export function ContentPanel({ 
-	item, 
-	aspectRatio, 
-	isReversed = false 
+export function ContentPanel({
+	item,
+	aspectRatio,
+	isReversed = false,
 }: ContentPanelProps) {
 	// アスペクト比のクラス名をCVAから取得
-	const imageClassName = imageVariants({ 
+	const imageClassName = imageVariants({
 		aspectRatio,
-		imagePosition: "top"
+		imagePosition: "top",
 	});
 
 	return (
-		<Card className={cn(
-			"p-6 bg-background",
-			isReversed && "bg-muted"
-		)}>
+		<Card className={cn("p-6 bg-background", isReversed && "bg-muted")}>
 			<div className="flex flex-col gap-6">
 				{item.imageUrl && (
 					<div className={imageClassName}>
-						<AspectRatio ratio={
-							aspectRatio === "square" ? 1 : 
-							aspectRatio === "portrait" ? 2/3 : 
-							aspectRatio === "landscape" ? 16/9 : 
-							undefined
-						}>
+						<AspectRatio
+							ratio={
+								aspectRatio === "square"
+									? 1
+									: aspectRatio === "portrait"
+										? 2 / 3
+										: aspectRatio === "landscape"
+											? 16 / 9
+											: undefined
+							}
+						>
 							<Image
 								src={item.imageUrl}
 								alt={`${item.title}の画像`}
@@ -59,9 +61,7 @@ export function ContentPanel({
 
 					{item.description && (
 						<CardContent className="p-0">
-							<p className="text-muted-foreground">
-								{item.description}
-							</p>
+							<p className="text-muted-foreground">{item.description}</p>
 						</CardContent>
 					)}
 				</div>

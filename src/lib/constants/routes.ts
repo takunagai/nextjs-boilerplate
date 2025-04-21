@@ -6,8 +6,8 @@
  * アプリケーションのルート設定
  */
 export const ROUTES = {
-  HOME: "/",
-  ABOUT: "/about",
-  CONTACT: "/contact",
-  PRIVACY: "/privacy",
+	HOME: "/",
+	ABOUT: "/about",
+	CONTACT: "/contact",
+	PRIVACY: "/privacy",
 } as const;

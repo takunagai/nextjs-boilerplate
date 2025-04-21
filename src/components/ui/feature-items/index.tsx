@@ -23,7 +23,8 @@ export const featureItemsVariants = cva("w-full", {
 	variants: {
 		layout: {
 			vertical: "flex flex-col gap-16 py-8",
-			horizontal: "flex flex-col md:flex-row gap-8 items-center justify-between py-8",
+			horizontal:
+				"flex flex-col md:flex-row gap-8 items-center justify-between py-8",
 		},
 		background: {
 			none: "",
@@ -44,7 +45,8 @@ export const featureItemsVariants = cva("w-full", {
 	},
 });
 
-export interface FeatureItemsProps extends VariantProps<typeof featureItemsVariants> {
+export interface FeatureItemsProps
+	extends VariantProps<typeof featureItemsVariants> {
 	items: FeatureItem[];
 	variant?: "split" | "overlay" | "simple";
 	className?: string;
@@ -70,7 +72,7 @@ export const FeatureItems = ({
 	// cvaを使用してコンテナクラスを生成
 	const containerClass = cn(
 		featureItemsVariants({ layout, background, spacing }),
-		className
+		className,
 	);
 
 	return (
@@ -96,17 +98,12 @@ export const FeatureItems = ({
 							/>
 						);
 					case "simple":
-						return (
-							<FeatureSimple
-								key={item.id}
-								item={item}
-							/>
-						);
+						return <FeatureSimple key={item.id} item={item} />;
 					default:
 						// デフォルトはsplitバリアント
 						return (
-							<FeatureSplit 
-								key={item.id} 
+							<FeatureSplit
+								key={item.id}
 								item={item}
 								isReversed={isItemReversed}
 							/>

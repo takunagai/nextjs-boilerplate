@@ -91,7 +91,9 @@ export default function CarouselPage() {
 
 				{/* Class Namesプラグインを活用した例 */}
 				<div className="mb-8">
-					<h2 className="text-xl font-semibold mb-2">Class Namesプラグインを活用した例</h2>
+					<h2 className="text-xl font-semibold mb-2">
+						Class Namesプラグインを活用した例
+					</h2>
 					<p className="text-gray-500 mb-4">
 						前後のスライドの端が見え、選択されていないスライドは暗く表示されるカルーセル
 					</p>

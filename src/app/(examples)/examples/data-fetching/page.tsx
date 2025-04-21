@@ -41,7 +41,8 @@ async function UserList() {
 							<span className="font-semibold">会社:</span> {user.company.name}
 						</p>
 						<p className="text-sm">
-							<span className="font-semibold">ウェブサイト:</span> {user.website}
+							<span className="font-semibold">ウェブサイト:</span>{" "}
+							{user.website}
 						</p>
 					</div>
 					<div className="mt-3 text-right">
@@ -104,8 +105,7 @@ export default function DataFetchingPage() {
 				</h2>
 				<p className="mb-6 text-gray-600">
 					このサンプルでは、Next.jsのサーバーコンポーネントとReact
-					Suspenseを使用して、
-					データ取得中のローディング状態を処理しています。
+					Suspenseを使用して、 データ取得中のローディング状態を処理しています。
 				</p>
 
 				<Suspense fallback={<UserListSkeleton />}>

@@ -57,19 +57,22 @@ const serviceFeatures: ContentItem[] = [
 	{
 		id: "quality-service",
 		title: "品質へのこだわり",
-		description: "お客様に最高品質のサービスを提供するため、細部まで妥協せずこだわりを持って対応いたします。",
+		description:
+			"お客様に最高品質のサービスを提供するため、細部まで妥協せずこだわりを持って対応いたします。",
 		imageUrl: "/dummy-images/street-photo-01.jpg",
 	},
 	{
 		id: "professional-support",
 		title: "専門家のサポート",
-		description: "経験豊富な専門スタッフが、お客様の要望に合わせた最適なソリューションを提案します。",
+		description:
+			"経験豊富な専門スタッフが、お客様の要望に合わせた最適なソリューションを提案します。",
 		imageUrl: "/dummy-images/street-photo-02.jpg",
 	},
 	{
 		id: "customer-satisfaction",
 		title: "お客様満足度の追求",
-		description: "お客様のフィードバックを大切にし、常にサービスの改善と向上に努めています。",
+		description:
+			"お客様のフィードバックを大切にし、常にサービスの改善と向上に努めています。",
 		imageUrl: "/dummy-images/street-photo-03.jpg",
 	},
 ];

@@ -14,7 +14,12 @@ import {
 } from "react-icons/fa6";
 
 // ソーシャルメディアプラットフォームの定義
-export type SocialPlatform = "GITHUB" | "X" | "INSTAGRAM" | "FACEBOOK" | "YOUTUBE";
+export type SocialPlatform =
+	| "GITHUB"
+	| "X"
+	| "INSTAGRAM"
+	| "FACEBOOK"
+	| "YOUTUBE";
 
 // ソーシャルメディアの設定
 export const SOCIAL_LINKS = {

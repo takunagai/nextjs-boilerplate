@@ -163,7 +163,7 @@ export default function FeatureItemsPage() {
 							/>
 						</div>
 					</div>
-					
+
 					<div className="mb-8">
 						<h3 className="text-xl font-medium mb-4">1/2サイズ (half)</h3>
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -183,7 +183,7 @@ export default function FeatureItemsPage() {
 							/>
 						</div>
 					</div>
-					
+
 					<div>
 						<h3 className="text-xl font-medium mb-4">全体 (full)</h3>
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-6">

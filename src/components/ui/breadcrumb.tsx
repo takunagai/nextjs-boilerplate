@@ -12,10 +12,7 @@ export type BreadcrumbProps = {
 	className?: string;
 };
 
-export function Breadcrumb({
-	items,
-	className,
-}: BreadcrumbProps) {
+export function Breadcrumb({ items, className }: BreadcrumbProps) {
 	// 項目が1つの場合（ホームのみ）は表示しない
 	if (items.length <= 1) {
 		return null;

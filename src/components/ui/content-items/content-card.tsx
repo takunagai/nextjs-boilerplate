@@ -15,34 +15,39 @@ export interface ContentCardProps {
 	isReversed?: boolean;
 }
 
-export function ContentCard({ 
-	item, 
-	aspectRatio, 
+export function ContentCard({
+	item,
+	aspectRatio,
 	imagePosition = "top",
-	isReversed = false 
+	isReversed = false,
 }: ContentCardProps) {
 	// カードのクラス名をCVAから取得
-	const cardClassName = contentCardVariants({ 
-		imagePosition, 
-		isReversed 
+	const cardClassName = contentCardVariants({
+		imagePosition,
+		isReversed,
 	});
 
 	// 画像のクラス名をCVAから取得
-	const imageClassName = imageVariants({ 
+	const imageClassName = imageVariants({
 		aspectRatio,
-		imagePosition
+		imagePosition,
 	});
 
 	return (
 		<Card className={cn(cardClassName, "border")}>
 			{item.imageUrl && (
 				<div className={imageClassName}>
-					<AspectRatio ratio={
-						aspectRatio === "square" ? 1 : 
-						aspectRatio === "portrait" ? 2/3 : 
-						aspectRatio === "landscape" ? 16/9 : 
-						undefined
-					}>
+					<AspectRatio
+						ratio={
+							aspectRatio === "square"
+								? 1
+								: aspectRatio === "portrait"
+									? 2 / 3
+									: aspectRatio === "landscape"
+										? 16 / 9
+										: undefined
+						}
+					>
 						<Image
 							src={item.imageUrl}
 							alt={`${item.title}の画像`}
@@ -63,9 +68,7 @@ export function ContentCard({
 
 				{item.description && (
 					<CardContent className="p-0 mt-2">
-						<p className="text-muted-foreground">
-							{item.description}
-						</p>
+						<p className="text-muted-foreground">{item.description}</p>
 					</CardContent>
 				)}
 			</div>

@@ -24,8 +24,7 @@ const tableVariants = cva(
 				none: "", // 罫線なし
 				all: "[&_th]:border [&_td]:border", // 全セル罫線
 				horizontal: "[&_tr]:border-b", // 水平罫線のみ
-				vertical:
-					"[&_th]:border-r [&_td]:border-r", // 垂直罫線のみ
+				vertical: "[&_th]:border-r [&_td]:border-r", // 垂直罫線のみ
 			},
 			// 偶数行のストライプ
 			striped: {

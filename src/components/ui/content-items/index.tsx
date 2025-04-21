@@ -74,7 +74,7 @@ export const contentCardVariants = cva(
 			imagePosition: "top",
 			isReversed: false,
 		},
-	}
+	},
 );
 
 // 画像バリアント定義（ContentCardでも使用）
@@ -99,7 +99,8 @@ export const imageVariants = cva("relative", {
 	},
 });
 
-export interface ContentItemsProps extends VariantProps<typeof contentItemsVariants> {
+export interface ContentItemsProps
+	extends VariantProps<typeof contentItemsVariants> {
 	items: ContentItem[];
 	variant?: "card" | "panel" | "simple";
 	aspectRatio?: "square" | "portrait" | "landscape" | "auto";
@@ -123,7 +124,7 @@ export const ContentItems = ({
 	// cvaを使用してコンテナクラスを生成
 	const containerClass = cn(
 		contentItemsVariants({ layout, columns, gap }),
-		className
+		className,
 	);
 
 	return (
@@ -137,10 +138,10 @@ export const ContentItems = ({
 				// デフォルトのレンダリング
 				if (variant === "card") {
 					return (
-						<ContentCard 
-							key={item.id} 
-							item={item} 
-							aspectRatio={aspectRatio} 
+						<ContentCard
+							key={item.id}
+							item={item}
+							aspectRatio={aspectRatio}
 							imagePosition={imagePosition}
 							isReversed={index % 2 === 1 && imagePosition === "left"}
 						/>
@@ -149,9 +150,9 @@ export const ContentItems = ({
 
 				if (variant === "panel") {
 					return (
-						<ContentPanel 
-							key={item.id} 
-							item={item} 
+						<ContentPanel
+							key={item.id}
+							item={item}
 							aspectRatio={aspectRatio}
 							isReversed={index % 2 === 1}
 						/>
@@ -159,10 +160,10 @@ export const ContentItems = ({
 				}
 
 				return (
-					<ContentSimple 
-						key={item.id} 
+					<ContentSimple
+						key={item.id}
 						item={item}
-						isReversed={index % 2 === 1} 
+						isReversed={index % 2 === 1}
 					/>
 				);
 			})}

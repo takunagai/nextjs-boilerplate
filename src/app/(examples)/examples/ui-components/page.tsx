@@ -30,12 +30,12 @@ import {
 import { Toggle } from "@/components/ui/toggle";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useState } from "react";
-import { 
-	FaCheckCircle, 
-	FaExclamationCircle, 
-	FaInfoCircle, 
-	FaStar, 
-	FaUserCircle 
+import {
+	FaCheckCircle,
+	FaExclamationCircle,
+	FaInfoCircle,
+	FaStar,
+	FaUserCircle,
 } from "react-icons/fa";
 
 export default function UIComponentsPage() {
@@ -64,7 +64,9 @@ export default function UIComponentsPage() {
 				<TabsContent value="buttons">
 					<div className="border rounded-lg p-6 space-y-6">
 						<div>
-							<h2 className="text-xl font-semibold mb-2">ボタンコンポーネント</h2>
+							<h2 className="text-xl font-semibold mb-2">
+								ボタンコンポーネント
+							</h2>
 							<p className="text-gray-600 mb-4">
 								さまざまなスタイルとバリエーションのボタンコンポーネント
 							</p>
@@ -111,11 +113,7 @@ export default function UIComponentsPage() {
 						<div className="space-y-4">
 							<div className="space-y-2">
 								<Label htmlFor="name">名前</Label>
-								<Input
-									id="name"
-									placeholder="山田 太郎"
-									className="max-w-md"
-								/>
+								<Input id="name" placeholder="山田 太郎" className="max-w-md" />
 							</div>
 
 							<div className="space-y-2">
@@ -173,7 +171,9 @@ export default function UIComponentsPage() {
 				<TabsContent value="dialogs">
 					<div className="border rounded-lg p-6 space-y-6">
 						<div>
-							<h2 className="text-xl font-semibold mb-2">ダイアログコンポーネント</h2>
+							<h2 className="text-xl font-semibold mb-2">
+								ダイアログコンポーネント
+							</h2>
 							<p className="text-gray-600 mb-4">
 								モーダルダイアログとポップアップのコンポーネント
 							</p>
@@ -203,9 +203,7 @@ export default function UIComponentsPage() {
 										>
 											キャンセル
 										</Button>
-										<Button onClick={() => setDialogOpen(false)}>
-											確認
-										</Button>
+										<Button onClick={() => setDialogOpen(false)}>確認</Button>
 									</DialogFooter>
 								</DialogContent>
 							</Dialog>
@@ -216,7 +214,9 @@ export default function UIComponentsPage() {
 				<TabsContent value="toggles">
 					<div className="border rounded-lg p-6 space-y-6">
 						<div>
-							<h2 className="text-xl font-semibold mb-2">トグルコンポーネント</h2>
+							<h2 className="text-xl font-semibold mb-2">
+								トグルコンポーネント
+							</h2>
 							<p className="text-gray-600 mb-4">
 								トグルとトグルグループのコンポーネント
 							</p>
@@ -261,15 +261,19 @@ export default function UIComponentsPage() {
 				<TabsContent value="timeline">
 					<div className="border rounded-lg p-6 space-y-6">
 						<div>
-							<h2 className="text-xl font-semibold mb-2">タイムラインコンポーネント</h2>
+							<h2 className="text-xl font-semibold mb-2">
+								タイムラインコンポーネント
+							</h2>
 							<p className="text-gray-600 mb-4">
 								時系列の流れを視覚的に表現するためのタイムラインコンポーネント
 							</p>
 						</div>
-						
+
 						<div className="space-y-8">
 							<div>
-								<h3 className="text-lg font-medium mb-3">基本的なタイムライン</h3>
+								<h3 className="text-lg font-medium mb-3">
+									基本的なタイムライン
+								</h3>
 								<Timeline>
 									<TimelineItem>
 										<TimelineIcon>
@@ -400,7 +404,9 @@ export default function UIComponentsPage() {
 							</div>
 
 							<div>
-								<h3 className="text-lg font-medium mb-3">アイコン位置バリアント</h3>
+								<h3 className="text-lg font-medium mb-3">
+									アイコン位置バリアント
+								</h3>
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 									<Timeline>
 										<TimelineItem>
@@ -408,7 +414,9 @@ export default function UIComponentsPage() {
 												<FaInfoCircle className="h-4 w-4" />
 											</TimelineIcon>
 											<TimelineContent>
-												<TimelineTitle>左位置アイコン（デフォルト）</TimelineTitle>
+												<TimelineTitle>
+													左位置アイコン（デフォルト）
+												</TimelineTitle>
 												<TimelineDate>2024年4月1日</TimelineDate>
 											</TimelineContent>
 										</TimelineItem>
@@ -453,10 +461,10 @@ export default function UIComponentsPage() {
 									</TimelineItem>
 									<TimelineItem variant="primary">
 										<TimelineIcon variant="primary">
-											<img 
-												src="/dummy-images/profile-placeholder.jpg" 
-												alt="プロフィール" 
-												className="h-full w-full object-cover rounded-full" 
+											<img
+												src="/dummy-images/profile-placeholder.jpg"
+												alt="プロフィール"
+												className="h-full w-full object-cover rounded-full"
 											/>
 										</TimelineIcon>
 										<TimelineContent variant="card">

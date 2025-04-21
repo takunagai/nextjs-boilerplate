@@ -6,7 +6,7 @@ import { FaSun, FaMoon } from "react-icons/fa6";
 
 export default function ThemeSwitcherContent() {
 	const { theme, toggleTheme, mounted } = useThemeToggle();
-	
+
 	// マウントされるまではnullを返す
 	// (親コンポーネントのプレースホルダーが表示される)
 	if (!mounted) {
@@ -15,7 +15,7 @@ export default function ThemeSwitcherContent() {
 
 	// アイコンの共通スタイル
 	const iconClass = "h-[1.2rem] w-[1.2rem] transition-all";
-	
+
 	return (
 		<Button
 			variant="ghost"

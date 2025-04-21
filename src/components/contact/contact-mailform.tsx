@@ -74,9 +74,15 @@ export function ContactEmailForm() {
 				});
 			} else if (isActionError(result)) {
 				// エラー処理
-				if (result.error.code === "VALIDATION_ERROR" && result.error.details?.fieldErrors) {
+				if (
+					result.error.code === "VALIDATION_ERROR" &&
+					result.error.details?.fieldErrors
+				) {
 					// バリデーションエラーをフォームに設定
-					const fieldErrors = result.error.details.fieldErrors as Record<string, string>;
+					const fieldErrors = result.error.details.fieldErrors as Record<
+						string,
+						string
+					>;
 					for (const [field, message] of Object.entries(fieldErrors)) {
 						form.setError(field as keyof ContactFormValues, { message });
 					}
@@ -88,7 +94,9 @@ export function ContactEmailForm() {
 					// その他のエラー
 					setSubmitStatus({
 						type: "error",
-						message: result.error.message || "送信に失敗しました。後ほど再度お試しください。",
+						message:
+							result.error.message ||
+							"送信に失敗しました。後ほど再度お試しください。",
 					});
 				}
 			}

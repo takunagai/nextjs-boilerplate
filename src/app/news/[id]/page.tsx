@@ -25,7 +25,8 @@ export async function generateMetadata({
 	if (!news) {
 		return {
 			title: "お知らせが見つかりません",
-			description: "指定されたお知らせは存在しないか、削除された可能性があります。",
+			description:
+				"指定されたお知らせは存在しないか、削除された可能性があります。",
 		};
 	}
 

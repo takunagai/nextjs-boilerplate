@@ -1237,9 +1237,7 @@ export default function TableExamplePage() {
 
 					{/* ソート対応テーブル */}
 					<div className="space-y-4">
-						<h3 className="text-xl font-semibold">
-							12. ソート対応テーブル
-						</h3>
+						<h3 className="text-xl font-semibold">12. ソート対応テーブル</h3>
 						<p className="text-sm text-muted-foreground">
 							aria-sort属性によるソート状態表現と、aria-labelledbyによる説明を付与しています。
 							これらはスクリーンリーダーでの読み上げに影響します。

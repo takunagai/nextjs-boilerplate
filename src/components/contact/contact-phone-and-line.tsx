@@ -82,7 +82,9 @@ export function ContactPhoneAndLine() {
 			<Card className="bg-muted/50">
 				<CardContent className="pt-6">
 					<div className="space-y-2">
-						<h3 className="text-sm font-medium">お問い合わせに関する注意事項</h3>
+						<h3 className="text-sm font-medium">
+							お問い合わせに関する注意事項
+						</h3>
 						<ul className="text-sm text-muted-foreground list-disc pl-5 space-y-1">
 							<li>
 								お問い合わせ内容によっては、回答までにお時間をいただく場合がございます。

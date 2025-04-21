@@ -74,9 +74,7 @@ export function ContentItems({
 					className="border rounded-md overflow-hidden hover:shadow-md transition-shadow bg-card"
 				>
 					{item.image && (
-						<div
-							className={`relative w-full ${aspectRatioClass}`}
-						>
+						<div className={`relative w-full ${aspectRatioClass}`}>
 							<Image
 								src={item.image}
 								alt={item.imageAlt || `${item.title}のイメージ`}

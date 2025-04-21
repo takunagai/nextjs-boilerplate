@@ -25,12 +25,9 @@ export function DesktopNavigation({
 					// サブメニューがある場合はドロップダウンを表示
 					if (item.children?.length) {
 						return (
-							<div
-								key={item.href}
-								className="relative group"
-							>
+							<div key={item.href} className="relative group">
 								{/* メインリンク */}
-								<button 
+								<button
 									className="flex flex-row items-center gap-1 text-sm font-medium transition-colors hover:text-primary focus:text-primary py-2"
 									aria-haspopup="true"
 									aria-expanded="false"
@@ -41,7 +38,7 @@ export function DesktopNavigation({
 								</button>
 
 								{/* サブメニュー（CSSのみでホバー制御） */}
-								<div 
+								<div
 									className="absolute left-0 min-w-[12rem] py-2 bg-background border-border rounded-md shadow-md mt-1 
                                            opacity-0 invisible 
                                            group-hover:opacity-100 group-focus-within:opacity-100 
