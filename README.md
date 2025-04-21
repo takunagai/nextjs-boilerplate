@@ -4,14 +4,14 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript)
 ![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react)
 ![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0.15-06B6D4?style=flat-square&logo=tailwind-css)
-![shadcn/ui](https://img.shields.io/badge/shadcn/ui-2.4-black?style=flat-square&logo=shadcnui)
 ![Auth.js](https://img.shields.io/badge/Auth.js-5(β)-blue?style=flat-square&logo=authjs)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=flat-square&logo=tailwind-css)
+![shadcn/ui](https://img.shields.io/badge/shadcn/ui-2-black?style=flat-square&logo=shadcnui)
+![Motion](https://img.shields.io/badge/motion-12-6E9F18?style=flat-square&logo=motion)
 ![Biome](https://img.shields.io/badge/Biome-2(β)-60A5FA?style=flat-square&logo=biome)
 ![Zod](https://img.shields.io/badge/zod-4(β)-3E67B1?style=flat-square&logo=zod)
 ![Vitest](https://img.shields.io/badge/Vitest-3-6E9F18?style=flat-square&logo=vitest)
 ![Playwright](https://img.shields.io/badge/Playwright-1-45ba4b?style=flat-square&logo=playwright)
-![Motion](https://img.shields.io/badge/motion-12-6E9F18?style=flat-square&logo=motion)
 
 ## 概要
 
