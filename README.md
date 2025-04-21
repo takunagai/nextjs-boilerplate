@@ -51,7 +51,7 @@
   - テーマ機能のON/OFF切替オプション
 - **レスポンシブレイアウト** - ビューポート幅に応じた最適なスタイル調整
   - CVA を活用した Container コンポーネント
-- **アニメーション** - Framer Motion によるモーション
+- **アニメーション** - motion によるモーション
 - **アクセシビリティ対応** - WAI-ARIA ガイドラインに準拠
 - **UIコンポーネント** - shadcn/ui による再利用可能なコンポーネント
 
@@ -157,7 +157,7 @@
 - **Tailwind CSS** - ユーティリティファーストCSS
 - **tw-animate-css** - アニメーション
 - **shadcn/ui** - 再利用可能なUIコンポーネント
-- **framer-motion** - アニメーション
+- **motion** - アニメーション
 - **embla-carousel-react** - カルーセル
   - embla-carousel-autoplay
   - embla-carousel-class-names
