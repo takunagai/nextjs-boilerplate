@@ -10,7 +10,7 @@ import { z } from 'zod';
 
 // リクエストのバリデーションスキーマ
 const MessageSchema = z.object({
-  name: z.string().min(1, '名前は必須です'),
+  name: z.string().min(1, { error: '名前は必須です' }),
   message: z.string().optional(),
 });
 
@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
     if (error instanceof z.ZodError) {
       return errorResponse(
         createApiError.validation('入力データが無効です', { 
-          fieldErrors: error.errors.reduce((acc, err) => {
+          fieldErrors: error.issues.reduce((acc: Record<string, string>, err: z.ZodIssue) => {
             const path = err.path.join('.');
             acc[path] = err.message;
             return acc;

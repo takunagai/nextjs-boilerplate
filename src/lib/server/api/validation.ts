@@ -6,7 +6,7 @@
  */
 
 import { createApiError } from './response';
-import type { ZodSchema, ZodError } from 'zod';
+import { z, type ZodSchema } from 'zod';
 
 /**
  * リクエストデータをバリデーションするユーティリティ関数
@@ -51,10 +51,9 @@ export async function validateRequestWithError<T>(
     const validatedData = await validateRequest(schema, data);
     return [validatedData, null];
   } catch (error: unknown) {
-    if (error && typeof error === 'object' && 'errors' in error) {
+    if (error instanceof z.ZodError) {
       // Zodエラーの場合はフィールドエラーを抽出
-      const zodError = error as ZodError;
-      const fieldErrors = zodError.errors.reduce((acc: Record<string, string>, err) => {
+      const fieldErrors = error.issues.reduce((acc: Record<string, string>, err: z.ZodIssue) => {
         const path = err.path.join('.');
         acc[path] = err.message;
         return acc;

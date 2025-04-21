@@ -4,9 +4,9 @@ import type { NextRequest } from 'next/server';
 
 // 登録リクエストの検証スキーマ
 const registerSchema = z.object({
-  name: z.string().min(1, '氏名は必須です'),
-  email: z.string().email('有効なメールアドレスを入力してください'),
-  password: z.string().min(8, 'パスワードは8文字以上で入力してください'),
+  name: z.string().min(1, { error: '氏名は必須です' }),
+  email: z.string().email({ error: '有効なメールアドレスを入力してください' }),
+  password: z.string().min(8, { error: 'パスワードは8文字以上で入力してください' }),
 });
 
 // 新規ユーザー登録API
@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
     // バリデーションエラーの場合
     if (!validationResult.success) {
       return errorResponse(createApiError.validation('入力データが無効です', {
-        errors: validationResult.error.errors,
+        errors: validationResult.error.issues,
       }));
     }
 
