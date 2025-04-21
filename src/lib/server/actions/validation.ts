@@ -34,7 +34,7 @@ export type FieldErrors = Record<string, string>;
  * @returns フィールド名をキーとするエラーメッセージのオブジェクト
  */
 export function formatZodErrors(error: z.ZodError): FieldErrors {
-  return error.errors.reduce((acc, curr) => {
+  return error.issues.reduce((acc, curr) => {
     const path = curr.path.join('.');
     acc[path] = curr.message;
     return acc;
