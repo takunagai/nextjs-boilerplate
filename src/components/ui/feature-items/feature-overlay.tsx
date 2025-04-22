@@ -4,12 +4,21 @@ import Link from "next/link";
 import type { FeatureItem } from "./index";
 import { Button } from "@/components/ui/button";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { DynamicHeading, type HeadingLevel } from "./components";
 
 export interface FeatureOverlayProps {
 	item: FeatureItem;
 	overlayStyle?: "dark" | "light" | "gradient";
 	overlayHeight?: "auto" | "full" | "half" | "third";
 	className?: string;
+	headingLevel?: HeadingLevel;
+	headingClassName?: string;
+	descriptionClassName?: string;
+	iconClassName?: string;
+	buttonClassName?: string;
+	imageClassName?: string;
+	imageContainerClassName?: string;
+	contentBlockClassName?: string;
 }
 
 export function FeatureOverlay({
@@ -17,19 +26,24 @@ export function FeatureOverlay({
 	overlayStyle = "dark",
 	overlayHeight = "auto",
 	className,
+	headingLevel = "h3",
+	headingClassName,
+	descriptionClassName,
+	iconClassName,
+	buttonClassName,
+	imageClassName,
+	imageContainerClassName,
+	contentBlockClassName,
 }: FeatureOverlayProps) {
-	// オーバーレイのスタイルを決定
 	const overlayClass = {
 		dark: "bg-black/60",
 		light: "bg-white/70",
 		gradient: "bg-gradient-(to-t from-black/90 via-black/60 to-transparent)",
 	}[overlayStyle];
 
-	// テキストカラーを決定
 	const textColorClass =
 		overlayStyle === "light" ? "text-foreground" : "text-white";
 
-	// オーバーレイの高さを設定
 	const heightClass = {
 		auto: "h-auto min-h-[40%]",
 		full: "h-full",
@@ -45,15 +59,17 @@ export function FeatureOverlay({
 				className,
 			)}
 		>
-			{/* 背景画像 */}
 			{item.imageUrl && (
-				<div className="w-full">
+				<div className={cn("w-full", imageContainerClassName)}>
 					<AspectRatio ratio={16 / 9}>
 						<Image
 							src={item.imageUrl}
 							alt={`${item.title}の画像`}
 							fill
-							className="object-cover transition-transform duration-500 group-hover:(scale-105)"
+							className={cn(
+								"object-cover transition-transform duration-500 group-hover:(scale-105)",
+								imageClassName
+							)}
 							sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 							priority
 						/>
@@ -61,7 +77,6 @@ export function FeatureOverlay({
 				</div>
 			)}
 
-			{/* テキストオーバーレイ */}
 			<div
 				className={cn(
 					"absolute bottom-0 left-0 right-0",
@@ -74,12 +89,32 @@ export function FeatureOverlay({
 					overlayHeight === "auto" && "group-hover:(translate-y-0)",
 				)}
 			>
-				<div className="max-w-xl overflow-y-auto max-h-[calc(100%-2rem)]">
-					{item.title && (
-						<h3 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight mb-2 md:mb-3">
-							{item.title}
-						</h3>
-					)}
+				<div className={cn(
+					"max-w-xl overflow-y-auto max-h-[calc(100%-2rem)]",
+					contentBlockClassName
+				)}>
+					<div className="flex items-center gap-3 mb-2">
+						{item.icon && (
+							<div className={cn(
+								"flex-shrink-0",
+								overlayStyle === "light" ? "text-primary" : "text-white",
+								iconClassName
+							)}>
+								{item.icon}
+							</div>
+						)}
+						{item.title && (
+							<DynamicHeading
+								level={headingLevel}
+								className={cn(
+									"text-xl md:text-2xl lg:text-3xl font-bold tracking-tight mb-2 md:mb-3",
+									headingClassName
+								)}
+							>
+								{item.title}
+							</DynamicHeading>
+						)}
+					</div>
 
 					{item.description && (
 						<p
@@ -88,6 +123,7 @@ export function FeatureOverlay({
 								overlayStyle === "light"
 									? "text-muted-foreground"
 									: "text-white/90",
+								descriptionClassName
 							)}
 						>
 							{item.description}
@@ -105,6 +141,7 @@ export function FeatureOverlay({
 									overlayStyle !== "light"
 										? "text-white border-white hover:bg-white/20"
 										: "",
+									buttonClassName
 								)}
 							>
 								<Link href={item.buttonUrl}>{item.buttonText}</Link>

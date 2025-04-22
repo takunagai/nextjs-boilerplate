@@ -5,13 +5,16 @@ import {
 } from "@/components/ui/content-items/index";
 import { Heading } from "@/components/ui/heading";
 import { FaPuzzlePiece } from "react-icons/fa6";
+import { FeatureItems } from "../ui/feature-items";
 
 interface ServiceFeaturesSectionProps {
 	features: ContentItem[];
+	featureItems: ContentItem[];
 }
 
 export function ServiceFeaturesSection({
 	features,
+	featureItems,
 }: ServiceFeaturesSectionProps) {
 	return (
 		<section className="w-full py-16 bg-gray-50 dark:bg-gray-900">
@@ -51,6 +54,14 @@ export function ServiceFeaturesSection({
 					aspectRatio="landscape"
 					imagePosition="top"
 				/>
+
+				<div className="pt-12">
+					<FeatureItems
+						items={featureItems}
+						variant="split"
+						alternateLayout={true}
+					/>
+				</div>
 			</Container>
 		</section>
 	);

@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { FeatureSplit } from "./feature-split";
 import { FeatureOverlay } from "./feature-overlay";
 import { FeatureSimple } from "./feature-simple";
+import { HeadingLevel } from "./components";
 
 // 基本的な特徴アイテムの型定義
 export interface FeatureItem {
@@ -54,6 +55,17 @@ export interface FeatureItemsProps
 	overlayStyle?: "dark" | "light" | "gradient";
 	overlayHeight?: "auto" | "full" | "half" | "third";
 	renderItem?: (item: FeatureItem, index: number) => ReactNode;
+	// 新しいスタイリングプロパティ
+	headingLevel?: HeadingLevel;
+	headingClassName?: string;
+	descriptionClassName?: string;
+	// 新しい追加スタイリングプロパティ
+	iconClassName?: string;
+	buttonClassName?: string;
+	imageClassName?: string;
+	imageContainerClassName?: string;
+	// 文字ブロック全体に適用するクラス
+	contentBlockClassName?: string;
 }
 
 // サーバーコンポーネントとして定義
@@ -68,6 +80,17 @@ export const FeatureItems = ({
 	overlayStyle = "dark",
 	overlayHeight,
 	renderItem,
+	// 新しいスタイリングプロパティ
+	headingLevel,
+	headingClassName,
+	descriptionClassName,
+	// 新しい追加スタイリングプロパティ
+	iconClassName,
+	buttonClassName,
+	imageClassName,
+	imageContainerClassName,
+	// 文字ブロック全体に適用するクラス
+	contentBlockClassName,
 }: FeatureItemsProps) => {
 	// cvaを使用してコンテナクラスを生成
 	const containerClass = cn(
@@ -95,10 +118,31 @@ export const FeatureItems = ({
 								item={item}
 								overlayStyle={overlayStyle}
 								overlayHeight={overlayHeight}
+								headingLevel={headingLevel}
+								headingClassName={headingClassName}
+								descriptionClassName={descriptionClassName}
+								iconClassName={iconClassName}
+								buttonClassName={buttonClassName}
+								imageClassName={imageClassName}
+								imageContainerClassName={imageContainerClassName}
+								contentBlockClassName={contentBlockClassName}
 							/>
 						);
 					case "simple":
-						return <FeatureSimple key={item.id} item={item} />;
+						return (
+							<FeatureSimple 
+								key={item.id} 
+								item={item} 
+								headingLevel={headingLevel}
+								headingClassName={headingClassName}
+								descriptionClassName={descriptionClassName}
+								iconClassName={iconClassName}
+								buttonClassName={buttonClassName}
+								imageClassName={imageClassName}
+								imageContainerClassName={imageContainerClassName}
+								contentBlockClassName={contentBlockClassName}
+							/>
+						);
 					default:
 						// デフォルトはsplitバリアント
 						return (
@@ -106,6 +150,14 @@ export const FeatureItems = ({
 								key={item.id}
 								item={item}
 								isReversed={isItemReversed}
+								headingLevel={headingLevel}
+								headingClassName={headingClassName}
+								descriptionClassName={descriptionClassName}
+								iconClassName={iconClassName}
+								buttonClassName={buttonClassName}
+								imageClassName={imageClassName}
+								imageContainerClassName={imageContainerClassName}
+								contentBlockClassName={contentBlockClassName}
 							/>
 						);
 				}
