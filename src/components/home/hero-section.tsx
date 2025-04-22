@@ -56,7 +56,7 @@ export function HeroSection() {
 				}}
 			/>
 
-			<Container width="2xl" paddingY="xl" paddingX="lg" className="z-50">
+			<Container width="2xl" paddingY="xl" paddingX="lg" className="z-1">
 				<div className="flex flex-col items-center text-center max-w-3xl mx-auto">
 					<h1 className="text-4xl leading-[1.3] md:text-6xl font-bold tracking-tight mb-6 text-white">
 						モダンな<span className="text-primary">Web開発</span>の
