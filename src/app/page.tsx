@@ -1,11 +1,3 @@
-import {
-	WebsiteJsonLd,
-	generateMetadata,
-	generateViewport,
-} from "@/components/seo";
-import { APP } from "@/lib/constants";
-import type { Metadata } from "next";
-
 import { FeatureListSection } from "@/components/home/feature-list-section";
 import { FeaturesSection } from "@/components/home/features-section";
 import { GallerySection } from "@/components/home/gallery-section";
@@ -14,7 +6,15 @@ import { LatestNewsSection } from "@/components/home/latest-news-section";
 import { ServiceFeaturesSection } from "@/components/home/service-features-section";
 import { TechnologiesSection } from "@/components/home/technologies-section";
 import { CTASection } from "@/components/sections/cta-section";
+import {
+	generateMetadata,
+	generateViewport,
+	WebsiteJsonLd,
+} from "@/components/seo";
 import type { ContentItem } from "@/components/ui/content-items";
+import { APP } from "@/lib/constants";
+import type { Metadata } from "next";
+import { FiBarChart2, FiCode, FiGlobe, FiMapPin } from "react-icons/fi";
 
 export const metadata: Metadata = generateMetadata({
 	title: "モダンなWebアプリケーション開発の出発点",
@@ -41,7 +41,10 @@ export default function Home() {
 			<main className="flex min-h-screen flex-col items-center">
 				<HeroSection />
 				<LatestNewsSection />
-				<ServiceFeaturesSection features={serviceFeatures} />
+				<ServiceFeaturesSection
+					features={serviceFeatures}
+					featureItems={featureItems}
+				/>
 				<GallerySection />
 				<FeaturesSection features={features} />
 				<TechnologiesSection technologies={technologies} />
@@ -221,5 +224,49 @@ const featureList = [
 		id: "seo",
 		title: "SEO最適化",
 		description: "メタデータ、構造化データ、サイトマップの最適化",
+	},
+];
+
+// サンプルデータ
+const featureItems = [
+	{
+		id: "feature-1",
+		title: "用途に合わせて自由にカスタマイズ",
+		description:
+			"Mapboxは、地図ソリューションの開発者向けプラットフォームです。社内外の様々な情報を統合し、目的・ユーザー・ブランドに合わせた地図を構築することで企業のロケーションデータ活用を促進させます。",
+		imageUrl: "/dummy-images/street-photo-01.jpg",
+		buttonText: "詳細を見る",
+		buttonUrl: "#",
+		icon: <FiMapPin className="w-6 h-6" />,
+	},
+	{
+		id: "feature-2",
+		title: "業界トップレベルの地図精度",
+		description:
+			"世界中の地理情報を網羅しているため、海外でもご利用が可能。日本国内はゼンリン社をベースとした高精度な地図情報を標準でご提供。",
+		imageUrl: "/dummy-images/street-photo-02.jpg",
+		buttonText: "事例を確認",
+		buttonUrl: "#",
+		icon: <FiGlobe className="w-6 h-6" />,
+	},
+	{
+		id: "feature-3",
+		title: "高度なデータ分析と可視化",
+		description:
+			"位置情報データを活用して、ユーザーの行動パターンやトレンドを分析。直感的なビジュアライゼーションツールで複雑なデータも簡単に理解できます。",
+		imageUrl: "/dummy-images/street-photo-03.jpg",
+		buttonText: "API情報",
+		buttonUrl: "#",
+		icon: <FiBarChart2 className="w-6 h-6" />,
+	},
+	{
+		id: "feature-4",
+		title: "シームレスな統合と拡張性",
+		description:
+			"既存のシステムやアプリケーションとの統合が容易で、ビジネスの成長に合わせて拡張可能。柔軟なAPIとSDKで、あらゆるプラットフォームに対応します。",
+		imageUrl: "/dummy-images/street-photo-04.jpg",
+		buttonText: "開発者向け情報",
+		buttonUrl: "#",
+		icon: <FiCode className="w-6 h-6" />,
 	},
 ];
