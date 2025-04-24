@@ -1,4 +1,4 @@
-import { CTASection } from "@/components/sections/cta-section/cta-section";
+import { CTASection } from "@/components/sections/cta-section";
 import { Metadata } from "next";
 import {
 	FaArrowRight,
@@ -26,7 +26,22 @@ export default function CTASectionExamplesPage() {
 
 			<div className="space-y-24">
 				<h2 className="text-2xl font-semibold mb-6">デフォルトスタイル</h2>
-				<CTASection />
+				<CTASection className="bg-primary text-primary-foreground">
+					<CTASection.Container>
+						<CTASection.Content>
+							<CTASection.Title>今すぐ始めましょう</CTASection.Title>
+							<CTASection.Description>
+								魅力的なCTAセクションで、ユーザーに次のアクションを促しましょう。
+							</CTASection.Description>
+						</CTASection.Content>
+						<CTASection.Actions className="justify-center">
+							<CTASection.PrimaryButton>詳細を見る</CTASection.PrimaryButton>
+							<CTASection.SecondaryButton>
+								お問い合わせ
+							</CTASection.SecondaryButton>
+						</CTASection.Actions>
+					</CTASection.Container>
+				</CTASection>
 				<p className="mt-4 text-muted-foreground">
 					デフォルト設定のCTAセクション。横並びレイアウトとプライマリカラーを使用しています。
 				</p>
@@ -34,109 +49,175 @@ export default function CTASectionExamplesPage() {
 				<h2 className="text-2xl font-semibold mb-6">垂直レイアウト</h2>
 				<CTASection
 					layout="vertical"
-					title="垂直レイアウトのCTA"
-					description="テキストとボタンが縦に並ぶレイアウトです。中央揃えになっているため、シンプルで目立つデザインに適しています。"
-					primaryButtonText="今すぐ登録"
-					primaryButtonIcon={<FaArrowRight />}
-					secondaryButtonText="詳細を見る"
-				/>
+					className="bg-primary text-primary-foreground"
+				>
+					<CTASection.Container>
+						<CTASection.Content>
+							<CTASection.Title>垂直レイアウトのCTA</CTASection.Title>
+							<CTASection.Description>
+								テキストとボタンが縦に並ぶレイアウトです。中央揃えになっているため、シンプルで目立つデザインに適しています。
+							</CTASection.Description>
+						</CTASection.Content>
+						<CTASection.Actions className="justify-center">
+							<CTASection.PrimaryButton icon={<FaArrowRight />}>
+								今すぐ登録
+							</CTASection.PrimaryButton>
+							<CTASection.SecondaryButton>
+								詳細を見る
+							</CTASection.SecondaryButton>
+						</CTASection.Actions>
+					</CTASection.Container>
+				</CTASection>
 
 				<h2 className="text-2xl font-semibold mb-6">カードレイアウト</h2>
 				<CTASection
 					layout="card"
-					intent="secondary"
-					decoration="shadow"
-					title="プレミアムプランにアップグレード"
-					description="より多くの機能を利用するには、プレミアムプランへのアップグレードをご検討ください。月額わずか980円で、すべての機能にアクセスできます。"
-					primaryButtonText="アップグレードする"
-					primaryButtonVariant="default"
-					primaryButtonIcon={<FaStar />}
-					secondaryButtonText="プラン比較"
-					secondaryButtonVariant="outline"
-				/>
+					className="bg-secondary text-secondary-foreground shadow-lg"
+				>
+					<CTASection.Container>
+						<CTASection.Content>
+							<CTASection.Title>
+								プレミアムプランにアップグレード
+							</CTASection.Title>
+							<CTASection.Description>
+								より多くの機能を利用するには、プレミアムプランへのアップグレードをご検討ください。月額わずか980円で、すべての機能にアクセスできます。
+							</CTASection.Description>
+						</CTASection.Content>
+						<CTASection.Actions className="justify-start">
+							<CTASection.PrimaryButton variant="default" icon={<FaStar />}>
+								アップグレードする
+							</CTASection.PrimaryButton>
+							<CTASection.SecondaryButton variant="outline">
+								プラン比較
+							</CTASection.SecondaryButton>
+						</CTASection.Actions>
+					</CTASection.Container>
+				</CTASection>
 
 				<h2 className="text-2xl font-semibold mb-6">バナーレイアウト</h2>
 				<CTASection
 					layout="banner"
-					intent="accent"
-					size="lg"
-					alignment="center"
-					title="期間限定セール実施中！"
-					description="今なら年間プランが30%オフ。この機会をお見逃しなく。"
-					primaryButtonText="セール会場へ"
-					primaryButtonVariant="default"
-					secondaryButtonText="詳細はこちら"
-					secondaryButtonVariant="secondary"
-				/>
+					className="bg-accent text-accent-foreground py-16 @lg:py-24"
+				>
+					<CTASection.Container>
+						<CTASection.Content>
+							<CTASection.Title>期間限定セール実施中！</CTASection.Title>
+							<CTASection.Description>
+								今なら年間プランが30%オフ。この機会をお見逃しなく。
+							</CTASection.Description>
+						</CTASection.Content>
+						<CTASection.Actions className="justify-center">
+							<CTASection.PrimaryButton variant="default">
+								セール会場へ
+							</CTASection.PrimaryButton>
+							<CTASection.SecondaryButton variant="outline">
+								詳細を見る
+							</CTASection.SecondaryButton>
+						</CTASection.Actions>
+					</CTASection.Container>
+				</CTASection>
 
 				<h2 className="text-2xl font-semibold mb-6">背景画像付き</h2>
 				<CTASection
 					layout="vertical"
-					intent="minimal"
-					decoration="none"
+					className="bg-transparent text-white py-16 @lg:py-24"
 					backgroundImage="/dummy-images/street-photo-03.jpg"
-					overlayOpacity={0.7}
-					title="美しい背景画像を活用"
-					description="背景画像を使用することで、より印象的なCTAセクションを作成できます。オーバーレイの不透明度も調整可能です。"
-					primaryButtonText="詳細を見る"
-					primaryButtonVariant="default"
-					secondaryButtonText="ギャラリーへ"
-					secondaryButtonVariant="outline"
-					titleClassName="text-white"
-					descriptionClassName="text-white/80"
-				/>
+				>
+					<CTASection.Container>
+						<CTASection.Content>
+							<CTASection.Title className="text-white">
+								美しい背景画像を活用
+							</CTASection.Title>
+							<CTASection.Description className="text-white/80">
+								背景画像を使用することで、より印象的なCTAセクションを作成できます。オーバーレイの不透明度もTailwindで調整可能です。
+							</CTASection.Description>
+						</CTASection.Content>
+						<CTASection.Actions className="justify-center">
+							<CTASection.PrimaryButton variant="default">
+								詳細を見る
+							</CTASection.PrimaryButton>
+							<CTASection.SecondaryButton variant="outline">
+								ギャラリーへ
+							</CTASection.SecondaryButton>
+						</CTASection.Actions>
+					</CTASection.Container>
+				</CTASection>
 
 				<h2 className="text-2xl font-semibold mb-6">グラデーション背景</h2>
 				<CTASection
 					layout="horizontal"
-					intent="primary"
-					decoration="gradient"
-					title="グラデーションスタイル"
-					description="グラデーション背景を使用したCTAセクションです。視覚的な魅力を高め、ユーザーの注目を集めることができます。"
-					primaryButtonText="ダウンロード"
-					primaryButtonVariant="secondary"
-					primaryButtonIcon={<FaDownload />}
-					secondaryButtonText="ドキュメント"
-					secondaryButtonVariant="outline"
-					secondaryButtonExternal={true}
-					secondaryButtonHref="https://example.com/docs"
-					secondaryButtonIcon={<FaArrowUpRightFromSquare />}
-				/>
+					className="bg-gradient-to-r from-primary to-primary-foreground/20 text-primary-foreground"
+				>
+					<CTASection.Container>
+						<CTASection.Content>
+							<CTASection.Title>グラデーションスタイル</CTASection.Title>
+							<CTASection.Description>
+								グラデーション背景を使用したCTAセクションです。視覚的な魅力を高め、ユーザーの注目を集めることができます。
+							</CTASection.Description>
+						</CTASection.Content>
+						<CTASection.Actions className="justify-center">
+							<CTASection.PrimaryButton
+								variant="secondary"
+								icon={<FaDownload />}
+							>
+								ダウンロード
+							</CTASection.PrimaryButton>
+							<CTASection.SecondaryButton
+								variant="outline"
+								external={true}
+								href="https://example.com/docs"
+								icon={<FaArrowUpRightFromSquare />}
+							>
+								ドキュメント
+							</CTASection.SecondaryButton>
+						</CTASection.Actions>
+					</CTASection.Container>
+				</CTASection>
 
 				<h2 className="text-2xl font-semibold mb-6">シンプルなCTA</h2>
 				<CTASection
 					layout="horizontal"
-					intent="muted"
-					title="お問い合わせはこちら"
-					description="ご質問やサポートが必要な場合は、お気軽にお問い合わせください。"
-					primaryButtonText="お問い合わせ"
-					primaryButtonVariant="default"
-					secondaryButtonText={undefined}
-				/>
+					className="bg-muted text-muted-foreground"
+				>
+					<CTASection.Container>
+						<CTASection.Content>
+							<CTASection.Title>お問い合わせはこちら</CTASection.Title>
+							<CTASection.Description>
+								ご質問やサポートが必要な場合は、お気軽にお問い合わせください。
+							</CTASection.Description>
+						</CTASection.Content>
+						<CTASection.Actions className="justify-center">
+							<CTASection.PrimaryButton variant="default">
+								お問い合わせ
+							</CTASection.PrimaryButton>
+						</CTASection.Actions>
+					</CTASection.Container>
+				</CTASection>
 
 				<h2 className="text-2xl font-semibold mb-6">高度なカスタマイズ</h2>
 				<CTASection
 					layout="vertical"
-					intent="minimal"
-					size="lg"
-					decoration="border"
-					spacing="spacious"
-					alignment="center"
-					buttonOrientation="horizontal"
-					containerWidth="xl"
-					containerPaddingY="lg"
-					title="完全にカスタマイズ可能"
-					description="CTASectionコンポーネントは、多様なプロパティを提供することで、あらゆるニーズに対応できるように設計されています。"
-					primaryButtonText="ドキュメントを読む"
-					primaryButtonVariant="default"
-					primaryButtonSize="lg"
-					secondaryButtonText="コードを見る"
-					secondaryButtonVariant="outline"
-					secondaryButtonSize="lg"
-					titleClassName="text-3xl md:text-4xl font-extrabold"
-					descriptionClassName="text-lg opacity-80"
-					buttonGroupClassName="gap-6"
-				/>
+					className="bg-transparent border border-border p-8 py-16 @lg:py-24"
+				>
+					<CTASection.Container className="max-w-screen-xl text-center">
+						<CTASection.Content className="space-y-6">
+							<CTASection.Title className="text-3xl md:text-4xl font-extrabold">
+								完全にカスタマイズ可能
+							</CTASection.Title>
+							<CTASection.Description className="text-lg opacity-80">
+								CTASectionコンポーネントは、多様なプロパティを提供することで、あらゆるニーズに対応できるように設計されています。
+							</CTASection.Description>
+						</CTASection.Content>
+						<CTASection.Actions className="flex-row justify-center gap-6 mt-6">
+							<CTASection.PrimaryButton variant="default" size="lg">
+								ドキュメントを読む
+							</CTASection.PrimaryButton>
+							<CTASection.SecondaryButton variant="outline" size="lg">
+								コードを見る
+							</CTASection.SecondaryButton>
+						</CTASection.Actions>
+					</CTASection.Container>
+				</CTASection>
 			</div>
 		</>
 	);
