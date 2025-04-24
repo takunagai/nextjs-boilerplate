@@ -37,6 +37,11 @@ export default function ExamplesPage() {
 			href: "/examples/content-items",
 		},
 		{
+			title: "CTAセクション",
+			description: "様々なスタイルのCTAセクションのサンプル集",
+			href: "/examples/cta-section",
+		},
+		{
 			title: "カルーセル",
 			description: "カルーセル (Embla Carousel) のサンプルです。",
 			href: "/examples/carousel",

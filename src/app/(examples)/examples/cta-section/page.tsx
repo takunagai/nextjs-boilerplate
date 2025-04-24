@@ -71,10 +71,10 @@ export default function CTASectionExamplesPage() {
 
 				<h2 className="text-2xl font-semibold mb-6">背景画像付き</h2>
 				<CTASection
-					layout="banner"
+					layout="vertical"
 					intent="minimal"
 					decoration="none"
-					backgroundImage="/dummy-images/cta-background.jpg"
+					backgroundImage="/dummy-images/street-photo-03.jpg"
 					overlayOpacity={0.7}
 					title="美しい背景画像を活用"
 					description="背景画像を使用することで、より印象的なCTAセクションを作成できます。オーバーレイの不透明度も調整可能です。"

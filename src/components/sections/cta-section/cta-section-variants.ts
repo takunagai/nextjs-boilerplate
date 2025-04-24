@@ -10,7 +10,7 @@ export const ctaSectionVariants = cva(
         horizontal: "flex flex-col md:flex-row items-center justify-between gap-8",
         vertical: "flex flex-col items-center text-center",
         card: "rounded-xl shadow-md flex flex-col",
-        banner: "w-full flex flex-col",
+        banner: "w-full flex flex-col items-center text-center",
       },
       intent: {
         primary: "bg-primary text-primary-foreground",
