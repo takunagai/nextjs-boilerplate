@@ -3,11 +3,11 @@ import { cva } from "class-variance-authority";
 // CTAセクション全体のバリアント
 export const ctaSectionVariants = cva(
   // ベースとなるスタイル
-  "w-full",
+  "w-full @container",
   {
     variants: {
       layout: {
-        horizontal: "flex flex-col md:flex-row items-center justify-between gap-8",
+        horizontal: "flex flex-col @lg:flex-row items-center justify-between gap-8",
         vertical: "flex flex-col items-center text-center",
         card: "rounded-xl shadow-md flex flex-col",
         banner: "w-full flex flex-col items-center text-center",
@@ -20,9 +20,9 @@ export const ctaSectionVariants = cva(
         minimal: "bg-transparent border border-border",
       },
       size: {
-        sm: "py-8 md:py-12",
-        md: "py-12 md:py-16",
-        lg: "py-16 md:py-24",
+        sm: "py-8 @lg:py-12",
+        md: "py-12 @lg:py-16",
+        lg: "py-16 @lg:py-24",
       },
       decoration: {
         none: "",
@@ -90,7 +90,7 @@ export const ctaButtonGroupVariants = cva("flex gap-4", {
     orientation: {
       horizontal: "flex-row",
       vertical: "flex-col",
-      responsive: "flex-col sm:flex-row",
+      responsive: "flex-col @md:flex-row",
     },
   },
   defaultVariants: {

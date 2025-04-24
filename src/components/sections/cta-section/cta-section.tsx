@@ -131,30 +131,30 @@ export function CTASection({
 
 	// コンテンツ
 	title = "今すぐ始めましょう",
-	description = "このボイラープレートを使って、モダンなWebアプリケーションの開発をスタートしましょう。詳細なドキュメントとサンプルコードが用意されています。",
+	description = "魅力的なCTAセクションで、ユーザーに次のアクションを促しましょう。",
 
 	// プライマリボタン
-	primaryButtonText = "GitHubで見る",
-	primaryButtonHref = "https://github.com/takunagai/nextjs-boilerplate",
-	primaryButtonExternal = true,
-	primaryButtonVariant = "secondary",
-	primaryButtonSize = "lg",
+	primaryButtonText = "詳細を見る",
+	primaryButtonHref,
+	primaryButtonExternal = false,
+	primaryButtonVariant = "default",
+	primaryButtonSize = "default",
 	primaryButtonIcon,
 	onPrimaryButtonClick,
 
 	// セカンダリボタン
-	secondaryButtonText = "使い方を学ぶ",
-	secondaryButtonHref = "/docs/getting-started",
+	secondaryButtonText = "お問い合わせ",
+	secondaryButtonHref,
 	secondaryButtonExternal = false,
 	secondaryButtonVariant = "outline",
-	secondaryButtonSize = "lg",
+	secondaryButtonSize = "default",
 	secondaryButtonIcon,
 	onSecondaryButtonClick,
 
 	// カスタムスタイリング
-	containerWidth = "2xl",
-	containerPaddingX = "lg",
-	containerPaddingY = "xl",
+	containerWidth = "lg",
+	containerPaddingX = "md",
+	containerPaddingY = "none",
 
 	// 背景設定
 	backgroundImage,
@@ -173,7 +173,17 @@ export function CTASection({
 	// その他のprops
 	...props
 }: CTASectionProps) {
-	// カスタム背景スタイル
+	// タイトルサイズのクラス
+	const titleSizeClasses = {
+		sm: "text-2xl @md:text-3xl",
+		md: "text-3xl @md:text-4xl",
+		lg: "text-4xl @md:text-5xl",
+	}[size];
+
+	// 説明文の透明度
+	const descriptionOpacityClass = intent === "minimal" ? "opacity-80" : "";
+
+	// 背景画像のスタイル
 	const backgroundStyle: React.CSSProperties = {};
 
 	if (backgroundImage) {
@@ -182,17 +192,7 @@ export function CTASection({
 		backgroundStyle.backgroundPosition = "center";
 	}
 
-	// タイトルのサイズをバリアントに応じて設定
-	const titleSizeClasses = {
-		sm: "text-2xl md:text-3xl",
-		md: "text-3xl md:text-4xl",
-		lg: "text-4xl md:text-5xl",
-	}[size];
-
-	// 説明文のサイズをバリアントに応じて設定
-	const descriptionOpacityClass = "opacity-80";
-
-	// デフォルトのアイコン設定
+	// デフォルトアイコン
 	const defaultPrimaryIcon = primaryButtonExternal ? (
 		<FaArrowUpRightFromSquare className="h-4 w-4" />
 	) : (
@@ -241,7 +241,7 @@ export function CTASection({
 				paddingY={containerPaddingY}
 				className={cn(
 					"relative z-10",
-					layout === "horizontal" && "flex flex-col md:flex-row md:items-center md:justify-between md:gap-8",
+					layout === "horizontal" && "flex flex-col @lg:flex-row @lg:items-center @lg:justify-between @lg:gap-8",
 					layout === "banner" && "flex flex-col items-center text-center",
 					containerClassName
 				)}
