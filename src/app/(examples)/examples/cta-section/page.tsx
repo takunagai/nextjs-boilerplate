@@ -1,4 +1,5 @@
 import { CTASection } from "@/components/sections/cta-section";
+import { Container } from "@/components/ui/container";
 import { Metadata } from "next";
 import {
 	FaArrowRight,
@@ -15,38 +16,61 @@ export const metadata: Metadata = {
 export default function CTASectionExamplesPage() {
 	return (
 		<>
-			<div className="space-y-6 mb-12">
-				<h1 className="text-4xl font-bold tracking-tight">
-					CTAセクションのサンプル
-				</h1>
-				<p className="text-xl text-muted-foreground">
-					CTASectionコンポーネントを使用した様々なデザインバリエーションのサンプルです。
+			<Container as="header">
+				<h1 className="text-4xl">CTAセクションのサンプル</h1>
+				<p className="text-xl text-muted-foreground space-y-6">
+					CTASectionコンポーネントを使用した様々な
+					<a href="https://example.com">デザインバリエーション</a>
+					のサンプルです。
 				</p>
-			</div>
+			</Container>
 
-			<div className="space-y-24">
-				<h2 className="text-2xl font-semibold mb-6">デフォルトスタイル</h2>
+			<Container className="space-y-24">
+				<h2 className="text-2xl mb-6">デフォルトスタイル</h2>
 				<CTASection className="bg-primary text-primary-foreground">
 					<CTASection.Container>
 						<CTASection.Content>
-							<CTASection.Title>今すぐ始めましょう</CTASection.Title>
+							<CTASection.Title>
+								今すぐ始めましょう (デフォルト h2)
+							</CTASection.Title>
 							<CTASection.Description>
-								魅力的なCTAセクションで、ユーザーに次のアクションを促しましょう。
+								魅力的なCTAセクションで、ユーザーに次の
+								<a href="https://example.com">アクション</a>
+								を促しましょう。
 							</CTASection.Description>
 						</CTASection.Content>
 						<CTASection.Actions className="justify-center">
 							<CTASection.PrimaryButton>詳細を見る</CTASection.PrimaryButton>
-							<CTASection.SecondaryButton>
-								お問い合わせ
-							</CTASection.SecondaryButton>
+							<CTASection.SecondaryButton>お問合せ</CTASection.SecondaryButton>
 						</CTASection.Actions>
 					</CTASection.Container>
 				</CTASection>
-				<p className="mt-4 text-muted-foreground">
-					デフォルト設定のCTAセクション。横並びレイアウトとプライマリカラーを使用しています。
-				</p>
+			</Container>
 
-				<h2 className="text-2xl font-semibold mb-6">垂直レイアウト</h2>
+			<Container className="space-y-24">
+				<h2 className="text-2xl mb-6">見出しレベルの指定</h2>
+				<CTASection className="bg-primary text-primary-foreground">
+					<CTASection.Container>
+						<CTASection.Content>
+							<CTASection.Title as="h3">
+								今すぐ始めましょう (h3)
+							</CTASection.Title>
+							<CTASection.Description>
+								魅力的なCTAセクションで、ユーザーに次の
+								<a href="https://example.com">アクション</a>
+								を促しましょう。
+							</CTASection.Description>
+						</CTASection.Content>
+						<CTASection.Actions className="justify-center">
+							<CTASection.PrimaryButton>詳細を見る</CTASection.PrimaryButton>
+							<CTASection.SecondaryButton>お問合せ</CTASection.SecondaryButton>
+						</CTASection.Actions>
+					</CTASection.Container>
+				</CTASection>
+			</Container>
+
+			<Container className="space-y-24">
+				<h2 className="text-2xl mb-6">垂直レイアウト</h2>
 				<CTASection
 					layout="vertical"
 					className="bg-primary text-primary-foreground"
@@ -68,8 +92,10 @@ export default function CTASectionExamplesPage() {
 						</CTASection.Actions>
 					</CTASection.Container>
 				</CTASection>
+			</Container>
 
-				<h2 className="text-2xl font-semibold mb-6">カードレイアウト</h2>
+			<Container width="md" className="space-y-24">
+				<h2 className="text-2xl mb-6">カードレイアウト</h2>
 				<CTASection
 					layout="card"
 					className="bg-secondary text-secondary-foreground shadow-lg"
@@ -93,8 +119,10 @@ export default function CTASectionExamplesPage() {
 						</CTASection.Actions>
 					</CTASection.Container>
 				</CTASection>
+			</Container>
 
-				<h2 className="text-2xl font-semibold mb-6">バナーレイアウト</h2>
+			<Container width="full" paddingX="none" className="space-y-24">
+				<h2 className="text-2xl mb-6">バナーレイアウト</h2>
 				<CTASection
 					layout="banner"
 					className="bg-accent text-accent-foreground py-16 @lg:py-24"
@@ -116,8 +144,10 @@ export default function CTASectionExamplesPage() {
 						</CTASection.Actions>
 					</CTASection.Container>
 				</CTASection>
+			</Container>
 
-				<h2 className="text-2xl font-semibold mb-6">背景画像付き</h2>
+			<Container width="full" paddingX="none" className="space-y-24">
+				<h2 className="text-2xl mb-6">背景画像付き</h2>
 				<CTASection
 					layout="vertical"
 					className="bg-transparent text-white py-16 @lg:py-24"
@@ -142,8 +172,10 @@ export default function CTASectionExamplesPage() {
 						</CTASection.Actions>
 					</CTASection.Container>
 				</CTASection>
+			</Container>
 
-				<h2 className="text-2xl font-semibold mb-6">グラデーション背景</h2>
+			<Container className="space-y-24">
+				<h2 className="text-2xl mb-6">グラデーション背景</h2>
 				<CTASection
 					layout="horizontal"
 					className="bg-gradient-to-r from-primary to-primary-foreground/20 text-primary-foreground"
@@ -173,28 +205,29 @@ export default function CTASectionExamplesPage() {
 						</CTASection.Actions>
 					</CTASection.Container>
 				</CTASection>
+			</Container>
 
-				<h2 className="text-2xl font-semibold mb-6">シンプルなCTA</h2>
-				<CTASection
-					layout="horizontal"
-					className="bg-muted text-muted-foreground"
-				>
+			<Container className="space-y-24">
+				<h2 className="text-2xl mb-6">シンプルなCTA</h2>
+				<CTASection className="bg-muted text-muted-foreground">
 					<CTASection.Container>
 						<CTASection.Content>
-							<CTASection.Title>お問い合わせはこちら</CTASection.Title>
+							<CTASection.Title>お問合せはこちら</CTASection.Title>
 							<CTASection.Description>
-								ご質問やサポートが必要な場合は、お気軽にお問い合わせください。
+								ご質問やサポートが必要な場合は、お気軽にお問合せください。
 							</CTASection.Description>
 						</CTASection.Content>
 						<CTASection.Actions className="justify-center">
 							<CTASection.PrimaryButton variant="default">
-								お問い合わせ
+								お問合せ
 							</CTASection.PrimaryButton>
 						</CTASection.Actions>
 					</CTASection.Container>
 				</CTASection>
+			</Container>
 
-				<h2 className="text-2xl font-semibold mb-6">高度なカスタマイズ</h2>
+			<Container className="space-y-24">
+				<h2 className="text-2xl mb-6">高度なカスタマイズ</h2>
 				<CTASection
 					layout="vertical"
 					className="bg-transparent border border-border p-8 py-16 @lg:py-24"
@@ -218,7 +251,7 @@ export default function CTASectionExamplesPage() {
 						</CTASection.Actions>
 					</CTASection.Container>
 				</CTASection>
-			</div>
+			</Container>
 		</>
 	);
 }

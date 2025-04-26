@@ -141,16 +141,23 @@ CTASection.Content = function CTASectionContent({
 	);
 };
 
+// タイトルサブコンポーネントのProps
+interface CTASectionTitleProps
+	extends React.HTMLAttributes<HTMLHeadingElement> {
+	as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+}
+
 // タイトルサブコンポーネント
 CTASection.Title = function CTASectionTitle({
 	className,
 	children,
+	as: Component = "h2",
 	...props
-}: React.HTMLAttributes<HTMLHeadingElement>) {
+}: CTASectionTitleProps) {
 	return (
-		<h2 className={cn("font-bold text-3xl @md:text-4xl", className)} {...props}>
+		<Component className={cn("text-2xl @md:text-3xl", className)} {...props}>
 			{children}
-		</h2>
+		</Component>
 	);
 };
 
