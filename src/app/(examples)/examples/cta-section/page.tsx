@@ -1,6 +1,5 @@
 import { CTASection } from "@/components/sections/cta-section";
 import { Container } from "@/components/ui/container";
-import { Metadata } from "next";
 import {
 	FaArrowRight,
 	FaArrowUpRightFromSquare,
@@ -8,24 +7,17 @@ import {
 	FaStar,
 } from "react-icons/fa6";
 
-export const metadata: Metadata = {
-	title: "CTAセクションのサンプル",
-	description: "様々なスタイルのCTAセクションの実装例を紹介します。",
-};
-
 export default function CTASectionExamplesPage() {
 	return (
 		<>
-			<Container as="header">
+			<Container as="header" className="space-y-4">
 				<h1 className="text-4xl">CTAセクションのサンプル</h1>
-				<p className="text-xl text-muted-foreground space-y-6">
-					CTASectionコンポーネントを使用した様々な
-					<a href="https://example.com">デザインバリエーション</a>
-					のサンプルです。
+				<p className="text-xl text-muted-foreground">
+					CTASectionコンポーネントを使用した様々なデザインバリエーションのサンプルです。
 				</p>
 			</Container>
 
-			<Container className="space-y-24">
+			<Container>
 				<h2 className="text-2xl mb-6">デフォルトスタイル</h2>
 				<CTASection className="bg-primary text-primary-foreground">
 					<CTASection.Container>
@@ -34,9 +26,7 @@ export default function CTASectionExamplesPage() {
 								今すぐ始めましょう (デフォルト h2)
 							</CTASection.Title>
 							<CTASection.Description>
-								魅力的なCTAセクションで、ユーザーに次の
-								<a href="https://example.com">アクション</a>
-								を促しましょう。
+								魅力的なCTAセクションで、ユーザーに次のアクションを促しましょう。
 							</CTASection.Description>
 						</CTASection.Content>
 						<CTASection.Actions className="justify-center">
@@ -47,7 +37,7 @@ export default function CTASectionExamplesPage() {
 				</CTASection>
 			</Container>
 
-			<Container className="space-y-24">
+			<Container>
 				<h2 className="text-2xl mb-6">見出しレベルの指定</h2>
 				<CTASection className="bg-primary text-primary-foreground">
 					<CTASection.Container>
@@ -56,9 +46,7 @@ export default function CTASectionExamplesPage() {
 								今すぐ始めましょう (h3)
 							</CTASection.Title>
 							<CTASection.Description>
-								魅力的なCTAセクションで、ユーザーに次の
-								<a href="https://example.com">アクション</a>
-								を促しましょう。
+								魅力的なCTAセクションで、ユーザーに次のアクションを促しましょう。
 							</CTASection.Description>
 						</CTASection.Content>
 						<CTASection.Actions className="justify-center">
@@ -69,7 +57,7 @@ export default function CTASectionExamplesPage() {
 				</CTASection>
 			</Container>
 
-			<Container className="space-y-24">
+			<Container>
 				<h2 className="text-2xl mb-6">垂直レイアウト</h2>
 				<CTASection
 					layout="vertical"
@@ -174,7 +162,7 @@ export default function CTASectionExamplesPage() {
 				</CTASection>
 			</Container>
 
-			<Container className="space-y-24">
+			<Container>
 				<h2 className="text-2xl mb-6">グラデーション背景</h2>
 				<CTASection
 					layout="horizontal"
@@ -207,7 +195,7 @@ export default function CTASectionExamplesPage() {
 				</CTASection>
 			</Container>
 
-			<Container className="space-y-24">
+			<Container>
 				<h2 className="text-2xl mb-6">シンプルなCTA</h2>
 				<CTASection className="bg-muted text-muted-foreground">
 					<CTASection.Container>
@@ -226,11 +214,11 @@ export default function CTASectionExamplesPage() {
 				</CTASection>
 			</Container>
 
-			<Container className="space-y-24">
+			<Container>
 				<h2 className="text-2xl mb-6">高度なカスタマイズ</h2>
 				<CTASection
 					layout="vertical"
-					className="bg-gradient-to-br from-slate-900 to-slate-800 p-12 py-20 @lg:py-28 shadow-2xl"
+					className="bg-gradient-to-br from-slate-900 to-slate-800 p-12 py-20 @lg:py-28"
 				>
 					<CTASection.Container className="max-w-screen-xl text-center">
 						<CTASection.Content className="space-y-8">
