@@ -230,22 +230,30 @@ export default function CTASectionExamplesPage() {
 				<h2 className="text-2xl mb-6">高度なカスタマイズ</h2>
 				<CTASection
 					layout="vertical"
-					className="bg-transparent border border-border p-8 py-16 @lg:py-24"
+					className="bg-gradient-to-br from-slate-900 to-slate-800 p-12 py-20 @lg:py-28 shadow-2xl"
 				>
 					<CTASection.Container className="max-w-screen-xl text-center">
-						<CTASection.Content className="space-y-6">
-							<CTASection.Title className="text-3xl md:text-4xl font-extrabold">
+						<CTASection.Content className="space-y-8">
+							<CTASection.Title className="text-4xl md:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
 								完全にカスタマイズ可能
 							</CTASection.Title>
-							<CTASection.Description className="text-lg opacity-80">
+							<CTASection.Description className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto">
 								CTASectionコンポーネントは、多様なプロパティを提供することで、あらゆるニーズに対応できるように設計されています。
 							</CTASection.Description>
 						</CTASection.Content>
-						<CTASection.Actions className="flex-row justify-center gap-6 mt-6">
-							<CTASection.PrimaryButton variant="default" size="lg">
+						<CTASection.Actions className="flex-row justify-center gap-8 mt-10">
+							<CTASection.PrimaryButton
+								variant="default"
+								size="lg"
+								className="bg-blue-500 hover:bg-blue-600 transition-all duration-300 shadow-lg hover:shadow-blue-500/40 px-8 py-3 rounded-full"
+							>
 								ドキュメントを読む
 							</CTASection.PrimaryButton>
-							<CTASection.SecondaryButton variant="outline" size="lg">
+							<CTASection.SecondaryButton
+								variant="outline"
+								size="lg"
+								className="border-2 border-purple-400 text-white hover:bg-purple-500/20 transition-all duration-300 px-8 py-3 rounded-full"
+							>
 								コードを見る
 							</CTASection.SecondaryButton>
 						</CTASection.Actions>
