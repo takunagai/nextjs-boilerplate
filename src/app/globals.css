@@ -97,4 +97,10 @@
 		@apply bg-background text-foreground;
 		font-feature-settings: "rlig" 1, "calt" 1;
 	}
+	h1, h2, h3, h4, h5, h6 {
+		@apply font-bold;
+	}
+	main a {
+		@apply underline text-sky-600 mx-1 hover:opacity-70 transition-opacity;
+	}
 }
