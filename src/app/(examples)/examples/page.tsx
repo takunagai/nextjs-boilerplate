@@ -26,6 +26,11 @@ export default function ExamplesPage() {
 			href: "/examples/table",
 		},
 		{
+			title: "FAQ",
+			description: "FAQコンポーネントのサンプルです。",
+			href: "/examples/faq",
+		},
+		{
 			title: "特徴紹介セクション",
 			description: "特徴を効果的に紹介するためのレイアウトコンポーネント",
 			href: "/examples/feature-items",
