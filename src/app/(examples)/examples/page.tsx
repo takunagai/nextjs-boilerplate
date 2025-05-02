@@ -47,6 +47,11 @@ export default function ExamplesPage() {
 			href: "/examples/cta-section",
 		},
 		{
+			title: "地図",
+			description: "様々なスタイルの地図コンポーネントのサンプル集",
+			href: "/examples/map",
+		},
+		{
 			title: "カルーセル",
 			description: "カルーセル (Embla Carousel) のサンプルです。",
 			href: "/examples/carousel",
