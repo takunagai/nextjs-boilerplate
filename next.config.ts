@@ -5,6 +5,11 @@ const nextConfig: NextConfig = {
 
 	reactStrictMode: true,
 
+	// Reactコンパイラの有効化
+	experimental: {
+		reactCompiler: true,
+	},
+
 	// 環境変数
 	env: {
 		// サンプルページを表示するかどうか
