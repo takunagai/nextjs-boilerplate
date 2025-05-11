@@ -52,6 +52,11 @@ export default function ExamplesPage() {
 			href: "/examples/map",
 		},
 		{
+			title: "Masonryギャラリー",
+			description: "Masonryギャラリーコンポーネントのサンプル集",
+			href: "/examples/masonry-gallery",
+		},
+		{
 			title: "カルーセル",
 			description: "カルーセル (Embla Carousel) のサンプルです。",
 			href: "/examples/carousel",

@@ -1,0 +1,182 @@
+import { Photo } from "@/components/masonry-gallery/types";
+
+/**
+ * ダミー画像データ
+ * 既存のダミー画像を使用
+ */
+export const dummyPhotos: Photo[] = [
+	{
+		id: "1",
+		src: "/dummy-images/street-photo-01.jpg",
+		alt: "Street photography scene 1",
+		width: 1200,
+		height: 800,
+		title: "Street Scene 1",
+	},
+	{
+		id: "2",
+		src: "/dummy-images/street-photo-02.jpg",
+		alt: "Street photography scene 2",
+		width: 1200,
+		height: 800,
+		title: "Street Scene 2",
+	},
+	{
+		id: "3",
+		src: "/dummy-images/street-photo-03.jpg",
+		alt: "Street photography scene 3",
+		width: 1200,
+		height: 800,
+		title: "Street Scene 3",
+	},
+	{
+		id: "4",
+		src: "/dummy-images/street-photo-04.jpg",
+		alt: "Street photography scene 4",
+		width: 1200,
+		height: 800,
+		title: "Street Scene 4",
+	},
+	{
+		id: "5",
+		src: "/dummy-images/profile-placeholder.jpg",
+		alt: "Profile placeholder",
+		width: 400,
+		height: 400,
+		title: "Profile Placeholder",
+	},
+	// 既存の画像を繰り返し使用して数を増やす
+	{
+		id: "6",
+		src: "/dummy-images/street-photo-01.jpg",
+		alt: "Street photography scene 1 (copy)",
+		width: 1200,
+		height: 800,
+		title: "Street Scene 1 (Copy)",
+	},
+	{
+		id: "7",
+		src: "/dummy-images/street-photo-02.jpg",
+		alt: "Street photography scene 2 (copy)",
+		width: 1200,
+		height: 800,
+		title: "Street Scene 2 (Copy)",
+	},
+	{
+		id: "8",
+		src: "/dummy-images/street-photo-03.jpg",
+		alt: "Street photography scene 3 (copy)",
+		width: 1200,
+		height: 800,
+		title: "Street Scene 3 (Copy)",
+	},
+	{
+		id: "9",
+		src: "/dummy-images/street-photo-04.jpg",
+		alt: "Street photography scene 4 (copy)",
+		width: 1200,
+		height: 800,
+		title: "Street Scene 4 (Copy)",
+	},
+	{
+		id: "10",
+		src: "/dummy-images/profile-placeholder.jpg",
+		alt: "Profile placeholder (copy)",
+		width: 400,
+		height: 400,
+		title: "Profile Placeholder (Copy)",
+	},
+	{
+		id: "11",
+		src: "/dummy-images/street-photo-01.jpg",
+		alt: "Street photography scene 1 (copy 2)",
+		width: 1200,
+		height: 800,
+		title: "Street Scene 1 (Copy 2)",
+	},
+	{
+		id: "12",
+		src: "/dummy-images/street-photo-02.jpg",
+		alt: "Street photography scene 2 (copy 2)",
+		width: 1200,
+		height: 800,
+		title: "Street Scene 2 (Copy 2)",
+	},
+	{
+		id: "13",
+		src: "/dummy-images/street-photo-03.jpg",
+		alt: "Street photography scene 3 (copy 2)",
+		width: 1200,
+		height: 800,
+		title: "Street Scene 3 (Copy 2)",
+	},
+	{
+		id: "14",
+		src: "/dummy-images/street-photo-04.jpg",
+		alt: "Street photography scene 4 (copy 2)",
+		width: 1200,
+		height: 800,
+		title: "Street Scene 4 (Copy 2)",
+	},
+	{
+		id: "15",
+		src: "/dummy-images/photo-05.jpg",
+		alt: "Profile placeholder (copy 2)",
+		width: 400,
+		height: 400,
+		title: "Profile Placeholder (Copy 2)",
+	},
+];
+
+// 実際のプロジェクトでは、ダミー画像の代わりに実際の画像を使用します。
+// ダミー画像がない場合に備えて、Unsplashなどの無料画像サービスのURLを使用する例
+export const fallbackPhotos: Photo[] = [
+	{
+		id: "1",
+		src: "/dummy-images/photo-06.jpg",
+		alt: "Random nature image",
+		width: 800,
+		height: 1200,
+		title: "Nature",
+	},
+	{
+		id: "2",
+		src: "/dummy-images/photo-07.jpg",
+		alt: "Random city image",
+		width: 900,
+		height: 900,
+		title: "City",
+	},
+	{
+		id: "3",
+		src: "/dummy-images/photo-08.jpg",
+		alt: "Random water image",
+		width: 1200,
+		height: 800,
+		title: "Water",
+	},
+	{
+		id: "4",
+		src: "/dummy-images/photo-09.jpg",
+		alt: "Random mountain image",
+		width: 800,
+		height: 1200,
+		title: "Mountain",
+	},
+	{
+		id: "5",
+		src: "/dummy-images/photo-10.jpg",
+		alt: "Random forest image",
+		width: 900,
+		height: 900,
+		title: "Forest",
+	},
+	{
+		id: "6",
+		src: "/dummy-images/photo-11.jpg",
+		alt: "Random desert image",
+		width: 1200,
+		height: 800,
+		title: "Desert",
+	},
+];
