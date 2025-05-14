@@ -28,7 +28,7 @@ export const authConfig: NextAuthConfig = {
 	},
 	// カスタムログインページ設定
 	pages: {
-		signIn: "/auth/login",
+		signIn: "/login",
 	},
 	// 認証プロバイダー設定
 	providers: [

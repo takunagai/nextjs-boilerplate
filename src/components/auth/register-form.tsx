@@ -83,7 +83,7 @@ export function RegisterForm() {
 				toast.success("アカウントが作成されました");
 
 				// ログインページへリダイレクト
-				router.push("/auth/login?registered=true");
+				router.push("/login?registered=true");
 			} else {
 				toast.error(result.error?.message || "アカウント登録に失敗しました");
 			}
@@ -199,7 +199,7 @@ export function RegisterForm() {
 				<div className="text-center text-sm">
 					すでにアカウントをお持ちですか？{" "}
 					<Link
-						href="/auth/login"
+						href="/login"
 						className="font-medium text-primary hover:underline"
 					>
 						ログイン

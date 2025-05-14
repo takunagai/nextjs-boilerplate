@@ -36,7 +36,7 @@ export function UserAuthMenu() {
 		return (
 			<Button
 				variant="ghost"
-				onClick={() => router.push("/auth/login")}
+				onClick={() => router.push("/login")}
 				className="gap-2"
 			>
 				<FaUser className="h-4 w-4" />
