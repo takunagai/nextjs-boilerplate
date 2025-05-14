@@ -6,12 +6,12 @@ import { FaArrowLeft } from "react-icons/fa6";
 
 export default function NotFound() {
 	return (
-		<Container>
-			<div className="py-16 md:py-24 text-center">
-				<PageHeader title="404" />
-				<h2 className="text-2xl md:text-3xl font-semibold mb-6 text-slate-800 dark:text-slate-200">
-					ページが見つかりません
-				</h2>
+		<Container className="min-h-screen flex items-center justify-center">
+			<div className="py-16 md:py-24 text-center w-full">
+				<PageHeader
+					title="404 Not Found"
+					description="ページが見つかりません"
+				/>
 				<p className="text-slate-500 dark:text-slate-400 mb-8 max-w-md mx-auto">
 					お探しのページは存在しないか、移動または削除された可能性があります。
 				</p>
