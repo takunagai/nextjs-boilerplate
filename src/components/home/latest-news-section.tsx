@@ -45,13 +45,13 @@ export async function LatestNewsSection({ className }: LatestNewsSectionProps) {
 				</div>
 				<ul className="divide-y divide-slate-200 dark:divide-slate-800">
 					{latestNews.map((news: NewsItem) => (
-						<li key={news.id} className="py-3 text-sm">
+						<li key={news.id} className="py-2 text-sm">
 							<Link
 								href={`/news/${news.id}`}
-								className="block group"
+								className="block group no-underline"
 								aria-label={`${news.title}の詳細を見る`}
 							>
-								<div className="flex flex-col md:flex-row md:items-center gap-3">
+								<div className="flex flex-col md:flex-row md:items-center gap-1">
 									<div className="flex items-center md:gap-3 md:w-auto md:min-w-52 md:flex-nowrap">
 										<time
 											dateTime={news.date.toISOString()}
