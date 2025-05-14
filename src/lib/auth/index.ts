@@ -101,7 +101,11 @@ export const authConfig: NextAuthConfig = {
 			// 現時点ではシンプルな認可チェックのみ実装
 			// 後でmiddlewareで詳細な制御を行う
 			const isLoggedIn = !!auth?.user;
-			const isOnAuthPage = request.nextUrl.pathname.startsWith("/auth/");
+			// 認証関連のパス（ルートグループを使わないため URL に直接現れる）
+			const PUBLIC_AUTH_PATHS = ["/login", "/register"] as const;
+			const isOnAuthPage = PUBLIC_AUTH_PATHS.some((p) =>
+				request.nextUrl.pathname.startsWith(p),
+			);
 
 			if (!isLoggedIn && !isOnAuthPage) {
 				return false; // 非認証ユーザーは認証ページ以外アクセス不可
