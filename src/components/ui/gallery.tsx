@@ -32,7 +32,8 @@ const galleryStyles = cva("w-full", {
 			"3": "grid-cols-3",
 			"4": "grid-cols-4",
 			"5": "grid-cols-5",
-			responsive: "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4",
+			responsive: "grid-cols-2 md:grid-cols-3",
+			responsive2: "grid-cols-2 md:grid-cols-3 lg:grid-cols-4",
 		},
 		gap: {
 			none: "gap-0",
