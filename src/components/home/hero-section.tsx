@@ -68,7 +68,7 @@ export function HeroSection() {
 						を使用した最新のWebアプリケーション開発のためのボイラープレート
 					</p>
 					<div className="flex flex-col sm:flex-row gap-4">
-						<Button asChild size="lg" className="gap-2">
+						<Button asChild size="lg">
 							<Link
 								href="https://github.com/takunagai/nextjs-boilerplate"
 								target="_blank"
@@ -82,7 +82,7 @@ export function HeroSection() {
 							asChild
 							variant="outline"
 							size="lg"
-							className="gap-2 bg-white/10 text-white border-white/20 hover:bg-white/20"
+							className="bg-white/10 text-white border-white/20 hover:bg-white/20"
 						>
 							<Link href="/contact">お問い合わせ</Link>
 						</Button>
