@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -461,10 +462,13 @@ export default function UIComponentsPage() {
 									</TimelineItem>
 									<TimelineItem variant="primary">
 										<TimelineIcon variant="primary">
-											<img
+											<Image
 												src="/dummy-images/profile-placeholder.jpg"
 												alt="プロフィール"
+												width={64}
+												height={64}
 												className="h-full w-full object-cover rounded-full"
+												sizes="(max-width: 768px) 32px, 64px"
 											/>
 										</TimelineIcon>
 										<TimelineContent variant="card">

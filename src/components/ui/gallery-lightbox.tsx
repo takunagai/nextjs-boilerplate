@@ -209,10 +209,14 @@ export function GalleryLightbox({
 								className="max-h-[70vh] object-contain mx-auto"
 							/>
 						) : (
-							<img
+							<Image
 								src={currentImage.src}
 								alt={currentImage.alt}
+								width={1200}
+								height={800}
 								className="max-h-[70vh] object-contain mx-auto"
+								sizes="(max-width: 768px) 100vw, 90vw"
+								priority={false}
 							/>
 						)}
 						{(currentImage.title || currentImage.description) && (

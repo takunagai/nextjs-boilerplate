@@ -258,13 +258,16 @@ export function Gallery({
 									)}
 								/>
 							) : (
-								<img
+								<Image
 									src={item.src}
 									alt={item.alt}
+									width={800}
+									height={600}
 									className={cn(
 										"w-full h-full object-cover",
 										aspectRatio === "auto" ? "aspect-auto" : "",
 									)}
+									sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
 								/>
 							)}
 						</div>

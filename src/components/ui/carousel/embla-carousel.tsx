@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import type { EmblaOptionsType } from "embla-carousel";
 import type { AutoplayOptionsType } from "embla-carousel-autoplay";
@@ -164,11 +165,13 @@ export function EmblaCarousel({
 							key={`slide-${slide.src}-${index}`}
 						>
 							<div className="relative overflow-hidden aspect-[16/9] rounded-lg">
-								<img
+								<Image
 									src={slide.src}
 									alt={slide.alt}
+									fill
 									className="absolute inset-0 h-full w-full object-cover"
-									loading="lazy"
+									sizes="(max-width: 768px) 100vw, (max-width: 1200px) 70vw, 50vw"
+									priority={index === 0}
 								/>
 							</div>
 						</div>
