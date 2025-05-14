@@ -21,7 +21,7 @@ export function GallerySection() {
 				<Gallery
 					items={galleryItems}
 					layout="grid"
-					columns="3"
+					columns="responsive"
 					gap="lg"
 					aspectRatio="landscape"
 					shadow="md"
@@ -38,7 +38,7 @@ export function GallerySection() {
 				<Gallery
 					items={squareGalleryItems}
 					layout="grid"
-					columns="4"
+					columns="responsive2"
 					gap="md"
 					aspectRatio="square"
 					rounded="lg"
