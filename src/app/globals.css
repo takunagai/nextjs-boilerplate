@@ -104,9 +104,10 @@
 		text-decoration: underline;
 		color: var(--color-sky-500);
 		margin-inline: 0.25rem;
+		text-underline-offset: 2px;
 		text-decoration-thickness: 1px;
 		text-decoration-style: dotted;
-		text-decoration-color: color-mix(in srgb, 70%, transparent);
+		text-decoration-color: color-mix(in srgb, currentColor 70%, transparent);
 		transition-property: opacity;
 		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 		transition-duration: 150ms;
