@@ -30,7 +30,7 @@ export default async function DashboardPage() {
 
 	// 未認証の場合はログインページにリダイレクト
 	if (!session) {
-		redirect("/auth/login?callbackUrl=/dashboard");
+		redirect("/login?callbackUrl=/dashboard");
 	}
 
 	// ユーザー情報を取得
