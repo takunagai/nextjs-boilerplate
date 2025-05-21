@@ -51,6 +51,11 @@ interface MasonryGalleryProps {
 	 * 画像のロード方法
 	 */
 	imageLoading?: "eager" | "lazy";
+
+	/**
+	 * 画像クリック時のコールバック関数
+	 */
+	onPhotoClick?: (photo: Photo, index: number) => void;
 }
 
 // Default props for the gallery
@@ -121,6 +126,7 @@ export default function MasonryGallery({
 	itemClassName,
 	imageClassName,
 	imageLoading: imageLoadingProp,
+	onPhotoClick,
 }: MasonryGalleryProps) {
 	// 最終的なカラム設定を解決
 	let finalColumnsConfig: ColumnsPerBreakpoint;
@@ -144,9 +150,8 @@ export default function MasonryGallery({
 
 	const columnClasses = buildColumnClasses(finalColumnsConfig);
 	const gapClass = `gap-x-${currentGap}`; // For column-gap (Tailwind class)
-
-	// vGapをrem単位で計算（Tailwindのspacing unit 1 = 0.25remを想定）
-	const vGapInRem = currentVGap / 4;
+	// 垂直ギャップ用のTailwindクラス
+	const vGapClass = `space-y-${currentVGap}`;
 
 	if (!photos || photos.length === 0) {
 		return <p>No photos to display.</p>;
@@ -158,21 +163,26 @@ export default function MasonryGallery({
 			className={clsx("@container", className)}
 		>
 			<ul
-				className={clsx("list-none p-0 m-0", columnClasses, gapClass)}
-				style={
-					{
-						"--v-gap": `${vGapInRem}rem`, // 垂直方向ギャップのためのCSS変数
-					} as React.CSSProperties
-				}
+				className={clsx("list-none p-0 m-0", columnClasses, gapClass, vGapClass)}
 			>
 				{photos.map((photo, index) => (
 					<li
 						key={photo.id || index}
 						className={clsx(
-							"pb-[var(--v-gap)]", // Use the CSS variable for padding-bottom
 							"break-inside-avoid-column", // Prevent items from breaking across columns
+							onPhotoClick ? "cursor-pointer" : "",
 							itemClassName,
 						)}
+						onClick={onPhotoClick ? () => onPhotoClick(photo, index) : undefined}
+						onKeyDown={onPhotoClick ? (e) => {
+							if (e.key === "Enter" || e.key === " ") {
+								e.preventDefault();
+								onPhotoClick(photo, index);
+							}
+						} : undefined}
+						tabIndex={onPhotoClick ? 0 : undefined}
+						role={onPhotoClick ? "button" : undefined}
+						aria-label={photo.alt ? `View ${photo.alt}` : `View image ${index + 1}`}
 					>
 						<figure className="relative w-full overflow-hidden rounded-xs">
 							<Image
@@ -188,7 +198,7 @@ export default function MasonryGallery({
 								)}
 								loading={imageLoading}
 								quality={75}
-								sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+								sizes="@xs 100%, @sm 50%, @md 33.33%, @lg 25%, @xl 20%, @2xl 16.67%"
 								style={{
 									aspectRatio: photo.width / photo.height,
 								}}

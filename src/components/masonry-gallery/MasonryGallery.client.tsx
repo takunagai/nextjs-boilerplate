@@ -33,12 +33,7 @@ export default function ClientMasonryGallery({
 	imageLoading,
 	onPhotoClick,
 }: ClientMasonryGalleryProps) {
-	// クリックハンドラがある場合はここで処理を追加
-	const handlePhotoClick = onPhotoClick
-		? (photo: Photo, index: number) => {
-				onPhotoClick(photo, index);
-			}
-		: undefined;
+	// クリックハンドラはMasonryGalleryに直接渡す
 
 	return (
 		<MasonryGallery
@@ -50,6 +45,7 @@ export default function ClientMasonryGallery({
 			itemClassName={itemClassName}
 			imageClassName={imageClassName}
 			imageLoading={imageLoading}
+			onPhotoClick={onPhotoClick}
 		/>
 	);
 }
