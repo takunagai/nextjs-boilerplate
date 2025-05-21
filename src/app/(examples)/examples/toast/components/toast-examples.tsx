@@ -45,8 +45,18 @@ export function ToastExamples() {
   };
 
   const handlePromiseToast = () => {
+    // 成功時のレスポンス型を定義
+    interface SuccessResponse {
+      name: string;
+    }
+
+    // エラー時のレスポンス型を定義
+    interface ErrorResponse {
+      error: string;
+    }
+
     const promise = () =>
-      new Promise((resolve, reject) => {
+      new Promise<SuccessResponse>((resolve, reject) => {
         const success = Math.random() > 0.5; // Simulate success/failure
         setTimeout(() => {
           if (success) {
@@ -59,10 +69,10 @@ export function ToastExamples() {
 
     toast.promise(promise, {
       loading: "Processing your request...",
-      success: (data: any) => {
+      success: (data: SuccessResponse) => {
         return `${data.name} has been successfully processed!`;
       },
-      error: (err: any) => {
+      error: (err: ErrorResponse) => {
         return `Error: ${err.error || "Something went wrong"}.`;
       },
     });
@@ -75,13 +85,13 @@ export function ToastExamples() {
         <Button onClick={handleDefaultToast} variant="default">
           Default Toast
         </Button>
-        <Button onClick={handleSuccessToast} variant="secondary"> {/* Using secondary for success as no specific 'success' variant */}
+        <Button onClick={handleSuccessToast} variant="success">
           Success Toast
         </Button>
         <Button onClick={handleErrorToast} variant="destructive">
           Error Toast
         </Button>
-        <Button onClick={handleWarningToast} variant="outline">
+        <Button onClick={handleWarningToast} variant="warning">
           Warning Toast
         </Button>
         <Button onClick={handleToastWithAction} variant="default">
@@ -98,7 +108,3 @@ export function ToastExamples() {
 // Note: For these toasts to appear, the <Toaster /> component from 'sonner'
 // must be rendered somewhere in your application's layout (e.g., in the root layout).
 // This file only provides the trigger examples.
-// import { Toaster } from "sonner";
-// export { Toaster }; // Optionally re-export if this file is meant to be the central point for toast related things.
-// However, the task specifies the Toaster is already in `src/components/ui/sonner.tsx`
-// and expected to be in the layout.

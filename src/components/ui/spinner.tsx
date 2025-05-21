@@ -15,6 +15,7 @@ const spinnerVariants = cva(
         primary: "text-primary",
         secondary: "text-secondary",
         destructive: "text-destructive",
+        "primary-foreground": "text-primary-foreground",
         inherit: "text-current", // Or simply rely on inherited text color
       },
     },
@@ -26,16 +27,15 @@ const spinnerVariants = cva(
 );
 
 export interface SpinnerProps
-  extends React.HTMLAttributes<HTMLDivElement>,
+  extends Omit<React.HTMLAttributes<HTMLOutputElement>, 'color'>,
     VariantProps<typeof spinnerVariants> {
   label?: string; // For custom aria-label
 }
 
-const Spinner = React.forwardRef<HTMLDivElement, SpinnerProps>(
+const Spinner = React.forwardRef<HTMLOutputElement, SpinnerProps>(
   ({ className, size, color, label = "Loading...", ...props }, ref) => {
     return (
-      <div
-        role="status"
+      <output
         aria-label={label}
         ref={ref}
         className={cn(spinnerVariants({ size, color }), className)}
@@ -44,7 +44,7 @@ const Spinner = React.forwardRef<HTMLDivElement, SpinnerProps>(
         <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
           {label}
         </span>
-      </div>
+      </output>
     );
   }
 );

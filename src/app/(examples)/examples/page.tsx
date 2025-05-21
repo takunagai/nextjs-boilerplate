@@ -76,6 +76,26 @@ export default function ExamplesPage() {
 			description: "shadcn/uiコンポーネントのサンプル集です。",
 			href: "/examples/ui-components",
 		},
+		{
+			title: "スピナー（Spinner）",
+			description: "読み込み状態を表示するためのスピナーコンポーネントです。",
+			href: "/examples/spinner",
+		},
+		{
+			title: "スケルトン（Skeleton）",
+			description: "コンテンツ読み込み中に表示するプレースホルダーコンポーネントです。",
+			href: "/examples/skeleton",
+		},
+		{
+			title: "日付選択（DatePicker）",
+			description: "カレンダーから日付を選択できる日付選択コンポーネントです。",
+			href: "/examples/date-picker",
+		},
+		{
+			title: "トースト（Toast）",
+			description: "ユーザーへの通知を表示するトーストコンポーネントです。",
+			href: "/examples/toast",
+		}
 	];
 
 	return (
@@ -83,8 +103,8 @@ export default function ExamplesPage() {
 			<PageHeader title="サンプル集" />
 
 			<ul className="space-y-4 list-disc pl-5">
-				{examples.map((example) => (
-					<li key={example.href} className="pl-2">
+				{examples.map((example, index) => (
+					<li key={`${example.href}-${index}`} className="pl-2">
 						<h2 className="text-lg font-bold">
 							<Link
 								href={example.href}
