@@ -41,6 +41,7 @@ export function ContactEmailForm() {
 			name: "",
 			email: "",
 			phoneContact: "不可",
+			phone: undefined, // Changed from "" to undefined
 			message: "",
 		},
 	});
