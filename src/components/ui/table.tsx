@@ -34,9 +34,9 @@ const tableVariants = cva(
 			// サイズバリエーション（パディング調整）
 			size: {
 				xs: "[&_th]:px-1 [&_td]:px-1 [&_th]:py-0.5 [&_td]:py-0.5 text-xs",
-				sm: "[&_th]:px-2 [&_td]:px-2 [&_th]:py-1.5 [&_td]:py-1.5 text-xs",
-				md: "[&_th]:px-4 [&_td]:px-4 [&_th]:py-2 [&_td]:py-2 text-sm",
-				lg: "[&_th]:px-6 [&_td]:px-6 [&_th]:py-3 [&_td]:py-3 text-base",
+				sm: "[&_th]:px-2 [&_td]:px-2 [&_th]:py-1.5 [&_td]:py-1.5 text-xs @sm:[&_th]:px-1 @sm:[&_td]:px-1 @sm:[&_th]:py-0.5 @sm:[&_td]:py-0.5 @sm:text-xs",
+				md: "[&_th]:px-4 [&_td]:px-4 [&_th]:py-2 [&_td]:py-2 text-sm @md:[&_th]:px-2 @md:[&_td]:px-2 @md:[&_th]:py-1.5 @md:[&_td]:py-1.5 @md:text-xs @sm:[&_th]:px-1 @sm:[&_td]:px-1 @sm:[&_th]:py-0.5 @sm:[&_td]:py-0.5 @sm:text-xs",
+				lg: "[&_th]:px-6 [&_td]:px-6 [&_th]:py-3 [&_td]:py-3 text-base @lg:[&_th]:px-4 @lg:[&_td]:px-4 @lg:[&_th]:py-2 @lg:[&_td]:py-2 @lg:text-sm @md:[&_th]:px-2 @md:[&_td]:px-2 @md:[&_th]:py-1.5 @md:[&_td]:py-1.5 @md:text-xs @sm:[&_th]:px-1 @sm:[&_td]:px-1 @sm:[&_th]:py-0.5 @sm:[&_td]:py-0.5 @sm:text-xs",
 			},
 			// キャプションの位置
 			captionPosition: {
@@ -81,7 +81,7 @@ export function Table({
 	...props
 }: TableProps) {
 	return (
-		<div className="w-full overflow-x-auto">
+		<div className="w-full overflow-x-auto @container">
 			<table
 				className={cn(
 					tableVariants({
