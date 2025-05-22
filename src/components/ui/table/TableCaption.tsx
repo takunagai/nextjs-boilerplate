@@ -2,6 +2,10 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 import type { TableCaptionProps } from "./types";
 
+/**
+ * テーブルのキャプションコンポーネント
+ * テーブルの説明や補足を表示するために使用
+ */
 export const TableCaption = React.forwardRef<
   HTMLTableCaptionElement,
   TableCaptionProps
@@ -9,7 +13,7 @@ export const TableCaption = React.forwardRef<
   <caption
     ref={ref}
     className={cn(
-      "text-sm text-muted-foreground text-left pb-1 font-bold [&>svg]:inline-block [&>svg]:mr-1",
+      "text-sm text-muted-foreground pb-2 pt-2 font-medium [&>svg]:mr-2 [&>svg]:inline-block",
       className
     )}
     {...props}
@@ -17,4 +21,5 @@ export const TableCaption = React.forwardRef<
     {children}
   </caption>
 ));
+
 TableCaption.displayName = "TableCaption";

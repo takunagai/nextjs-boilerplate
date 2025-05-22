@@ -1,89 +1,116 @@
 import type { HTMLAttributes, ReactNode, TdHTMLAttributes, ThHTMLAttributes } from "react";
 
-// Sorting direction
+/**
+ * ソート方向を表す型
+ */
 export type SortDirection = "asc" | "desc" | "none";
 
-// Internal representation of a column, extending ColumnDef with runtime properties
-export interface Column<TData> extends ColumnDef<TData> {
-  // Potentially add internal state for columns if needed later
-}
-
-// Representation of a row, containing the original data and potentially other row-specific state
+/**
+ * テーブルの行データを表す型
+ */
 export interface Row<TData> {
   original: TData;
-  // id: string; // Unique row ID, can be derived or provided
-  // getCells: () => Cell[]; // Function to get all cells for this row
 }
 
-// Definition for a table column
-export interface ColumnDef<TData, TValue = any> {
-  accessorKey: keyof TData | (string & {}); // Key for data access (e.g., 'email' or 'user.firstName')
-  header: ReactNode | ((props: { column: Column<TData> }) => ReactNode); // Header content or render function
-  cell?: (props: { row: Row<TData>; value: TValue }) => ReactNode; // Custom cell render function
+/**
+ * テーブル列の定義を表す型
+ */
+export interface ColumnDef<TData, TValue = unknown> {
+  /** データへのアクセスキー */
+  accessorKey: keyof TData | (string & {});
+  /** ヘッダーの内容 */
+  header: ReactNode | ((props: { column: ColumnDef<TData> }) => ReactNode);
+  /** セルのカスタムレンダリング関数 */
+  cell?: (props: { row: Row<TData>; value: TValue }) => ReactNode;
+  /** ソート機能を有効にするかどうか */
   enableSorting?: boolean;
-  // id?: string; // Optional unique ID for the column
 }
 
-// Props for the main Table component, now generic for type safety
-export interface TableProps<TData> extends Omit<HTMLAttributes<HTMLTableElement>, 'children'> {
+/**
+ * ソート設定を表す型
+ */
+export interface SortConfig<TData> {
+  key: keyof TData | (string & {});
+  direction: SortDirection;
+}
+
+/**
+ * メインのTableコンポーネントのProps
+ */
+export interface TableProps<TData> {
+  /** テーブルデータ */
   data: TData[];
+  /** 列定義 */
   columns: ColumnDef<TData>[];
+  /** クラス名 */
   className?: string;
-  // caption?: ReactNode; // Optional caption, can be direct or via Table.Caption
-  // variant, borderedCells, etc., are from tableVariants, will be merged in Table.tsx
 }
 
-
-// 各サブコンポーネントの共通Props型
+/**
+ * 全てのテーブル関連コンポーネントの共通Props
+ */
 export type TableChildProps = {
-  children: ReactNode;
+  children?: ReactNode;
   className?: string;
 };
 
-// Specific props for TableCaption if they differ beyond TableChildProps
+/**
+ * TableCaptionコンポーネントのProps
+ */
 export type TableCaptionProps = TableChildProps & HTMLAttributes<HTMLTableCaptionElement>;
 
-// Specific props for TableHeader (Thead) - will need columns and sort state
-export type TableHeaderProps<TData> = TableChildProps & HTMLAttributes<HTMLTableSectionElement> & {
+/**
+ * TableHeaderコンポーネントのProps
+ */
+export type TableHeaderProps<TData> = Omit<TableChildProps, 'children'> & HTMLAttributes<HTMLTableSectionElement> & {
   columns: ColumnDef<TData>[];
-  sortConfig: { key: keyof TData | (string & {}); direction: SortDirection } | null;
+  sortConfig: SortConfig<TData> | null;
   requestSort: (key: keyof TData | (string & {})) => void;
 };
 
-// Specific props for TableBody (Tbody) - will need columns and data
-export type TableBodyProps<TData> = TableChildProps & HTMLAttributes<HTMLTableSectionElement> & {
-  rows: Row<TData>[]; // Expecting rows to be pre-processed (e.g., sorted)
+/**
+ * TableBodyコンポーネントのProps
+ */
+export type TableBodyProps<TData> = Omit<TableChildProps, 'children'> & HTMLAttributes<HTMLTableSectionElement> & {
+  rows: Row<TData>[];
   columns: ColumnDef<TData>[];
 };
 
-// Specific props for TableFooter (Tfoot)
+/**
+ * TableFooterコンポーネントのProps
+ */
 export type TableFooterProps = TableChildProps & HTMLAttributes<HTMLTableSectionElement>;
 
-// Specific props for TableRow (Tr) - will need row data and columns
-export type TableRowProps<TData> = TableChildProps & HTMLAttributes<HTMLTableRowElement> & {
+/**
+ * TableRowコンポーネントのProps
+ */
+export type TableRowProps<TData> = Omit<TableChildProps, 'children'> & HTMLAttributes<HTMLTableRowElement> & {
   row: Row<TData>;
   columns: ColumnDef<TData>[];
 };
 
-// Specific props for TableHead (Th) - will need column definition and sort state
-export type TableHeadProps<TData> = TableChildProps & ThHTMLAttributes<HTMLTableCellElement> & {
+/**
+ * TableHeadコンポーネントのProps
+ */
+export type TableHeadProps<TData> = Omit<TableChildProps, 'children'> & ThHTMLAttributes<HTMLTableCellElement> & {
   column: ColumnDef<TData>;
-  sortConfig: { key: keyof TData | (string & {}); direction: SortDirection } | null;
+  sortConfig: SortConfig<TData> | null;
   requestSort: (key: keyof TData | (string & {})) => void;
   scope?: "col" | "row";
 };
 
-// Specific props for TableCell (Td) - will need row data and column definition
-export type TableCellProps<TData> = TableChildProps & TdHTMLAttributes<HTMLTableCellElement> & {
+/**
+ * TableCellコンポーネントのProps
+ */
+export type TableCellProps<TData> = Omit<TableChildProps, 'children'> & TdHTMLAttributes<HTMLTableCellElement> & {
   row: Row<TData>;
   column: ColumnDef<TData>;
 };
 
-// Interface for the main Table component's static properties (sub-components)
-// This helps with type checking for the nested API
-// Note: These might need to be generic if they directly use TData, but typically
-// they are used within the context of a generic Table instance.
-export interface TableComponents<TData = any> {
+/**
+ * テーブルコンポーネントの静的プロパティ（サブコンポーネント）のインターフェース
+ */
+export interface TableComponents<TData> {
   Caption: React.FC<TableCaptionProps>;
   Header: React.FC<TableHeaderProps<TData>>;
   Body: React.FC<TableBodyProps<TData>>;
@@ -91,4 +118,12 @@ export interface TableComponents<TData = any> {
   Row: React.FC<TableRowProps<TData>>;
   Head: React.FC<TableHeadProps<TData>>;
   Cell: React.FC<TableCellProps<TData>>;
+  
+  caption: React.FC<React.HTMLAttributes<HTMLTableCaptionElement>>;
+  thead: React.FC<React.HTMLAttributes<HTMLTableSectionElement>>;
+  tbody: React.FC<React.HTMLAttributes<HTMLTableSectionElement>>;
+  tfoot: React.FC<React.HTMLAttributes<HTMLTableSectionElement>>;
+  tr: React.FC<React.HTMLAttributes<HTMLTableRowElement>>;
+  th: React.FC<React.TdHTMLAttributes<HTMLTableCellElement>>;
+  td: React.FC<React.TdHTMLAttributes<HTMLTableCellElement>>;
 }

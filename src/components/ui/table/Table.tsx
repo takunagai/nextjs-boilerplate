@@ -1,84 +1,100 @@
 "use client";
 
 import * as React from "react";
-import { useState, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { type VariantProps, cva } from "class-variance-authority";
 import type { HTMLAttributes } from "react";
+
+// サブコンポーネントのインポート
 import { TableCaption } from "./TableCaption";
-import { TableHeader as OriginalTableHeader } from "./TableHeader"; // Renamed to avoid conflict
-import { TableBody as OriginalTableBody } from "./TableBody"; // Renamed to avoid conflict
+import { TableHeader } from "./TableHeader";
+import { TableBody } from "./TableBody";
 import { TableFooter } from "./TableFooter";
-import { TableRow } from "./TableRow";
 import { TableHead } from "./TableHead";
+import { TableRow } from "./TableRow";
 import { TableCell } from "./TableCell";
+
+// プリミティブコンポーネントのインポート
+import { Tr } from "./primitives/Tr";
+import { Th } from "./primitives/Th";
+import { Td } from "./primitives/Td";
+import { Thead } from "./primitives/Thead";
+import { Tbody } from "./primitives/Tbody";
+import { Tfoot } from "./primitives/Tfoot";
+
+// 型定義のインポート
 import type {
   TableComponents,
-  TableProps as NewTableProps, // Renamed to avoid conflict
   ColumnDef,
+  SortConfig,
   Row,
-  SortDirection,
 } from "./types";
 
-// テーブル本体のバリエーション定義
+/**
+ * テーブルコンポーネントのバリアント定義
+ */
 export const tableVariants = cva(
-  // ベースクラス
-  "w-full text-sm overflow-x-auto border-collapse",
+  "w-full caption-bottom border-collapse overflow-auto",
   {
     variants: {
-      // テーブルの見た目バリエーション
       variant: {
         default: "",
-        bordered: "border",
-        card: "border rounded-sm shadow-xs",
+        bordered: "border border-border",
+        card: "border rounded-md shadow-sm",
       },
-      // 罫線タイプ
+      size: {
+        xs: "text-xs [&_th]:p-1 [&_td]:p-1",
+        sm: "text-sm [&_th]:p-2 [&_td]:p-2",
+        default: "text-sm [&_th]:p-3 [&_td]:p-3",
+        md: "text-sm [&_th]:p-4 [&_td]:p-4",
+        lg: "text-base [&_th]:p-6 [&_td]:p-6",
+      },
+      align: {
+        default: "",
+        center: "text-center",
+        left: "text-left",
+        right: "text-right",
+      },
       borderedCells: {
-        none: "", // 罫線なし
-        all: "[&_th]:border [&_td]:border", // 全セル罫線
-        horizontal: "[&_tr]:border-b", // 水平罫線のみ
-        vertical: "[&_th]:border-r [&_td]:border-r", // 垂直罫線のみ
+        true: "[&_th]:border [&_td]:border [&_th]:border-border [&_td]:border-border",
+        false: "",
+        none: "",
+        all: "[&_th]:border [&_td]:border [&_th]:border-border [&_td]:border-border",
+        horizontal: "[&_tr]:border-b [&_tr]:border-border",
+        vertical: "[&_th]:border-r [&_td]:border-r [&_th]:border-border [&_td]:border-border",
       },
-      // 偶数行のストライプ
       striped: {
-        true: "[&>tbody>tr:nth-child(even)]:bg-muted/30",
+        true: "[&_tbody_tr:nth-child(odd)]:bg-muted/50",
         false: "",
       },
-      // サイズバリエーション（パディング調整）
-      size: {
-        xs: "[&_th]:px-1 [&_td]:px-1 [&_th]:py-0.5 [&_td]:py-0.5 text-xs",
-        sm: "[&_th]:px-2 [&_td]:px-2 [&_th]:py-1.5 [&_td]:py-1.5 text-xs",
-        md: "[&_th]:px-4 [&_td]:px-4 [&_th]:py-2 [&_td]:py-2 text-sm",
-        lg: "[&_th]:px-6 [&_td]:px-6 [&_th]:py-3 [&_td]:py-3 text-base",
-      },
-      // キャプションの位置
       captionPosition: {
         top: "caption-top",
         bottom: "caption-bottom",
       },
-      // テーブルの配置
-      align: {
-        left: "text-left",
-        center: "text-center",
-        right: "text-right",
-      },
     },
     defaultVariants: {
       variant: "default",
-      borderedCells: "all",
+      size: "default",
+      align: "default",
+      borderedCells: false,
       striped: false,
-      size: "md",
-      captionPosition: "top",
-      align: "center",
+      captionPosition: "bottom",
     },
   }
 );
 
-// Combine original TableProps (variant props) with new data-driven props
-export type TableProps<TData> = VariantProps<typeof tableVariants> & NewTableProps<TData> & Omit<HTMLAttributes<HTMLTableElement>, 'children' | 'data'>;
+/**
+ * 完全なテーブルコンポーネントのProps型
+ */
+export type TableProps<TData> = HTMLAttributes<HTMLTableElement> &
+  VariantProps<typeof tableVariants> & {
+    data?: TData[];
+    columns?: ColumnDef<TData>[];
+  };
 
-
-// メインとなるTableコンポーネント
+/**
+ * テーブルコンポーネント
+ */
 const BaseTable = <TData,>({
   className,
   variant,
@@ -87,96 +103,128 @@ const BaseTable = <TData,>({
   size,
   captionPosition,
   align,
-  data,
-  columns,
+  data = [],
+  columns = [],
   ...props
 }: TableProps<TData>) => {
-  const [sortConfig, setSortConfig] = useState<{
-    key: keyof TData | (string & {});
-    direction: SortDirection;
-  } | null>(null);
+  // ソート状態
+  const [sortConfig, setSortConfig] = React.useState<SortConfig<TData> | null>(null);
 
-  const requestSort = (key: keyof TData | (string & {})) => {
-    let direction: SortDirection = "asc";
-    if (
-      sortConfig &&
-      sortConfig.key === key &&
-      sortConfig.direction === "asc"
-    ) {
-      direction = "desc";
-    } else if (
-      sortConfig &&
-      sortConfig.key === key &&
-      sortConfig.direction === "desc"
-    ) {
-      direction = "none";
-    }
-    setSortConfig(direction === "none" ? null : { key, direction });
-  };
+  // ソートリクエスト処理
+  const requestSort = React.useCallback(
+    (key: keyof TData | (string & {})) => {
+      setSortConfig((prevSortConfig) => {
+        if (
+          prevSortConfig &&
+          prevSortConfig.key === key &&
+          prevSortConfig.direction === "asc"
+        ) {
+          return { key, direction: "desc" };
+        } else if (
+          prevSortConfig &&
+          prevSortConfig.key === key &&
+          prevSortConfig.direction === "desc"
+        ) {
+          return null; // 3回目のクリックでソートを解除
+        } else {
+          return { key, direction: "asc" };
+        }
+      });
+    },
+    []
+  );
 
-  const sortedData = useMemo(() => {
-    if (!sortConfig || sortConfig.direction === "none") {
-      return data;
-    }
-    const { key, direction } = sortConfig;
+  // ソート済みデータの計算
+  const sortedData = React.useMemo(() => {
+    if (!sortConfig) return data;
+
     return [...data].sort((a, b) => {
-      const aValue = a[key];
-      const bValue = b[key];
+      const aValue = a[sortConfig.key as keyof TData];
+      const bValue = b[sortConfig.key as keyof TData];
 
-      if (aValue === null || aValue === undefined) return direction === "asc" ? -1 : 1;
-      if (bValue === null || bValue === undefined) return direction === "asc" ? 1 : -1;
+      if (aValue === bValue) return 0;
 
-      if (typeof aValue === 'number' && typeof bValue === 'number') {
-        return direction === "asc" ? aValue - bValue : bValue - aValue;
-      }
-      if (typeof aValue === 'string' && typeof bValue === 'string') {
-        return direction === "asc"
+      // 異なる型に対して適切に処理
+      if (typeof aValue === "string" && typeof bValue === "string") {
+        return sortConfig.direction === "asc"
           ? aValue.localeCompare(bValue)
           : bValue.localeCompare(aValue);
       }
-      // Add more type comparisons if needed (e.g., dates)
-      return 0;
+
+      if (aValue === null || aValue === undefined) return 1;
+      if (bValue === null || bValue === undefined) return -1;
+
+      return sortConfig.direction === "asc"
+        ? aValue > bValue
+          ? 1
+          : -1
+        : aValue < bValue
+        ? 1
+        : -1;
     });
   }, [data, sortConfig]);
 
-  const rows: Row<TData>[] = useMemo(() => sortedData.map(item => ({ original: item })), [sortedData]);
+  // 行データの生成
+  const rows: Row<TData>[] = React.useMemo(
+    () => sortedData.map((item) => ({ original: item })),
+    [sortedData]
+  );
 
   return (
-    <div className="w-full overflow-x-auto">
-      <table
-        className={cn(
-          tableVariants({
-            variant,
-            borderedCells,
-            striped,
-            size,
-            captionPosition,
-            align,
-            className,
-          })
-        )}
-        {...props}
-      >
-        {/* Render children if provided (for manual structure), or render based on data/columns */}
-        {/* For now, prioritizing data/columns rendering */}
-        <OriginalTableHeader columns={columns as ColumnDef<TData>[]} sortConfig={sortConfig} requestSort={requestSort} />
-        <OriginalTableBody rows={rows} columns={columns as ColumnDef<TData>[]} />
-        {/* Footer might also need columns if it renders aggregates, but keeping it simple for now */}
-        {/* <TableFooter /> */}
-      </table>
-    </div>
+    <table
+      className={cn(
+        tableVariants({
+          variant,
+          borderedCells,
+          striped,
+          size,
+          captionPosition,
+          align,
+        }),
+        className
+      )}
+      {...props}
+    >
+      {props.children ? (
+        props.children
+      ) : (
+        <>
+          {columns.length > 0 && (
+            <>
+              <TableHeader
+                columns={columns}
+                sortConfig={sortConfig}
+                requestSort={requestSort}
+              />
+              <TableBody rows={rows} columns={columns} />
+            </>
+          )}
+        </>
+      )}
+    </table>
   );
 };
 
-// Attach sub-components for the nested API
-// Note: These sub-components are not generic yet, which might be an issue if they need TData directly.
-// This setup assumes they are used within a generic Table instance context.
-(BaseTable as TableComponents<any>).Caption = TableCaption;
-(BaseTable as TableComponents<any>).Header = OriginalTableHeader;
-(BaseTable as TableComponents<any>).Body = OriginalTableBody;
-(BaseTable as TableComponents<any>).Footer = TableFooter;
-(BaseTable as TableComponents<any>).Row = TableRow;
-(BaseTable as TableComponents<any>).Head = TableHead;
-(BaseTable as TableComponents<any>).Cell = TableCell;
+// コンポーネント合成パターンを実装したテーブルコンポーネント
+type TableType = typeof BaseTable & TableComponents<unknown>;
+export const Table = BaseTable as TableType;
 
-export const Table = BaseTable as typeof BaseTable & TableComponents<any>;
+// 高レベルなコンポーネント（データとカラム定義を使用する）
+Table.Caption = TableCaption;
+Table.Header = TableHeader;
+Table.Body = TableBody;
+Table.Footer = TableFooter;
+Table.Head = TableHead;
+Table.Row = TableRow;
+Table.Cell = TableCell;
+
+// HTMLプリミティブ要素（直接使用できる低レベルコンポーネント）
+// 型システムの制約上、型アサーションを使用
+type FC<P> = React.FC<P>;
+Table.caption = TableCaption as unknown as FC<React.HTMLAttributes<HTMLTableCaptionElement>>;
+Table.thead = Thead as unknown as FC<React.HTMLAttributes<HTMLTableSectionElement>>;
+Table.tbody = Tbody as unknown as FC<React.HTMLAttributes<HTMLTableSectionElement>>;
+Table.tfoot = Tfoot as unknown as FC<React.HTMLAttributes<HTMLTableSectionElement>>;
+Table.tr = Tr as unknown as FC<React.HTMLAttributes<HTMLTableRowElement>>;
+Table.th = Th as unknown as FC<React.ThHTMLAttributes<HTMLTableCellElement>>;
+Table.td = Td as unknown as FC<React.TdHTMLAttributes<HTMLTableCellElement>>;
