@@ -136,6 +136,6 @@ export interface TableComponents<TData> {
 	tbody: React.FC<React.HTMLAttributes<HTMLTableSectionElement>>;
 	tfoot: React.FC<React.HTMLAttributes<HTMLTableSectionElement>>;
 	tr: React.FC<React.HTMLAttributes<HTMLTableRowElement>>;
-	th: React.FC<React.TdHTMLAttributes<HTMLTableCellElement>>;
+	th: React.FC<React.ThHTMLAttributes<HTMLTableCellElement>>;
 	td: React.FC<React.TdHTMLAttributes<HTMLTableCellElement>>;
 }
