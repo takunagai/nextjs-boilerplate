@@ -222,13 +222,15 @@ Table.Row = TableRow;
 Table.Cell = TableCell;
 
 // 小文字バージョン (HTML 互換)
-Table.caption = TableCaption;
-Table.thead = Thead;
-Table.tbody = Tbody;
-Table.tfoot = Tfoot;
-Table.tr = Tr;
-Table.th = Th;
-Table.td = Td;
+// 型システムの制約上、型アサーションを使用
+type FC<P> = React.FC<P>;
+Table.caption = TableCaption as unknown as FC<React.HTMLAttributes<HTMLTableCaptionElement>>;
+Table.thead = Thead as unknown as FC<React.HTMLAttributes<HTMLTableSectionElement>>;
+Table.tbody = Tbody as unknown as FC<React.HTMLAttributes<HTMLTableSectionElement>>;
+Table.tfoot = Tfoot as unknown as FC<React.HTMLAttributes<HTMLTableSectionElement>>;
+Table.tr = Tr as unknown as FC<React.HTMLAttributes<HTMLTableRowElement>>;
+Table.th = Th as unknown as FC<React.ThHTMLAttributes<HTMLTableCellElement>>;
+Table.td = Td as unknown as FC<React.TdHTMLAttributes<HTMLTableCellElement>>;
 
 // エクスポート
 export { Table, tableVariants };
