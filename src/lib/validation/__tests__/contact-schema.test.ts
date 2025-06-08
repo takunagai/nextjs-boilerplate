@@ -94,7 +94,7 @@ describe("contact-schema", () => {
 					expect(result.success).toBe(false);
 					if (!result.success) {
 						expect(result.error.issues[0].message).toBe(
-							"お名前を入力してください"
+							"お名前を入力してください",
 						);
 						expect(result.error.issues[0].path).toEqual(["name"]);
 					}
@@ -113,7 +113,7 @@ describe("contact-schema", () => {
 					expect(result.success).toBe(false);
 					if (!result.success) {
 						const nameError = result.error.issues.find(
-							(issue) => issue.path[0] === "name"
+							(issue) => issue.path[0] === "name",
 						);
 						expect(nameError?.code).toBe("invalid_type");
 					}
@@ -145,7 +145,7 @@ describe("contact-schema", () => {
 						expect(result.success).toBe(false);
 						if (!result.success) {
 							expect(result.error.issues[0].message).toBe(
-								"有効なメールアドレスを入力してください"
+								"有効なメールアドレスを入力してください",
 							);
 							expect(result.error.issues[0].path).toEqual(["email"]);
 						}
@@ -166,7 +166,7 @@ describe("contact-schema", () => {
 					expect(result.success).toBe(false);
 					if (!result.success) {
 						expect(result.error.issues[0].message).toBe(
-							"有効なメールアドレスを入力してください"
+							"有効なメールアドレスを入力してください",
 						);
 					}
 				});
@@ -187,7 +187,7 @@ describe("contact-schema", () => {
 					expect(result.success).toBe(false);
 					if (!result.success) {
 						expect(result.error.issues[0].message).toBe(
-							"有効な選択肢を選んでください"
+							"有効な選択肢を選んでください",
 						);
 						expect(result.error.issues[0].path).toEqual(["phoneContact"]);
 					}
@@ -206,10 +206,10 @@ describe("contact-schema", () => {
 					expect(result.success).toBe(false);
 					if (!result.success) {
 						const phoneContactError = result.error.issues.find(
-							(issue) => issue.path[0] === "phoneContact"
+							(issue) => issue.path[0] === "phoneContact",
 						);
 						expect(phoneContactError?.message).toBe(
-							"電話連絡の可否を選択してください"
+							"電話連絡の可否を選択してください",
 						);
 					}
 				});
@@ -241,10 +241,10 @@ describe("contact-schema", () => {
 						expect(result.success).toBe(false);
 						if (!result.success) {
 							const phoneError = result.error.issues.find(
-								(issue) => issue.path[0] === "phone"
+								(issue) => issue.path[0] === "phone",
 							);
 							expect(phoneError?.message).toBe(
-								"電話番号は「00-0000-0000」の形式で入力してください"
+								"電話番号は「00-0000-0000」の形式で入力してください",
 							);
 						}
 					});
@@ -280,7 +280,7 @@ describe("contact-schema", () => {
 					expect(result.success).toBe(false);
 					if (!result.success) {
 						expect(result.error.issues[0].message).toBe(
-							"お問い合わせ内容は10文字以上で入力してください"
+							"お問い合わせ内容は10文字以上で入力してください",
 						);
 						expect(result.error.issues[0].path).toEqual(["message"]);
 					}
@@ -300,7 +300,7 @@ describe("contact-schema", () => {
 					expect(result.success).toBe(false);
 					if (!result.success) {
 						expect(result.error.issues[0].message).toBe(
-							"お問い合わせ内容は10文字以上で入力してください"
+							"お問い合わせ内容は10文字以上で入力してください",
 						);
 					}
 				});
@@ -319,7 +319,7 @@ describe("contact-schema", () => {
 					expect(result.success).toBe(false);
 					if (!result.success) {
 						expect(result.error.issues[0].message).toBe(
-							"お問い合わせ内容は10文字以上で入力してください"
+							"お問い合わせ内容は10文字以上で入力してください",
 						);
 					}
 				});
@@ -344,7 +344,13 @@ describe("contact-schema", () => {
 
 					const errorPaths = result.error.issues.map((issue) => issue.path[0]);
 					expect(errorPaths).toEqual(
-						expect.arrayContaining(["name", "email", "phoneContact", "phone", "message"])
+						expect.arrayContaining([
+							"name",
+							"email",
+							"phoneContact",
+							"phone",
+							"message",
+						]),
 					);
 				}
 			});
@@ -422,10 +428,10 @@ describe("contact-schema", () => {
 				expect(result.success).toBe(false);
 				if (!result.success) {
 					const phoneError = result.error.issues.find(
-						(issue) => issue.path[0] === "phone"
+						(issue) => issue.path[0] === "phone",
 					);
 					expect(phoneError?.message).toBe(
-						"電話番号は「00-0000-0000」の形式で入力してください"
+						"電話番号は「00-0000-0000」の形式で入力してください",
 					);
 				}
 			});

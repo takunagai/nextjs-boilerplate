@@ -27,11 +27,12 @@ vi.mock("../header/mobile-navigation", () => ({
 	MobileNavigation: ({ items, isOpen, setIsOpen }: any) => (
 		<div data-testid="mobile-navigation">
 			<button onClick={() => setIsOpen(!isOpen)}>メニュー</button>
-			{isOpen && items.map((item: any) => (
-				<a key={item.href} href={item.href}>
-					{item.label}
-				</a>
-			))}
+			{isOpen &&
+				items.map((item: any) => (
+					<a key={item.href} href={item.href}>
+						{item.label}
+					</a>
+				))}
 		</div>
 	),
 }));
@@ -111,14 +112,18 @@ describe("Header", () => {
 
 			render(<Header items={mockItems} />);
 
-			expect(screen.queryByTestId("desktop-navigation")).not.toBeInTheDocument();
+			expect(
+				screen.queryByTestId("desktop-navigation"),
+			).not.toBeInTheDocument();
 			expect(screen.getByTestId("mobile-navigation")).toBeInTheDocument();
 		});
 
 		it("ブレイクポイントをカスタマイズできる", () => {
-			(useMediaQuery as ReturnType<typeof vi.fn>).mockImplementation((query: string) => {
-				return query === "(min-width: 1024px)";
-			});
+			(useMediaQuery as ReturnType<typeof vi.fn>).mockImplementation(
+				(query: string) => {
+					return query === "(min-width: 1024px)";
+				},
+			);
 
 			render(<Header items={mockItems} mobileMenuBreakpoint="lg" />);
 
@@ -152,7 +157,11 @@ describe("Header", () => {
 			const { container } = render(<Header items={mockItems} />);
 
 			const header = container.querySelector("header");
-			expect(header).toHaveClass("bg-background/90", "backdrop-blur-sm", "shadow-sm");
+			expect(header).toHaveClass(
+				"bg-background/90",
+				"backdrop-blur-sm",
+				"shadow-sm",
+			);
 		});
 
 		it("hideOnScrollがtrueの場合、下スクロール時にヘッダーが隠れる", () => {
@@ -163,7 +172,9 @@ describe("Header", () => {
 				direction: "down",
 			});
 
-			const { container } = render(<Header items={mockItems} hideOnScroll={true} />);
+			const { container } = render(
+				<Header items={mockItems} hideOnScroll={true} />,
+			);
 
 			const header = container.querySelector("header");
 			expect(header).toHaveClass("-translate-y-full");
@@ -177,7 +188,9 @@ describe("Header", () => {
 				direction: "down",
 			});
 
-			const { container } = render(<Header items={mockItems} hideOnScroll={false} />);
+			const { container } = render(
+				<Header items={mockItems} hideOnScroll={false} />,
+			);
 
 			const header = container.querySelector("header");
 			expect(header).toHaveClass("translate-y-0");
@@ -192,7 +205,9 @@ describe("Header", () => {
 				direction: "down",
 			});
 
-			const { container } = render(<Header items={mockItems} hideOnScroll={true} />);
+			const { container } = render(
+				<Header items={mockItems} hideOnScroll={true} />,
+			);
 
 			// モバイルメニューを開く
 			const menuButton = screen.getByText("メニュー");
@@ -212,7 +227,9 @@ describe("Header", () => {
 				direction: null,
 			});
 
-			const { container } = render(<Header items={mockItems} background="transparent" />);
+			const { container } = render(
+				<Header items={mockItems} background="transparent" />,
+			);
 
 			const header = container.querySelector("header");
 			expect(header).toHaveClass("bg-transparent");
@@ -226,7 +243,9 @@ describe("Header", () => {
 				direction: "down",
 			});
 
-			const { container } = render(<Header items={mockItems} background="transparent" />);
+			const { container } = render(
+				<Header items={mockItems} background="transparent" />,
+			);
 
 			const header = container.querySelector("header");
 			expect(header).toHaveClass("bg-background/90");
@@ -237,7 +256,9 @@ describe("Header", () => {
 		it("異なる背景バリアントが適用される", () => {
 			(useMediaQuery as ReturnType<typeof vi.fn>).mockReturnValue(true);
 
-			const { container, rerender } = render(<Header items={mockItems} background="primary" />);
+			const { container, rerender } = render(
+				<Header items={mockItems} background="primary" />,
+			);
 			let header = container.querySelector("header");
 			expect(header).toHaveClass("bg-primary", "text-primary-foreground");
 
@@ -249,7 +270,9 @@ describe("Header", () => {
 		it("異なる高さバリアントが適用される", () => {
 			(useMediaQuery as ReturnType<typeof vi.fn>).mockReturnValue(true);
 
-			const { container, rerender } = render(<Header items={mockItems} height="sm" />);
+			const { container, rerender } = render(
+				<Header items={mockItems} height="sm" />,
+			);
 			let header = container.querySelector("header");
 			expect(header).toHaveClass("h-12");
 
@@ -292,9 +315,9 @@ describe("Header", () => {
 			render(<Header items={mockItems} />);
 
 			// スケルトンUIの確認
-			const skeletons = screen.getAllByRole("generic").filter(
-				(el) => el.className.includes("animate-pulse")
-			);
+			const skeletons = screen
+				.getAllByRole("generic")
+				.filter((el) => el.className.includes("animate-pulse"));
 			expect(skeletons.length).toBeGreaterThan(0);
 		});
 	});

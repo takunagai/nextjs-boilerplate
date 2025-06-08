@@ -87,7 +87,7 @@ describe("Dialog Components", () => {
 			render(
 				<Dialog>
 					<div>Dialog Content</div>
-				</Dialog>
+				</Dialog>,
 			);
 
 			expect(screen.getByTestId("dialog-root")).toBeInTheDocument();
@@ -98,7 +98,7 @@ describe("Dialog Components", () => {
 			render(
 				<Dialog>
 					<div>Content</div>
-				</Dialog>
+				</Dialog>,
 			);
 
 			const root = screen.getByTestId("dialog-root");
@@ -111,7 +111,7 @@ describe("Dialog Components", () => {
 			render(
 				<Dialog open={true} onOpenChange={onOpenChange}>
 					<div>Content</div>
-				</Dialog>
+				</Dialog>,
 			);
 
 			const root = screen.getByTestId("dialog-root");
@@ -125,7 +125,7 @@ describe("Dialog Components", () => {
 			render(
 				<DialogTrigger>
 					<button>Open Dialog</button>
-				</DialogTrigger>
+				</DialogTrigger>,
 			);
 
 			expect(screen.getByTestId("dialog-trigger")).toBeInTheDocument();
@@ -136,7 +136,7 @@ describe("Dialog Components", () => {
 			render(
 				<DialogTrigger>
 					<button>Open</button>
-				</DialogTrigger>
+				</DialogTrigger>,
 			);
 
 			const trigger = screen.getByTestId("dialog-trigger");
@@ -150,7 +150,7 @@ describe("Dialog Components", () => {
 			render(
 				<DialogContent>
 					<div>Dialog Content</div>
-				</DialogContent>
+				</DialogContent>,
 			);
 
 			expect(screen.getByTestId("dialog-portal")).toBeInTheDocument();
@@ -163,7 +163,7 @@ describe("Dialog Components", () => {
 			render(
 				<DialogContent>
 					<div>Content</div>
-				</DialogContent>
+				</DialogContent>,
 			);
 
 			const closeButton = screen.getByTestId("dialog-close");
@@ -176,7 +176,7 @@ describe("Dialog Components", () => {
 			render(
 				<DialogContent>
 					<div>Content</div>
-				</DialogContent>
+				</DialogContent>,
 			);
 
 			const content = screen.getByTestId("dialog-content");
@@ -197,7 +197,7 @@ describe("Dialog Components", () => {
 				"p-6",
 				"shadow-lg",
 				"duration-200",
-				"sm:max-w-lg"
+				"sm:max-w-lg",
 			);
 		});
 
@@ -205,7 +205,7 @@ describe("Dialog Components", () => {
 			render(
 				<DialogContent className="custom-class">
 					<div>Content</div>
-				</DialogContent>
+				</DialogContent>,
 			);
 
 			const content = screen.getByTestId("dialog-content");
@@ -216,7 +216,7 @@ describe("Dialog Components", () => {
 			render(
 				<DialogContent>
 					<div>Content</div>
-				</DialogContent>
+				</DialogContent>,
 			);
 
 			const content = screen.getByTestId("dialog-content");
@@ -230,7 +230,7 @@ describe("Dialog Components", () => {
 			render(
 				<DialogHeader>
 					<h2>Dialog Title</h2>
-				</DialogHeader>
+				</DialogHeader>,
 			);
 
 			expect(screen.getByText("Dialog Title")).toBeInTheDocument();
@@ -240,11 +240,17 @@ describe("Dialog Components", () => {
 			render(
 				<DialogHeader data-testid="dialog-header">
 					<h2>Title</h2>
-				</DialogHeader>
+				</DialogHeader>,
 			);
 
 			const header = screen.getByTestId("dialog-header");
-			expect(header).toHaveClass("flex", "flex-col", "gap-2", "text-center", "sm:text-left");
+			expect(header).toHaveClass(
+				"flex",
+				"flex-col",
+				"gap-2",
+				"text-center",
+				"sm:text-left",
+			);
 			expect(header).toHaveAttribute("data-slot", "dialog-header");
 		});
 
@@ -252,7 +258,7 @@ describe("Dialog Components", () => {
 			render(
 				<DialogHeader className="custom-header" data-testid="dialog-header">
 					<h2>Title</h2>
-				</DialogHeader>
+				</DialogHeader>,
 			);
 
 			const header = screen.getByTestId("dialog-header");
@@ -266,7 +272,7 @@ describe("Dialog Components", () => {
 				<DialogFooter>
 					<button>Cancel</button>
 					<button>OK</button>
-				</DialogFooter>
+				</DialogFooter>,
 			);
 
 			expect(screen.getByText("Cancel")).toBeInTheDocument();
@@ -277,7 +283,7 @@ describe("Dialog Components", () => {
 			render(
 				<DialogFooter data-testid="dialog-footer">
 					<button>Action</button>
-				</DialogFooter>
+				</DialogFooter>,
 			);
 
 			const footer = screen.getByTestId("dialog-footer");
@@ -286,7 +292,7 @@ describe("Dialog Components", () => {
 				"flex-col-reverse",
 				"gap-2",
 				"sm:flex-row",
-				"sm:justify-end"
+				"sm:justify-end",
 			);
 			expect(footer).toHaveAttribute("data-slot", "dialog-footer");
 		});
@@ -304,7 +310,12 @@ describe("Dialog Components", () => {
 			render(<DialogTitle>Title</DialogTitle>);
 
 			const title = screen.getByTestId("dialog-title");
-			expect(title).toHaveClass("text-lg", "leading-none", "font-semibold", "tracking-tight");
+			expect(title).toHaveClass(
+				"text-lg",
+				"leading-none",
+				"font-semibold",
+				"tracking-tight",
+			);
 		});
 
 		it("data-slot属性が設定される", () => {
@@ -345,7 +356,7 @@ describe("Dialog Components", () => {
 			render(
 				<DialogClose>
 					<button>Close</button>
-				</DialogClose>
+				</DialogClose>,
 			);
 
 			expect(screen.getByTestId("dialog-close")).toBeInTheDocument();
@@ -356,7 +367,7 @@ describe("Dialog Components", () => {
 			render(
 				<DialogClose>
 					<button>Close</button>
-				</DialogClose>
+				</DialogClose>,
 			);
 
 			const close = screen.getByTestId("dialog-close");
@@ -386,13 +397,15 @@ describe("Dialog Components", () => {
 							<button>Confirm</button>
 						</DialogFooter>
 					</DialogContent>
-				</Dialog>
+				</Dialog>,
 			);
 
 			// 全ての要素が存在することを確認
 			expect(screen.getByText("Open Dialog")).toBeInTheDocument();
 			expect(screen.getByText("Confirmation")).toBeInTheDocument();
-			expect(screen.getByText("Are you sure you want to continue?")).toBeInTheDocument();
+			expect(
+				screen.getByText("Are you sure you want to continue?"),
+			).toBeInTheDocument();
 			expect(screen.getByText("Cancel")).toBeInTheDocument();
 			expect(screen.getByText("Confirm")).toBeInTheDocument();
 		});
@@ -401,7 +414,7 @@ describe("Dialog Components", () => {
 			render(
 				<DialogContent>
 					<div>Content</div>
-				</DialogContent>
+				</DialogContent>,
 			);
 
 			const content = screen.getByTestId("dialog-content");
@@ -411,7 +424,7 @@ describe("Dialog Components", () => {
 				"data-[state=closed]:fade-out-0",
 				"data-[state=open]:fade-in-0",
 				"data-[state=closed]:zoom-out-95",
-				"data-[state=open]:zoom-in-95"
+				"data-[state=open]:zoom-in-95",
 			);
 		});
 
@@ -419,7 +432,7 @@ describe("Dialog Components", () => {
 			render(
 				<DialogContent>
 					<div>Content</div>
-				</DialogContent>
+				</DialogContent>,
 			);
 
 			const overlay = screen.getByTestId("dialog-overlay");
@@ -431,7 +444,7 @@ describe("Dialog Components", () => {
 				"fixed",
 				"inset-0",
 				"z-50",
-				"bg-black/80"
+				"bg-black/80",
 			);
 		});
 	});

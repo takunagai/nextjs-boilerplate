@@ -82,13 +82,20 @@ describe("server/actions/error", () => {
 					message: "カスタムエラー",
 					details: undefined,
 				});
-				expect(console.error).toHaveBeenCalledWith("Action error:", expect.any(ActionError));
+				expect(console.error).toHaveBeenCalledWith(
+					"Action error:",
+					expect.any(ActionError),
+				);
 			});
 
 			it("詳細情報付きのActionErrorを処理する", async () => {
 				const details = { fieldErrors: { email: "無効なメール" } };
 				const errorFn = async () => {
-					throw new ActionError("バリデーションエラー", "VALIDATION_ERROR", details);
+					throw new ActionError(
+						"バリデーションエラー",
+						"VALIDATION_ERROR",
+						details,
+					);
 				};
 
 				const result = await safeAction(errorFn);
@@ -189,7 +196,9 @@ describe("server/actions/error", () => {
 				const undefinedResult = await safeAction(undefinedErrorFn);
 
 				expect(nullResult.error?.message).toBe("不明なエラーが発生しました");
-				expect(undefinedResult.error?.message).toBe("不明なエラーが発生しました");
+				expect(undefinedResult.error?.message).toBe(
+					"不明なエラーが発生しました",
+				);
 			});
 
 			it("オブジェクトエラーを処理する", async () => {
@@ -219,7 +228,7 @@ describe("server/actions/error", () => {
 			it("複数の非同期処理でのエラーを処理する", async () => {
 				const complexAsyncFn = async () => {
 					await Promise.resolve();
-					await new Promise(resolve => setTimeout(resolve, 1));
+					await new Promise((resolve) => setTimeout(resolve, 1));
 					throw new Error("複雑な非同期エラー");
 				};
 
@@ -354,7 +363,7 @@ describe("server/actions/error", () => {
 			};
 
 			const successResult = await safeAction(successAction);
-			
+
 			expect(isActionSuccess(successResult)).toBe(true);
 			expect(isActionError(successResult)).toBe(false);
 

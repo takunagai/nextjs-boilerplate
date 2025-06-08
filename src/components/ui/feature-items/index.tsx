@@ -130,9 +130,9 @@ export const FeatureItems = ({
 						);
 					case "simple":
 						return (
-							<FeatureSimple 
-								key={item.id} 
-								item={item} 
+							<FeatureSimple
+								key={item.id}
+								item={item}
 								headingLevel={headingLevel}
 								headingClassName={headingClassName}
 								descriptionClassName={descriptionClassName}

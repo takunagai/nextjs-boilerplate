@@ -1,4 +1,7 @@
-import { formExampleSchema, type FormExampleValues } from "../form-example-schema";
+import {
+	formExampleSchema,
+	type FormExampleValues,
+} from "../form-example-schema";
 
 describe("form-example-schema", () => {
 	describe("formExampleSchema", () => {
@@ -84,7 +87,7 @@ describe("form-example-schema", () => {
 					expect(result.success).toBe(false);
 					if (!result.success) {
 						expect(result.error.issues[0].message).toBe(
-							"名前を入力してください"
+							"名前を入力してください",
 						);
 						expect(result.error.issues[0].path).toEqual(["name"]);
 					}
@@ -104,7 +107,7 @@ describe("form-example-schema", () => {
 					expect(result.success).toBe(false);
 					if (!result.success) {
 						expect(result.error.issues[0].message).toBe(
-							"名前は50文字以内で入力してください"
+							"名前は50文字以内で入力してください",
 						);
 					}
 				});
@@ -122,7 +125,7 @@ describe("form-example-schema", () => {
 					expect(result.success).toBe(false);
 					if (!result.success) {
 						const nameError = result.error.issues.find(
-							(issue) => issue.path[0] === "name"
+							(issue) => issue.path[0] === "name",
 						);
 						expect(nameError?.code).toBe("invalid_type");
 					}
@@ -144,7 +147,7 @@ describe("form-example-schema", () => {
 					expect(result.success).toBe(false);
 					if (!result.success) {
 						expect(result.error.issues[0].message).toBe(
-							"メールアドレスを入力してください"
+							"メールアドレスを入力してください",
 						);
 					}
 				});
@@ -173,7 +176,7 @@ describe("form-example-schema", () => {
 						expect(result.success).toBe(false);
 						if (!result.success) {
 							expect(result.error.issues[0].message).toBe(
-								"有効なメールアドレスを入力してください"
+								"有効なメールアドレスを入力してください",
 							);
 						}
 					});
@@ -192,7 +195,7 @@ describe("form-example-schema", () => {
 					expect(result.success).toBe(false);
 					if (!result.success) {
 						const emailError = result.error.issues.find(
-							(issue) => issue.path[0] === "email"
+							(issue) => issue.path[0] === "email",
 						);
 						expect(emailError?.code).toBe("too_small");
 					}
@@ -214,7 +217,7 @@ describe("form-example-schema", () => {
 					expect(result.success).toBe(false);
 					if (!result.success) {
 						expect(result.error.issues[0].message).toBe(
-							"年齢は数値で入力してください"
+							"年齢は数値で入力してください",
 						);
 					}
 				});
@@ -233,7 +236,7 @@ describe("form-example-schema", () => {
 					expect(result.success).toBe(false);
 					if (!result.success) {
 						expect(result.error.issues[0].message).toBe(
-							"年齢は整数で入力してください"
+							"年齢は整数で入力してください",
 						);
 					}
 				});
@@ -252,7 +255,7 @@ describe("form-example-schema", () => {
 					expect(result.success).toBe(false);
 					if (!result.success) {
 						expect(result.error.issues[0].message).toBe(
-							"年齢は正の数で入力してください"
+							"年齢は正の数で入力してください",
 						);
 					}
 				});
@@ -271,7 +274,7 @@ describe("form-example-schema", () => {
 					expect(result.success).toBe(false);
 					if (!result.success) {
 						expect(result.error.issues[0].message).toBe(
-							"年齢は正の数で入力してください"
+							"年齢は正の数で入力してください",
 						);
 					}
 				});
@@ -290,7 +293,7 @@ describe("form-example-schema", () => {
 					expect(result.success).toBe(false);
 					if (!result.success) {
 						expect(result.error.issues[0].message).toBe(
-							"年齢は18歳以上で入力してください"
+							"年齢は18歳以上で入力してください",
 						);
 					}
 				});
@@ -309,7 +312,7 @@ describe("form-example-schema", () => {
 					expect(result.success).toBe(false);
 					if (!result.success) {
 						expect(result.error.issues[0].message).toBe(
-							"年齢は120歳以下で入力してください"
+							"年齢は120歳以下で入力してください",
 						);
 					}
 				});
@@ -330,7 +333,7 @@ describe("form-example-schema", () => {
 					expect(result.success).toBe(false);
 					if (!result.success) {
 						expect(result.error.issues[0].message).toBe(
-							"メッセージは10文字以上で入力してください"
+							"メッセージは10文字以上で入力してください",
 						);
 					}
 				});
@@ -349,7 +352,7 @@ describe("form-example-schema", () => {
 					expect(result.success).toBe(false);
 					if (!result.success) {
 						expect(result.error.issues[0].message).toBe(
-							"メッセージは500文字以内で入力してください"
+							"メッセージは500文字以内で入力してください",
 						);
 					}
 				});
@@ -368,7 +371,7 @@ describe("form-example-schema", () => {
 					expect(result.success).toBe(false);
 					if (!result.success) {
 						expect(result.error.issues[0].message).toBe(
-							"メッセージは10文字以上で入力してください"
+							"メッセージは10文字以上で入力してください",
 						);
 					}
 				});
@@ -386,7 +389,7 @@ describe("form-example-schema", () => {
 					expect(result.success).toBe(false);
 					if (!result.success) {
 						const messageError = result.error.issues.find(
-							(issue) => issue.path[0] === "message"
+							(issue) => issue.path[0] === "message",
 						);
 						expect(messageError?.code).toBe("invalid_type");
 					}
@@ -408,7 +411,7 @@ describe("form-example-schema", () => {
 					expect(result.success).toBe(false);
 					if (!result.success) {
 						expect(result.error.issues[0].message).toBe(
-							"利用規約に同意してください"
+							"利用規約に同意してください",
 						);
 						expect(result.error.issues[0].path).toEqual(["terms"]);
 					}
@@ -427,7 +430,7 @@ describe("form-example-schema", () => {
 					expect(result.success).toBe(false);
 					if (!result.success) {
 						const termsError = result.error.issues.find(
-							(issue) => issue.path[0] === "terms"
+							(issue) => issue.path[0] === "terms",
 						);
 						expect(termsError?.code).toBe("invalid_type");
 					}
@@ -447,7 +450,7 @@ describe("form-example-schema", () => {
 					expect(result.success).toBe(false);
 					if (!result.success) {
 						const termsError = result.error.issues.find(
-							(issue) => issue.path[0] === "terms"
+							(issue) => issue.path[0] === "terms",
 						);
 						expect(termsError?.code).toBe("invalid_type");
 					}
@@ -473,7 +476,13 @@ describe("form-example-schema", () => {
 
 					const errorPaths = result.error.issues.map((issue) => issue.path[0]);
 					expect(errorPaths).toEqual(
-						expect.arrayContaining(["name", "email", "age", "message", "terms"])
+						expect.arrayContaining([
+							"name",
+							"email",
+							"age",
+							"message",
+							"terms",
+						]),
 					);
 				}
 			});
@@ -527,7 +536,8 @@ describe("form-example-schema", () => {
 					name: "田中　花子",
 					email: "hanako@example.com",
 					age: 30,
-					message: "こんにちは。これは日本語でのテストメッセージです。よろしくお願いします。",
+					message:
+						"こんにちは。これは日本語でのテストメッセージです。よろしくお願いします。",
 					terms: true,
 				};
 

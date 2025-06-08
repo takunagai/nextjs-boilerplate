@@ -23,7 +23,7 @@ describe("Pagination Components", () => {
 			render(
 				<Pagination>
 					<div>Pagination Content</div>
-				</Pagination>
+				</Pagination>,
 			);
 
 			const nav = screen.getByRole("navigation");
@@ -36,7 +36,7 @@ describe("Pagination Components", () => {
 			render(
 				<Pagination>
 					<div>Content</div>
-				</Pagination>
+				</Pagination>,
 			);
 
 			const nav = screen.getByRole("navigation");
@@ -47,7 +47,7 @@ describe("Pagination Components", () => {
 			render(
 				<Pagination className="custom-pagination">
 					<div>Content</div>
-				</Pagination>
+				</Pagination>,
 			);
 
 			const nav = screen.getByRole("navigation");
@@ -61,7 +61,7 @@ describe("Pagination Components", () => {
 				<PaginationContent>
 					<li>Item 1</li>
 					<li>Item 2</li>
-				</PaginationContent>
+				</PaginationContent>,
 			);
 
 			const list = screen.getByRole("list");
@@ -73,7 +73,7 @@ describe("Pagination Components", () => {
 			render(
 				<PaginationContent>
 					<li>Item</li>
-				</PaginationContent>
+				</PaginationContent>,
 			);
 
 			const list = screen.getByRole("list");
@@ -84,7 +84,7 @@ describe("Pagination Components", () => {
 			render(
 				<PaginationContent className="custom-content">
 					<li>Item</li>
-				</PaginationContent>
+				</PaginationContent>,
 			);
 
 			const list = screen.getByRole("list");
@@ -97,7 +97,7 @@ describe("Pagination Components", () => {
 			render(
 				<ul>
 					<PaginationItem>Item Content</PaginationItem>
-				</ul>
+				</ul>,
 			);
 
 			const item = screen.getByText("Item Content");
@@ -112,7 +112,7 @@ describe("Pagination Components", () => {
 					<PaginationItem id="test-item" data-testid="pagination-item">
 						Content
 					</PaginationItem>
-				</ul>
+				</ul>,
 			);
 
 			const item = screen.getByTestId("pagination-item");
@@ -143,7 +143,7 @@ describe("Pagination Components", () => {
 			render(
 				<PaginationLink href="/page/2" isActive={true}>
 					2
-				</PaginationLink>
+				</PaginationLink>,
 			);
 
 			const link = screen.getByRole("link");
@@ -163,7 +163,7 @@ describe("Pagination Components", () => {
 			render(
 				<PaginationLink href="/page/2" size="default">
 					2
-				</PaginationLink>
+				</PaginationLink>,
 			);
 
 			const link = screen.getByRole("link");
@@ -175,7 +175,7 @@ describe("Pagination Components", () => {
 			render(
 				<PaginationLink href="/page/2" className="custom-link">
 					2
-				</PaginationLink>
+				</PaginationLink>,
 			);
 
 			const link = screen.getByRole("link");
@@ -267,7 +267,10 @@ describe("Pagination Components", () => {
 
 			const ellipsis = screen.getByText("More pages");
 			expect(ellipsis.parentElement).toBeInTheDocument();
-			expect(ellipsis.parentElement).toHaveAttribute("data-slot", "pagination-ellipsis");
+			expect(ellipsis.parentElement).toHaveAttribute(
+				"data-slot",
+				"pagination-ellipsis",
+			);
 			expect(ellipsis.parentElement).toHaveAttribute("aria-hidden", "true");
 		});
 
@@ -289,11 +292,21 @@ describe("Pagination Components", () => {
 			render(<PaginationEllipsis data-testid="ellipsis" />);
 
 			const ellipsis = screen.getByTestId("ellipsis");
-			expect(ellipsis).toHaveClass("flex", "size-9", "items-center", "justify-center");
+			expect(ellipsis).toHaveClass(
+				"flex",
+				"size-9",
+				"items-center",
+				"justify-center",
+			);
 		});
 
 		it("カスタムクラス名が適用される", () => {
-			render(<PaginationEllipsis className="custom-ellipsis" data-testid="ellipsis" />);
+			render(
+				<PaginationEllipsis
+					className="custom-ellipsis"
+					data-testid="ellipsis"
+				/>,
+			);
 
 			const ellipsis = screen.getByTestId("ellipsis");
 			expect(ellipsis).toHaveClass("custom-ellipsis");
@@ -326,7 +339,7 @@ describe("Pagination Components", () => {
 							<PaginationNext href="/page/3" />
 						</PaginationItem>
 					</PaginationContent>
-				</Pagination>
+				</Pagination>,
 			);
 
 			// ナビゲーション要素が存在
@@ -360,7 +373,7 @@ describe("Pagination Components", () => {
 							<PaginationEllipsis />
 						</PaginationItem>
 					</PaginationContent>
-				</Pagination>
+				</Pagination>,
 			);
 
 			// ナビゲーションのaria-label
@@ -403,10 +416,13 @@ describe("Pagination Components", () => {
 							</PaginationLink>
 						</PaginationItem>
 					</PaginationContent>
-				</Pagination>
+				</Pagination>,
 			);
 
-			expect(screen.getByTestId("pagination")).toHaveAttribute("id", "main-pagination");
+			expect(screen.getByTestId("pagination")).toHaveAttribute(
+				"id",
+				"main-pagination",
+			);
 			expect(screen.getByTestId("content")).toHaveAttribute("id", "content");
 			expect(screen.getByTestId("item")).toHaveAttribute("id", "item");
 			expect(screen.getByTestId("link")).toHaveAttribute("id", "link");

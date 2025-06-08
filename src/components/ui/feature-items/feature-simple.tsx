@@ -18,8 +18,8 @@ export interface FeatureSimpleProps {
 	contentBlockClassName?: string;
 }
 
-export function FeatureSimple({ 
-	item, 
+export function FeatureSimple({
+	item,
 	className,
 	headingLevel = "h3",
 	headingClassName,
@@ -49,7 +49,7 @@ export function FeatureSimple({
 							level={headingLevel}
 							className={cn(
 								"text-xl md:text-2xl font-bold tracking-tight",
-								headingClassName
+								headingClassName,
 							)}
 						>
 							{item.title}
@@ -59,10 +59,12 @@ export function FeatureSimple({
 
 				<CardContent>
 					{item.description && (
-						<p className={cn(
-							"text-base text-muted-foreground mb-6",
-							descriptionClassName
-						)}>
+						<p
+							className={cn(
+								"text-base text-muted-foreground mb-6",
+								descriptionClassName,
+							)}
+						>
 							{item.description}
 						</p>
 					)}

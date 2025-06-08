@@ -143,7 +143,9 @@ describe("useAuth", () => {
 
 				expect(authResult.success).toBe(false);
 				expect(authResult.error).toBe(AUTH_ERROR_CODES.EMPTY_CREDENTIALS);
-				expect(authResult.message).toBe("メールアドレスとパスワードを入力してください");
+				expect(authResult.message).toBe(
+					"メールアドレスとパスワードを入力してください",
+				);
 			});
 
 			expect(mockSignIn).not.toHaveBeenCalled();
@@ -178,7 +180,9 @@ describe("useAuth", () => {
 
 				expect(authResult.success).toBe(false);
 				expect(authResult.error).toBe(AUTH_ERROR_CODES.INVALID_CREDENTIALS);
-				expect(authResult.message).toBe("test@example.comのログイン認証に失敗しました");
+				expect(authResult.message).toBe(
+					"test@example.comのログイン認証に失敗しました",
+				);
 			});
 		});
 
@@ -199,7 +203,10 @@ describe("useAuth", () => {
 				expect(authResult.message).toBe("ネットワークエラーが発生しました");
 			});
 
-			expect(console.error).toHaveBeenCalledWith("ログインエラー:", networkError);
+			expect(console.error).toHaveBeenCalledWith(
+				"ログインエラー:",
+				networkError,
+			);
 		});
 
 		it("不明なエラーを適切に処理する", async () => {
@@ -224,9 +231,9 @@ describe("useAuth", () => {
 	describe("logout関数", () => {
 		beforeEach(() => {
 			mockUseSession.mockReturnValue({
-				data: { 
+				data: {
 					user: { email: "test@example.com" },
-					expires: new Date(Date.now() + 1000 * 60 * 60).toISOString()
+					expires: new Date(Date.now() + 1000 * 60 * 60).toISOString(),
 				},
 				status: "authenticated",
 				update: mockUpdate,
@@ -259,19 +266,24 @@ describe("useAuth", () => {
 
 				expect(authResult.success).toBe(false);
 				expect(authResult.error).toBe(AUTH_ERROR_CODES.UNKNOWN_ERROR);
-				expect(authResult.message).toBe("ログアウト処理中にエラーが発生しました");
+				expect(authResult.message).toBe(
+					"ログアウト処理中にエラーが発生しました",
+				);
 			});
 
-			expect(console.error).toHaveBeenCalledWith("ログアウトエラー:", logoutError);
+			expect(console.error).toHaveBeenCalledWith(
+				"ログアウトエラー:",
+				logoutError,
+			);
 		});
 	});
 
 	describe("updateSession関数", () => {
 		beforeEach(() => {
 			mockUseSession.mockReturnValue({
-				data: { 
+				data: {
 					user: { email: "test@example.com" },
-					expires: new Date(Date.now() + 1000 * 60 * 60).toISOString()
+					expires: new Date(Date.now() + 1000 * 60 * 60).toISOString(),
 				},
 				status: "authenticated",
 				update: mockUpdate,
@@ -304,10 +316,15 @@ describe("useAuth", () => {
 
 				expect(authResult.success).toBe(false);
 				expect(authResult.error).toBe(AUTH_ERROR_CODES.UNKNOWN_ERROR);
-				expect(authResult.message).toBe("セッション更新中にエラーが発生しました");
+				expect(authResult.message).toBe(
+					"セッション更新中にエラーが発生しました",
+				);
 			});
 
-			expect(console.error).toHaveBeenCalledWith("セッション更新エラー:", updateError);
+			expect(console.error).toHaveBeenCalledWith(
+				"セッション更新エラー:",
+				updateError,
+			);
 		});
 	});
 
@@ -329,9 +346,9 @@ describe("useAuth", () => {
 
 		it("logout関数が再レンダリング時に同じ参照を保持する", () => {
 			mockUseSession.mockReturnValue({
-				data: { 
+				data: {
 					user: { email: "test@example.com" },
-					expires: new Date(Date.now() + 1000 * 60 * 60).toISOString()
+					expires: new Date(Date.now() + 1000 * 60 * 60).toISOString(),
 				},
 				status: "authenticated",
 				update: mockUpdate,
@@ -348,9 +365,9 @@ describe("useAuth", () => {
 		it("updateSession関数がupdate関数の変更時に更新される", () => {
 			const firstUpdate = vi.fn();
 			mockUseSession.mockReturnValue({
-				data: { 
+				data: {
 					user: { email: "test@example.com" },
-					expires: new Date(Date.now() + 1000 * 60 * 60).toISOString()
+					expires: new Date(Date.now() + 1000 * 60 * 60).toISOString(),
 				},
 				status: "authenticated",
 				update: firstUpdate,
@@ -361,9 +378,9 @@ describe("useAuth", () => {
 
 			const secondUpdate = vi.fn();
 			mockUseSession.mockReturnValue({
-				data: { 
+				data: {
 					user: { email: "test@example.com" },
-					expires: new Date(Date.now() + 1000 * 60 * 60).toISOString()
+					expires: new Date(Date.now() + 1000 * 60 * 60).toISOString(),
 				},
 				status: "authenticated",
 				update: secondUpdate,

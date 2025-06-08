@@ -3,7 +3,9 @@ import { validateRequest, validateRequestWithError } from "../validation";
 import { createApiError } from "../response";
 
 // consoleのエラーログをモック
-const mockConsoleError = vi.spyOn(console, "error").mockImplementation(() => {});
+const mockConsoleError = vi
+	.spyOn(console, "error")
+	.mockImplementation(() => {});
 
 describe("API validation", () => {
 	beforeEach(() => {
@@ -66,7 +68,7 @@ describe("API validation", () => {
 				};
 
 				await expect(validateRequest(schema, invalidData)).rejects.toThrow(
-					z.ZodError
+					z.ZodError,
 				);
 			});
 
@@ -78,7 +80,7 @@ describe("API validation", () => {
 				};
 
 				await expect(validateRequest(schema, incompleteData)).rejects.toThrow(
-					z.ZodError
+					z.ZodError,
 				);
 			});
 
@@ -90,7 +92,7 @@ describe("API validation", () => {
 				};
 
 				await expect(validateRequest(schema, wrongTypeData)).rejects.toThrow(
-					z.ZodError
+					z.ZodError,
 				);
 			});
 
@@ -109,7 +111,7 @@ describe("API validation", () => {
 
 				expect(mockConsoleError).toHaveBeenCalledWith(
 					"[API Validation Error]",
-					expect.any(z.ZodError)
+					expect.any(z.ZodError),
 				);
 			});
 		});
@@ -117,14 +119,12 @@ describe("API validation", () => {
 		describe("エッジケース", () => {
 			it("undefined データでエラーをスローする", async () => {
 				await expect(validateRequest(schema, undefined)).rejects.toThrow(
-					z.ZodError
+					z.ZodError,
 				);
 			});
 
 			it("null データでエラーをスローする", async () => {
-				await expect(validateRequest(schema, null)).rejects.toThrow(
-					z.ZodError
-				);
+				await expect(validateRequest(schema, null)).rejects.toThrow(z.ZodError);
 			});
 
 			it("空のオブジェクトでエラーをスローする", async () => {
@@ -154,7 +154,7 @@ describe("API validation", () => {
 
 				const [result, error] = await validateRequestWithError(
 					schema,
-					validData
+					validData,
 				);
 
 				expect(result).toEqual(validData);
@@ -172,7 +172,7 @@ describe("API validation", () => {
 
 				const [result, error] = await validateRequestWithError(
 					schema,
-					invalidData
+					invalidData,
 				);
 
 				expect(result).toBeNull();
@@ -208,7 +208,7 @@ describe("API validation", () => {
 
 				const [result, error] = await validateRequestWithError(
 					nestedSchema,
-					invalidData
+					invalidData,
 				);
 
 				expect(result).toBeNull();
@@ -224,7 +224,7 @@ describe("API validation", () => {
 					items: z.array(
 						z.object({
 							name: z.string().min(1, "アイテム名は必須です"),
-						})
+						}),
 					),
 				});
 
@@ -234,7 +234,7 @@ describe("API validation", () => {
 
 				const [result, error] = await validateRequestWithError(
 					arraySchema,
-					invalidData
+					invalidData,
 				);
 
 				expect(result).toBeNull();
@@ -253,10 +253,7 @@ describe("API validation", () => {
 					}),
 				} as unknown as z.ZodSchema;
 
-				const [result, error] = await validateRequestWithError(
-					mockSchema,
-					{}
-				);
+				const [result, error] = await validateRequestWithError(mockSchema, {});
 
 				expect(result).toBeNull();
 				expect(error).toEqual({
@@ -277,7 +274,7 @@ describe("API validation", () => {
 
 				const [result, error] = await validateRequestWithError(
 					schema,
-					invalidData
+					invalidData,
 				);
 
 				expect(result).toBeNull();
@@ -296,7 +293,7 @@ describe("API validation", () => {
 
 				const [result, error] = await validateRequestWithError(
 					schema,
-					partiallyValidData
+					partiallyValidData,
 				);
 
 				expect(result).toBeNull();
@@ -309,10 +306,7 @@ describe("API validation", () => {
 		describe("エッジケース", () => {
 			it("空のスキーマでも正しく動作する", async () => {
 				const emptySchema = z.object({});
-				const [result, error] = await validateRequestWithError(
-					emptySchema,
-					{}
-				);
+				const [result, error] = await validateRequestWithError(emptySchema, {});
 
 				expect(result).toEqual({});
 				expect(error).toBeNull();
@@ -320,10 +314,7 @@ describe("API validation", () => {
 
 			it("空のパスを持つエラーを処理する", async () => {
 				const rootSchema = z.string().min(1, "値は必須です");
-				const [result, error] = await validateRequestWithError(
-					rootSchema,
-					""
-				);
+				const [result, error] = await validateRequestWithError(rootSchema, "");
 
 				expect(result).toBeNull();
 				expect(error?.details?.fieldErrors).toEqual({

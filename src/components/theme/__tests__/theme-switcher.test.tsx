@@ -15,7 +15,7 @@ vi.mock("next/dynamic", () => ({
 	default: (importFn: () => Promise<any>, options?: any) => {
 		// ssrオプションをチェック
 		const isSSR = options?.ssr !== false;
-		
+
 		// プレースホルダーのモック
 		if (options?.loading) {
 			const LoadingComponent = options.loading;
@@ -23,29 +23,29 @@ vi.mock("next/dynamic", () => ({
 			if (!isSSR) {
 				return function DynamicComponent(props: any) {
 					const [isLoaded, setIsLoaded] = React.useState(false);
-					
+
 					React.useEffect(() => {
 						// 非同期でコンテンツをロード
 						setTimeout(() => setIsLoaded(true), 0);
 					}, []);
-					
+
 					if (!isLoaded) {
 						return <LoadingComponent />;
 					}
-					
+
 					// ThemeSwitcherContentのモック
 					return <div data-testid="theme-switcher-content" {...props} />;
 				};
 			}
 		}
-		
+
 		// SSRが有効な場合（プレースホルダー）
 		if (isSSR) {
 			return function PlaceholderComponent(props: any) {
 				return <div data-testid="theme-switcher-placeholder" {...props} />;
 			};
 		}
-		
+
 		// デフォルトのモック
 		return function MockedComponent(props: any) {
 			return <div data-testid="mocked-component" {...props} />;
@@ -70,22 +70,30 @@ describe("ThemeSwitcher", () => {
 			render(<ThemeSwitcher />);
 
 			// 最初はプレースホルダーが表示される
-			expect(screen.getByTestId("theme-switcher-placeholder")).toBeInTheDocument();
+			expect(
+				screen.getByTestId("theme-switcher-placeholder"),
+			).toBeInTheDocument();
 
 			// コンテンツがロードされるのを待つ
 			await waitFor(() => {
-				expect(screen.getByTestId("theme-switcher-content")).toBeInTheDocument();
+				expect(
+					screen.getByTestId("theme-switcher-content"),
+				).toBeInTheDocument();
 			});
 
 			// プレースホルダーは表示されなくなる
-			expect(screen.queryByTestId("theme-switcher-placeholder")).not.toBeInTheDocument();
+			expect(
+				screen.queryByTestId("theme-switcher-placeholder"),
+			).not.toBeInTheDocument();
 		});
 
 		it("ThemeSwitcherContentが正しくレンダリングされる", async () => {
 			render(<ThemeSwitcher />);
 
 			await waitFor(() => {
-				expect(screen.getByTestId("theme-switcher-content")).toBeInTheDocument();
+				expect(
+					screen.getByTestId("theme-switcher-content"),
+				).toBeInTheDocument();
 			});
 		});
 	});
@@ -99,8 +107,12 @@ describe("ThemeSwitcher", () => {
 			const { container } = render(<ThemeSwitcher />);
 
 			expect(container.firstChild).toBeNull();
-			expect(screen.queryByTestId("theme-switcher-content")).not.toBeInTheDocument();
-			expect(screen.queryByTestId("theme-switcher-placeholder")).not.toBeInTheDocument();
+			expect(
+				screen.queryByTestId("theme-switcher-content"),
+			).not.toBeInTheDocument();
+			expect(
+				screen.queryByTestId("theme-switcher-placeholder"),
+			).not.toBeInTheDocument();
 		});
 	});
 
@@ -109,14 +121,20 @@ describe("ThemeSwitcher", () => {
 			(FEATURES as any).THEME_SWITCHER = true;
 			const { rerender } = render(<ThemeSwitcher />);
 
-			expect(screen.getByTestId("theme-switcher-placeholder")).toBeInTheDocument();
+			expect(
+				screen.getByTestId("theme-switcher-placeholder"),
+			).toBeInTheDocument();
 
 			// 機能フラグをOFFに変更
 			(FEATURES as any).THEME_SWITCHER = false;
 			rerender(<ThemeSwitcher />);
 
-			expect(screen.queryByTestId("theme-switcher-placeholder")).not.toBeInTheDocument();
-			expect(screen.queryByTestId("theme-switcher-content")).not.toBeInTheDocument();
+			expect(
+				screen.queryByTestId("theme-switcher-placeholder"),
+			).not.toBeInTheDocument();
+			expect(
+				screen.queryByTestId("theme-switcher-content"),
+			).not.toBeInTheDocument();
 		});
 
 		it("機能フラグがOFFからONに変更された場合", async () => {
@@ -130,11 +148,15 @@ describe("ThemeSwitcher", () => {
 			rerender(<ThemeSwitcher />);
 
 			// プレースホルダーが表示される
-			expect(screen.getByTestId("theme-switcher-placeholder")).toBeInTheDocument();
+			expect(
+				screen.getByTestId("theme-switcher-placeholder"),
+			).toBeInTheDocument();
 
 			// コンテンツがロードされる
 			await waitFor(() => {
-				expect(screen.getByTestId("theme-switcher-content")).toBeInTheDocument();
+				expect(
+					screen.getByTestId("theme-switcher-content"),
+				).toBeInTheDocument();
 			});
 		});
 	});
@@ -152,7 +174,9 @@ describe("ThemeSwitcher", () => {
 
 			// 最終的にコンテンツが表示される
 			await waitFor(() => {
-				expect(screen.getByTestId("theme-switcher-content")).toBeInTheDocument();
+				expect(
+					screen.getByTestId("theme-switcher-content"),
+				).toBeInTheDocument();
 			});
 		});
 	});

@@ -24,7 +24,9 @@ describe("Sidebar", () => {
 
 	describe("基本的なレンダリング", () => {
 		it("ナビゲーション要素がレンダリングされる", () => {
-			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue("/dashboard");
+			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue(
+				"/dashboard",
+			);
 
 			render(<Sidebar />);
 
@@ -32,7 +34,9 @@ describe("Sidebar", () => {
 		});
 
 		it("すべてのナビゲーション項目が表示される", () => {
-			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue("/dashboard");
+			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue(
+				"/dashboard",
+			);
 
 			render(<Sidebar />);
 
@@ -42,7 +46,9 @@ describe("Sidebar", () => {
 		});
 
 		it("各ナビゲーション項目にアイコンが表示される", () => {
-			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue("/dashboard");
+			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue(
+				"/dashboard",
+			);
 
 			render(<Sidebar />);
 
@@ -52,7 +58,9 @@ describe("Sidebar", () => {
 		});
 
 		it("適切なクラス名が適用される", () => {
-			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue("/dashboard");
+			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue(
+				"/dashboard",
+			);
 
 			render(<Sidebar />);
 
@@ -63,17 +71,24 @@ describe("Sidebar", () => {
 
 	describe("アクティブ状態の管理", () => {
 		it("現在のパスがダッシュボードの場合、ダッシュボード項目がアクティブになる", () => {
-			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue("/dashboard");
+			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue(
+				"/dashboard",
+			);
 
 			render(<Sidebar />);
 
 			const dashboardLink = screen.getByText("ダッシュボード").closest("a");
-			expect(dashboardLink).toHaveClass("bg-primary", "text-primary-foreground");
+			expect(dashboardLink).toHaveClass(
+				"bg-primary",
+				"text-primary-foreground",
+			);
 			expect(dashboardLink).not.toHaveClass("text-muted-foreground");
 		});
 
 		it("現在のパスがプロフィールの場合、プロフィール項目がアクティブになる", () => {
-			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue("/profile");
+			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue(
+				"/profile",
+			);
 
 			render(<Sidebar />);
 
@@ -86,7 +101,9 @@ describe("Sidebar", () => {
 		});
 
 		it("現在のパスが設定の場合、設定項目がアクティブになる", () => {
-			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue("/settings");
+			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue(
+				"/settings",
+			);
 
 			render(<Sidebar />);
 
@@ -95,7 +112,9 @@ describe("Sidebar", () => {
 		});
 
 		it("現在のパスがサイドバーにない場合、どの項目もアクティブにならない", () => {
-			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue("/unknown");
+			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue(
+				"/unknown",
+			);
 
 			render(<Sidebar />);
 
@@ -114,7 +133,9 @@ describe("Sidebar", () => {
 
 	describe("ナビゲーション項目の詳細", () => {
 		beforeEach(() => {
-			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue("/dashboard");
+			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue(
+				"/dashboard",
+			);
 		});
 
 		it("ダッシュボード項目が正しいhrefを持つ", () => {
@@ -141,7 +162,9 @@ describe("Sidebar", () => {
 
 	describe("スタイリング", () => {
 		it("非アクティブ項目に適切なクラスが適用される", () => {
-			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue("/dashboard");
+			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue(
+				"/dashboard",
+			);
 
 			render(<Sidebar />);
 
@@ -157,12 +180,14 @@ describe("Sidebar", () => {
 				"transition-colors",
 				"text-muted-foreground",
 				"hover:bg-muted",
-				"hover:text-foreground"
+				"hover:text-foreground",
 			);
 		});
 
 		it("アクティブ項目に適切なクラスが適用される", () => {
-			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue("/dashboard");
+			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue(
+				"/dashboard",
+			);
 
 			render(<Sidebar />);
 
@@ -177,14 +202,16 @@ describe("Sidebar", () => {
 				"font-medium",
 				"transition-colors",
 				"bg-primary",
-				"text-primary-foreground"
+				"text-primary-foreground",
 			);
 		});
 	});
 
 	describe("アイコンの詳細", () => {
 		beforeEach(() => {
-			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue("/dashboard");
+			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue(
+				"/dashboard",
+			);
 		});
 
 		it("ダッシュボードアイコンが正しいSVG属性を持つ", () => {
@@ -227,7 +254,9 @@ describe("Sidebar", () => {
 
 	describe("ナビゲーション項目の順序", () => {
 		it("ナビゲーション項目が正しい順序で表示される", () => {
-			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue("/dashboard");
+			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue(
+				"/dashboard",
+			);
 
 			render(<Sidebar />);
 
@@ -240,7 +269,9 @@ describe("Sidebar", () => {
 
 	describe("インタラクション", () => {
 		it("ナビゲーション項目がクリック可能である", () => {
-			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue("/dashboard");
+			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue(
+				"/dashboard",
+			);
 
 			render(<Sidebar />);
 
@@ -255,7 +286,9 @@ describe("Sidebar", () => {
 
 	describe("アクセシビリティ", () => {
 		it("ナビゲーション要素が適切にマークアップされている", () => {
-			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue("/dashboard");
+			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue(
+				"/dashboard",
+			);
 
 			render(<Sidebar />);
 
@@ -271,7 +304,9 @@ describe("Sidebar", () => {
 		});
 
 		it("アクティブな項目が視覚的に区別される", () => {
-			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue("/profile");
+			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue(
+				"/profile",
+			);
 
 			render(<Sidebar />);
 

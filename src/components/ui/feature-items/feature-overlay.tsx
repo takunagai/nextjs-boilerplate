@@ -68,7 +68,7 @@ export function FeatureOverlay({
 							fill
 							className={cn(
 								"object-cover transition-transform duration-500 group-hover:(scale-105)",
-								imageClassName
+								imageClassName,
 							)}
 							sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 							priority
@@ -89,17 +89,21 @@ export function FeatureOverlay({
 					overlayHeight === "auto" && "group-hover:(translate-y-0)",
 				)}
 			>
-				<div className={cn(
-					"max-w-xl overflow-y-auto max-h-[calc(100%-2rem)]",
-					contentBlockClassName
-				)}>
+				<div
+					className={cn(
+						"max-w-xl overflow-y-auto max-h-[calc(100%-2rem)]",
+						contentBlockClassName,
+					)}
+				>
 					<div className="flex items-center gap-3 mb-2">
 						{item.icon && (
-							<div className={cn(
-								"flex-shrink-0",
-								overlayStyle === "light" ? "text-primary" : "text-white",
-								iconClassName
-							)}>
+							<div
+								className={cn(
+									"flex-shrink-0",
+									overlayStyle === "light" ? "text-primary" : "text-white",
+									iconClassName,
+								)}
+							>
 								{item.icon}
 							</div>
 						)}
@@ -108,7 +112,7 @@ export function FeatureOverlay({
 								level={headingLevel}
 								className={cn(
 									"text-xl md:text-2xl lg:text-3xl font-bold tracking-tight mb-2 md:mb-3",
-									headingClassName
+									headingClassName,
 								)}
 							>
 								{item.title}
@@ -123,7 +127,7 @@ export function FeatureOverlay({
 								overlayStyle === "light"
 									? "text-muted-foreground"
 									: "text-white/90",
-								descriptionClassName
+								descriptionClassName,
 							)}
 						>
 							{item.description}
@@ -141,7 +145,7 @@ export function FeatureOverlay({
 									overlayStyle !== "light"
 										? "text-white border-white hover:bg-white/20"
 										: "",
-									buttonClassName
+									buttonClassName,
 								)}
 							>
 								<Link href={item.buttonUrl}>{item.buttonText}</Link>

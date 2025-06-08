@@ -253,9 +253,11 @@ describe("meta-tags", () => {
 		it("ライトモードのテーマカラーが設定される", () => {
 			const viewport = generateViewport();
 
-			const themeColors = Array.isArray(viewport.themeColor) ? viewport.themeColor : [];
+			const themeColors = Array.isArray(viewport.themeColor)
+				? viewport.themeColor
+				: [];
 			const lightTheme = themeColors.find(
-				(theme: any) => theme.media === "(prefers-color-scheme: light)"
+				(theme: any) => theme.media === "(prefers-color-scheme: light)",
 			);
 			expect(lightTheme?.color).toBe("#ffffff");
 		});
@@ -263,9 +265,11 @@ describe("meta-tags", () => {
 		it("ダークモードのテーマカラーが設定される", () => {
 			const viewport = generateViewport();
 
-			const themeColors = Array.isArray(viewport.themeColor) ? viewport.themeColor : [];
+			const themeColors = Array.isArray(viewport.themeColor)
+				? viewport.themeColor
+				: [];
 			const darkTheme = themeColors.find(
-				(theme: any) => theme.media === "(prefers-color-scheme: dark)"
+				(theme: any) => theme.media === "(prefers-color-scheme: dark)",
 			);
 			expect(darkTheme?.color).toBe("#09090b");
 		});

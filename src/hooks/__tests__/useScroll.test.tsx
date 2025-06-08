@@ -31,15 +31,15 @@ Object.defineProperty(window, "removeEventListener", {
 
 describe("useScroll", () => {
 	const mockDate = Date;
-	
+
 	beforeEach(() => {
 		vi.clearAllMocks();
-		
+
 		// デフォルト値を設定
 		mockScrollY.mockReturnValue(0);
 		mockInnerHeight.mockReturnValue(600);
 		mockDocumentBodyOffsetHeight.mockReturnValue(1200);
-		
+
 		// Date.nowをモック
 		global.Date.now = vi.fn(() => 1000);
 	});
@@ -61,8 +61,8 @@ describe("useScroll", () => {
 		});
 
 		it("カスタム初期表示状態を設定する", () => {
-			const { result } = renderHook(() => 
-				useScroll({ initiallyVisible: false })
+			const { result } = renderHook(() =>
+				useScroll({ initiallyVisible: false }),
 			);
 
 			expect(result.current.visible).toBe(false);
@@ -80,9 +80,7 @@ describe("useScroll", () => {
 		it("topOffsetを考慮した初期状態を設定する", () => {
 			mockScrollY.mockReturnValue(50);
 
-			const { result } = renderHook(() => 
-				useScroll({ topOffset: 100 })
-			);
+			const { result } = renderHook(() => useScroll({ topOffset: 100 }));
 
 			expect(result.current.isAtTop).toBe(true);
 		});
@@ -95,7 +93,7 @@ describe("useScroll", () => {
 			expect(mockAddEventListener).toHaveBeenCalledWith(
 				"scroll",
 				expect.any(Function),
-				{ passive: true }
+				{ passive: true },
 			);
 		});
 
@@ -105,7 +103,7 @@ describe("useScroll", () => {
 			expect(mockAddEventListener).toHaveBeenCalledWith(
 				"resize",
 				expect.any(Function),
-				{ passive: true }
+				{ passive: true },
 			);
 		});
 
@@ -116,11 +114,11 @@ describe("useScroll", () => {
 
 			expect(mockRemoveEventListener).toHaveBeenCalledWith(
 				"scroll",
-				expect.any(Function)
+				expect.any(Function),
 			);
 			expect(mockRemoveEventListener).toHaveBeenCalledWith(
 				"resize",
-				expect.any(Function)
+				expect.any(Function),
 			);
 		});
 	});
@@ -132,7 +130,7 @@ describe("useScroll", () => {
 
 			// スクロールイベントを取得
 			const scrollHandler = mockAddEventListener.mock.calls.find(
-				(call: unknown[]) => call[0] === "scroll"
+				(call: unknown[]) => call[0] === "scroll",
 			)?.[1] as () => void;
 
 			// 下向きスクロールをシミュレート
@@ -151,7 +149,7 @@ describe("useScroll", () => {
 
 			// 初期状態を設定
 			const scrollHandler = mockAddEventListener.mock.calls.find(
-				(call: unknown[]) => call[0] === "scroll"
+				(call: unknown[]) => call[0] === "scroll",
 			)?.[1] as () => void;
 
 			// 下向きスクロール後、上向きスクロールをシミュレート
@@ -173,7 +171,7 @@ describe("useScroll", () => {
 			const { result } = renderHook(() => useScroll({ threshold: 10 }));
 
 			const scrollHandler = mockAddEventListener.mock.calls.find(
-				(call: unknown[]) => call[0] === "scroll"
+				(call: unknown[]) => call[0] === "scroll",
 			)?.[1] as () => void;
 
 			// 閾値未満のスクロール
@@ -192,7 +190,7 @@ describe("useScroll", () => {
 			const { result } = renderHook(() => useScroll({ threshold: 5 }));
 
 			const scrollHandler = mockAddEventListener.mock.calls.find(
-				(call: unknown[]) => call[0] === "scroll"
+				(call: unknown[]) => call[0] === "scroll",
 			)?.[1] as () => void;
 
 			act(() => {
@@ -208,7 +206,7 @@ describe("useScroll", () => {
 			const { result } = renderHook(() => useScroll({ threshold: 5 }));
 
 			const scrollHandler = mockAddEventListener.mock.calls.find(
-				(call: unknown[]) => call[0] === "scroll"
+				(call: unknown[]) => call[0] === "scroll",
 			)?.[1] as () => void;
 
 			// 下向きスクロール
@@ -231,7 +229,7 @@ describe("useScroll", () => {
 			const { result } = renderHook(() => useScroll({ threshold: 5 }));
 
 			const scrollHandler = mockAddEventListener.mock.calls.find(
-				(call: unknown[]) => call[0] === "scroll"
+				(call: unknown[]) => call[0] === "scroll",
 			)?.[1] as () => void;
 
 			// 最上部にスクロール
@@ -246,12 +244,12 @@ describe("useScroll", () => {
 
 		it("onlyDirectionChangeオプションが動作する", () => {
 			mockScrollY.mockReturnValue(0);
-			const { result } = renderHook(() => 
-				useScroll({ threshold: 5, onlyDirectionChange: true })
+			const { result } = renderHook(() =>
+				useScroll({ threshold: 5, onlyDirectionChange: true }),
 			);
 
 			const scrollHandler = mockAddEventListener.mock.calls.find(
-				(call: unknown[]) => call[0] === "scroll"
+				(call: unknown[]) => call[0] === "scroll",
 			)?.[1] as () => void;
 
 			// 下向きスクロール（方向変化）
@@ -281,7 +279,7 @@ describe("useScroll", () => {
 			const { result } = renderHook(() => useScroll());
 
 			const scrollHandler = mockAddEventListener.mock.calls.find(
-				(call: unknown[]) => call[0] === "scroll"
+				(call: unknown[]) => call[0] === "scroll",
 			)?.[1] as () => void;
 
 			// 最下部までスクロール（600 + 400 >= 1000 - 5）
@@ -301,7 +299,7 @@ describe("useScroll", () => {
 			const { result } = renderHook(() => useScroll());
 
 			const scrollHandler = mockAddEventListener.mock.calls.find(
-				(call: unknown[]) => call[0] === "scroll"
+				(call: unknown[]) => call[0] === "scroll",
 			)?.[1] as () => void;
 
 			// 中間位置（600 + 300 < 1200 - 5）
@@ -325,12 +323,12 @@ describe("useScroll", () => {
 
 		it("スロットリング間隔内では更新されない", () => {
 			mockScrollY.mockReturnValue(0);
-			const { result } = renderHook(() => 
-				useScroll({ throttleMs: 100, threshold: 5 })
+			const { result } = renderHook(() =>
+				useScroll({ throttleMs: 100, threshold: 5 }),
 			);
 
 			const scrollHandler = mockAddEventListener.mock.calls.find(
-				(call: unknown[]) => call[0] === "scroll"
+				(call: unknown[]) => call[0] === "scroll",
 			)?.[1] as () => void;
 
 			// 1回目の呼び出し
@@ -359,12 +357,12 @@ describe("useScroll", () => {
 			});
 
 			mockScrollY.mockReturnValue(0);
-			const { result } = renderHook(() => 
-				useScroll({ throttleMs: 100, threshold: 5 })
+			const { result } = renderHook(() =>
+				useScroll({ throttleMs: 100, threshold: 5 }),
 			);
 
 			const scrollHandler = mockAddEventListener.mock.calls.find(
-				(call: unknown[]) => call[0] === "scroll"
+				(call: unknown[]) => call[0] === "scroll",
 			)?.[1] as () => void;
 
 			// 1回目の呼び出し
@@ -389,7 +387,7 @@ describe("useScroll", () => {
 			const { result } = renderHook(() => useScroll({ threshold: 5 }));
 
 			const scrollHandler = mockAddEventListener.mock.calls.find(
-				(call: unknown[]) => call[0] === "scroll"
+				(call: unknown[]) => call[0] === "scroll",
 			)?.[1] as () => void;
 
 			// 最初のスクロール
@@ -415,7 +413,7 @@ describe("useScroll", () => {
 			const { result } = renderHook(() => useScroll({ threshold: 20 }));
 
 			const scrollHandler = mockAddEventListener.mock.calls.find(
-				(call: unknown[]) => call[0] === "scroll"
+				(call: unknown[]) => call[0] === "scroll",
 			)?.[1] as () => void;
 
 			// 閾値未満のスクロール
@@ -442,7 +440,7 @@ describe("useScroll", () => {
 			expect(result.current.isAtTop).toBe(true);
 
 			const scrollHandler = mockAddEventListener.mock.calls.find(
-				(call: unknown[]) => call[0] === "scroll"
+				(call: unknown[]) => call[0] === "scroll",
 			)?.[1] as () => void;
 
 			act(() => {
@@ -460,7 +458,7 @@ describe("useScroll", () => {
 			const { result } = renderHook(() => useScroll({ threshold: 50 }));
 
 			const scrollHandler = mockAddEventListener.mock.calls.find(
-				(call: unknown[]) => call[0] === "scroll"
+				(call: unknown[]) => call[0] === "scroll",
 			)?.[1] as () => void;
 
 			const initialState = result.current;
@@ -485,7 +483,7 @@ describe("useScroll", () => {
 			const { result } = renderHook(() => useScroll());
 
 			const resizeHandler = mockAddEventListener.mock.calls.find(
-				(call: unknown[]) => call[0] === "resize"
+				(call: unknown[]) => call[0] === "resize",
 			)?.[1] as () => void;
 
 			act(() => {

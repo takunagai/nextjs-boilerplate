@@ -78,9 +78,9 @@ describe("UserAuthMenu", () => {
 			render(<UserAuthMenu />);
 
 			// Skeletonコンポーネントが2つ表示されることを確認
-			const skeletons = screen.getAllByRole("generic").filter(
-				(el) => el.className.includes("animate-pulse")
-			);
+			const skeletons = screen
+				.getAllByRole("generic")
+				.filter((el) => el.className.includes("animate-pulse"));
 			expect(skeletons).toHaveLength(2);
 		});
 	});

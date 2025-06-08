@@ -52,7 +52,7 @@ describe("useLoginForm", () => {
 
 			// バリデーションエラーが設定されるまで待機
 			await act(async () => {
-				await new Promise(resolve => setTimeout(resolve, 0));
+				await new Promise((resolve) => setTimeout(resolve, 0));
 			});
 
 			const errors = result.current.form.formState.errors;
@@ -72,11 +72,13 @@ describe("useLoginForm", () => {
 			});
 
 			await act(async () => {
-				await new Promise(resolve => setTimeout(resolve, 0));
+				await new Promise((resolve) => setTimeout(resolve, 0));
 			});
 
 			const errors = result.current.form.formState.errors;
-			expect(errors.email?.message).toBe("有効なメールアドレスを入力してください");
+			expect(errors.email?.message).toBe(
+				"有効なメールアドレスを入力してください",
+			);
 		});
 	});
 
@@ -152,7 +154,7 @@ describe("useLoginForm", () => {
 
 		it("ローディング状態が正しく管理される", async () => {
 			let resolveLogin: (value: unknown) => void;
-			const loginPromise = new Promise(resolve => {
+			const loginPromise = new Promise((resolve) => {
 				resolveLogin = resolve;
 			});
 			mockLogin.mockReturnValue(loginPromise);
@@ -214,10 +216,13 @@ describe("useLoginForm", () => {
 				error: "unexpected-error",
 			});
 			expect(result.current.error).toBe(
-				"ログイン処理中にエラーが発生しました。時間をおいて再度お試しください。"
+				"ログイン処理中にエラーが発生しました。時間をおいて再度お試しください。",
 			);
 			expect(result.current.isLoading).toBe(false);
-			expect(console.error).toHaveBeenCalledWith("ログイン処理エラー:", unexpectedError);
+			expect(console.error).toHaveBeenCalledWith(
+				"ログイン処理エラー:",
+				unexpectedError,
+			);
 		});
 	});
 
@@ -298,7 +303,7 @@ describe("useLoginForm", () => {
 			});
 
 			await act(async () => {
-				await new Promise(resolve => setTimeout(resolve, 0));
+				await new Promise((resolve) => setTimeout(resolve, 0));
 			});
 
 			const errors = result.current.form.formState.errors;

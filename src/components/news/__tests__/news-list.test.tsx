@@ -38,8 +38,12 @@ describe("NewsList", () => {
 			render(<NewsList items={mockItems} />);
 
 			expect(screen.getByText("新年のご挨拶")).toBeInTheDocument();
-			expect(screen.getByText("新春セミナー開催のお知らせ")).toBeInTheDocument();
-			expect(screen.getByText("システムメンテナンスのお知らせ")).toBeInTheDocument();
+			expect(
+				screen.getByText("新春セミナー開催のお知らせ"),
+			).toBeInTheDocument();
+			expect(
+				screen.getByText("システムメンテナンスのお知らせ"),
+			).toBeInTheDocument();
 		});
 
 		it("各アイテムの詳細情報が正しく表示される", () => {
@@ -75,7 +79,9 @@ describe("NewsList", () => {
 
 			const links = screen.queryAllByRole("link");
 			expect(links).toHaveLength(0);
-			expect(screen.getByText("システムメンテナンスのお知らせ")).toBeInTheDocument();
+			expect(
+				screen.getByText("システムメンテナンスのお知らせ"),
+			).toBeInTheDocument();
 		});
 	});
 

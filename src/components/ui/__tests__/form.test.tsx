@@ -32,7 +32,7 @@ describe("Form Components", () => {
 			render(
 				<TestForm>
 					<div>Form Content</div>
-				</TestForm>
+				</TestForm>,
 			);
 
 			expect(screen.getByText("Form Content")).toBeInTheDocument();
@@ -49,7 +49,7 @@ describe("Form Components", () => {
 							<input {...field} data-testid="username-input" />
 						)}
 					/>
-				</TestForm>
+				</TestForm>,
 			);
 
 			const input = screen.getByTestId("username-input");
@@ -65,7 +65,7 @@ describe("Form Components", () => {
 					<FormItem data-testid="form-item">
 						<div>Item Content</div>
 					</FormItem>
-				</TestForm>
+				</TestForm>,
 			);
 
 			const formItem = screen.getByTestId("form-item");
@@ -78,7 +78,7 @@ describe("Form Components", () => {
 					<FormItem className="custom-class" data-testid="form-item">
 						<div>Item Content</div>
 					</FormItem>
-				</TestForm>
+				</TestForm>,
 			);
 
 			const formItem = screen.getByTestId("form-item");
@@ -98,7 +98,7 @@ describe("Form Components", () => {
 							</FormItem>
 						)}
 					/>
-				</TestForm>
+				</TestForm>,
 			);
 
 			expect(screen.getByText("ユーザー名")).toBeInTheDocument();
@@ -154,7 +154,7 @@ describe("Form Components", () => {
 							</FormItem>
 						)}
 					/>
-				</TestForm>
+				</TestForm>,
 			);
 
 			const input = screen.getByTestId("control-input");
@@ -207,13 +207,11 @@ describe("Form Components", () => {
 						name="username"
 						render={() => (
 							<FormItem>
-								<FormDescription>
-									3文字以上で入力してください
-								</FormDescription>
+								<FormDescription>3文字以上で入力してください</FormDescription>
 							</FormItem>
 						)}
 					/>
-				</TestForm>
+				</TestForm>,
 			);
 
 			const description = screen.getByText("3文字以上で入力してください");
@@ -234,11 +232,15 @@ describe("Form Components", () => {
 							</FormItem>
 						)}
 					/>
-				</TestForm>
+				</TestForm>,
 			);
 
 			const description = screen.getByText("説明文");
-			expect(description).toHaveClass("text-sm", "text-muted-foreground", "custom-description");
+			expect(description).toHaveClass(
+				"text-sm",
+				"text-muted-foreground",
+				"custom-description",
+			);
 		});
 	});
 
@@ -274,7 +276,11 @@ describe("Form Components", () => {
 
 			const errorMessage = screen.getByText("ユーザー名は必須です");
 			expect(errorMessage).toBeInTheDocument();
-			expect(errorMessage).toHaveClass("text-sm", "font-medium", "text-destructive");
+			expect(errorMessage).toHaveClass(
+				"text-sm",
+				"font-medium",
+				"text-destructive",
+			);
 		});
 
 		it("エラーがない場合は何も表示されない", () => {
@@ -288,7 +294,7 @@ describe("Form Components", () => {
 							</FormItem>
 						)}
 					/>
-				</TestForm>
+				</TestForm>,
 			);
 
 			expect(screen.queryByTestId("form-message")).not.toBeInTheDocument();
@@ -305,7 +311,7 @@ describe("Form Components", () => {
 							</FormItem>
 						)}
 					/>
-				</TestForm>
+				</TestForm>,
 			);
 
 			expect(screen.getByText("カスタムメッセージ")).toBeInTheDocument();
@@ -320,7 +326,9 @@ describe("Form Components", () => {
 			};
 
 			// コンソールエラーを抑制
-			const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+			const consoleSpy = vi
+				.spyOn(console, "error")
+				.mockImplementation(() => {});
 
 			expect(() => {
 				render(<TestComponent />);
@@ -347,7 +355,7 @@ describe("Form Components", () => {
 							</FormItem>
 						)}
 					/>
-				</TestForm>
+				</TestForm>,
 			);
 
 			expect(fieldInfo).toHaveProperty("name", "username");
@@ -381,12 +389,14 @@ describe("Form Components", () => {
 							</FormItem>
 						)}
 					/>
-				</TestForm>
+				</TestForm>,
 			);
 
 			expect(screen.getByText("メールアドレス")).toBeInTheDocument();
 			expect(screen.getByTestId("email-input")).toBeInTheDocument();
-			expect(screen.getByText("有効なメールアドレスを入力してください")).toBeInTheDocument();
+			expect(
+				screen.getByText("有効なメールアドレスを入力してください"),
+			).toBeInTheDocument();
 		});
 
 		it("複数のフォームフィールドが独立して動作する", () => {
@@ -414,7 +424,7 @@ describe("Form Components", () => {
 							</FormItem>
 						)}
 					/>
-				</TestForm>
+				</TestForm>,
 			);
 
 			const usernameInput = screen.getByTestId("username-input");

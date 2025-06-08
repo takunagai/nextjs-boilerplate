@@ -25,7 +25,7 @@ describe("NewsItem", () => {
 			const timeElement = screen.getByText("2024.01.01");
 			expect(timeElement).toHaveAttribute(
 				"datetime",
-				"2024-01-01T00:00:00.000Z"
+				"2024-01-01T00:00:00.000Z",
 			);
 		});
 	});

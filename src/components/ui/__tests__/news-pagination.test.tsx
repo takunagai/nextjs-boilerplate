@@ -38,7 +38,7 @@ describe("NewsPagination", () => {
 
 		it("totalPagesが1以下の場合は何も表示されない", () => {
 			const { container } = render(
-				<NewsPagination {...defaultProps} totalPages={1} />
+				<NewsPagination {...defaultProps} totalPages={1} />,
 			);
 
 			expect(container.firstChild).toBeNull();
@@ -46,7 +46,7 @@ describe("NewsPagination", () => {
 
 		it("totalPagesが0の場合は何も表示されない", () => {
 			const { container } = render(
-				<NewsPagination {...defaultProps} totalPages={0} />
+				<NewsPagination {...defaultProps} totalPages={0} />,
 			);
 
 			expect(container.firstChild).toBeNull();
@@ -128,7 +128,7 @@ describe("NewsPagination", () => {
 			render(<NewsPagination {...defaultProps} />);
 
 			expect(screen.getByTestId("chevron-left-icon")).toBeInTheDocument();
-			
+
 			const prevText = screen.getByText("前へ");
 			expect(prevText).toBeInTheDocument();
 			expect(prevText).toHaveClass("hidden", "sm:inline");
@@ -138,7 +138,7 @@ describe("NewsPagination", () => {
 			render(<NewsPagination {...defaultProps} />);
 
 			expect(screen.getByTestId("chevron-right-icon")).toBeInTheDocument();
-			
+
 			const nextText = screen.getByText("次へ");
 			expect(nextText).toBeInTheDocument();
 			expect(nextText).toHaveClass("hidden", "sm:inline");
@@ -153,7 +153,7 @@ describe("NewsPagination", () => {
 					items={[8, 9, 10]}
 					currentPage={9}
 					showEdges={true}
-				/>
+				/>,
 			);
 
 			expect(screen.getByText("1")).toBeInTheDocument();
@@ -166,7 +166,7 @@ describe("NewsPagination", () => {
 					items={[8, 9, 10]}
 					currentPage={9}
 					showEdges={false}
-				/>
+				/>,
 			);
 
 			expect(screen.queryByText("1")).not.toBeInTheDocument();
@@ -179,7 +179,7 @@ describe("NewsPagination", () => {
 					items={[1, 2, 3]}
 					currentPage={2}
 					showEdges={true}
-				/>
+				/>,
 			);
 
 			expect(screen.getByText("10")).toBeInTheDocument();
@@ -192,7 +192,7 @@ describe("NewsPagination", () => {
 					items={[1, 2, 3]}
 					currentPage={2}
 					showEdges={false}
-				/>
+				/>,
 			);
 
 			expect(screen.queryByText("10")).not.toBeInTheDocument();
@@ -205,7 +205,7 @@ describe("NewsPagination", () => {
 					items={[1, 2, 3]}
 					currentPage={2}
 					showEdges={true}
-				/>
+				/>,
 			);
 
 			const firstPageLinks = screen.getAllByText("1");
@@ -222,7 +222,7 @@ describe("NewsPagination", () => {
 					currentPage={9}
 					showEllipsis={true}
 					showEdges={true}
-				/>
+				/>,
 			);
 
 			const ellipsis = screen.getAllByTestId("ellipsis-icon");
@@ -237,7 +237,7 @@ describe("NewsPagination", () => {
 					currentPage={9}
 					showEllipsis={false}
 					showEdges={true}
-				/>
+				/>,
 			);
 
 			expect(screen.queryByTestId("ellipsis-icon")).not.toBeInTheDocument();
@@ -251,7 +251,7 @@ describe("NewsPagination", () => {
 					currentPage={2}
 					showEllipsis={true}
 					showEdges={true}
-				/>
+				/>,
 			);
 
 			const ellipsis = screen.getAllByTestId("ellipsis-icon");
@@ -276,12 +276,12 @@ describe("NewsPagination", () => {
 					currentPage={2}
 					showEllipsis={true}
 					showEdges={true}
-				/>
+				/>,
 			);
 
-			const ellipsisElements = screen.getAllByRole("generic").filter(
-				(el) => el.getAttribute("aria-hidden") === "true"
-			);
+			const ellipsisElements = screen
+				.getAllByRole("generic")
+				.filter((el) => el.getAttribute("aria-hidden") === "true");
 			expect(ellipsisElements.length).toBeGreaterThan(0);
 		});
 
@@ -295,7 +295,9 @@ describe("NewsPagination", () => {
 
 	describe("スタイリング", () => {
 		it("カスタムクラス名が適用される", () => {
-			render(<NewsPagination {...defaultProps} className="custom-pagination" />);
+			render(
+				<NewsPagination {...defaultProps} className="custom-pagination" />,
+			);
 
 			const nav = screen.getByRole("navigation");
 			expect(nav).toHaveClass("custom-pagination");
@@ -329,26 +331,26 @@ describe("NewsPagination", () => {
 					category="tech"
 					showEllipsis={true}
 					showEdges={true}
-				/>
+				/>,
 			);
 
 			// 前へボタン
 			expect(screen.getByLabelText("前のページへ")).toBeInTheDocument();
-			
+
 			// 先頭ページ
 			expect(screen.getByText("1")).toBeInTheDocument();
-			
+
 			// 省略記号（開始）
 			expect(screen.getAllByTestId("ellipsis-icon")).toHaveLength(2);
-			
+
 			// 現在の範囲のページ
 			expect(screen.getByText("9")).toBeInTheDocument();
 			expect(screen.getByText("10")).toBeInTheDocument();
 			expect(screen.getByText("11")).toBeInTheDocument();
-			
+
 			// 末尾ページ
 			expect(screen.getByText("20")).toBeInTheDocument();
-			
+
 			// 次へボタン
 			expect(screen.getByLabelText("次のページへ")).toBeInTheDocument();
 
@@ -364,12 +366,12 @@ describe("NewsPagination", () => {
 					currentPage={1}
 					items={[1, 2, 3]}
 					hasPreviousPage={false}
-				/>
+				/>,
 			);
 
 			// 前へボタンは表示されない
 			expect(screen.queryByLabelText("前のページへ")).not.toBeInTheDocument();
-			
+
 			// 1ページ目がアクティブ
 			const currentPage = screen.getByText("1");
 			expect(currentPage).toHaveAttribute("aria-current", "page");
@@ -382,12 +384,12 @@ describe("NewsPagination", () => {
 					currentPage={10}
 					items={[8, 9, 10]}
 					hasNextPage={false}
-				/>
+				/>,
 			);
 
 			// 次へボタンは表示されない
 			expect(screen.queryByLabelText("次のページへ")).not.toBeInTheDocument();
-			
+
 			// 最終ページがアクティブ
 			const currentPage = screen.getByText("10");
 			expect(currentPage).toHaveAttribute("aria-current", "page");

@@ -8,7 +8,9 @@ import {
 describe("auth-errors", () => {
 	describe("AUTH_ERROR_CODES", () => {
 		it("すべての認証エラーコードが定義されている", () => {
-			expect(AUTH_ERROR_CODES.INVALID_CREDENTIALS).toBe("auth/invalid-credentials");
+			expect(AUTH_ERROR_CODES.INVALID_CREDENTIALS).toBe(
+				"auth/invalid-credentials",
+			);
 			expect(AUTH_ERROR_CODES.EMPTY_CREDENTIALS).toBe("auth/empty-credentials");
 			expect(AUTH_ERROR_CODES.ACCOUNT_NOT_FOUND).toBe("auth/account-not-found");
 			expect(AUTH_ERROR_CODES.NETWORK_ERROR).toBe("auth/network-error");
@@ -30,25 +32,29 @@ describe("auth-errors", () => {
 				const message = getAuthErrorMessage(
 					AUTH_ERROR_CODES.INVALID_CREDENTIALS,
 					"test@example.com",
-					0
+					0,
 				);
-				expect(message).toBe("メールアドレスまたはパスワードが正しくありません");
+				expect(message).toBe(
+					"メールアドレスまたはパスワードが正しくありません",
+				);
 			});
 
 			it("1回目の失敗時（attempts = 1）は基本メッセージを返す", () => {
 				const message = getAuthErrorMessage(
 					AUTH_ERROR_CODES.INVALID_CREDENTIALS,
 					"test@example.com",
-					1
+					1,
 				);
-				expect(message).toBe("メールアドレスまたはパスワードが正しくありません");
+				expect(message).toBe(
+					"メールアドレスまたはパスワードが正しくありません",
+				);
 			});
 
 			it("2回以上失敗時（attempts >= 2）は詳細メッセージを返す", () => {
 				const message = getAuthErrorMessage(
 					AUTH_ERROR_CODES.INVALID_CREDENTIALS,
 					"test@example.com",
-					2
+					2,
 				);
 				expect(message).toContain("認証に失敗しました。以下をお試しください：");
 				expect(message).toContain("1. パスワードが正しいか確認");
@@ -60,7 +66,7 @@ describe("auth-errors", () => {
 				const message = getAuthErrorMessage(
 					AUTH_ERROR_CODES.INVALID_CREDENTIALS,
 					"test@example.com",
-					3
+					3,
 				);
 				expect(message).toContain("認証に失敗しました。以下をお試しください：");
 			});
@@ -69,7 +75,7 @@ describe("auth-errors", () => {
 				const message = getAuthErrorMessage(
 					AUTH_ERROR_CODES.INVALID_CREDENTIALS,
 					"invalid-email",
-					2
+					2,
 				);
 				expect(message).toContain("メールアドレスの形式が正しいか確認");
 			});
@@ -78,7 +84,7 @@ describe("auth-errors", () => {
 				const message = getAuthErrorMessage(
 					AUTH_ERROR_CODES.INVALID_CREDENTIALS,
 					undefined,
-					2
+					2,
 				);
 				expect(message).toBe("認証に失敗しました。以下をお試しください：");
 			});
@@ -91,8 +97,16 @@ describe("auth-errors", () => {
 			});
 
 			it("試行回数に関係なく同じメッセージを返す", () => {
-				const message1 = getAuthErrorMessage(AUTH_ERROR_CODES.EMPTY_CREDENTIALS, "test@example.com", 0);
-				const message2 = getAuthErrorMessage(AUTH_ERROR_CODES.EMPTY_CREDENTIALS, "test@example.com", 5);
+				const message1 = getAuthErrorMessage(
+					AUTH_ERROR_CODES.EMPTY_CREDENTIALS,
+					"test@example.com",
+					0,
+				);
+				const message2 = getAuthErrorMessage(
+					AUTH_ERROR_CODES.EMPTY_CREDENTIALS,
+					"test@example.com",
+					5,
+				);
 				expect(message1).toBe(message2);
 			});
 		});
@@ -107,37 +121,57 @@ describe("auth-errors", () => {
 		describe("NETWORK_ERROR エラー", () => {
 			it("適切なメッセージを返す", () => {
 				const message = getAuthErrorMessage(AUTH_ERROR_CODES.NETWORK_ERROR);
-				expect(message).toBe("サーバーに接続できません。インターネット接続を確認してください");
+				expect(message).toBe(
+					"サーバーに接続できません。インターネット接続を確認してください",
+				);
 			});
 		});
 
 		describe("SERVER_ERROR エラー", () => {
 			it("適切なメッセージを返す", () => {
 				const message = getAuthErrorMessage(AUTH_ERROR_CODES.SERVER_ERROR);
-				expect(message).toBe("サーバーエラーが発生しました。時間をおいて再度お試しください");
+				expect(message).toBe(
+					"サーバーエラーが発生しました。時間をおいて再度お試しください",
+				);
 			});
 		});
 
 		describe("NextAuthエラーの処理", () => {
 			it("CredentialsSigninエラーを初回試行時に処理する", () => {
-				const message = getAuthErrorMessage("CredentialsSignin", "test@example.com", 0);
-				expect(message).toBe("メールアドレスまたはパスワードが正しくありません");
+				const message = getAuthErrorMessage(
+					"CredentialsSignin",
+					"test@example.com",
+					0,
+				);
+				expect(message).toBe(
+					"メールアドレスまたはパスワードが正しくありません",
+				);
 			});
 
 			it("CredentialsSigninエラーを複数回試行時に詳細メッセージで処理する", () => {
-				const message = getAuthErrorMessage("CredentialsSignin", "test@example.com", 2);
+				const message = getAuthErrorMessage(
+					"CredentialsSignin",
+					"test@example.com",
+					2,
+				);
 				expect(message).toContain("認証に失敗しました。以下をお試しください：");
 				expect(message).toContain("登録済みのメールアドレスか確認");
 			});
 
 			it("fetch failedエラーをネットワークエラーとして処理する", () => {
 				const message = getAuthErrorMessage("fetch failed: network error");
-				expect(message).toBe("サーバーに接続できません。インターネット接続を確認してください");
+				expect(message).toBe(
+					"サーバーに接続できません。インターネット接続を確認してください",
+				);
 			});
 
 			it("部分的なfetch failedメッセージも処理する", () => {
-				const message = getAuthErrorMessage("Request failed due to fetch failed");
-				expect(message).toBe("サーバーに接続できません。インターネット接続を確認してください");
+				const message = getAuthErrorMessage(
+					"Request failed due to fetch failed",
+				);
+				expect(message).toBe(
+					"サーバーに接続できません。インターネット接続を確認してください",
+				);
 			});
 		});
 
@@ -150,12 +184,16 @@ describe("auth-errors", () => {
 
 			it("undefinedエラーコードでデフォルトメッセージを返す", () => {
 				const message = getAuthErrorMessage(undefined);
-				expect(message).toBe("ログインに失敗しました。認証情報を確認してください");
+				expect(message).toBe(
+					"ログインに失敗しました。認証情報を確認してください",
+				);
 			});
 
 			it("空文字列エラーコードでデフォルトメッセージを返す", () => {
 				const message = getAuthErrorMessage("");
-				expect(message).toBe("ログインに失敗しました。認証情報を確認してください");
+				expect(message).toBe(
+					"ログインに失敗しました。認証情報を確認してください",
+				);
 			});
 
 			it("不明なエラーコード定数でそのまま返す", () => {
@@ -170,7 +208,7 @@ describe("auth-errors", () => {
 				const message = getAuthErrorMessage(
 					AUTH_ERROR_CODES.INVALID_CREDENTIALS,
 					"",
-					2
+					2,
 				);
 				expect(message).toContain("メールアドレスの形式が正しいか確認");
 			});
@@ -179,16 +217,18 @@ describe("auth-errors", () => {
 				const message = getAuthErrorMessage(
 					AUTH_ERROR_CODES.INVALID_CREDENTIALS,
 					"test@example.com",
-					-1
+					-1,
 				);
-				expect(message).toBe("メールアドレスまたはパスワードが正しくありません");
+				expect(message).toBe(
+					"メールアドレスまたはパスワードが正しくありません",
+				);
 			});
 
 			it("試行回数が非常に大きい値の場合", () => {
 				const message = getAuthErrorMessage(
 					AUTH_ERROR_CODES.INVALID_CREDENTIALS,
 					"test@example.com",
-					1000
+					1000,
 				);
 				expect(message).toContain("認証に失敗しました。以下をお試しください：");
 			});
@@ -197,7 +237,7 @@ describe("auth-errors", () => {
 				const message = getAuthErrorMessage(
 					AUTH_ERROR_CODES.INVALID_CREDENTIALS,
 					"test+tag@example.co.uk",
-					2
+					2,
 				);
 				expect(message).toContain("登録済みのメールアドレスか確認");
 			});
@@ -208,7 +248,7 @@ describe("auth-errors", () => {
 				const message = getAuthErrorMessage(
 					AUTH_ERROR_CODES.INVALID_CREDENTIALS,
 					"test@example.com",
-					2
+					2,
 				);
 
 				expect(message).toContain("1. パスワードが正しいか確認");
@@ -220,7 +260,7 @@ describe("auth-errors", () => {
 				const message = getAuthErrorMessage(
 					AUTH_ERROR_CODES.INVALID_CREDENTIALS,
 					"not-an-email",
-					2
+					2,
 				);
 
 				expect(message).toContain("メールアドレスの形式が正しいか確認");

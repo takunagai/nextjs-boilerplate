@@ -36,7 +36,7 @@ describe("ThemeProvider", () => {
 			render(
 				<ThemeProvider>
 					<div>Test Content</div>
-				</ThemeProvider>
+				</ThemeProvider>,
 			);
 
 			expect(screen.getByTestId("next-themes-provider")).toBeInTheDocument();
@@ -47,7 +47,7 @@ describe("ThemeProvider", () => {
 			render(
 				<ThemeProvider>
 					<div>Test Content</div>
-				</ThemeProvider>
+				</ThemeProvider>,
 			);
 
 			const provider = screen.getByTestId("next-themes-provider");
@@ -67,7 +67,7 @@ describe("ThemeProvider", () => {
 					disableTransitionOnChange={false}
 				>
 					<div>Test Content</div>
-				</ThemeProvider>
+				</ThemeProvider>,
 			);
 
 			const provider = screen.getByTestId("next-themes-provider");
@@ -83,7 +83,7 @@ describe("ThemeProvider", () => {
 			render(
 				<ThemeProvider themes={themes}>
 					<div>Test Content</div>
-				</ThemeProvider>
+				</ThemeProvider>,
 			);
 
 			const provider = screen.getByTestId("next-themes-provider");
@@ -96,7 +96,7 @@ describe("ThemeProvider", () => {
 			render(
 				<ThemeProvider forcedTheme="dark">
 					<div>Test Content</div>
-				</ThemeProvider>
+				</ThemeProvider>,
 			);
 
 			const provider = screen.getByTestId("next-themes-provider");
@@ -115,10 +115,12 @@ describe("ThemeProvider", () => {
 			render(
 				<ThemeProvider>
 					<div data-testid="child-content">Test Content</div>
-				</ThemeProvider>
+				</ThemeProvider>,
 			);
 
-			expect(screen.queryByTestId("next-themes-provider")).not.toBeInTheDocument();
+			expect(
+				screen.queryByTestId("next-themes-provider"),
+			).not.toBeInTheDocument();
 			expect(screen.getByTestId("child-content")).toBeInTheDocument();
 			expect(screen.getByText("Test Content")).toBeInTheDocument();
 		});
@@ -131,10 +133,12 @@ describe("ThemeProvider", () => {
 					themes={["light", "dark"]}
 				>
 					<div data-testid="child-content">Test Content</div>
-				</ThemeProvider>
+				</ThemeProvider>,
 			);
 
-			expect(screen.queryByTestId("next-themes-provider")).not.toBeInTheDocument();
+			expect(
+				screen.queryByTestId("next-themes-provider"),
+			).not.toBeInTheDocument();
 			expect(screen.getByTestId("child-content")).toBeInTheDocument();
 		});
 	});
@@ -148,7 +152,7 @@ describe("ThemeProvider", () => {
 					<div>Child 1</div>
 					<div>Child 2</div>
 					<div>Child 3</div>
-				</ThemeProvider>
+				</ThemeProvider>,
 			);
 
 			expect(screen.getByText("Child 1")).toBeInTheDocument();
@@ -167,7 +171,7 @@ describe("ThemeProvider", () => {
 							<button>Button</button>
 						</div>
 					</div>
-				</ThemeProvider>
+				</ThemeProvider>,
 			);
 
 			expect(screen.getByText("Nested Content")).toBeInTheDocument();
@@ -182,7 +186,7 @@ describe("ThemeProvider", () => {
 					{null}
 					<div>Valid Content</div>
 					{undefined}
-				</ThemeProvider>
+				</ThemeProvider>,
 			);
 
 			expect(screen.getByText("Valid Content")).toBeInTheDocument();
@@ -196,7 +200,7 @@ describe("ThemeProvider", () => {
 			render(
 				<ThemeProvider>
 					<div>Test</div>
-				</ThemeProvider>
+				</ThemeProvider>,
 			);
 
 			const provider = screen.getByTestId("next-themes-provider");
@@ -211,7 +215,7 @@ describe("ThemeProvider", () => {
 			render(
 				<ThemeProvider disableTransitionOnChange={false}>
 					<div>Test</div>
-				</ThemeProvider>
+				</ThemeProvider>,
 			);
 
 			const provider = screen.getByTestId("next-themes-provider");

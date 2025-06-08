@@ -83,7 +83,8 @@ export default function ExamplesPage() {
 		},
 		{
 			title: "スケルトン（Skeleton）",
-			description: "コンテンツ読み込み中に表示するプレースホルダーコンポーネントです。",
+			description:
+				"コンテンツ読み込み中に表示するプレースホルダーコンポーネントです。",
 			href: "/examples/skeleton",
 		},
 		{
@@ -95,7 +96,7 @@ export default function ExamplesPage() {
 			title: "トースト（Toast）",
 			description: "ユーザーへの通知を表示するトーストコンポーネントです。",
 			href: "/examples/toast",
-		}
+		},
 	];
 
 	return (

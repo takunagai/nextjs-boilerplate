@@ -163,7 +163,12 @@ export default function MasonryGallery({
 			className={clsx("@container", className)}
 		>
 			<ul
-				className={clsx("list-none p-0 m-0", columnClasses, gapClass, vGapClass)}
+				className={clsx(
+					"list-none p-0 m-0",
+					columnClasses,
+					gapClass,
+					vGapClass,
+				)}
 			>
 				{photos.map((photo, index) => (
 					<li
@@ -173,16 +178,24 @@ export default function MasonryGallery({
 							onPhotoClick ? "cursor-pointer" : "",
 							itemClassName,
 						)}
-						onClick={onPhotoClick ? () => onPhotoClick(photo, index) : undefined}
-						onKeyDown={onPhotoClick ? (e) => {
-							if (e.key === "Enter" || e.key === " ") {
-								e.preventDefault();
-								onPhotoClick(photo, index);
-							}
-						} : undefined}
+						onClick={
+							onPhotoClick ? () => onPhotoClick(photo, index) : undefined
+						}
+						onKeyDown={
+							onPhotoClick
+								? (e) => {
+										if (e.key === "Enter" || e.key === " ") {
+											e.preventDefault();
+											onPhotoClick(photo, index);
+										}
+									}
+								: undefined
+						}
 						tabIndex={onPhotoClick ? 0 : undefined}
 						role={onPhotoClick ? "button" : undefined}
-						aria-label={photo.alt ? `View ${photo.alt}` : `View image ${index + 1}`}
+						aria-label={
+							photo.alt ? `View ${photo.alt}` : `View image ${index + 1}`
+						}
 					>
 						<figure className="relative w-full overflow-hidden rounded-xs">
 							<Image

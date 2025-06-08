@@ -159,7 +159,9 @@ describe("server/actions/validation", () => {
 				age: -1,
 			};
 
-			await expect(validateAction(testSchema, invalidData)).rejects.toThrow(ActionError);
+			await expect(validateAction(testSchema, invalidData)).rejects.toThrow(
+				ActionError,
+			);
 
 			try {
 				await validateAction(testSchema, invalidData);
@@ -198,7 +200,9 @@ describe("server/actions/validation", () => {
 				},
 			} as unknown as z.ZodType;
 
-			await expect(validateAction(problematicSchema, {})).rejects.toThrow(ActionError);
+			await expect(validateAction(problematicSchema, {})).rejects.toThrow(
+				ActionError,
+			);
 
 			try {
 				await validateAction(problematicSchema, {});
@@ -227,11 +231,15 @@ describe("server/actions/validation", () => {
 		});
 
 		it("undefinedデータでバリデーションエラー", async () => {
-			await expect(validateAction(testSchema, undefined)).rejects.toThrow(ActionError);
+			await expect(validateAction(testSchema, undefined)).rejects.toThrow(
+				ActionError,
+			);
 		});
 
 		it("nullデータでバリデーションエラー", async () => {
-			await expect(validateAction(testSchema, null)).rejects.toThrow(ActionError);
+			await expect(validateAction(testSchema, null)).rejects.toThrow(
+				ActionError,
+			);
 		});
 	});
 
@@ -252,7 +260,7 @@ describe("server/actions/validation", () => {
 				z.object({
 					email: z.string().email(),
 					count: z.number(),
-				})
+				}),
 			);
 
 			// TypeScriptの型チェックのため
@@ -273,7 +281,7 @@ describe("server/actions/validation", () => {
 						}),
 					}),
 					metadata: z.record(z.string(), z.unknown()),
-				})
+				}),
 			);
 
 			expect(complexSchema).toBeDefined();
@@ -358,7 +366,7 @@ describe("server/actions/validation", () => {
 					profile: z.object({
 						age: z.number().min(18, "18歳以上である必要があります"),
 					}),
-				})
+				}),
 			);
 
 			// デフォルト値設定
@@ -383,7 +391,9 @@ describe("server/actions/validation", () => {
 					const fieldErrors = error.details?.fieldErrors as FieldErrors;
 					expect(fieldErrors.username).toBe("ユーザー名は3文字以上");
 					expect(fieldErrors.email).toBe("無効なメールアドレス");
-					expect(fieldErrors["profile.age"]).toBe("18歳以上である必要があります");
+					expect(fieldErrors["profile.age"]).toBe(
+						"18歳以上である必要があります",
+					);
 				}
 			}
 

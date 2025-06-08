@@ -33,13 +33,13 @@ export type FeatureComparisonProps = {
 		plan: Plan,
 	) => ReactNode;
 	title?: string; // テーブルのタイトル（アクセシビリティ用）
-	
+
 	// スタイルカスタマイズ用props
-	tableClassName?: string;        // テーブル全体
-	headerClassName?: string;       // ヘッダー行
-	headerCellClassName?: string;   // ヘッダーセル
-	rowClassName?: string;          // ボディ行
-	cellClassName?: string;         // ボディセル
+	tableClassName?: string; // テーブル全体
+	headerClassName?: string; // ヘッダー行
+	headerCellClassName?: string; // ヘッダーセル
+	rowClassName?: string; // ボディ行
+	cellClassName?: string; // ボディセル
 	highlightColumnClassName?: string; // ハイライト列のスタイル
 };
 
@@ -92,7 +92,9 @@ export function FeatureComparison({
 			>
 				<thead className={headerClassName}>
 					<tr>
-						<th className={cn("w-[180px]", headerCellClassName)}>機能/サービス</th>
+						<th className={cn("w-[180px]", headerCellClassName)}>
+							機能/サービス
+						</th>
 						{plans.map((plan) => (
 							<th
 								key={plan.key}

@@ -28,7 +28,9 @@ export function DatePicker({
 	minDate,
 	maxDate,
 }: DatePickerProps) {
-	const [selectedDate, setSelectedDate] = React.useState<Date | undefined>(date);
+	const [selectedDate, setSelectedDate] = React.useState<Date | undefined>(
+		date,
+	);
 	const [isCalendarOpen, setIsCalendarOpen] = React.useState(false);
 	const calendarRef = React.useRef<HTMLDivElement>(null);
 
@@ -46,7 +48,7 @@ export function DatePicker({
 		onSelect(newDate);
 		setIsCalendarOpen(false); // Close calendar on date select
 	};
-	
+
 	// 日付が選択可能かどうかをチェック
 	const isDateDisabled = (day: Date): boolean => {
 		const isBeforeMin = minDate ? day < minDate : false;
@@ -105,7 +107,11 @@ export function DatePicker({
 				disabled={disabled}
 				aria-expanded={isCalendarOpen}
 				aria-haspopup="dialog"
-				aria-label={selectedDate ? `Selected date is ${format(selectedDate, "PPP")}` : `Select date, ${placeholder}`}
+				aria-label={
+					selectedDate
+						? `Selected date is ${format(selectedDate, "PPP")}`
+						: `Select date, ${placeholder}`
+				}
 			>
 				<FaCalendarAlt className="mr-2 h-4 w-4" />
 				{selectedDate ? (
@@ -115,7 +121,7 @@ export function DatePicker({
 				)}
 			</Button>
 			{isCalendarOpen && (
-				<div 
+				<div
 					className="absolute z-50 mt-1 w-auto rounded-md border bg-popover p-0 shadow-md outline-none animate-in fade-in-0 zoom-in-95"
 					role="dialog"
 					aria-label="カレンダー"

@@ -61,8 +61,8 @@ function validateCsrf(req: NextRequest): boolean {
 function applyRateLimit(req: NextRequest): boolean {
 	// API、認証エンドポイントのみに適用
 	const AUTH_PATHS = ["/api", "/login", "/register"];
-	const isProtectedPath = AUTH_PATHS.some((path) => 
-		req.nextUrl.pathname.startsWith(path)
+	const isProtectedPath = AUTH_PATHS.some((path) =>
+		req.nextUrl.pathname.startsWith(path),
 	);
 
 	if (!isProtectedPath) {
