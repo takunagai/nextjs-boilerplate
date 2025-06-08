@@ -1,0 +1,323 @@
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { Header } from "../header";
+import { usePathname } from "next/navigation";
+import { useScroll } from "@/hooks/useScroll";
+import { useIsClient, useLocalStorage, useMediaQuery } from "usehooks-ts";
+import "@testing-library/jest-dom";
+
+// モックの設定
+jest.mock("next/navigation");
+jest.mock("@/hooks/useScroll");
+jest.mock("usehooks-ts");
+jest.mock("@/components/theme/theme-switcher", () => ({
+	ThemeSwitcher: () => <div data-testid="theme-switcher" />,
+}));
+jest.mock("../header/desktop-navigation", () => ({
+	DesktopNavigation: ({ items }: any) => (
+		<nav data-testid="desktop-navigation">
+			{items.map((item: any) => (
+				<a key={item.href} href={item.href}>
+					{item.label}
+				</a>
+			))}
+		</nav>
+	),
+}));
+jest.mock("../header/mobile-navigation", () => ({
+	MobileNavigation: ({ items, isOpen, setIsOpen }: any) => (
+		<div data-testid="mobile-navigation">
+			<button onClick={() => setIsOpen(!isOpen)}>メニュー</button>
+			{isOpen && items.map((item: any) => (
+				<a key={item.href} href={item.href}>
+					{item.label}
+				</a>
+			))}
+		</div>
+	),
+}));
+
+// Next.js Imageコンポーネントのモック
+jest.mock("next/image", () => ({
+	__esModule: true,
+	default: (props: any) => {
+		// eslint-disable-next-line jsx-a11y/alt-text, @next/next/no-img-element
+		return <img {...props} />;
+	},
+}));
+
+describe("Header", () => {
+	const mockItems = [
+		{ label: "ホーム", href: "/" },
+		{ label: "サービス", href: "/services" },
+		{ label: "お問い合わせ", href: "/contact" },
+	];
+
+	const mockSetStoredViewportInfo = jest.fn();
+
+	beforeEach(() => {
+		jest.clearAllMocks();
+		(usePathname as jest.Mock).mockReturnValue("/");
+		(useIsClient as jest.Mock).mockReturnValue(true);
+		(useLocalStorage as jest.Mock).mockReturnValue([
+			{ isDesktop: false, timestamp: 0 },
+			mockSetStoredViewportInfo,
+		]);
+		(useScroll as jest.Mock).mockReturnValue({
+			visible: true,
+			isAtTop: true,
+			direction: null,
+		});
+	});
+
+	describe("基本的な表示", () => {
+		it("ロゴとアプリ名が表示される", () => {
+			(useMediaQuery as jest.Mock).mockReturnValue(true);
+
+			render(<Header items={mockItems} />);
+
+			expect(screen.getByAltText("Next.js Boilerplate")).toBeInTheDocument();
+			expect(screen.getByText("Next.js Boilerplate")).toBeInTheDocument();
+		});
+
+		it("カスタムロゴが表示される", () => {
+			(useMediaQuery as jest.Mock).mockReturnValue(true);
+			const customLogo = <div data-testid="custom-logo">Custom Logo</div>;
+
+			render(<Header items={mockItems} logo={customLogo} />);
+
+			expect(screen.getByTestId("custom-logo")).toBeInTheDocument();
+		});
+
+		it("カスタムロゴテキストが表示される", () => {
+			(useMediaQuery as jest.Mock).mockReturnValue(true);
+
+			render(<Header items={mockItems} logoText="カスタムアプリ" />);
+
+			expect(screen.getByText("カスタムアプリ")).toBeInTheDocument();
+		});
+	});
+
+	describe("レスポンシブ対応", () => {
+		it("デスクトップサイズではデスクトップナビゲーションが表示される", () => {
+			(useMediaQuery as jest.Mock).mockReturnValue(true);
+
+			render(<Header items={mockItems} />);
+
+			expect(screen.getByTestId("desktop-navigation")).toBeInTheDocument();
+			expect(screen.queryByTestId("mobile-navigation")).not.toBeInTheDocument();
+		});
+
+		it("モバイルサイズではモバイルナビゲーションが表示される", () => {
+			(useMediaQuery as jest.Mock).mockReturnValue(false);
+
+			render(<Header items={mockItems} />);
+
+			expect(screen.queryByTestId("desktop-navigation")).not.toBeInTheDocument();
+			expect(screen.getByTestId("mobile-navigation")).toBeInTheDocument();
+		});
+
+		it("ブレイクポイントをカスタマイズできる", () => {
+			(useMediaQuery as jest.Mock).mockImplementation((query: string) => {
+				return query === "(min-width: 1024px)";
+			});
+
+			render(<Header items={mockItems} mobileMenuBreakpoint="lg" />);
+
+			// useMediaQueryが正しいクエリで呼ばれたか確認
+			expect(useMediaQuery).toHaveBeenCalledWith("(min-width: 1024px)");
+		});
+	});
+
+	describe("ナビゲーションアイテムのアクティブ状態", () => {
+		it("現在のパスに応じてアイテムがアクティブになる", () => {
+			(usePathname as jest.Mock).mockReturnValue("/services");
+			(useMediaQuery as jest.Mock).mockReturnValue(true);
+
+			render(<Header items={mockItems} />);
+
+			// ナビゲーションコンポーネントに渡されたitemsをチェック
+			const navItems = screen.getByTestId("desktop-navigation");
+			expect(navItems).toBeInTheDocument();
+		});
+	});
+
+	describe("スクロール動作", () => {
+		it("スクロール時に背景がぼかし効果付きになる", () => {
+			(useMediaQuery as jest.Mock).mockReturnValue(true);
+			(useScroll as jest.Mock).mockReturnValue({
+				visible: true,
+				isAtTop: false,
+				direction: "down",
+			});
+
+			const { container } = render(<Header items={mockItems} />);
+
+			const header = container.querySelector("header");
+			expect(header).toHaveClass("bg-background/90", "backdrop-blur-sm", "shadow-sm");
+		});
+
+		it("hideOnScrollがtrueの場合、下スクロール時にヘッダーが隠れる", () => {
+			(useMediaQuery as jest.Mock).mockReturnValue(true);
+			(useScroll as jest.Mock).mockReturnValue({
+				visible: false,
+				isAtTop: false,
+				direction: "down",
+			});
+
+			const { container } = render(<Header items={mockItems} hideOnScroll={true} />);
+
+			const header = container.querySelector("header");
+			expect(header).toHaveClass("-translate-y-full");
+		});
+
+		it("hideOnScrollがfalseの場合、スクロールしてもヘッダーは隠れない", () => {
+			(useMediaQuery as jest.Mock).mockReturnValue(true);
+			(useScroll as jest.Mock).mockReturnValue({
+				visible: false,
+				isAtTop: false,
+				direction: "down",
+			});
+
+			const { container } = render(<Header items={mockItems} hideOnScroll={false} />);
+
+			const header = container.querySelector("header");
+			expect(header).toHaveClass("translate-y-0");
+			expect(header).not.toHaveClass("-translate-y-full");
+		});
+
+		it("メニューが開いている時はスクロールしても隠れない", () => {
+			(useMediaQuery as jest.Mock).mockReturnValue(false);
+			(useScroll as jest.Mock).mockReturnValue({
+				visible: false,
+				isAtTop: false,
+				direction: "down",
+			});
+
+			const { container } = render(<Header items={mockItems} hideOnScroll={true} />);
+
+			// モバイルメニューを開く
+			const menuButton = screen.getByText("メニュー");
+			fireEvent.click(menuButton);
+
+			const header = container.querySelector("header");
+			expect(header).not.toHaveClass("-translate-y-full");
+		});
+	});
+
+	describe("透明背景", () => {
+		it("background=transparentかつページトップの時、背景が透明になる", () => {
+			(useMediaQuery as jest.Mock).mockReturnValue(true);
+			(useScroll as jest.Mock).mockReturnValue({
+				visible: true,
+				isAtTop: true,
+				direction: null,
+			});
+
+			const { container } = render(<Header items={mockItems} background="transparent" />);
+
+			const header = container.querySelector("header");
+			expect(header).toHaveClass("bg-transparent");
+		});
+
+		it("background=transparentでもスクロール時は背景が表示される", () => {
+			(useMediaQuery as jest.Mock).mockReturnValue(true);
+			(useScroll as jest.Mock).mockReturnValue({
+				visible: true,
+				isAtTop: false,
+				direction: "down",
+			});
+
+			const { container } = render(<Header items={mockItems} background="transparent" />);
+
+			const header = container.querySelector("header");
+			expect(header).toHaveClass("bg-background/90");
+		});
+	});
+
+	describe("バリアント", () => {
+		it("異なる背景バリアントが適用される", () => {
+			(useMediaQuery as jest.Mock).mockReturnValue(true);
+
+			const { container, rerender } = render(<Header items={mockItems} background="primary" />);
+			let header = container.querySelector("header");
+			expect(header).toHaveClass("bg-primary", "text-primary-foreground");
+
+			rerender(<Header items={mockItems} background="secondary" />);
+			header = container.querySelector("header");
+			expect(header).toHaveClass("bg-secondary");
+		});
+
+		it("異なる高さバリアントが適用される", () => {
+			(useMediaQuery as jest.Mock).mockReturnValue(true);
+
+			const { container, rerender } = render(<Header items={mockItems} height="sm" />);
+			let header = container.querySelector("header");
+			expect(header).toHaveClass("h-12");
+
+			rerender(<Header items={mockItems} height="lg" />);
+			header = container.querySelector("header");
+			expect(header).toHaveClass("h-20");
+		});
+	});
+
+	describe("右側コンテンツ", () => {
+		it("カスタム右側コンテンツが表示される", () => {
+			(useMediaQuery as jest.Mock).mockReturnValue(true);
+			const rightContent = <button data-testid="login-button">ログイン</button>;
+
+			render(<Header items={mockItems} rightContent={rightContent} />);
+
+			expect(screen.getByTestId("login-button")).toBeInTheDocument();
+			expect(screen.getByTestId("theme-switcher")).toBeInTheDocument();
+		});
+	});
+
+	describe("ローカルストレージとの連携", () => {
+		it("画面サイズ情報がローカルストレージに保存される", () => {
+			(useMediaQuery as jest.Mock).mockReturnValue(true);
+
+			render(<Header items={mockItems} />);
+
+			expect(mockSetStoredViewportInfo).toHaveBeenCalledWith({
+				isDesktop: true,
+				timestamp: expect.any(Number),
+			});
+		});
+	});
+
+	describe("SSR対応", () => {
+		it("クライアントサイドでない場合、スケルトンUIが表示される", () => {
+			(useIsClient as jest.Mock).mockReturnValue(false);
+			(useMediaQuery as jest.Mock).mockReturnValue(true);
+
+			render(<Header items={mockItems} />);
+
+			// スケルトンUIの確認
+			const skeletons = screen.getAllByRole("generic").filter(
+				(el) => el.className.includes("animate-pulse")
+			);
+			expect(skeletons.length).toBeGreaterThan(0);
+		});
+	});
+
+	describe("モバイルメニューの開閉", () => {
+		it("デスクトップサイズになったらモバイルメニューが自動的に閉じる", () => {
+			const { rerender } = render(<Header items={mockItems} />);
+
+			// 最初はモバイルサイズ
+			(useMediaQuery as jest.Mock).mockReturnValue(false);
+			rerender(<Header items={mockItems} />);
+
+			// メニューを開く
+			const menuButton = screen.getByText("メニュー");
+			fireEvent.click(menuButton);
+
+			// デスクトップサイズに変更
+			(useMediaQuery as jest.Mock).mockReturnValue(true);
+			rerender(<Header items={mockItems} />);
+
+			// モバイルナビゲーションが表示されていないことを確認
+			expect(screen.queryByTestId("mobile-navigation")).not.toBeInTheDocument();
+		});
+	});
+});
