@@ -108,6 +108,7 @@ export type TableHeadProps<TData> = Omit<TableChildProps, "children"> &
 		sortConfig: SortConfig<TData> | null;
 		requestSort: (key: keyof TData | (string & {})) => void;
 		scope?: "col" | "row";
+		children?: ReactNode;
 	};
 
 /**

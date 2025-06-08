@@ -4,8 +4,8 @@
 
 import * as React from "react";
 import { cn } from "@/lib/utils";
-import type { TableHeaderProps as BaseHeaderProps, ColumnDef } from "./types";
-import { TableRow } from "./TableRow"; // Assuming TableRow might be used for the header row
+import type { TableHeaderProps as BaseHeaderProps } from "./types";
+// TableRow requires row data, so we'll use primitive tr for header
 import { TableHead } from "./TableHead"; // The actual header cell component
 
 // Update TableHeaderProps to be generic
@@ -25,7 +25,7 @@ export const TableHeader = <TData,>({
 			{...props}
 		>
 			{/* Assuming a single header row for now. Multi-row headers would need more complex logic. */}
-			<TableRow>
+			<tr className="transition-colors hover:bg-muted/50 border-b">
 				{columns.map((column, index) => (
 					<TableHead<TData>
 						key={(column.accessorKey as string) || index} // Ensure key is string
@@ -35,7 +35,7 @@ export const TableHeader = <TData,>({
 						// className={column.className} // If you add className to ColumnDef
 					/>
 				))}
-			</TableRow>
+			</tr>
 		</thead>
 	);
 };
