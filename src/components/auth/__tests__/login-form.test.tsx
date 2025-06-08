@@ -13,9 +13,9 @@ vi.mock('next/navigation', () => ({
 }));
 
 // Typedefs for mocks
-const mockUseAuth = useAuth as vi.MockedFunction<typeof useAuth>;
-const mockUseLoginForm = useLoginForm as vi.MockedFunction<typeof useLoginForm>;
-const mockUseRouter = useRouter as vi.MockedFunction<typeof useRouter>;
+const mockUseAuth = useAuth as ReturnType<typeof vi.fn>;
+const mockUseLoginForm = useLoginForm as ReturnType<typeof vi.fn>;
+const mockUseRouter = useRouter as ReturnType<typeof vi.fn>;
 
 const mockPush = vi.fn();
 const mockReplace = vi.fn();

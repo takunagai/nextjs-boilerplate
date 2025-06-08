@@ -1,18 +1,18 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { Header } from "../header";
 import { usePathname } from "next/navigation";
 import { useScroll } from "@/hooks/useScroll";
 import { useIsClient, useLocalStorage, useMediaQuery } from "usehooks-ts";
-import "@testing-library/jest-dom";
 
 // モックの設定
-jest.mock("next/navigation");
-jest.mock("@/hooks/useScroll");
-jest.mock("usehooks-ts");
-jest.mock("@/components/theme/theme-switcher", () => ({
+vi.mock("next/navigation");
+vi.mock("@/hooks/useScroll");
+vi.mock("usehooks-ts");
+vi.mock("@/components/theme/theme-switcher", () => ({
 	ThemeSwitcher: () => <div data-testid="theme-switcher" />,
 }));
-jest.mock("../header/desktop-navigation", () => ({
+vi.mock("../header/desktop-navigation", () => ({
 	DesktopNavigation: ({ items }: any) => (
 		<nav data-testid="desktop-navigation">
 			{items.map((item: any) => (
@@ -23,7 +23,7 @@ jest.mock("../header/desktop-navigation", () => ({
 		</nav>
 	),
 }));
-jest.mock("../header/mobile-navigation", () => ({
+vi.mock("../header/mobile-navigation", () => ({
 	MobileNavigation: ({ items, isOpen, setIsOpen }: any) => (
 		<div data-testid="mobile-navigation">
 			<button onClick={() => setIsOpen(!isOpen)}>メニュー</button>
@@ -37,8 +37,7 @@ jest.mock("../header/mobile-navigation", () => ({
 }));
 
 // Next.js Imageコンポーネントのモック
-jest.mock("next/image", () => ({
-	__esModule: true,
+vi.mock("next/image", () => ({
 	default: (props: any) => {
 		// eslint-disable-next-line jsx-a11y/alt-text, @next/next/no-img-element
 		return <img {...props} />;
@@ -52,17 +51,17 @@ describe("Header", () => {
 		{ label: "お問い合わせ", href: "/contact" },
 	];
 
-	const mockSetStoredViewportInfo = jest.fn();
+	const mockSetStoredViewportInfo = vi.fn();
 
 	beforeEach(() => {
-		jest.clearAllMocks();
-		(usePathname as jest.Mock).mockReturnValue("/");
-		(useIsClient as jest.Mock).mockReturnValue(true);
-		(useLocalStorage as jest.Mock).mockReturnValue([
+		vi.clearAllMocks();
+		(usePathname as ReturnType<typeof vi.fn>).mockReturnValue("/");
+		(useIsClient as ReturnType<typeof vi.fn>).mockReturnValue(true);
+		(useLocalStorage as ReturnType<typeof vi.fn>).mockReturnValue([
 			{ isDesktop: false, timestamp: 0 },
 			mockSetStoredViewportInfo,
 		]);
-		(useScroll as jest.Mock).mockReturnValue({
+		(useScroll as ReturnType<typeof vi.fn>).mockReturnValue({
 			visible: true,
 			isAtTop: true,
 			direction: null,
@@ -71,7 +70,7 @@ describe("Header", () => {
 
 	describe("基本的な表示", () => {
 		it("ロゴとアプリ名が表示される", () => {
-			(useMediaQuery as jest.Mock).mockReturnValue(true);
+			(useMediaQuery as ReturnType<typeof vi.fn>).mockReturnValue(true);
 
 			render(<Header items={mockItems} />);
 
@@ -80,7 +79,7 @@ describe("Header", () => {
 		});
 
 		it("カスタムロゴが表示される", () => {
-			(useMediaQuery as jest.Mock).mockReturnValue(true);
+			(useMediaQuery as ReturnType<typeof vi.fn>).mockReturnValue(true);
 			const customLogo = <div data-testid="custom-logo">Custom Logo</div>;
 
 			render(<Header items={mockItems} logo={customLogo} />);
@@ -89,7 +88,7 @@ describe("Header", () => {
 		});
 
 		it("カスタムロゴテキストが表示される", () => {
-			(useMediaQuery as jest.Mock).mockReturnValue(true);
+			(useMediaQuery as ReturnType<typeof vi.fn>).mockReturnValue(true);
 
 			render(<Header items={mockItems} logoText="カスタムアプリ" />);
 
@@ -99,7 +98,7 @@ describe("Header", () => {
 
 	describe("レスポンシブ対応", () => {
 		it("デスクトップサイズではデスクトップナビゲーションが表示される", () => {
-			(useMediaQuery as jest.Mock).mockReturnValue(true);
+			(useMediaQuery as ReturnType<typeof vi.fn>).mockReturnValue(true);
 
 			render(<Header items={mockItems} />);
 
@@ -108,7 +107,7 @@ describe("Header", () => {
 		});
 
 		it("モバイルサイズではモバイルナビゲーションが表示される", () => {
-			(useMediaQuery as jest.Mock).mockReturnValue(false);
+			(useMediaQuery as ReturnType<typeof vi.fn>).mockReturnValue(false);
 
 			render(<Header items={mockItems} />);
 
@@ -117,7 +116,7 @@ describe("Header", () => {
 		});
 
 		it("ブレイクポイントをカスタマイズできる", () => {
-			(useMediaQuery as jest.Mock).mockImplementation((query: string) => {
+			(useMediaQuery as ReturnType<typeof vi.fn>).mockImplementation((query: string) => {
 				return query === "(min-width: 1024px)";
 			});
 
@@ -130,8 +129,8 @@ describe("Header", () => {
 
 	describe("ナビゲーションアイテムのアクティブ状態", () => {
 		it("現在のパスに応じてアイテムがアクティブになる", () => {
-			(usePathname as jest.Mock).mockReturnValue("/services");
-			(useMediaQuery as jest.Mock).mockReturnValue(true);
+			(usePathname as ReturnType<typeof vi.fn>).mockReturnValue("/services");
+			(useMediaQuery as ReturnType<typeof vi.fn>).mockReturnValue(true);
 
 			render(<Header items={mockItems} />);
 
@@ -143,8 +142,8 @@ describe("Header", () => {
 
 	describe("スクロール動作", () => {
 		it("スクロール時に背景がぼかし効果付きになる", () => {
-			(useMediaQuery as jest.Mock).mockReturnValue(true);
-			(useScroll as jest.Mock).mockReturnValue({
+			(useMediaQuery as ReturnType<typeof vi.fn>).mockReturnValue(true);
+			(useScroll as ReturnType<typeof vi.fn>).mockReturnValue({
 				visible: true,
 				isAtTop: false,
 				direction: "down",
@@ -157,8 +156,8 @@ describe("Header", () => {
 		});
 
 		it("hideOnScrollがtrueの場合、下スクロール時にヘッダーが隠れる", () => {
-			(useMediaQuery as jest.Mock).mockReturnValue(true);
-			(useScroll as jest.Mock).mockReturnValue({
+			(useMediaQuery as ReturnType<typeof vi.fn>).mockReturnValue(true);
+			(useScroll as ReturnType<typeof vi.fn>).mockReturnValue({
 				visible: false,
 				isAtTop: false,
 				direction: "down",
@@ -171,8 +170,8 @@ describe("Header", () => {
 		});
 
 		it("hideOnScrollがfalseの場合、スクロールしてもヘッダーは隠れない", () => {
-			(useMediaQuery as jest.Mock).mockReturnValue(true);
-			(useScroll as jest.Mock).mockReturnValue({
+			(useMediaQuery as ReturnType<typeof vi.fn>).mockReturnValue(true);
+			(useScroll as ReturnType<typeof vi.fn>).mockReturnValue({
 				visible: false,
 				isAtTop: false,
 				direction: "down",
@@ -186,8 +185,8 @@ describe("Header", () => {
 		});
 
 		it("メニューが開いている時はスクロールしても隠れない", () => {
-			(useMediaQuery as jest.Mock).mockReturnValue(false);
-			(useScroll as jest.Mock).mockReturnValue({
+			(useMediaQuery as ReturnType<typeof vi.fn>).mockReturnValue(false);
+			(useScroll as ReturnType<typeof vi.fn>).mockReturnValue({
 				visible: false,
 				isAtTop: false,
 				direction: "down",
@@ -206,8 +205,8 @@ describe("Header", () => {
 
 	describe("透明背景", () => {
 		it("background=transparentかつページトップの時、背景が透明になる", () => {
-			(useMediaQuery as jest.Mock).mockReturnValue(true);
-			(useScroll as jest.Mock).mockReturnValue({
+			(useMediaQuery as ReturnType<typeof vi.fn>).mockReturnValue(true);
+			(useScroll as ReturnType<typeof vi.fn>).mockReturnValue({
 				visible: true,
 				isAtTop: true,
 				direction: null,
@@ -220,8 +219,8 @@ describe("Header", () => {
 		});
 
 		it("background=transparentでもスクロール時は背景が表示される", () => {
-			(useMediaQuery as jest.Mock).mockReturnValue(true);
-			(useScroll as jest.Mock).mockReturnValue({
+			(useMediaQuery as ReturnType<typeof vi.fn>).mockReturnValue(true);
+			(useScroll as ReturnType<typeof vi.fn>).mockReturnValue({
 				visible: true,
 				isAtTop: false,
 				direction: "down",
@@ -236,7 +235,7 @@ describe("Header", () => {
 
 	describe("バリアント", () => {
 		it("異なる背景バリアントが適用される", () => {
-			(useMediaQuery as jest.Mock).mockReturnValue(true);
+			(useMediaQuery as ReturnType<typeof vi.fn>).mockReturnValue(true);
 
 			const { container, rerender } = render(<Header items={mockItems} background="primary" />);
 			let header = container.querySelector("header");
@@ -248,7 +247,7 @@ describe("Header", () => {
 		});
 
 		it("異なる高さバリアントが適用される", () => {
-			(useMediaQuery as jest.Mock).mockReturnValue(true);
+			(useMediaQuery as ReturnType<typeof vi.fn>).mockReturnValue(true);
 
 			const { container, rerender } = render(<Header items={mockItems} height="sm" />);
 			let header = container.querySelector("header");
@@ -262,7 +261,7 @@ describe("Header", () => {
 
 	describe("右側コンテンツ", () => {
 		it("カスタム右側コンテンツが表示される", () => {
-			(useMediaQuery as jest.Mock).mockReturnValue(true);
+			(useMediaQuery as ReturnType<typeof vi.fn>).mockReturnValue(true);
 			const rightContent = <button data-testid="login-button">ログイン</button>;
 
 			render(<Header items={mockItems} rightContent={rightContent} />);
@@ -274,7 +273,7 @@ describe("Header", () => {
 
 	describe("ローカルストレージとの連携", () => {
 		it("画面サイズ情報がローカルストレージに保存される", () => {
-			(useMediaQuery as jest.Mock).mockReturnValue(true);
+			(useMediaQuery as ReturnType<typeof vi.fn>).mockReturnValue(true);
 
 			render(<Header items={mockItems} />);
 
@@ -287,8 +286,8 @@ describe("Header", () => {
 
 	describe("SSR対応", () => {
 		it("クライアントサイドでない場合、スケルトンUIが表示される", () => {
-			(useIsClient as jest.Mock).mockReturnValue(false);
-			(useMediaQuery as jest.Mock).mockReturnValue(true);
+			(useIsClient as ReturnType<typeof vi.fn>).mockReturnValue(false);
+			(useMediaQuery as ReturnType<typeof vi.fn>).mockReturnValue(true);
 
 			render(<Header items={mockItems} />);
 
@@ -305,7 +304,7 @@ describe("Header", () => {
 			const { rerender } = render(<Header items={mockItems} />);
 
 			// 最初はモバイルサイズ
-			(useMediaQuery as jest.Mock).mockReturnValue(false);
+			(useMediaQuery as ReturnType<typeof vi.fn>).mockReturnValue(false);
 			rerender(<Header items={mockItems} />);
 
 			// メニューを開く
@@ -313,7 +312,7 @@ describe("Header", () => {
 			fireEvent.click(menuButton);
 
 			// デスクトップサイズに変更
-			(useMediaQuery as jest.Mock).mockReturnValue(true);
+			(useMediaQuery as ReturnType<typeof vi.fn>).mockReturnValue(true);
 			rerender(<Header items={mockItems} />);
 
 			// モバイルナビゲーションが表示されていないことを確認

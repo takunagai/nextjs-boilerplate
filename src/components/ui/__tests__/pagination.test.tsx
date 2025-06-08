@@ -8,10 +8,10 @@ import {
 	PaginationNext,
 	PaginationPrevious,
 } from "../pagination";
-import "@testing-library/jest-dom";
+import { vi } from "vitest";
 
 // アイコンのモック
-jest.mock("react-icons/lu", () => ({
+vi.mock("react-icons/lu", () => ({
 	LuChevronLeft: () => <div data-testid="chevron-left-icon" />,
 	LuChevronRight: () => <div data-testid="chevron-right-icon" />,
 	LuEllipsis: () => <div data-testid="ellipsis-icon" />,

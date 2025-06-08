@@ -9,10 +9,10 @@ import {
 	DialogDescription,
 	DialogClose,
 } from "../dialog";
-import "@testing-library/jest-dom";
+import { vi } from "vitest";
 
 // Radix UIのモック
-jest.mock("@radix-ui/react-dialog", () => ({
+vi.mock("@radix-ui/react-dialog", () => ({
 	Root: ({ children, onOpenChange, ...props }: any) => (
 		<div data-testid="dialog-root" data-props={JSON.stringify(props)}>
 			{children}
@@ -77,7 +77,7 @@ jest.mock("@radix-ui/react-dialog", () => ({
 }));
 
 // アイコンのモック
-jest.mock("react-icons/fa6", () => ({
+vi.mock("react-icons/fa6", () => ({
 	FaXmark: () => <div data-testid="close-icon" />,
 }));
 
@@ -107,7 +107,7 @@ describe("Dialog Components", () => {
 		});
 
 		it("プロパティが正しく渡される", () => {
-			const onOpenChange = jest.fn();
+			const onOpenChange = vi.fn();
 			render(
 				<Dialog open={true} onOpenChange={onOpenChange}>
 					<div>Content</div>

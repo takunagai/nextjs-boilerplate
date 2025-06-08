@@ -3,15 +3,13 @@ import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { ContactEmailForm } from '../contact-mailform';
 import { submitContactForm } from '@/app/actions/contact-form';
-import type { ActionError, ActionSuccess } from '@/lib/server';
+import type { ActionError } from '@/lib/server';
 
 vi.mock('@/app/actions/contact-form', () => ({
   submitContactForm: vi.fn(),
 }));
 
-const mockSubmitContactForm = submitContactForm as vi.MockedFunction<
-  typeof submitContactForm
->;
+const mockSubmitContactForm = submitContactForm as ReturnType<typeof vi.fn>;
 
 describe('ContactEmailForm', () => {
   const user = userEvent.setup(); 
@@ -21,7 +19,7 @@ describe('ContactEmailForm', () => {
     mockSubmitContactForm.mockResolvedValue({
       success: true,
       data: { message: '送信が完了しました。' }, 
-    } as ActionSuccess<{ message: string }>);
+    });
   });
 
   describe('Initial Rendering', () => {
@@ -31,11 +29,11 @@ describe('ContactEmailForm', () => {
       expect(screen.getByText('メールフォーム')).toBeInTheDocument();
       expect(screen.getByText(/以下のフォームに必要事項をご入力の上/)).toBeInTheDocument();
 
-      const nameInput = screen.getByLabelText(/お名前/);
+      const nameInput = screen.getByLabelText(/お名前/) as HTMLInputElement;
       expect(nameInput).toBeInTheDocument();
       expect(nameInput.labels?.[0]?.textContent).toMatch(/お名前\s*\*/);
 
-      const emailInput = screen.getByLabelText(/メールアドレス/);
+      const emailInput = screen.getByLabelText(/メールアドレス/) as HTMLInputElement;
       expect(emailInput).toBeInTheDocument();
       expect(emailInput.labels?.[0]?.textContent).toMatch(/メールアドレス\s*\*/);
       
@@ -47,7 +45,7 @@ describe('ContactEmailForm', () => {
       expect(radioNo).toBeInTheDocument();
       expect(radioNo).toBeChecked();
 
-      const messageInput = screen.getByLabelText(/お問い合わせ内容/);
+      const messageInput = screen.getByLabelText(/お問い合わせ内容/) as HTMLTextAreaElement;
       expect(messageInput).toBeInTheDocument();
       expect(messageInput.labels?.[0]?.textContent).toMatch(/お問い合わせ内容\s*\*/);
 
@@ -132,7 +130,7 @@ describe('ContactEmailForm', () => {
       await act(async () => {
         await user.click(screen.getByRole('radio', { name: '可' }));
       });
-      const phoneInput = await screen.findByLabelText(/電話番号/);
+      const phoneInput = await screen.findByLabelText(/電話番号/) as HTMLInputElement;
       expect(phoneInput).toBeInTheDocument();
       expect(phoneInput.labels?.[0]?.textContent).toMatch(/電話番号\s*\*/);
     });
@@ -229,10 +227,10 @@ describe('ContactEmailForm', () => {
     it('handles server-side validation error', async () => {
       const serverErrorMessage = "名前がサーバーで短すぎます。";
       const validationErrorResponse: ActionError = {
-        success: false, error: {
-          code: 'VALIDATION_ERROR', message: 'Server validation failed.',
-          details: { fieldErrors: { name: [serverErrorMessage] } },
-        },
+        name: 'ValidationError',
+        code: 'VALIDATION_ERROR', 
+        message: 'Server validation failed.',
+        details: { fieldErrors: { name: [serverErrorMessage] } },
       };
       mockSubmitContactForm.mockResolvedValueOnce(validationErrorResponse);
 
@@ -250,7 +248,9 @@ describe('ContactEmailForm', () => {
     it('handles other server error', async () => {
       const genericErrorMessage = 'A generic server error occurred.';
       const serverErrorResponse: ActionError = {
-        success: false, error: { message: genericErrorMessage },
+        name: 'ServerError',
+        code: 'INTERNAL_SERVER_ERROR',
+        message: genericErrorMessage,
       };
       mockSubmitContactForm.mockResolvedValueOnce(serverErrorResponse);
       render(<ContactEmailForm />);
@@ -265,7 +265,9 @@ describe('ContactEmailForm', () => {
     
     it('handles server error with no specific message', async () => {
       const serverErrorResponse: ActionError = {
-        success: false, error: { code: "INTERNAL_SERVER_ERROR" }, 
+        name: "ServerError",
+        code: "INTERNAL_SERVER_ERROR",
+        message: "An error occurred",
       };
       mockSubmitContactForm.mockResolvedValueOnce(serverErrorResponse);
       render(<ContactEmailForm />);
@@ -282,7 +284,7 @@ describe('ContactEmailForm', () => {
       mockSubmitContactForm.mockImplementationOnce(
         () => new Promise(resolve => setTimeout(() => resolve({
             success: true, data: { message: '送信完了' }
-        } as ActionSuccess<{message: string}>), 100)) 
+        }), 100)) 
       );
 
       render(<ContactEmailForm />);

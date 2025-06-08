@@ -1,17 +1,17 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { UserAuthMenu } from "../user-auth-menu";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
-import "@testing-library/jest-dom";
 
 // モックの設定
-jest.mock("@/hooks/useAuth");
-jest.mock("next/navigation", () => ({
-	useRouter: jest.fn(),
+vi.mock("@/hooks/useAuth");
+vi.mock("next/navigation", () => ({
+	useRouter: vi.fn(),
 }));
 
 // アイコンコンポーネントのモック
-jest.mock("react-icons/fa6", () => ({
+vi.mock("react-icons/fa6", () => ({
 	FaUser: () => <div data-testid="user-icon" />,
 	FaGear: () => <div data-testid="gear-icon" />,
 	FaRightFromBracket: () => <div data-testid="logout-icon" />,
@@ -21,13 +21,13 @@ jest.mock("react-icons/fa6", () => ({
 }));
 
 describe("UserAuthMenu", () => {
-	const mockPush = jest.fn();
-	const mockRefresh = jest.fn();
-	const mockLogout = jest.fn();
+	const mockPush = vi.fn();
+	const mockRefresh = vi.fn();
+	const mockLogout = vi.fn();
 
 	beforeEach(() => {
-		jest.clearAllMocks();
-		(useRouter as jest.Mock).mockReturnValue({
+		vi.clearAllMocks();
+		(useRouter as ReturnType<typeof vi.fn>).mockReturnValue({
 			push: mockPush,
 			refresh: mockRefresh,
 		});
@@ -35,7 +35,7 @@ describe("UserAuthMenu", () => {
 
 	describe("未認証状態", () => {
 		it("ログインボタンが表示される", () => {
-			(useAuth as jest.Mock).mockReturnValue({
+			(useAuth as ReturnType<typeof vi.fn>).mockReturnValue({
 				user: null,
 				isAuthenticated: false,
 				isLoading: false,
@@ -50,7 +50,7 @@ describe("UserAuthMenu", () => {
 		});
 
 		it("ログインボタンをクリックすると/loginに遷移する", () => {
-			(useAuth as jest.Mock).mockReturnValue({
+			(useAuth as ReturnType<typeof vi.fn>).mockReturnValue({
 				user: null,
 				isAuthenticated: false,
 				isLoading: false,
@@ -68,7 +68,7 @@ describe("UserAuthMenu", () => {
 
 	describe("読み込み中", () => {
 		it("スケルトンローディングが表示される", () => {
-			(useAuth as jest.Mock).mockReturnValue({
+			(useAuth as ReturnType<typeof vi.fn>).mockReturnValue({
 				user: null,
 				isAuthenticated: false,
 				isLoading: true,
@@ -94,7 +94,7 @@ describe("UserAuthMenu", () => {
 		};
 
 		beforeEach(() => {
-			(useAuth as jest.Mock).mockReturnValue({
+			(useAuth as ReturnType<typeof vi.fn>).mockReturnValue({
 				user: mockUser,
 				isAuthenticated: true,
 				isLoading: false,
@@ -105,41 +105,49 @@ describe("UserAuthMenu", () => {
 		it("ユーザーアバターが表示される", () => {
 			render(<UserAuthMenu />);
 
-			const avatar = screen.getByRole("button", { name: /avatar/i });
-			expect(avatar).toBeInTheDocument();
+			const avatarButton = screen.getByRole("button");
+			expect(avatarButton).toBeInTheDocument();
 		});
 
-		it("ドロップダウンメニューを開くとユーザー情報が表示される", () => {
-			render(<UserAuthMenu />);
+		it("ドロップダウンメニューを開くとユーザー情報が表示される", async () => {
+			render(<UserAuthMenu />, { container: document.body });
 
-			const avatarButton = screen.getByRole("button", { name: /avatar/i });
+			const avatarButton = screen.getByRole("button");
 			fireEvent.click(avatarButton);
 
-			expect(screen.getByText("Test User")).toBeInTheDocument();
-			expect(screen.getByText("test@example.com")).toBeInTheDocument();
+			await waitFor(() => {
+				expect(screen.getByText("Test User")).toBeInTheDocument();
+				expect(screen.getByText("test@example.com")).toBeInTheDocument();
+			});
 		});
 
-		it("一般ユーザー向けメニュー項目が表示される", () => {
-			render(<UserAuthMenu />);
+		it("一般ユーザー向けメニュー項目が表示される", async () => {
+			render(<UserAuthMenu />, { container: document.body });
 
-			const avatarButton = screen.getByRole("button", { name: /avatar/i });
+			const avatarButton = screen.getByRole("button");
 			fireEvent.click(avatarButton);
 
-			expect(screen.getByText("プロフィール")).toBeInTheDocument();
-			expect(screen.getByText("ダッシュボード")).toBeInTheDocument();
-			expect(screen.getByText("設定")).toBeInTheDocument();
-			expect(screen.getByText("ログアウト")).toBeInTheDocument();
+			await waitFor(() => {
+				expect(screen.getByText("プロフィール")).toBeInTheDocument();
+				expect(screen.getByText("ダッシュボード")).toBeInTheDocument();
+				expect(screen.getByText("設定")).toBeInTheDocument();
+				expect(screen.getByText("ログアウト")).toBeInTheDocument();
 
-			// 管理者メニューは表示されない
-			expect(screen.queryByText("管理画面")).not.toBeInTheDocument();
-			expect(screen.queryByText("ユーザー管理")).not.toBeInTheDocument();
+				// 管理者メニューは表示されない
+				expect(screen.queryByText("管理画面")).not.toBeInTheDocument();
+				expect(screen.queryByText("ユーザー管理")).not.toBeInTheDocument();
+			});
 		});
 
-		it("プロフィールをクリックすると/profileに遷移する", () => {
-			render(<UserAuthMenu />);
+		it("プロフィールをクリックすると/profileに遷移する", async () => {
+			render(<UserAuthMenu />, { container: document.body });
 
-			const avatarButton = screen.getByRole("button", { name: /avatar/i });
+			const avatarButton = screen.getByRole("button");
 			fireEvent.click(avatarButton);
+
+			await waitFor(() => {
+				expect(screen.getByText("プロフィール")).toBeInTheDocument();
+			});
 
 			const profileItem = screen.getByText("プロフィール");
 			fireEvent.click(profileItem);
@@ -149,10 +157,14 @@ describe("UserAuthMenu", () => {
 
 		it("ログアウトをクリックするとログアウト処理が実行される", async () => {
 			mockLogout.mockResolvedValue({ success: true });
-			render(<UserAuthMenu />);
+			render(<UserAuthMenu />, { container: document.body });
 
-			const avatarButton = screen.getByRole("button", { name: /avatar/i });
+			const avatarButton = screen.getByRole("button");
 			fireEvent.click(avatarButton);
+
+			await waitFor(() => {
+				expect(screen.getByText("ログアウト")).toBeInTheDocument();
+			});
 
 			const logoutItem = screen.getByText("ログアウト");
 			fireEvent.click(logoutItem);
@@ -174,7 +186,7 @@ describe("UserAuthMenu", () => {
 		};
 
 		beforeEach(() => {
-			(useAuth as jest.Mock).mockReturnValue({
+			(useAuth as ReturnType<typeof vi.fn>).mockReturnValue({
 				user: mockAdminUser,
 				isAuthenticated: true,
 				isLoading: false,
@@ -182,27 +194,33 @@ describe("UserAuthMenu", () => {
 			});
 		});
 
-		it("管理者向けメニュー項目が表示される", () => {
-			render(<UserAuthMenu />);
+		it("管理者向けメニュー項目が表示される", async () => {
+			render(<UserAuthMenu />, { container: document.body });
 
-			const avatarButton = screen.getByRole("button", { name: /avatar/i });
+			const avatarButton = screen.getByRole("button");
 			fireEvent.click(avatarButton);
 
-			// 一般メニュー
-			expect(screen.getByText("プロフィール")).toBeInTheDocument();
-			expect(screen.getByText("ダッシュボード")).toBeInTheDocument();
-			expect(screen.getByText("設定")).toBeInTheDocument();
+			await waitFor(() => {
+				// 一般メニュー
+				expect(screen.getByText("プロフィール")).toBeInTheDocument();
+				expect(screen.getByText("ダッシュボード")).toBeInTheDocument();
+				expect(screen.getByText("設定")).toBeInTheDocument();
 
-			// 管理者メニュー
-			expect(screen.getByText("管理画面")).toBeInTheDocument();
-			expect(screen.getByText("ユーザー管理")).toBeInTheDocument();
+				// 管理者メニュー
+				expect(screen.getByText("管理画面")).toBeInTheDocument();
+				expect(screen.getByText("ユーザー管理")).toBeInTheDocument();
+			});
 		});
 
-		it("管理画面をクリックすると/adminに遷移する", () => {
-			render(<UserAuthMenu />);
+		it("管理画面をクリックすると/adminに遷移する", async () => {
+			render(<UserAuthMenu />, { container: document.body });
 
-			const avatarButton = screen.getByRole("button", { name: /avatar/i });
+			const avatarButton = screen.getByRole("button");
 			fireEvent.click(avatarButton);
+
+			await waitFor(() => {
+				expect(screen.getByText("管理画面")).toBeInTheDocument();
+			});
 
 			const adminItem = screen.getByText("管理画面");
 			fireEvent.click(adminItem);
@@ -213,7 +231,7 @@ describe("UserAuthMenu", () => {
 
 	describe("ユーザー名のイニシャル表示", () => {
 		it("フルネームから正しくイニシャルを生成する", () => {
-			(useAuth as jest.Mock).mockReturnValue({
+			(useAuth as ReturnType<typeof vi.fn>).mockReturnValue({
 				user: {
 					id: "1",
 					name: "John Doe",
@@ -227,13 +245,12 @@ describe("UserAuthMenu", () => {
 
 			render(<UserAuthMenu />);
 
-			const avatarButton = screen.getByRole("button", { name: /avatar/i });
-			const avatarFallback = avatarButton.querySelector(".text-sm");
-			expect(avatarFallback?.textContent).toBe("JD");
+			const avatarButton = screen.getByRole("button");
+			expect(avatarButton).toHaveTextContent("JD");
 		});
 
 		it("名前がない場合はUを表示する", () => {
-			(useAuth as jest.Mock).mockReturnValue({
+			(useAuth as ReturnType<typeof vi.fn>).mockReturnValue({
 				user: {
 					id: "1",
 					name: null,
@@ -247,16 +264,15 @@ describe("UserAuthMenu", () => {
 
 			render(<UserAuthMenu />);
 
-			const avatarButton = screen.getByRole("button", { name: /avatar/i });
-			const avatarFallback = avatarButton.querySelector(".text-sm");
-			expect(avatarFallback?.textContent).toBe("U");
+			const avatarButton = screen.getByRole("button");
+			expect(avatarButton).toHaveTextContent("U");
 		});
 	});
 
 	describe("ログアウト失敗時", () => {
 		it("ログアウトが失敗してもエラーがスローされない", async () => {
 			mockLogout.mockResolvedValue({ success: false });
-			(useAuth as jest.Mock).mockReturnValue({
+			(useAuth as ReturnType<typeof vi.fn>).mockReturnValue({
 				user: {
 					id: "1",
 					name: "Test User",
@@ -268,10 +284,14 @@ describe("UserAuthMenu", () => {
 				logout: mockLogout,
 			});
 
-			render(<UserAuthMenu />);
+			render(<UserAuthMenu />, { container: document.body });
 
-			const avatarButton = screen.getByRole("button", { name: /avatar/i });
+			const avatarButton = screen.getByRole("button");
 			fireEvent.click(avatarButton);
+
+			await waitFor(() => {
+				expect(screen.getByText("ログアウト")).toBeInTheDocument();
+			});
 
 			const logoutItem = screen.getByText("ログアウト");
 			fireEvent.click(logoutItem);

@@ -15,10 +15,10 @@ import {
 	DropdownMenuSubTrigger,
 	DropdownMenuSubContent,
 } from "../dropdown-menu";
-import "@testing-library/jest-dom";
+import { vi } from "vitest";
 
 // Radix UIのモック
-jest.mock("@radix-ui/react-dropdown-menu", () => ({
+vi.mock("@radix-ui/react-dropdown-menu", () => ({
 	Root: ({ children, ...props }: any) => (
 		<div data-testid="dropdown-menu-root" data-props={JSON.stringify(props)}>
 			{children}
@@ -129,7 +129,7 @@ jest.mock("@radix-ui/react-dropdown-menu", () => ({
 }));
 
 // アイコンのモック
-jest.mock("react-icons/fa6", () => ({
+vi.mock("react-icons/fa6", () => ({
 	FaCheck: () => <div data-testid="check-icon" />,
 	FaChevronRight: () => <div data-testid="chevron-right-icon" />,
 	FaCircle: () => <div data-testid="circle-icon" />,

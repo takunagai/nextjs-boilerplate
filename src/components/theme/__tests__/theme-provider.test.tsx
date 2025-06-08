@@ -1,10 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import { ThemeProvider } from "../theme-provider";
 import { FEATURES } from "@/lib/constants";
-import "@testing-library/jest-dom";
+import { vi } from "vitest";
 
 // next-themesのモック
-jest.mock("next-themes", () => ({
+vi.mock("next-themes", () => ({
 	ThemeProvider: ({ children, ...props }: any) => (
 		<div data-testid="next-themes-provider" data-props={JSON.stringify(props)}>
 			{children}
@@ -13,7 +13,7 @@ jest.mock("next-themes", () => ({
 }));
 
 // 定数のモック
-jest.mock("@/lib/constants", () => ({
+vi.mock("@/lib/constants", () => ({
 	FEATURES: {
 		THEME_SWITCHER: true,
 	},
@@ -24,7 +24,7 @@ jest.mock("@/lib/constants", () => ({
 
 describe("ThemeProvider", () => {
 	beforeEach(() => {
-		jest.clearAllMocks();
+		vi.clearAllMocks();
 	});
 
 	describe("機能フラグがONの場合", () => {

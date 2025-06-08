@@ -1,18 +1,17 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { ThemeSwitcher } from "../theme-switcher";
 import { FEATURES } from "@/lib/constants";
-import "@testing-library/jest-dom";
+import { vi } from "vitest";
 
 // モックの設定
-jest.mock("@/lib/constants", () => ({
+vi.mock("@/lib/constants", () => ({
 	FEATURES: {
 		THEME_SWITCHER: true,
 	},
 }));
 
 // 動的インポートのモック
-jest.mock("next/dynamic", () => ({
-	__esModule: true,
+vi.mock("next/dynamic", () => ({
 	default: (importFn: () => Promise<any>, options?: any) => {
 		// ssrオプションをチェック
 		const isSSR = options?.ssr !== false;
@@ -59,7 +58,7 @@ import React from "react";
 
 describe("ThemeSwitcher", () => {
 	beforeEach(() => {
-		jest.clearAllMocks();
+		vi.clearAllMocks();
 	});
 
 	describe("機能フラグがONの場合", () => {

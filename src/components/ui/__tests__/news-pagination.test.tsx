@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import { NewsPagination } from "../news-pagination";
-import "@testing-library/jest-dom";
+import { vi } from "vitest";
 
 // 定数のモック
-jest.mock("@/lib/constants/news", () => ({
+vi.mock("@/lib/constants/news", () => ({
 	QUERY_PARAMS: {
 		page: "page",
 		category: "category",
@@ -11,7 +11,7 @@ jest.mock("@/lib/constants/news", () => ({
 }));
 
 // アイコンのモック
-jest.mock("react-icons/lu", () => ({
+vi.mock("react-icons/lu", () => ({
 	LuChevronLeft: () => <div data-testid="chevron-left-icon" />,
 	LuChevronRight: () => <div data-testid="chevron-right-icon" />,
 	LuEllipsis: () => <div data-testid="ellipsis-icon" />,

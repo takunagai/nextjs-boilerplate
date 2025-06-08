@@ -1,8 +1,9 @@
 import { generateMetadata, generateViewport } from "../meta-tags";
 import { APP, META } from "@/lib/constants";
+import { vi } from "vitest";
 
 // 定数のモック
-jest.mock("@/lib/constants", () => ({
+vi.mock("@/lib/constants", () => ({
 	APP: {
 		NAME: "Test App",
 	},
@@ -252,7 +253,8 @@ describe("meta-tags", () => {
 		it("ライトモードのテーマカラーが設定される", () => {
 			const viewport = generateViewport();
 
-			const lightTheme = viewport.themeColor?.find(
+			const themeColors = Array.isArray(viewport.themeColor) ? viewport.themeColor : [];
+			const lightTheme = themeColors.find(
 				(theme: any) => theme.media === "(prefers-color-scheme: light)"
 			);
 			expect(lightTheme?.color).toBe("#ffffff");
@@ -261,7 +263,8 @@ describe("meta-tags", () => {
 		it("ダークモードのテーマカラーが設定される", () => {
 			const viewport = generateViewport();
 
-			const darkTheme = viewport.themeColor?.find(
+			const themeColors = Array.isArray(viewport.themeColor) ? viewport.themeColor : [];
+			const darkTheme = themeColors.find(
 				(theme: any) => theme.media === "(prefers-color-scheme: dark)"
 			);
 			expect(darkTheme?.color).toBe("#09090b");

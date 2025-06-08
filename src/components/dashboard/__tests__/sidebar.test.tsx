@@ -1,16 +1,15 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { Sidebar } from "../sidebar";
 import { usePathname } from "next/navigation";
-import "@testing-library/jest-dom";
+import { vi, type MockedFunction } from "vitest";
 
 // Next.jsのモック
-jest.mock("next/navigation", () => ({
-	usePathname: jest.fn(),
+vi.mock("next/navigation", () => ({
+	usePathname: vi.fn(),
 }));
 
 // Next.js Linkコンポーネントのモック
-jest.mock("next/link", () => ({
-	__esModule: true,
+vi.mock("next/link", () => ({
 	default: ({ children, href, className, ...props }: any) => (
 		<a href={href} className={className} {...props}>
 			{children}
@@ -20,12 +19,12 @@ jest.mock("next/link", () => ({
 
 describe("Sidebar", () => {
 	beforeEach(() => {
-		jest.clearAllMocks();
+		vi.clearAllMocks();
 	});
 
 	describe("基本的なレンダリング", () => {
 		it("ナビゲーション要素がレンダリングされる", () => {
-			(usePathname as jest.Mock).mockReturnValue("/dashboard");
+			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue("/dashboard");
 
 			render(<Sidebar />);
 
@@ -33,7 +32,7 @@ describe("Sidebar", () => {
 		});
 
 		it("すべてのナビゲーション項目が表示される", () => {
-			(usePathname as jest.Mock).mockReturnValue("/dashboard");
+			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue("/dashboard");
 
 			render(<Sidebar />);
 
@@ -43,7 +42,7 @@ describe("Sidebar", () => {
 		});
 
 		it("各ナビゲーション項目にアイコンが表示される", () => {
-			(usePathname as jest.Mock).mockReturnValue("/dashboard");
+			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue("/dashboard");
 
 			render(<Sidebar />);
 
@@ -53,7 +52,7 @@ describe("Sidebar", () => {
 		});
 
 		it("適切なクラス名が適用される", () => {
-			(usePathname as jest.Mock).mockReturnValue("/dashboard");
+			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue("/dashboard");
 
 			render(<Sidebar />);
 
@@ -64,7 +63,7 @@ describe("Sidebar", () => {
 
 	describe("アクティブ状態の管理", () => {
 		it("現在のパスがダッシュボードの場合、ダッシュボード項目がアクティブになる", () => {
-			(usePathname as jest.Mock).mockReturnValue("/dashboard");
+			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue("/dashboard");
 
 			render(<Sidebar />);
 
@@ -74,7 +73,7 @@ describe("Sidebar", () => {
 		});
 
 		it("現在のパスがプロフィールの場合、プロフィール項目がアクティブになる", () => {
-			(usePathname as jest.Mock).mockReturnValue("/profile");
+			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue("/profile");
 
 			render(<Sidebar />);
 
@@ -87,7 +86,7 @@ describe("Sidebar", () => {
 		});
 
 		it("現在のパスが設定の場合、設定項目がアクティブになる", () => {
-			(usePathname as jest.Mock).mockReturnValue("/settings");
+			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue("/settings");
 
 			render(<Sidebar />);
 
@@ -96,7 +95,7 @@ describe("Sidebar", () => {
 		});
 
 		it("現在のパスがサイドバーにない場合、どの項目もアクティブにならない", () => {
-			(usePathname as jest.Mock).mockReturnValue("/unknown");
+			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue("/unknown");
 
 			render(<Sidebar />);
 
@@ -115,7 +114,7 @@ describe("Sidebar", () => {
 
 	describe("ナビゲーション項目の詳細", () => {
 		beforeEach(() => {
-			(usePathname as jest.Mock).mockReturnValue("/dashboard");
+			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue("/dashboard");
 		});
 
 		it("ダッシュボード項目が正しいhrefを持つ", () => {
@@ -142,7 +141,7 @@ describe("Sidebar", () => {
 
 	describe("スタイリング", () => {
 		it("非アクティブ項目に適切なクラスが適用される", () => {
-			(usePathname as jest.Mock).mockReturnValue("/dashboard");
+			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue("/dashboard");
 
 			render(<Sidebar />);
 
@@ -163,7 +162,7 @@ describe("Sidebar", () => {
 		});
 
 		it("アクティブ項目に適切なクラスが適用される", () => {
-			(usePathname as jest.Mock).mockReturnValue("/dashboard");
+			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue("/dashboard");
 
 			render(<Sidebar />);
 
@@ -185,7 +184,7 @@ describe("Sidebar", () => {
 
 	describe("アイコンの詳細", () => {
 		beforeEach(() => {
-			(usePathname as jest.Mock).mockReturnValue("/dashboard");
+			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue("/dashboard");
 		});
 
 		it("ダッシュボードアイコンが正しいSVG属性を持つ", () => {
@@ -228,7 +227,7 @@ describe("Sidebar", () => {
 
 	describe("ナビゲーション項目の順序", () => {
 		it("ナビゲーション項目が正しい順序で表示される", () => {
-			(usePathname as jest.Mock).mockReturnValue("/dashboard");
+			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue("/dashboard");
 
 			render(<Sidebar />);
 
@@ -241,7 +240,7 @@ describe("Sidebar", () => {
 
 	describe("インタラクション", () => {
 		it("ナビゲーション項目がクリック可能である", () => {
-			(usePathname as jest.Mock).mockReturnValue("/dashboard");
+			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue("/dashboard");
 
 			render(<Sidebar />);
 
@@ -256,7 +255,7 @@ describe("Sidebar", () => {
 
 	describe("アクセシビリティ", () => {
 		it("ナビゲーション要素が適切にマークアップされている", () => {
-			(usePathname as jest.Mock).mockReturnValue("/dashboard");
+			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue("/dashboard");
 
 			render(<Sidebar />);
 
@@ -272,7 +271,7 @@ describe("Sidebar", () => {
 		});
 
 		it("アクティブな項目が視覚的に区別される", () => {
-			(usePathname as jest.Mock).mockReturnValue("/profile");
+			(usePathname as MockedFunction<typeof usePathname>).mockReturnValue("/profile");
 
 			render(<Sidebar />);
 

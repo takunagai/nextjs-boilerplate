@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation';
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn(),
 }));
-const mockUseRouter = useRouter as vi.MockedFunction<typeof useRouter>;
+const mockUseRouter = useRouter as ReturnType<typeof vi.fn>;
 const mockRouterPush = vi.fn();
 
 // Mock sonner
@@ -20,8 +20,8 @@ vi.mock('sonner', () => ({
     error: vi.fn(),
   },
 }));
-const mockToastSuccess = toast.success as vi.Mock;
-const mockToastError = toast.error as vi.Mock;
+const mockToastSuccess = toast.success as ReturnType<typeof vi.fn>;
+const mockToastError = toast.error as ReturnType<typeof vi.fn>;
 
 // Mock global fetch
 const mockFetch = vi.fn();
@@ -33,7 +33,7 @@ describe('RegisterForm', () => {
 
   beforeEach(() => {
     vi.resetAllMocks(); // Reset all mocks before each test
-    mockUseRouter.mockReturnValue({ push: mockRouterPush } as any); // Setup router mock
+    mockUseRouter.mockReturnValue({ push: mockRouterPush }); // Setup router mock
   });
 
   afterEach(() => {
@@ -125,7 +125,6 @@ describe('RegisterForm', () => {
 
     it('shows error when terms are not accepted and sets aria-invalid on checkbox', async () => {
       render(<RegisterForm />);
-      const termsCheckbox = screen.getByRole('checkbox', { name: /利用規約/ });
       // Fill other fields to ensure only terms error shows
       await act(async () => {
         await user.type(screen.getByLabelText(/氏名/), 'Test User');
@@ -134,9 +133,11 @@ describe('RegisterForm', () => {
         await user.type(screen.getByLabelText(/パスワード（確認用）/), 'password123');
         await user.click(screen.getByRole('button', { name: '登録' }));
       });
-      // Checkbox itself doesn't get aria-invalid, the FormItem or FormMessage handles error display.
-      // We check for the message.
+      // Verify terms error message appears
       expect(await screen.findByText(termsRequiredError)).toBeInTheDocument();
+      // Also verify checkbox is available for interaction
+      const termsCheckbox = screen.getByRole('checkbox', { name: /利用規約/ });
+      expect(termsCheckbox).toBeInTheDocument();
     });
   });
   

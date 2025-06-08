@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { Button, buttonVariants } from "../button";
-import "@testing-library/jest-dom";
+import { vi } from "vitest";
 
 describe("Button", () => {
 	describe("基本的な動作", () => {
@@ -12,7 +12,7 @@ describe("Button", () => {
 		});
 
 		it("onClickハンドラーが動作する", () => {
-			const handleClick = jest.fn();
+			const handleClick = vi.fn();
 			render(<Button onClick={handleClick}>Click me</Button>);
 			
 			const button = screen.getByRole("button", { name: "Click me" });
