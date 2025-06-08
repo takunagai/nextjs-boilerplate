@@ -51,7 +51,7 @@ export default function SpinnerPage() {
         <div className="p-4 bg-background rounded-lg shadow space-y-4">
           <h3 className="text-xl font-medium">ボタン内での使用</h3>
           <div className="flex items-center space-x-2 h-10 px-4 py-2 bg-primary text-primary-foreground rounded-md">
-            <Spinner size="sm" color="primary-foreground" />
+            <Spinner size="sm" color="inherit" />
             <span>読み込み中...</span>
           </div>
           
