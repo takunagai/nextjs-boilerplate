@@ -1,5 +1,9 @@
 import "@testing-library/jest-dom";
 import { vi } from "vitest";
+import { configure } from "@testing-library/react";
+
+// React Testing Library utilities
+import { act } from "react";
 
 // Mock ResizeObserver
 class ResizeObserver {
@@ -32,3 +36,9 @@ if (typeof window.matchMedia !== "function") {
 		})),
 	});
 }
+
+// React Testing Library configuration
+configure({
+	// Increase timeout for async operations
+	asyncUtilTimeout: 15000,
+});

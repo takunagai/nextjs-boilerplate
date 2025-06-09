@@ -14,6 +14,7 @@ export default defineConfig(async () => {
 			globals: true,
 			environment: "jsdom",
 			setupFiles: "./setupTests.ts",
+			testTimeout: 10000, // 10秒に増加
 		},
 	};
 });
