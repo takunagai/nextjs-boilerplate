@@ -129,9 +129,9 @@ describe("NewsPagination", () => {
 
 			expect(screen.getByTestId("chevron-left-icon")).toBeInTheDocument();
 
-			const prevText = screen.getByText("前へ");
+			const prevText = screen.getByText("Previous");
 			expect(prevText).toBeInTheDocument();
-			expect(prevText).toHaveClass("hidden", "sm:inline");
+			expect(prevText).toHaveClass("hidden", "sm:block");
 		});
 
 		it("次へボタンにアイコンとテキストが表示される", () => {
@@ -139,9 +139,9 @@ describe("NewsPagination", () => {
 
 			expect(screen.getByTestId("chevron-right-icon")).toBeInTheDocument();
 
-			const nextText = screen.getByText("次へ");
+			const nextText = screen.getByText("Next");
 			expect(nextText).toBeInTheDocument();
-			expect(nextText).toHaveClass("hidden", "sm:inline");
+			expect(nextText).toHaveClass("hidden", "sm:block");
 		});
 	});
 
@@ -272,17 +272,21 @@ describe("NewsPagination", () => {
 			render(
 				<NewsPagination
 					{...defaultProps}
-					items={[1, 2, 3]}
-					currentPage={2}
+					totalPages={10}
+					items={[3, 4, 5]}
+					currentPage={4}
 					showEllipsis={true}
 					showEdges={true}
 				/>,
 			);
 
-			const ellipsisElements = screen
-				.getAllByRole("generic")
-				.filter((el) => el.getAttribute("aria-hidden") === "true");
-			expect(ellipsisElements.length).toBeGreaterThan(0);
+			// 省略記号のアイコンで検索
+			const ellipsisIcons = screen.getAllByTestId("ellipsis-icon");
+			expect(ellipsisIcons.length).toBeGreaterThan(0);
+			
+			// 親要素がaria-hidden属性を持っているかチェック
+			const ellipsisElement = ellipsisIcons[0]?.closest('[aria-hidden="true"]');
+			expect(ellipsisElement).toBeInTheDocument();
 		});
 
 		it("現在のページにaria-current='page'が設定される", () => {

@@ -50,22 +50,22 @@ vi.mock("@radix-ui/react-dropdown-menu", () => ({
 			{children}
 		</div>
 	),
-	Item: ({ children, className, inset, variant, ...props }: any) => (
+	Item: ({ children, className, "data-inset": dataInset, "data-variant": dataVariant, ...props }: any) => (
 		<div
 			data-testid="dropdown-menu-item"
 			className={className}
-			data-inset={inset}
-			data-variant={variant}
+			data-inset={dataInset}
+			data-variant={dataVariant}
 			data-props={JSON.stringify(props)}
 		>
 			{children}
 		</div>
 	),
-	Label: ({ children, className, inset, ...props }: any) => (
+	Label: ({ children, className, "data-inset": dataInset, ...props }: any) => (
 		<div
 			data-testid="dropdown-menu-label"
 			className={className}
-			data-inset={inset}
+			data-inset={dataInset}
 			data-props={JSON.stringify(props)}
 		>
 			{children}
@@ -113,11 +113,11 @@ vi.mock("@radix-ui/react-dropdown-menu", () => ({
 			{children}
 		</div>
 	),
-	SubTrigger: ({ children, className, inset, ...props }: any) => (
+	SubTrigger: ({ children, className, "data-inset": dataInset, ...props }: any) => (
 		<div
 			data-testid="dropdown-menu-sub-trigger"
 			className={className}
-			data-inset={inset}
+			data-inset={dataInset}
 			data-props={JSON.stringify(props)}
 		>
 			{children}
@@ -171,7 +171,7 @@ describe("DropdownMenu Components", () => {
 		it("トリガーがレンダリングされる", () => {
 			render(
 				<DropdownMenuTrigger>
-					<button>Open Menu</button>
+					<span>Open Menu</span>
 				</DropdownMenuTrigger>,
 			);
 
@@ -182,7 +182,7 @@ describe("DropdownMenu Components", () => {
 		it("data-slot属性が設定される", () => {
 			render(
 				<DropdownMenuTrigger>
-					<button>Trigger</button>
+					<span>Trigger</span>
 				</DropdownMenuTrigger>,
 			);
 
@@ -484,7 +484,7 @@ describe("DropdownMenu Components", () => {
 			render(
 				<DropdownMenu>
 					<DropdownMenuTrigger>
-						<button>Menu</button>
+						<span>Menu</span>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent>
 						<DropdownMenuLabel>Actions</DropdownMenuLabel>

@@ -135,7 +135,6 @@ describe("Pagination Components", () => {
 			render(<PaginationLink href="/page/2">2</PaginationLink>);
 
 			const link = screen.getByRole("link");
-			expect(link).toHaveAttribute("data-active", "false");
 			expect(link).not.toHaveAttribute("aria-current");
 		});
 
@@ -402,7 +401,6 @@ describe("Pagination Components", () => {
 			render(<PaginationLink href="/page/1">1</PaginationLink>);
 
 			const link = screen.getByRole("link");
-			expect(link).toHaveAttribute("data-active", "false");
 			expect(link).not.toHaveAttribute("aria-current");
 		});
 

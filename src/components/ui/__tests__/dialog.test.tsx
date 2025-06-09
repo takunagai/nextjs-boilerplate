@@ -124,7 +124,7 @@ describe("Dialog Components", () => {
 		it("トリガーボタンがレンダリングされる", () => {
 			render(
 				<DialogTrigger>
-					<button>Open Dialog</button>
+					<span>Open Dialog</span>
 				</DialogTrigger>,
 			);
 
@@ -135,7 +135,7 @@ describe("Dialog Components", () => {
 		it("data-slot属性が設定される", () => {
 			render(
 				<DialogTrigger>
-					<button>Open</button>
+					<span>Open</span>
 				</DialogTrigger>,
 			);
 
@@ -355,7 +355,7 @@ describe("Dialog Components", () => {
 		it("閉じるボタンがレンダリングされる", () => {
 			render(
 				<DialogClose>
-					<button>Close</button>
+					<span>Close</span>
 				</DialogClose>,
 			);
 
@@ -366,7 +366,7 @@ describe("Dialog Components", () => {
 		it("data-slot属性が設定される", () => {
 			render(
 				<DialogClose>
-					<button>Close</button>
+					<span>Close</span>
 				</DialogClose>,
 			);
 
@@ -381,7 +381,7 @@ describe("Dialog Components", () => {
 			render(
 				<Dialog>
 					<DialogTrigger>
-						<button>Open Dialog</button>
+						<span>Open Dialog</span>
 					</DialogTrigger>
 					<DialogContent>
 						<DialogHeader>
@@ -392,7 +392,7 @@ describe("Dialog Components", () => {
 						</DialogHeader>
 						<DialogFooter>
 							<DialogClose>
-								<button>Cancel</button>
+								<span>Cancel</span>
 							</DialogClose>
 							<button>Confirm</button>
 						</DialogFooter>
