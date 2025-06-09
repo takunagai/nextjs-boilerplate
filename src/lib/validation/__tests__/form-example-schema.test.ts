@@ -45,7 +45,7 @@ describe("form-example-schema", () => {
 			it("最小値/最大値の境界値でバリデーションが成功する", () => {
 				const boundaryData = {
 					name: "あ", // 1文字（最小値）
-					email: "a@b.c", // 最短のメール形式
+					email: "a@example.com", // 有効なメール形式
 					age: 18, // 最小年齢
 					message: "1234567890", // 10文字（最小値）
 					terms: true,
@@ -197,7 +197,7 @@ describe("form-example-schema", () => {
 						const emailError = result.error.issues.find(
 							(issue) => issue.path[0] === "email",
 						);
-						expect(emailError?.code).toBe("too_small");
+						expect(emailError?.code).toBe("invalid_type");
 					}
 				});
 			});

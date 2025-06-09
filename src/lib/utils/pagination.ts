@@ -15,15 +15,19 @@ export function calculatePagination(
 	itemsPerPage: number,
 	siblingCount = 1,
 ) {
+	// 負の値やゼロの場合の処理
+	const validTotalItems = Math.max(0, totalItems);
+	const validItemsPerPage = Math.max(1, itemsPerPage);
+
 	// 総ページ数を計算
-	const totalPages = Math.ceil(totalItems / itemsPerPage);
+	const totalPages = validTotalItems === 0 ? 0 : Math.ceil(validTotalItems / validItemsPerPage);
 
 	// 現在のページが範囲外の場合は調整
-	const page = Math.max(1, Math.min(currentPage, totalPages));
+	const page = Math.max(1, Math.min(currentPage, totalPages || 1));
 
 	// 開始インデックスと終了インデックスを計算
-	const startIndex = (page - 1) * itemsPerPage;
-	const endIndex = Math.min(startIndex + itemsPerPage, totalItems);
+	const startIndex = (page - 1) * validItemsPerPage;
+	const endIndex = Math.min(startIndex + validItemsPerPage, validTotalItems);
 
 	// ページネーションの範囲を計算
 	let startPage = Math.max(1, page - siblingCount);
@@ -40,9 +44,9 @@ export function calculatePagination(
 	}
 
 	return {
-		totalItems,
+		totalItems: validTotalItems,
 		currentPage: page,
-		itemsPerPage,
+		itemsPerPage: validItemsPerPage,
 		totalPages,
 		startIndex,
 		endIndex,
@@ -50,6 +54,8 @@ export function calculatePagination(
 		endPage,
 		hasPreviousPage: page > 1,
 		hasNextPage: page < totalPages,
+		isFirstPage: page === 1,
+		isLastPage: page === totalPages || totalPages === 0,
 		items: Array.from(
 			{ length: endPage - startPage + 1 },
 			(_, i) => startPage + i,

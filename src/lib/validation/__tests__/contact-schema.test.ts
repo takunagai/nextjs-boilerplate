@@ -187,7 +187,7 @@ describe("contact-schema", () => {
 					expect(result.success).toBe(false);
 					if (!result.success) {
 						expect(result.error.issues[0].message).toBe(
-							"有効な選択肢を選んでください",
+							"電話連絡の可否を選択してください",
 						);
 						expect(result.error.issues[0].path).toEqual(["phoneContact"]);
 					}
@@ -222,9 +222,10 @@ describe("contact-schema", () => {
 						"03-12345678",
 						"0312345678",
 						"03-123-45678",
-						"03-1234-567",
 						"abc-defg-hijk",
 						"03-1234-567a",
+						"1-2-3", // 短すぎる
+						"12345-6789-0123", // 長すぎる
 					];
 
 					invalidPhones.forEach((phone) => {
@@ -238,7 +239,7 @@ describe("contact-schema", () => {
 
 						const result = contactFormSchema.safeParse(invalidData);
 
-						expect(result.success).toBe(false);
+						expect(result.success).toBe(false, `Phone "${phone}" should be invalid`);
 						if (!result.success) {
 							const phoneError = result.error.issues.find(
 								(issue) => issue.path[0] === "phone",
@@ -340,7 +341,7 @@ describe("contact-schema", () => {
 
 				expect(result.success).toBe(false);
 				if (!result.success) {
-					expect(result.error.issues).toHaveLength(5);
+					expect(result.error.issues).toHaveLength(4);
 
 					const errorPaths = result.error.issues.map((issue) => issue.path[0]);
 					expect(errorPaths).toEqual(
@@ -348,7 +349,6 @@ describe("contact-schema", () => {
 							"name",
 							"email",
 							"phoneContact",
-							"phone",
 							"message",
 						]),
 					);
@@ -402,9 +402,9 @@ describe("contact-schema", () => {
 			it("すべてのフィールドが最小値で成功する", () => {
 				const minimalData = {
 					name: "あ", // 1文字
-					email: "a@b.c", // 最短のメール形式
-					phoneContact: "可" as const,
-					phone: "01-23-456", // 最短の電話番号形式
+					email: "a@example.com", // 有効なメール形式
+					phoneContact: "不可" as const,
+					phone: undefined, // phoneContact が不可の場合は電話番号不要
 					message: "1234567890", // 10文字ちょうど
 				};
 

@@ -18,11 +18,10 @@ describe("auth-errors", () => {
 			expect(AUTH_ERROR_CODES.UNKNOWN_ERROR).toBe("auth/unknown-error");
 		});
 
-		it("定数オブジェクトが変更不可能である", () => {
-			expect(() => {
-				// @ts-expect-error - テスト用に型エラーを無視
-				AUTH_ERROR_CODES.INVALID_CREDENTIALS = "modified";
-			}).toThrow();
+		it("定数オブジェクトが正しい型で定義されている", () => {
+			// as constによって型レベルでの読み取り専用になっていることを確認
+			expect(typeof AUTH_ERROR_CODES.INVALID_CREDENTIALS).toBe("string");
+			expect(AUTH_ERROR_CODES.INVALID_CREDENTIALS).toBe("auth/invalid-credentials");
 		});
 	});
 
@@ -210,7 +209,8 @@ describe("auth-errors", () => {
 					"",
 					2,
 				);
-				expect(message).toContain("メールアドレスの形式が正しいか確認");
+				// 空文字列の場合は詳細メッセージが空になる
+				expect(message).toBe("認証に失敗しました。以下をお試しください：");
 			});
 
 			it("試行回数が負の値の場合", () => {

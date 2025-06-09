@@ -177,7 +177,7 @@ describe("API validation", () => {
 
 				expect(result).toBeNull();
 				expect(error).toEqual({
-					error: "validation",
+					code: "VALIDATION_ERROR",
 					message: "入力データが無効です",
 					details: {
 						fieldErrors: {
@@ -257,7 +257,7 @@ describe("API validation", () => {
 
 				expect(result).toBeNull();
 				expect(error).toEqual({
-					error: "validation",
+					code: "VALIDATION_ERROR",
 					message: "バリデーションに失敗しました",
 					details: undefined,
 				});
