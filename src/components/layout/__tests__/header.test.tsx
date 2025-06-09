@@ -40,8 +40,9 @@ vi.mock("../header/mobile-navigation", () => ({
 // Next.js Imageコンポーネントのモック
 vi.mock("next/image", () => ({
 	default: (props: any) => {
+		const { priority, ...imgProps } = props;
 		// eslint-disable-next-line jsx-a11y/alt-text, @next/next/no-img-element
-		return <img {...props} />;
+		return <img {...imgProps} data-priority={priority ? "true" : "false"} />;
 	},
 }));
 

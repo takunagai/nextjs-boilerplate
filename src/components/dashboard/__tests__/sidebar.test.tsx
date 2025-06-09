@@ -11,7 +11,15 @@ vi.mock("next/navigation", () => ({
 // Next.js Linkコンポーネントのモック
 vi.mock("next/link", () => ({
 	default: ({ children, href, className, ...props }: any) => (
-		<a href={href} className={className} {...props}>
+		<a 
+			href={href} 
+			className={className} 
+			{...props}
+			onClick={(e) => {
+				e.preventDefault(); // デフォルト動作を防止
+				if (props.onClick) props.onClick(e);
+			}}
+		>
 			{children}
 		</a>
 	),
@@ -53,8 +61,8 @@ describe("Sidebar", () => {
 			render(<Sidebar />);
 
 			// SVGアイコンが存在することを確認
-			const icons = screen.getAllByRole("img", { hidden: true });
-			expect(icons).toHaveLength(3); // ダッシュボード、プロフィール、設定のアイコン
+			const svgElements = document.querySelectorAll("svg");
+			expect(svgElements).toHaveLength(3); // ダッシュボード、プロフィール、設定のアイコン
 		});
 
 		it("適切なクラス名が適用される", () => {
