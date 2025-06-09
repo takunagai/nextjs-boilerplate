@@ -1,7 +1,7 @@
 import { renderHook, act } from "@testing-library/react";
 import { useLoginForm, type LoginFormInputs } from "../useLoginForm";
 import { useAuth } from "../useAuth";
-import { vi, type MockedFunction } from "vitest";
+import { vi, describe, it, expect, beforeEach, type MockedFunction } from "vitest";
 
 // useAuthのモック
 vi.mock("../useAuth", () => ({
@@ -10,20 +10,24 @@ vi.mock("../useAuth", () => ({
 
 describe("useLoginForm", () => {
 	const mockLogin = vi.fn();
+	const mockLogout = vi.fn();
+	const mockUpdateSession = vi.fn();
 
 	beforeEach(() => {
 		vi.clearAllMocks();
 		console.error = vi.fn(); // console.errorをモック
 
-		(useAuth as MockedFunction<typeof useAuth>).mockReturnValue({
+		// useAuthのモックを確実に設定
+		const mockUseAuth = useAuth as MockedFunction<typeof useAuth>;
+		mockUseAuth.mockReturnValue({
 			session: null,
 			status: "unauthenticated",
 			isLoading: false,
 			isAuthenticated: false,
 			user: undefined,
 			login: mockLogin,
-			logout: vi.fn(),
-			updateSession: vi.fn(),
+			logout: mockLogout,
+			updateSession: mockUpdateSession,
 		});
 	});
 
@@ -45,17 +49,28 @@ describe("useLoginForm", () => {
 		it("フォームが適切なバリデーションスキーマを持つ", async () => {
 			const { result } = renderHook(() => useLoginForm());
 
-			// 空のフォームを送信してバリデーションエラーを確認
-			act(() => {
-				result.current.form.handleSubmit(() => {})();
-			});
-
-			// バリデーションエラーが設定されるまで待機
+			// handleSubmitを実行してバリデーションエラーを発生させる
+			let errors: any = {};
 			await act(async () => {
-				await new Promise((resolve) => setTimeout(resolve, 0));
+				try {
+					await result.current.form.handleSubmit(
+						() => {},
+						(formErrors) => {
+							errors = formErrors;
+						}
+					)();
+				} catch (error: any) {
+					// ZodErrorの場合、issuesからエラーメッセージを取得
+					if (error.issues) {
+						errors = error.issues.reduce((acc: any, issue: any) => {
+							const path = issue.path[0];
+							if (!acc[path]) acc[path] = { message: issue.message };
+							return acc;
+						}, {});
+					}
+				}
 			});
 
-			const errors = result.current.form.formState.errors;
 			expect(errors.email?.message).toBe("メールアドレスは必須です");
 			expect(errors.password?.message).toBe("パスワードは必須です");
 		});
@@ -63,19 +78,33 @@ describe("useLoginForm", () => {
 		it("無効なメールアドレスでバリデーションエラーが発生する", async () => {
 			const { result } = renderHook(() => useLoginForm());
 
-			act(() => {
-				result.current.form.setValue("email", "invalid-email");
-			});
-
-			act(() => {
-				result.current.form.handleSubmit(() => {})();
-			});
-
 			await act(async () => {
-				await new Promise((resolve) => setTimeout(resolve, 0));
+				result.current.form.setValue("email", "invalid-email");
+				result.current.form.setValue("password", "password123");
 			});
 
-			const errors = result.current.form.formState.errors;
+			// handleSubmitを実行してバリデーションエラーを発生させる
+			let errors: any = {};
+			await act(async () => {
+				try {
+					await result.current.form.handleSubmit(
+						() => {},
+						(formErrors) => {
+							errors = formErrors;
+						}
+					)();
+				} catch (error: any) {
+					// ZodErrorの場合、issuesからエラーメッセージを取得
+					if (error.issues) {
+						errors = error.issues.reduce((acc: any, issue: any) => {
+							const path = issue.path[0];
+							if (!acc[path]) acc[path] = { message: issue.message };
+							return acc;
+						}, {});
+					}
+				}
+			});
+
 			expect(errors.email?.message).toBe(
 				"有効なメールアドレスを入力してください",
 			);
@@ -161,20 +190,20 @@ describe("useLoginForm", () => {
 
 			const { result } = renderHook(() => useLoginForm());
 
-			// ログイン開始
-			const loginPromiseResult = act(async () => {
-				return result.current.handleLogin(validFormData);
+			// ログイン開始（非同期処理を開始するが待機しない）
+			let loginPromiseResult: Promise<unknown>;
+			act(() => {
+				loginPromiseResult = result.current.handleLogin(validFormData);
 			});
 
 			// ローディング中であることを確認
 			expect(result.current.isLoading).toBe(true);
 
 			// ログイン完了
-			act(() => {
+			await act(async () => {
 				resolveLogin!({ success: true });
+				await loginPromiseResult!;
 			});
-
-			await loginPromiseResult;
 
 			// ローディングが終了していることを確認
 			expect(result.current.isLoading).toBe(false);
@@ -293,20 +322,33 @@ describe("useLoginForm", () => {
 		it("空のメールアドレスと空のパスワードでバリデーションエラー", async () => {
 			const { result } = renderHook(() => useLoginForm());
 
-			act(() => {
+			await act(async () => {
 				result.current.form.setValue("email", "");
 				result.current.form.setValue("password", "");
 			});
 
-			act(() => {
-				result.current.form.handleSubmit(() => {})();
-			});
-
+			// handleSubmitを実行してバリデーションエラーを発生させる
+			let errors: any = {};
 			await act(async () => {
-				await new Promise((resolve) => setTimeout(resolve, 0));
+				try {
+					await result.current.form.handleSubmit(
+						() => {},
+						(formErrors) => {
+							errors = formErrors;
+						}
+					)();
+				} catch (error: any) {
+					// ZodErrorの場合、issuesからエラーメッセージを取得
+					if (error.issues) {
+						errors = error.issues.reduce((acc: any, issue: any) => {
+							const path = issue.path[0];
+							if (!acc[path]) acc[path] = { message: issue.message };
+							return acc;
+						}, {});
+					}
+				}
 			});
 
-			const errors = result.current.form.formState.errors;
 			expect(errors.email?.message).toBe("メールアドレスは必須です");
 			expect(errors.password?.message).toBe("パスワードは必須です");
 		});

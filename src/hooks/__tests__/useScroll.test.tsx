@@ -31,17 +31,22 @@ Object.defineProperty(window, "removeEventListener", {
 
 describe("useScroll", () => {
 	const mockDate = Date;
+	let mockTime = 1000;
 
 	beforeEach(() => {
 		vi.clearAllMocks();
+		mockTime = 1000;
 
 		// デフォルト値を設定
 		mockScrollY.mockReturnValue(0);
 		mockInnerHeight.mockReturnValue(600);
 		mockDocumentBodyOffsetHeight.mockReturnValue(1200);
 
-		// Date.nowをモック
-		global.Date.now = vi.fn(() => 1000);
+		// Date.nowをモック - 呼び出しごとに時間を進める
+		global.Date.now = vi.fn(() => {
+			mockTime += 200; // throttle間隔(100ms)より大きい値で進める
+			return mockTime;
+		});
 	});
 
 	afterEach(() => {
@@ -424,9 +429,9 @@ describe("useScroll", () => {
 
 			expect(result.current.direction).toBeNull();
 
-			// 閾値以上のスクロール
+			// 閾値以上のスクロール (15から40なので25の差 > 20)
 			act(() => {
-				mockScrollY.mockReturnValue(25);
+				mockScrollY.mockReturnValue(40);
 				scrollHandler();
 			});
 
@@ -453,7 +458,7 @@ describe("useScroll", () => {
 	});
 
 	describe("状態変化の最適化", () => {
-		it("状態が変化しない場合は更新されない", () => {
+		it("スクロール位置は常に最新の値に更新される", () => {
 			mockScrollY.mockReturnValue(100);
 			const { result } = renderHook(() => useScroll({ threshold: 50 }));
 
@@ -461,16 +466,15 @@ describe("useScroll", () => {
 				(call: unknown[]) => call[0] === "scroll",
 			)?.[1] as () => void;
 
-			const initialState = result.current;
-
 			// 閾値未満の小さな変化
 			act(() => {
 				mockScrollY.mockReturnValue(105);
 				scrollHandler();
 			});
 
-			// オブジェクトの参照が変わっていないことを確認
-			expect(result.current).toBe(initialState);
+			// スクロール位置は更新されるが、方向は変化しない
+			expect(result.current.scrollY).toBe(105);
+			expect(result.current.direction).toBeNull();
 		});
 	});
 

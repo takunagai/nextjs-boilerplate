@@ -14,18 +14,18 @@ vi.mock("next-auth/react", () => ({
 // auth-errorsのモック
 vi.mock("@/lib/auth/auth-errors", () => ({
 	AUTH_ERROR_CODES: {
-		EMPTY_CREDENTIALS: "EMPTY_CREDENTIALS",
-		NETWORK_ERROR: "NETWORK_ERROR",
-		UNKNOWN_ERROR: "UNKNOWN_ERROR",
-		CREDENTIALS_SIGNIN: "CredentialsSignin",
+		INVALID_CREDENTIALS: "auth/invalid-credentials",
+		EMPTY_CREDENTIALS: "auth/empty-credentials",
+		NETWORK_ERROR: "auth/network-error",
+		UNKNOWN_ERROR: "auth/unknown-error",
 	},
 	getAuthErrorMessage: vi.fn((errorCode: string, email?: string) => {
 		switch (errorCode) {
-			case "EMPTY_CREDENTIALS":
+			case "auth/empty-credentials":
 				return "メールアドレスとパスワードを入力してください";
-			case "NETWORK_ERROR":
+			case "auth/network-error":
 				return "ネットワークエラーが発生しました";
-			case "CredentialsSignin":
+			case "auth/invalid-credentials":
 				return `${email}のログイン認証に失敗しました`;
 			default:
 				return "不明なエラーが発生しました";
@@ -172,18 +172,16 @@ describe("useAuth", () => {
 
 			const { result } = renderHook(() => useAuth());
 
-			await act(async () => {
-				const authResult = await result.current.login({
-					email: "test@example.com",
-					password: "wrongpassword",
-				});
-
-				expect(authResult.success).toBe(false);
-				expect(authResult.error).toBe(AUTH_ERROR_CODES.INVALID_CREDENTIALS);
-				expect(authResult.message).toBe(
-					"test@example.comのログイン認証に失敗しました",
-				);
+			const authResult = await result.current.login({
+				email: "test@example.com",
+				password: "wrongpassword",
 			});
+
+			expect(authResult.success).toBe(false);
+			expect(authResult.error).toBe(AUTH_ERROR_CODES.INVALID_CREDENTIALS);
+			expect(authResult.message).toBe(
+				"test@example.comのログイン認証に失敗しました",
+			);
 		});
 
 		it("ネットワークエラーを適切に処理する", async () => {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 /**
  * スクロール状態の追跡用インターフェース
@@ -93,6 +93,10 @@ export function useScroll({
 		previousScrollY: 0,
 	});
 
+	// 最新の状態を参照するためのref
+	const stateRef = useRef(state);
+	stateRef.current = state;
+
 	// スロットリング関数
 	const throttle = useCallback(
 		<T extends (...args: unknown[]) => void>(callback: T, delay: number) => {
@@ -127,15 +131,16 @@ export function useScroll({
 
 		// スクロールイベントハンドラー
 		const handleScroll = throttle(() => {
+			const currentState = stateRef.current;
 			const currentScrollY = window.scrollY;
-			const isScrollingDown = currentScrollY > state.scrollY;
-			const isScrollingUp = currentScrollY < state.scrollY;
+			const isScrollingDown = currentScrollY > currentState.scrollY;
+			const isScrollingUp = currentScrollY < currentState.scrollY;
 			const isAtTop = currentScrollY <= topOffset;
 			const isAtBottom = isAtBottomCheck();
 
 			// 方向変化の検出
-			let newDirection: "up" | "down" | null = state.direction;
-			if (Math.abs(currentScrollY - state.scrollY) > threshold) {
+			let newDirection: "up" | "down" | null = currentState.direction;
+			if (Math.abs(currentScrollY - currentState.scrollY) > threshold) {
 				if (isScrollingDown) {
 					newDirection = "down";
 				} else if (isScrollingUp) {
@@ -144,7 +149,7 @@ export function useScroll({
 			}
 
 			// 表示/非表示の決定
-			let visible = state.visible;
+			let visible = currentState.visible;
 
 			// 最上部では常に表示
 			if (isAtTop) {
@@ -152,7 +157,7 @@ export function useScroll({
 			}
 			// 方向変化のみで更新する場合
 			else if (onlyDirectionChange) {
-				if (newDirection !== state.direction) {
+				if (newDirection !== currentState.direction) {
 					visible = newDirection === "up";
 				}
 			}
@@ -161,7 +166,7 @@ export function useScroll({
 				if (
 					isScrollingDown &&
 					!isAtTop &&
-					Math.abs(currentScrollY - state.scrollY) > threshold
+					Math.abs(currentScrollY - currentState.scrollY) > threshold
 				) {
 					visible = false;
 				} else if (isScrollingUp) {
@@ -171,11 +176,11 @@ export function useScroll({
 
 			// 状態が変化した場合のみ更新
 			if (
-				newDirection !== state.direction ||
-				visible !== state.visible ||
-				isAtTop !== state.isAtTop ||
-				isAtBottom !== state.isAtBottom ||
-				currentScrollY !== state.scrollY
+				newDirection !== currentState.direction ||
+				visible !== currentState.visible ||
+				isAtTop !== currentState.isAtTop ||
+				isAtBottom !== currentState.isAtBottom ||
+				currentScrollY !== currentState.scrollY
 			) {
 				setState({
 					direction: newDirection,
@@ -183,7 +188,7 @@ export function useScroll({
 					scrollY: currentScrollY,
 					isAtTop,
 					isAtBottom,
-					previousScrollY: state.scrollY,
+					previousScrollY: currentState.scrollY,
 				});
 			}
 		}, throttleMs);
@@ -199,18 +204,7 @@ export function useScroll({
 			window.removeEventListener("scroll", handleScroll);
 			window.removeEventListener("resize", handleScroll);
 		};
-	}, [
-		state.scrollY,
-		state.direction,
-		state.visible,
-		state.isAtTop,
-		state.isAtBottom,
-		threshold,
-		topOffset,
-		onlyDirectionChange,
-		throttleMs,
-		throttle,
-	]);
+	}, [threshold, topOffset, onlyDirectionChange, throttleMs, throttle]);
 
 	return state;
 }
