@@ -15,6 +15,16 @@ export default defineConfig(async () => {
 			environment: "jsdom",
 			setupFiles: "./setupTests.ts",
 			testTimeout: 10000, // 10秒に増加
+			// E2Eテストファイルを除外（Playwrightで実行するため）
+			exclude: [
+				"**/node_modules/**",
+				"**/dist/**",
+				"**/cypress/**",
+				"**/.{idea,git,cache,output,temp}/**",
+				"**/{karma,rollup,webpack,vite,vitest,jest,ava,babel,nyc,cypress,tsup,build}.config.*",
+				"**/e2e/**",
+				"**/*.spec.ts", // PlaywrightのE2Eテストファイル
+			],
 		},
 	};
 });
