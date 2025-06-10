@@ -37,7 +37,7 @@ export function ContactEmailForm() {
 	// フォーム状態の初期化
 	const form = useForm<ContactFormValues>({
 		resolver: zodResolver(contactFormSchema),
-		mode: "all", // バリデーションを全てのイベントでトリガー
+		mode: "onSubmit", // バリデーションを送信時のみトリガー
 		defaultValues: {
 			name: "",
 			email: "",

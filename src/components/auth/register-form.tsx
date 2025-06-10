@@ -49,7 +49,7 @@ export function RegisterForm() {
 	// フォームの初期化
 	const form = useForm<RegisterFormInputs>({
 		resolver: zodResolver(registerSchema),
-		mode: "all", // バリデーションを全てのイベントでトリガー
+		mode: "onSubmit", // バリデーションを送信時のみトリガー
 		defaultValues: {
 			name: "",
 			email: "",

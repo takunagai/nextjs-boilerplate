@@ -34,6 +34,7 @@ export default function FormExamplePage() {
 
 	const form = useForm<FormExampleValues>({
 		resolver: zodResolver(formExampleSchema),
+		mode: "onSubmit", // バリデーションを送信時のみトリガー（WebKit対応）
 		defaultValues: {
 			name: "",
 			email: "",
