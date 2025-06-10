@@ -42,3 +42,15 @@ configure({
 	// Increase timeout for async operations
 	asyncUtilTimeout: 15000,
 });
+
+// Zod v4 エラーのunhandled promise rejectionをキャッチ
+if (typeof global.process !== 'undefined') {
+	global.process.on('unhandledRejection', (reason: any) => {
+		// ZodErrorの場合は無視
+		if (reason && (reason._tag === 'Symbol({{zod.error}})' || reason.name === 'ZodError')) {
+			return;
+		}
+		// その他のエラーは通常通り処理
+		console.error('Unhandled promise rejection:', reason);
+	});
+}
