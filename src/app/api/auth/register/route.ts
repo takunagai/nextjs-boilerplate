@@ -3,6 +3,7 @@ import {
 	createApiResponse,
 	errorResponse,
 } from "@/lib/server/api/response";
+import { validateCsrfInApiRoute } from "@/lib/security/csrf-validation";
 import { z } from "zod";
 import type { NextRequest } from "next/server";
 
@@ -18,6 +19,19 @@ const registerSchema = z.object({
 // 新規ユーザー登録API
 export async function POST(req: NextRequest) {
 	try {
+		// CSRF検証
+		const csrfValidation = validateCsrfInApiRoute(req);
+		if (!csrfValidation.isValid) {
+			return errorResponse(
+				createApiError.custom(
+					"CSRF_VALIDATION_FAILED",
+					"CSRF検証に失敗しました",
+					{ details: csrfValidation.error }
+				),
+				403
+			);
+		}
+
 		// リクエストボディの取得とバリデーション
 		const body = await req.json();
 		const validationResult = registerSchema.safeParse(body);

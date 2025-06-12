@@ -19,22 +19,26 @@ const RATE_LIMIT = {
  * @param req リクエストオブジェクト
  */
 function validateCsrf(req: NextRequest): boolean {
-	// POSTリクエストの場合のみ検証
-	if (req.method !== "POST") return true;
+	// GET、HEAD、OPTIONS、TRACEリクエストは検証をスキップ
+	const safeMethods = ["GET", "HEAD", "OPTIONS", "TRACE"];
+	if (safeMethods.includes(req.method)) return true;
 
 	// 認証関連のエンドポイントでのみ検証
 	if (!req.nextUrl.pathname.startsWith("/api/auth")) return true;
 
+	// 1. Originヘッダーベースの基本検証
 	const origin = req.headers.get("origin");
 	const referer = req.headers.get("referer");
 	const host = req.headers.get("host");
 
 	// Originヘッダーが存在しない場合は失敗
-	if (!origin) return false;
+	if (!origin) {
+		console.warn("CSRF検出: Originヘッダーが存在しません");
+		return false;
+	}
 
 	// ホストが一致するか検証
 	const originHost = new URL(origin).host;
-
 	if (host !== originHost) {
 		console.warn(`CSRF検出: Origin ${origin} がホスト ${host} と一致しません`);
 		return false;
@@ -50,6 +54,13 @@ function validateCsrf(req: NextRequest): boolean {
 			return false;
 		}
 	}
+
+	// 2. CSRFトークンベースの検証（より強固な保護）
+	// TODO: CSRFトークン検証をAPI route内で実装
+	// middlewareでnode:cryptoモジュールを使用するとWebpackエラーが発生するため、
+	// API routes内で直接CSRFトークン検証を行う方式に変更する必要があります
+	
+	// 現在はOriginヘッダーベースの検証のみ実行
 
 	return true;
 }
