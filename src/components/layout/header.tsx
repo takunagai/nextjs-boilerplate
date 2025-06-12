@@ -142,7 +142,7 @@ export function Header({
 			: "";
 
 	// スクロール方向に基づくアニメーションクラス
-	const scrollAnimationClass = React.useMemo(() => {
+	const scrollAnimationClass = (() => {
 		if (!hideOnScroll) return "translate-y-0";
 
 		if (shouldHide) {
@@ -150,10 +150,10 @@ export function Header({
 		}
 
 		return "translate-y-0";
-	}, [hideOnScroll, shouldHide]);
+	})();
 
 	// スクロール方向に応じたアニメーション効果
-	const scrollDirectionEffect = React.useMemo(() => {
+	const scrollDirectionEffect = (() => {
 		if (!hideOnScroll) return "";
 
 		// 上方向スクロール時は早めに表示
@@ -167,7 +167,7 @@ export function Header({
 		}
 
 		return "";
-	}, [hideOnScroll, direction, isAtTop]);
+	})();
 
 	// デスクトップサイズになったらドロワーメニューを閉じる
 	React.useEffect(() => {

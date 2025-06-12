@@ -8,7 +8,7 @@ import Autoplay from "embla-carousel-autoplay";
 import ClassNames from "embla-carousel-class-names";
 import Fade from "embla-carousel-fade";
 import useEmblaCarousel from "embla-carousel-react";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 // 型定義
@@ -73,28 +73,25 @@ export function EmblaCarousel({
 	const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
 
 	// スクロールスナップの設定
-	const onSelect = useCallback(() => {
+	const onSelect = () => {
 		if (!emblaApi) return;
 		setSelectedIndex(emblaApi.selectedScrollSnap());
 		setPrevBtnEnabled(emblaApi.canScrollPrev());
 		setNextBtnEnabled(emblaApi.canScrollNext());
-	}, [emblaApi]);
+	};
 
 	// 前のスライドへ
-	const scrollPrev = useCallback(() => {
+	const scrollPrev = () => {
 		emblaApi?.scrollPrev();
-	}, [emblaApi]);
+	};
 
 	// 次のスライドへ
-	const scrollNext = useCallback(() => {
+	const scrollNext = () => {
 		emblaApi?.scrollNext();
-	}, [emblaApi]);
+	};
 
 	// ドットクリックでのスライド移動
-	const scrollTo = useCallback(
-		(index: number) => emblaApi?.scrollTo(index),
-		[emblaApi],
-	);
+	const scrollTo = (index: number) => emblaApi?.scrollTo(index);
 
 	// 初期化とクリーンアップ
 	useEffect(() => {
@@ -109,7 +106,7 @@ export function EmblaCarousel({
 			emblaApi.off("select", onSelect);
 			emblaApi.off("reInit", onSelect);
 		};
-	}, [emblaApi, onSelect]);
+	}, [emblaApi]);
 
 	// ドットインジケーターのレンダリング
 	const renderDots = () => (

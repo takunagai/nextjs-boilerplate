@@ -4,7 +4,6 @@ import { type VariantProps, cva } from "class-variance-authority";
 import Image from "next/image";
 import {
 	type KeyboardEvent as ReactKeyboardEvent,
-	useCallback,
 	useEffect,
 	useState,
 } from "react";
@@ -144,49 +143,43 @@ export function Gallery({
 	const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
 	const [currentIndex, setCurrentIndex] = useState<number>(0);
 
-	const handleImageClick = useCallback(
-		(item: GalleryItem) => {
-			if (lightbox) {
-				const index = items.findIndex((i) => i.id === item.id);
-				setCurrentIndex(index !== -1 ? index : 0);
-				setSelectedImage(item);
-			}
-		},
-		[lightbox, items],
-	);
+	const handleImageClick = (item: GalleryItem) => {
+		if (lightbox) {
+			const index = items.findIndex((i) => i.id === item.id);
+			setCurrentIndex(index !== -1 ? index : 0);
+			setSelectedImage(item);
+		}
+	};
 
-	const closeModal = useCallback(() => {
+	const closeModal = () => {
 		setSelectedImage(null);
-	}, []);
+	};
 
-	const goToPrevious = useCallback(() => {
+	const goToPrevious = () => {
 		if (items.length <= 1) return;
 
 		const newIndex = currentIndex <= 0 ? items.length - 1 : currentIndex - 1;
 		setCurrentIndex(newIndex);
 		setSelectedImage(items[newIndex]);
-	}, [currentIndex, items]);
+	};
 
-	const goToNext = useCallback(() => {
+	const goToNext = () => {
 		if (items.length <= 1) return;
 
 		const newIndex = currentIndex >= items.length - 1 ? 0 : currentIndex + 1;
 		setCurrentIndex(newIndex);
 		setSelectedImage(items[newIndex]);
-	}, [currentIndex, items]);
+	};
 
-	const handleModalKeyDown = useCallback(
-		(e: ReactKeyboardEvent<HTMLElement> | KeyboardEvent) => {
-			if (e.key === "Escape") {
-				closeModal();
-			} else if (e.key === "ArrowLeft") {
-				goToPrevious();
-			} else if (e.key === "ArrowRight") {
-				goToNext();
-			}
-		},
-		[closeModal, goToPrevious, goToNext],
-	);
+	const handleModalKeyDown = (e: ReactKeyboardEvent<HTMLElement> | KeyboardEvent) => {
+		if (e.key === "Escape") {
+			closeModal();
+		} else if (e.key === "ArrowLeft") {
+			goToPrevious();
+		} else if (e.key === "ArrowRight") {
+			goToNext();
+		}
+	};
 
 	useEffect(() => {
 		if (selectedImage) {
@@ -199,7 +192,7 @@ export function Gallery({
 			};
 		}
 		return undefined;
-	}, [selectedImage, handleModalKeyDown]);
+	}, [selectedImage, currentIndex, items]);
 
 	const masonryStyle =
 		layout === "masonry"
@@ -209,15 +202,12 @@ export function Gallery({
 				}
 			: {};
 
-	const handleKeyDown = useCallback(
-		(e: ReactKeyboardEvent<HTMLElement>, item: GalleryItem) => {
-			if (e.key === "Enter" || e.key === " ") {
-				e.preventDefault();
-				handleImageClick(item);
-			}
-		},
-		[handleImageClick],
-	);
+	const handleKeyDown = (e: ReactKeyboardEvent<HTMLElement>, item: GalleryItem) => {
+		if (e.key === "Enter" || e.key === " ") {
+			e.preventDefault();
+			handleImageClick(item);
+		}
+	};
 
 	return (
 		<>

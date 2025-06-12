@@ -108,7 +108,7 @@ function BaseTable<TData = Record<string, unknown>>({
 	);
 
 	// ソートリクエスト処理
-	const requestSort = React.useCallback((key: keyof TData | (string & {})) => {
+	const requestSort = (key: keyof TData | (string & {})) => {
 		setSortConfig((prevSortConfig) => {
 			if (
 				prevSortConfig &&
@@ -126,10 +126,10 @@ function BaseTable<TData = Record<string, unknown>>({
 				return { key, direction: "asc" };
 			}
 		});
-	}, []);
+	};
 
 	// ソート済みデータの計算
-	const sortedData = React.useMemo(() => {
+	const sortedData = (() => {
 		if (!sortConfig || !data.length) return data;
 
 		return [...data].sort((a, b) => {
@@ -156,13 +156,10 @@ function BaseTable<TData = Record<string, unknown>>({
 					? 1
 					: -1;
 		});
-	}, [data, sortConfig]);
+	})();
 
 	// 行データの生成
-	const rows: Row<TData>[] = React.useMemo(
-		() => sortedData.map((item) => ({ original: item })),
-		[sortedData],
-	);
+	const rows: Row<TData>[] = sortedData.map((item) => ({ original: item }));
 
 	return (
 		<table
