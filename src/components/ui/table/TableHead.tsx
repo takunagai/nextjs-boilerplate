@@ -1,10 +1,10 @@
 "use client"; // Became a client component due to interactive sorting button
 
 import * as React from "react";
+import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa"; // Using react-icons
+import { Button } from "@/components/ui/button"; // Assuming a Button component is available
 import { cn } from "@/lib/utils";
 import type { TableHeadProps as BaseTableHeadProps } from "./types";
-import { Button } from "@/components/ui/button"; // Assuming a Button component is available
-import { FaSort, FaSortUp, FaSortDown } from "react-icons/fa"; // Using react-icons
 
 // Update TableHeadProps to be generic
 export type TableHeadProps<TData> = BaseTableHeadProps<TData>;

@@ -3,12 +3,12 @@
 
 import * as React from "react";
 import { cn } from "@/lib/utils";
+import { TableCell } from "./TableCell"; // The actual cell component
 import type {
 	TableRowProps as BaseTableRowProps,
-	Row,
 	ColumnDef,
+	Row,
 } from "./types";
-import { TableCell } from "./TableCell"; // The actual cell component
 
 // Update TableRowProps to be generic
 export type TableRowProps<TData> = BaseTableRowProps<TData>;

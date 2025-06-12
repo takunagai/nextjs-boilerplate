@@ -1,6 +1,6 @@
-import { cn } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 import type { ReactNode } from "react";
+import { cn } from "@/lib/utils";
 import { ContentCard } from "./content-card";
 import { ContentPanel } from "./content-panel";
 import { ContentSimple } from "./content-simple";
@@ -22,8 +22,8 @@ export const contentItemsVariants = cva("", {
 		layout: {
 			grid: "grid",
 			list: "flex flex-col",
-			carousel: "flex overflow-x-auto snap-x",
-			masonry: "columns-1 sm:columns-2 md:columns-3 gap-4",
+			carousel: "relative",
+			masonry: "columns-1 sm:columns-2 md:columns-3",
 		},
 		columns: {
 			1: "grid-cols-1",
@@ -127,6 +127,97 @@ export const ContentItems = ({
 		className,
 	);
 
+	// レイアウトごとの子要素のクラス
+	const getItemClassName = () => {
+		if (layout === "carousel") {
+			return "flex-shrink-0 w-[calc(100%-2rem)] sm:w-[calc(50%-1rem)] md:w-[calc(33.333%-1rem)] lg:w-80 snap-start h-full";
+		}
+		if (layout === "masonry") {
+			return "break-inside-avoid mb-4";
+		}
+		return "";
+	};
+
+	const itemClassName = getItemClassName();
+
+	// カルーセルレイアウトの場合の特別な処理
+	if (layout === "carousel") {
+		return (
+			<div className={containerClass}>
+				{/* スクロールインジケーター（左） */}
+				<div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-12 bg-gradient-to-r from-background to-transparent md:w-24" />
+
+				{/* カルーセルコンテナ */}
+				<div
+					className={cn(
+						"flex overflow-x-auto snap-x snap-mandatory scrollbar-hide",
+						gap === "small" && "gap-2",
+						gap === "medium" && "gap-4",
+						gap === "large" && "gap-6",
+						"pb-4 px-4 sm:px-6 lg:px-8 -mx-4 sm:-mx-6 lg:-mx-8",
+					)}
+				>
+					{/* 左側のパディング用の空要素 */}
+					<div className="flex-shrink-0 w-0" />
+
+					{items.map((item, index) => {
+						// カスタムレンダリング関数が提供されている場合はそれを使用
+						if (renderItem) {
+							return (
+								<div key={item.id} className={itemClassName}>
+									{renderItem(item, index)}
+								</div>
+							);
+						}
+
+						// デフォルトのレンダリング
+						const content = (() => {
+							if (variant === "card") {
+								return (
+									<ContentCard
+										key={item.id}
+										item={item}
+										aspectRatio={aspectRatio}
+										imagePosition={imagePosition}
+										isReversed={false}
+									/>
+								);
+							}
+
+							if (variant === "panel") {
+								return (
+									<ContentPanel
+										key={item.id}
+										item={item}
+										aspectRatio={aspectRatio}
+										isReversed={false}
+									/>
+								);
+							}
+
+							return (
+								<ContentSimple key={item.id} item={item} isReversed={false} />
+							);
+						})();
+
+						return (
+							<div key={item.id} className={itemClassName}>
+								{content}
+							</div>
+						);
+					})}
+
+					{/* 右側のパディング用の空要素 */}
+					<div className="flex-shrink-0 w-4 sm:w-6 lg:w-8" />
+				</div>
+
+				{/* スクロールインジケーター（右） */}
+				<div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-12 bg-gradient-to-l from-background to-transparent md:w-24" />
+			</div>
+		);
+	}
+
+	// その他のレイアウトの処理
 	return (
 		<div className={containerClass}>
 			{items.map((item, index) => {
@@ -136,36 +227,49 @@ export const ContentItems = ({
 				}
 
 				// デフォルトのレンダリング
-				if (variant === "card") {
-					return (
-						<ContentCard
-							key={item.id}
-							item={item}
-							aspectRatio={aspectRatio}
-							imagePosition={imagePosition}
-							isReversed={index % 2 === 1 && imagePosition === "left"}
-						/>
-					);
-				}
+				const content = (() => {
+					if (variant === "card") {
+						return (
+							<ContentCard
+								key={item.id}
+								item={item}
+								aspectRatio={aspectRatio}
+								imagePosition={imagePosition}
+								isReversed={index % 2 === 1 && imagePosition === "left"}
+							/>
+						);
+					}
 
-				if (variant === "panel") {
+					if (variant === "panel") {
+						return (
+							<ContentPanel
+								key={item.id}
+								item={item}
+								aspectRatio={aspectRatio}
+								isReversed={index % 2 === 1}
+							/>
+						);
+					}
+
 					return (
-						<ContentPanel
+						<ContentSimple
 							key={item.id}
 							item={item}
-							aspectRatio={aspectRatio}
 							isReversed={index % 2 === 1}
 						/>
 					);
+				})();
+
+				// マスリーレイアウトの場合はdivでラップ
+				if (layout === "masonry") {
+					return (
+						<div key={item.id} className={itemClassName}>
+							{content}
+						</div>
+					);
 				}
 
-				return (
-					<ContentSimple
-						key={item.id}
-						item={item}
-						isReversed={index % 2 === 1}
-					/>
-				);
+				return content;
 			})}
 		</div>
 	);

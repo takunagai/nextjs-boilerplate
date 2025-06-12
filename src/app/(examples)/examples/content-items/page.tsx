@@ -1,8 +1,4 @@
 import {
-	type ContentItem,
-	ContentItems,
-} from "@/components/ui/content-items/index";
-import {
 	FiBox,
 	FiCpu,
 	FiGlobe,
@@ -10,6 +6,10 @@ import {
 	FiShield,
 	FiZap,
 } from "react-icons/fi";
+import {
+	type ContentItem,
+	ContentItems,
+} from "@/components/ui/content-items/index";
 import { PageHeader } from "@/components/ui/page-header";
 
 export const metadata = {
@@ -80,14 +80,14 @@ export default function ContentItemsExamplePage() {
 				</p>
 			</div>
 
-			{/* グリッドレイアウト */}
+			{/* グリッドレイアウト + カードバリアント */}
 			<section className="py-16">
 				<div className="space-y-4 mb-12">
 					<h2 className="text-3xl font-bold tracking-tighter">
-						グリッドレイアウト
+						グリッドレイアウト + カード
 					</h2>
 					<p className="text-muted-foreground">
-						3カラムのグリッドレイアウトでカードとして表示します。画像は上部に配置されます。
+						3カラムのグリッドレイアウトでカードとして表示します。画像は上部に配置され、ボーダーとシャドウ効果があります。
 					</p>
 				</div>
 
@@ -102,14 +102,14 @@ export default function ContentItemsExamplePage() {
 				/>
 			</section>
 
-			{/* グリッドレイアウト + カードバリアント */}
+			{/* グリッドレイアウト + シンプルバリアント */}
 			<section className="py-16">
 				<div className="space-y-4 mb-12">
 					<h2 className="text-3xl font-bold tracking-tighter">
-						グリッドレイアウト + カード
+						グリッドレイアウト + シンプル
 					</h2>
 					<p className="text-muted-foreground">
-						3カラムのグリッドレイアウトでカードとして表示します。画像は上部に配置されます。
+						3カラムのグリッドレイアウトでシンプルに表示します。画像なしでアイコンのみの軽量な表示です。
 					</p>
 				</div>
 
@@ -184,14 +184,14 @@ export default function ContentItemsExamplePage() {
 				/>
 			</section>
 
-			{/* グリッドレイアウト + カード（左右画像） */}
+			{/* グリッドレイアウト + カード（左右画像・1カラム） */}
 			<section className="py-16">
 				<div className="space-y-4 mb-12">
 					<h2 className="text-3xl font-bold tracking-tighter">
-						グリッドレイアウト + カード（左右画像）
+						グリッドレイアウト + カード（左右画像・1カラム）
 					</h2>
 					<p className="text-muted-foreground">
-						2カラムのグリッドレイアウトで画像を左に配置したカードとして表示します。
+						1カラムの縦並びレイアウトで画像を左に配置したカードとして表示します。奇数番目のアイテムは画像が右に配置されます。
 					</p>
 				</div>
 
@@ -206,14 +206,14 @@ export default function ContentItemsExamplePage() {
 				/>
 			</section>
 
-			{/* グリッドレイアウト + カード（左右画像） */}
+			{/* グリッドレイアウト + カード（左右画像・2カラム） */}
 			<section className="py-16">
 				<div className="space-y-4 mb-12">
 					<h2 className="text-3xl font-bold tracking-tighter">
-						グリッドレイアウト + カード（左右画像）
+						グリッドレイアウト + カード（左右画像・2カラム）
 					</h2>
 					<p className="text-muted-foreground">
-						2カラムのグリッドレイアウトで画像を左に配置したカードとして表示します。
+						2カラムのグリッドレイアウトで画像を左に配置したカードとして表示します。デスクトップでは横並び、モバイルでは縦並びになります。
 					</p>
 				</div>
 

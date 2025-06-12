@@ -1,29 +1,27 @@
 "use client";
 
+import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
-import { cn } from "@/lib/utils";
-import { type VariantProps, cva } from "class-variance-authority";
 import type { HTMLAttributes } from "react";
-
-// サブコンポーネントのインポート
-import { TableCaption } from "./TableCaption";
-import { TableHeader } from "./TableHeader";
-import { TableBody } from "./TableBody";
-import { TableFooter } from "./TableFooter";
-import { TableHead } from "./TableHead";
-import { TableRow } from "./TableRow";
-import { TableCell } from "./TableCell";
-
+import { cn } from "@/lib/utils";
+import { Tbody } from "./primitives/Tbody";
+import { Td } from "./primitives/Td";
+import { Tfoot } from "./primitives/Tfoot";
+import { Th } from "./primitives/Th";
+import { Thead } from "./primitives/Thead";
 // プリミティブコンポーネントのインポート
 import { Tr } from "./primitives/Tr";
-import { Th } from "./primitives/Th";
-import { Td } from "./primitives/Td";
-import { Thead } from "./primitives/Thead";
-import { Tbody } from "./primitives/Tbody";
-import { Tfoot } from "./primitives/Tfoot";
+import { TableBody } from "./TableBody";
+// サブコンポーネントのインポート
+import { TableCaption } from "./TableCaption";
+import { TableCell } from "./TableCell";
+import { TableFooter } from "./TableFooter";
+import { TableHead } from "./TableHead";
+import { TableHeader } from "./TableHeader";
+import { TableRow } from "./TableRow";
 
 // 型定義のインポート
-import type { ColumnDef, SortConfig, Row, TableComponents } from "./types";
+import type { ColumnDef, Row, SortConfig, TableComponents } from "./types";
 
 /**
  * テーブルコンポーネントのバリアント定義

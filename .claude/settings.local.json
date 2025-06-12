@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add:*)",
+      "Bash(git checkout:*)",
+      "Bash(git commit:*)",
+      "Bash(git reset:*)",
+      "Bash(ls:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm run dev:*)",
+      "Bash(npm run lint)",
+      "Bash(npx biome check:*)",
+      "Bash(npx biome format:*)",
+      "Bash(mkdir:*)",
+      "Bash(npm test:*)",
+      "Bash(find:*)",
+      "Bash(grep:*)",
+      "Bash(rg:*)",
+      "Bash(npx tsc:*)",
+      "Bash(sed:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run test:*)",
+      "Bash(npx vitest:*)",
+      "Bash(node:*)",
+      "Bash(npx playwright test:*)",
+      "Bash(pkill:*)",
+      "Bash(kill:*)"
+    ]
+  },
+  "enableAllProjectMcpServers": false
+}

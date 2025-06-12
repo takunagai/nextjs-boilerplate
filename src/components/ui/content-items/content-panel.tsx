@@ -1,9 +1,9 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import Image from "next/image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import Image from "next/image";
+import { cn } from "@/lib/utils";
 import type { ContentItem } from "./index";
 import { imageVariants } from "./index";
 

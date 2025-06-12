@@ -4,9 +4,9 @@
 
 import * as React from "react";
 import { cn } from "@/lib/utils";
-import type { TableHeaderProps as BaseHeaderProps } from "./types";
 // TableRow requires row data, so we'll use primitive tr for header
 import { TableHead } from "./TableHead"; // The actual header cell component
+import type { TableHeaderProps as BaseHeaderProps } from "./types";
 
 // Update TableHeaderProps to be generic
 export type TableHeaderProps<TData> = BaseHeaderProps<TData>;

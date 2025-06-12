@@ -1,9 +1,9 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import Image from "next/image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import Image from "next/image";
+import { cn } from "@/lib/utils";
 import type { ContentItem } from "./index";
 import { contentCardVariants, imageVariants } from "./index";
 
@@ -34,7 +34,7 @@ export function ContentCard({
 	});
 
 	return (
-		<Card className={cn(cardClassName, "border")}>
+		<Card className={cn(cardClassName, "border h-full flex flex-col")}>
 			{item.imageUrl && (
 				<div className={imageClassName}>
 					<AspectRatio
@@ -59,7 +59,7 @@ export function ContentCard({
 				</div>
 			)}
 
-			<div className="flex-1 p-6">
+			<div className="flex-1 p-6 flex flex-col">
 				<CardHeader className="p-0">
 					<CardTitle className="text-xl font-bold tracking-tight">
 						{item.title}
@@ -67,7 +67,7 @@ export function ContentCard({
 				</CardHeader>
 
 				{item.description && (
-					<CardContent className="p-0 mt-2">
+					<CardContent className="p-0 mt-2 flex-1">
 						<p className="text-muted-foreground">{item.description}</p>
 					</CardContent>
 				)}

@@ -1,7 +1,7 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 import type { ContentItem } from "./index";
 
 // シンプルバリアント用のインターフェース
