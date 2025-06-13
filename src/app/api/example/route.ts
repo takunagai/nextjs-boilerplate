@@ -15,7 +15,7 @@ import { z } from "zod";
 
 // リクエストのバリデーションスキーマ
 const MessageSchema = z.object({
-	name: z.string().min(1, { error: "名前は必須です" }),
+	name: z.string().min(1, { message: "名前は必須です" }),
 	message: z.string().optional(),
 });
 

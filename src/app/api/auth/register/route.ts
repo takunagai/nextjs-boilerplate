@@ -9,11 +9,11 @@ import type { NextRequest } from "next/server";
 
 // 登録リクエストの検証スキーマ
 const registerSchema = z.object({
-	name: z.string().min(1, { error: "氏名は必須です" }),
-	email: z.string().email({ error: "有効なメールアドレスを入力してください" }),
+	name: z.string().min(1, { message: "氏名は必須です" }),
+	email: z.string().email({ message: "有効なメールアドレスを入力してください" }),
 	password: z
 		.string()
-		.min(8, { error: "パスワードは8文字以上で入力してください" }),
+		.min(8, { message: "パスワードは8文字以上で入力してください" }),
 });
 
 // 新規ユーザー登録API
@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
 					"CSRF検証に失敗しました",
 					{ details: csrfValidation.error }
 				),
-				403
+				{ status: 403 }
 			);
 		}
 
