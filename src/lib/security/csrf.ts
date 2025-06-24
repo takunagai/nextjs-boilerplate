@@ -22,7 +22,9 @@ interface CsrfTokenData {
 /**
  * セキュアなランダムトークンを生成
  */
-function generateSecureToken(length: number = CSRF_CONFIG.TOKEN_LENGTH): string {
+function generateSecureToken(
+	length: number = CSRF_CONFIG.TOKEN_LENGTH,
+): string {
 	// サーバーサイドでのみ実行される
 	const crypto = require("node:crypto");
 	return crypto.randomBytes(length).toString("hex");

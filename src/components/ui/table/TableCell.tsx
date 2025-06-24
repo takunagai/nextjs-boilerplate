@@ -1,7 +1,7 @@
 "use client"; // Potentially, if a custom cell renderer uses client-side hooks/logic.
 // For now, it's borderline as it depends on the `column.cell` implementation.
 
-import * as React from "react";
+import type * as React from "react";
 import { cn } from "@/lib/utils";
 import type {
 	TableCellProps as BaseTableCellProps,

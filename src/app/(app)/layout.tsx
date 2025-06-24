@@ -1,9 +1,9 @@
 "use client";
 
+import Link from "next/link";
+import type { ReactNode } from "react";
 import Sidebar from "@/components/dashboard/sidebar";
 import { UserNav } from "@/components/dashboard/user-nav";
-import Link from "next/link";
-import { ReactNode } from "react";
 
 interface AppLayoutProps {
 	children: ReactNode;

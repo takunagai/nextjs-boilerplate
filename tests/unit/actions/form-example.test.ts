@@ -1,11 +1,11 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
-	submitExampleForm,
 	checkExampleEmail,
+	submitExampleForm,
 } from "@/app/actions/form-example";
-import { validateAction, ActionError } from "@/lib/server";
-import { formExampleSchema } from "@/lib/validation/form-example-schema";
+import { ActionError, validateAction } from "@/lib/server";
 import type { FormExampleValues } from "@/lib/validation/form-example-schema";
+import { formExampleSchema } from "@/lib/validation/form-example-schema";
 
 // validateActionをモック化
 vi.mock("@/lib/server", async () => {

@@ -1,4 +1,4 @@
-import { contactFormSchema, type ContactFormValues } from "../contact-schema";
+import { type ContactFormValues, contactFormSchema } from "../contact-schema";
 
 describe("contact-schema", () => {
 	describe("contactFormSchema", () => {
@@ -239,7 +239,10 @@ describe("contact-schema", () => {
 
 						const result = contactFormSchema.safeParse(invalidData);
 
-						expect(result.success).toBe(false, `Phone "${phone}" should be invalid`);
+						expect(result.success).toBe(
+							false,
+							`Phone "${phone}" should be invalid`,
+						);
 						if (!result.success) {
 							const phoneError = result.error.issues.find(
 								(issue) => issue.path[0] === "phone",

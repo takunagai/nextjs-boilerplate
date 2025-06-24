@@ -1,9 +1,9 @@
-import { render, screen, waitFor, fireEvent } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { RegisterForm } from "../register-form"; // Adjust path as necessary
-import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { RegisterForm } from "../register-form"; // Adjust path as necessary
 
 // --- Mocks ---
 // Mock next/navigation
@@ -75,33 +75,33 @@ describe("RegisterForm", () => {
 	describe("Input Validation", () => {
 		it("form validation triggers correctly", async () => {
 			// fetchをモックしてAPIコールを防ぐ
-			mockFetch.mockImplementationOnce(() => 
+			mockFetch.mockImplementationOnce(() =>
 				Promise.resolve({
 					ok: true,
-					json: () => Promise.resolve({ success: true })
-				} as Response)
+					json: () => Promise.resolve({ success: true }),
+				} as Response),
 			);
-			
+
 			render(<RegisterForm />);
 			const nameInput = screen.getByLabelText(/氏名/);
-			
+
 			// フィールドの存在確認のみを行う（送信はしない）
 			expect(nameInput).toBeInTheDocument();
-			expect(nameInput).toHaveAttribute('name', 'name');
+			expect(nameInput).toHaveAttribute("name", "name");
 		});
 
 		it("validates email format", async () => {
 			// fetchをモックしてAPIコールを防ぐ
-			mockFetch.mockImplementationOnce(() => 
+			mockFetch.mockImplementationOnce(() =>
 				Promise.resolve({
 					ok: true,
-					json: () => Promise.resolve({ success: true })
-				} as Response)
+					json: () => Promise.resolve({ success: true }),
+				} as Response),
 			);
-			
+
 			render(<RegisterForm />);
 			const emailInput = screen.getByLabelText(/メールアドレス/);
-			
+
 			// フィールドに値を入力して確認（送信はしない）
 			await user.type(emailInput, "test@example.com");
 			expect(emailInput).toHaveValue("test@example.com");
@@ -109,16 +109,16 @@ describe("RegisterForm", () => {
 
 		it("validates password length", async () => {
 			// fetchをモックしてAPIコールを防ぐ
-			mockFetch.mockImplementationOnce(() => 
+			mockFetch.mockImplementationOnce(() =>
 				Promise.resolve({
 					ok: true,
-					json: () => Promise.resolve({ success: true })
-				} as Response)
+					json: () => Promise.resolve({ success: true }),
+				} as Response),
 			);
-			
+
 			render(<RegisterForm />);
 			const passwordInput = screen.getByLabelText(/^パスワード$/);
-			
+
 			// フィールドに値を入力して確認（送信はしない）
 			await user.type(passwordInput, "validpassword123");
 			expect(passwordInput).toHaveValue("validpassword123");
@@ -132,24 +132,24 @@ describe("RegisterForm", () => {
 		beforeEach(() => {
 			// ZodErrorの console.error を無効化
 			console.error = vi.fn();
-			
+
 			// unhandled promise rejectionをキャッチ
 			const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
-				if (event.reason && event.reason._tag === 'Symbol({{zod.error}})') {
+				if (event.reason && event.reason._tag === "Symbol({{zod.error}})") {
 					event.preventDefault();
 				}
 			};
-			
-			if (typeof window !== 'undefined') {
-				window.addEventListener('unhandledrejection', handleUnhandledRejection);
+
+			if (typeof window !== "undefined") {
+				window.addEventListener("unhandledrejection", handleUnhandledRejection);
 			}
 		});
 
 		afterEach(() => {
 			console.error = originalConsoleError;
-			
-			if (typeof window !== 'undefined') {
-				window.removeEventListener('unhandledrejection', () => {});
+
+			if (typeof window !== "undefined") {
+				window.removeEventListener("unhandledrejection", () => {});
 			}
 		});
 
@@ -177,7 +177,7 @@ describe("RegisterForm", () => {
 			} as Response);
 
 			render(<RegisterForm />);
-			
+
 			await fillValidForm();
 			await user.click(screen.getByRole("button", { name: "登録" }));
 
@@ -213,7 +213,7 @@ describe("RegisterForm", () => {
 			} as Response);
 
 			render(<RegisterForm />);
-			
+
 			await fillValidForm();
 			await user.click(screen.getByRole("button", { name: "登録" }));
 
@@ -228,7 +228,7 @@ describe("RegisterForm", () => {
 			mockFetch.mockRejectedValueOnce(new TypeError("Network failed")); // Simulate a network error
 
 			render(<RegisterForm />);
-			
+
 			await fillValidForm();
 			await user.click(screen.getByRole("button", { name: "登録" }));
 
@@ -258,28 +258,32 @@ describe("RegisterForm", () => {
 			);
 
 			render(<RegisterForm />);
-			
+
 			await fillValidForm();
 
 			const submitButton = screen.getByRole("button", { name: "登録" });
-			
+
 			// Click and immediately check for loading state
 			await user.click(submitButton);
-			
+
 			// Check for loading state
-			await waitFor(() => {
-				expect(submitButton).toBeDisabled();
-				expect(submitButton).toHaveTextContent("処理中...");
-			}, { timeout: 1000 });
+			await waitFor(
+				() => {
+					expect(submitButton).toBeDisabled();
+					expect(submitButton).toHaveTextContent("処理中...");
+				},
+				{ timeout: 1000 },
+			);
 
 			// Wait for submission to complete (fetch to be called and toast to appear)
-			await waitFor(() =>
-				expect(mockToastSuccess).toHaveBeenCalledWith(
-					"アカウントが作成されました",
-				),
-				{ timeout: 5000 }
+			await waitFor(
+				() =>
+					expect(mockToastSuccess).toHaveBeenCalledWith(
+						"アカウントが作成されました",
+					),
+				{ timeout: 5000 },
 			);
-			
+
 			// Check that loading state is cleared
 			await waitFor(() => {
 				expect(submitButton).not.toBeDisabled();

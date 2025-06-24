@@ -1,8 +1,8 @@
 "use client";
 
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
-import { FaCheck, FaChevronRight, FaCircle } from "react-icons/fa6";
 import type * as React from "react";
+import { FaCheck, FaChevronRight, FaCircle } from "react-icons/fa6";
 
 import { cn } from "@/lib/utils";
 

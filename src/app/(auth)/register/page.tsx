@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { RegisterForm } from "@/components/auth/register-form";
 import {
 	Card,
@@ -7,7 +8,6 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { PageHeader } from "@/components/ui/page-header";
-import type { Metadata } from "next";
 
 // メタデータ
 export const metadata: Metadata = {

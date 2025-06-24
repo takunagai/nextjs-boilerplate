@@ -1,8 +1,8 @@
 "use client";
 
 import { toast } from "sonner";
-import { Toaster } from "@/components/ui/sonner";
 import { Button } from "@/components/ui/button";
+import { Toaster } from "@/components/ui/sonner";
 import { ToastExamples } from "./components/toast-examples";
 
 export default function ToastPage() {
@@ -60,7 +60,7 @@ export default function ToastPage() {
 	// 解除不可のトースト
 	const showPersistentToast = () => {
 		toast.info("この通知は自動的に消えません", {
-			duration: Infinity,
+			duration: Number.POSITIVE_INFINITY,
 			description: "右上の×ボタンをクリックして閉じてください",
 		});
 	};

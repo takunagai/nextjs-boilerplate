@@ -1,7 +1,7 @@
+import type { Metadata } from "next";
 import { MapCard } from "@/components/map";
 import { Container } from "@/components/ui/container";
 import { Separator } from "@/components/ui/separator";
-import { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "マップコンポーネント例",

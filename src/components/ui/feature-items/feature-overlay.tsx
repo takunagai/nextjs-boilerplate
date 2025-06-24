@@ -1,10 +1,10 @@
-import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import type { FeatureItem } from "./index";
-import { Button } from "@/components/ui/button";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { DynamicHeading, type HeadingLevel } from "./components";
+import type { FeatureItem } from "./index";
 
 export interface FeatureOverlayProps {
 	item: FeatureItem;

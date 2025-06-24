@@ -1,11 +1,11 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
-	submitContactForm,
 	checkEmailExists,
+	submitContactForm,
 } from "@/app/actions/contact-form";
-import { validateAction, ActionError } from "@/lib/server";
-import { contactFormSchema } from "@/lib/validation/contact-schema";
+import { ActionError, validateAction } from "@/lib/server";
 import type { ContactFormValues } from "@/lib/validation/contact-schema";
+import { contactFormSchema } from "@/lib/validation/contact-schema";
 
 // validateActionをモック化
 vi.mock("@/lib/server", async () => {

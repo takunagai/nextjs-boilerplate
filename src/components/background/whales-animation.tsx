@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
 import { motion } from "motion/react";
+import { useEffect, useRef, useState } from "react";
 import { useIsClient } from "usehooks-ts";
 
 // 泡の型定義

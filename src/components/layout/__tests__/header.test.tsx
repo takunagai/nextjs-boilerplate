@@ -1,9 +1,9 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { Header } from "../header";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { usePathname } from "next/navigation";
-import { useScroll } from "@/hooks/useScroll";
 import { useIsClient, useLocalStorage, useMediaQuery } from "usehooks-ts";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { useScroll } from "@/hooks/useScroll";
+import { Header } from "../header";
 
 // モックの設定
 vi.mock("next/navigation");

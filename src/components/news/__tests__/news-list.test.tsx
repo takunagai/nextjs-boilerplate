@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect } from "vitest";
-import { NewsList } from "../news-list";
+import { describe, expect, it } from "vitest";
 import type { NewsItemProps } from "../news-item";
+import { NewsList } from "../news-list";
 
 describe("NewsList", () => {
 	const mockItems: NewsItemProps[] = [

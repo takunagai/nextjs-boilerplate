@@ -1,8 +1,8 @@
+import Link from "next/link";
+import { FaArrowLeft } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { PageHeader } from "@/components/ui/page-header";
-import Link from "next/link";
-import { FaArrowLeft } from "react-icons/fa6";
 
 export default function NotFound() {
 	return (

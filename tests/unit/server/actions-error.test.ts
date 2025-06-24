@@ -1,9 +1,9 @@
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 import {
 	ActionError,
+	type ActionResult,
 	isActionError,
 	isActionSuccess,
-	type ActionResult,
 } from "@/lib/server";
 
 describe("サーバーアクションエラーユーティリティ", () => {

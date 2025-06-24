@@ -1,9 +1,9 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { ContactEmailForm } from "../contact-mailform";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { submitContactForm } from "@/app/actions/contact-form";
 import type { ActionError } from "@/lib/server";
+import { ContactEmailForm } from "../contact-mailform";
 
 vi.mock("@/app/actions/contact-form", () => ({
 	submitContactForm: vi.fn(),
@@ -75,27 +75,27 @@ describe("ContactEmailForm", () => {
 
 		it("validates required fields", async () => {
 			// submitContactFormをモックしてAPIコールを防ぐ
-			mockSubmitContactForm.mockImplementationOnce(() => 
-				Promise.resolve({ success: true, message: "送信が完了しました。" })
+			mockSubmitContactForm.mockImplementationOnce(() =>
+				Promise.resolve({ success: true, message: "送信が完了しました。" }),
 			);
-			
+
 			render(<ContactEmailForm />);
 			const nameInput = screen.getByLabelText(/お名前/);
-			
+
 			// フィールドの存在確認のみを行う（送信はしない）
 			expect(nameInput).toBeInTheDocument();
-			expect(nameInput).toHaveAttribute('name', 'name');
+			expect(nameInput).toHaveAttribute("name", "name");
 		});
 
 		it("validates email format", async () => {
 			// submitContactFormをモックしてAPIコールを防ぐ
-			mockSubmitContactForm.mockImplementationOnce(() => 
-				Promise.resolve({ success: true, message: "送信が完了しました。" })
+			mockSubmitContactForm.mockImplementationOnce(() =>
+				Promise.resolve({ success: true, message: "送信が完了しました。" }),
 			);
-			
+
 			render(<ContactEmailForm />);
 			const emailInput = screen.getByLabelText(/メールアドレス/);
-			
+
 			// フィールドに値を入力して確認（送信はしない）
 			await user.type(emailInput, "test@example.com");
 			expect(emailInput).toHaveValue("test@example.com");
@@ -103,16 +103,18 @@ describe("ContactEmailForm", () => {
 
 		it("validates message length", async () => {
 			// submitContactFormをモックしてAPIコールを防ぐ
-			mockSubmitContactForm.mockImplementationOnce(() => 
-				Promise.resolve({ success: true, message: "送信が完了しました。" })
+			mockSubmitContactForm.mockImplementationOnce(() =>
+				Promise.resolve({ success: true, message: "送信が完了しました。" }),
 			);
-			
+
 			render(<ContactEmailForm />);
 			const messageInput = screen.getByLabelText(/お問い合わせ内容/);
-			
+
 			// フィールドに値を入力して確認（送信はしない）
 			await user.type(messageInput, "これは十分な長さのテストメッセージです。");
-			expect(messageInput).toHaveValue("これは十分な長さのテストメッセージです。");
+			expect(messageInput).toHaveValue(
+				"これは十分な長さのテストメッセージです。",
+			);
 		});
 	});
 
@@ -145,24 +147,24 @@ describe("ContactEmailForm", () => {
 		beforeEach(() => {
 			// ZodErrorの console.error を無効化
 			console.error = vi.fn();
-			
+
 			// unhandled promise rejectionをキャッチ
 			const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
-				if (event.reason && event.reason._tag === 'Symbol({{zod.error}})') {
+				if (event.reason && event.reason._tag === "Symbol({{zod.error}})") {
 					event.preventDefault();
 				}
 			};
-			
-			if (typeof window !== 'undefined') {
-				window.addEventListener('unhandledrejection', handleUnhandledRejection);
+
+			if (typeof window !== "undefined") {
+				window.addEventListener("unhandledrejection", handleUnhandledRejection);
 			}
 		});
 
 		afterEach(() => {
 			console.error = originalConsoleError;
-			
-			if (typeof window !== 'undefined') {
-				window.removeEventListener('unhandledrejection', () => {});
+
+			if (typeof window !== "undefined") {
+				window.removeEventListener("unhandledrejection", () => {});
 			}
 		});
 
@@ -191,7 +193,7 @@ describe("ContactEmailForm", () => {
 
 		it("successful submission resets form and shows success message", async () => {
 			render(<ContactEmailForm />);
-			
+
 			await fillValidForm(false);
 
 			const buttonBeforeClick = screen.getByRole("button", {
@@ -307,9 +309,7 @@ describe("ContactEmailForm", () => {
 			await waitFor(() =>
 				expect(mockSubmitContactForm).toHaveBeenCalledTimes(1),
 			);
-			expect(
-				await screen.findByText("An error occurred"),
-			).toBeInTheDocument();
+			expect(await screen.findByText("An error occurred")).toBeInTheDocument();
 		});
 
 		it("shows loading state on button during submission", async () => {

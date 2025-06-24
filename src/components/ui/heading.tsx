@@ -1,5 +1,5 @@
 import { clsx } from "clsx";
-import { Children, type ReactNode, isValidElement } from "react";
+import { Children, isValidElement, type ReactNode } from "react";
 
 /**
  * 見出しのサイズバリエーション

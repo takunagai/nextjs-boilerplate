@@ -1,7 +1,8 @@
+import type { Metadata } from "next";
 import { NewsList } from "@/components/news/news-list";
 import { Container } from "@/components/ui/container";
-import { PageHeader } from "@/components/ui/page-header";
 import { NewsPagination } from "@/components/ui/news-pagination";
+import { PageHeader } from "@/components/ui/page-header";
 import {
 	NEWS_PER_PAGE,
 	PAGINATION_CONFIG,
@@ -14,7 +15,6 @@ import {
 	getNewsCategories,
 } from "@/lib/data/news";
 import { calculatePagination, getPaginatedItems } from "@/lib/utils/pagination";
-import type { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "お知らせ",

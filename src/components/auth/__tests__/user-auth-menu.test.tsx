@@ -1,9 +1,9 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { UserAuthMenu } from "../user-auth-menu";
-import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { useAuth } from "@/hooks/useAuth";
+import { UserAuthMenu } from "../user-auth-menu";
 
 // モックの設定
 vi.mock("@/hooks/useAuth");
@@ -118,10 +118,13 @@ describe("UserAuthMenu", () => {
 			const avatarButton = screen.getByRole("button");
 			await user.click(avatarButton);
 
-			await waitFor(() => {
-				expect(screen.getByText("Test User")).toBeInTheDocument();
-				expect(screen.getByText("test@example.com")).toBeInTheDocument();
-			}, { timeout: 5000 });
+			await waitFor(
+				() => {
+					expect(screen.getByText("Test User")).toBeInTheDocument();
+					expect(screen.getByText("test@example.com")).toBeInTheDocument();
+				},
+				{ timeout: 5000 },
+			);
 		});
 
 		it("一般ユーザー向けメニュー項目が表示される", async () => {
@@ -130,16 +133,19 @@ describe("UserAuthMenu", () => {
 			const avatarButton = screen.getByRole("button");
 			await user.click(avatarButton);
 
-			await waitFor(() => {
-				expect(screen.getByText("プロフィール")).toBeInTheDocument();
-				expect(screen.getByText("ダッシュボード")).toBeInTheDocument();
-				expect(screen.getByText("設定")).toBeInTheDocument();
-				expect(screen.getByText("ログアウト")).toBeInTheDocument();
+			await waitFor(
+				() => {
+					expect(screen.getByText("プロフィール")).toBeInTheDocument();
+					expect(screen.getByText("ダッシュボード")).toBeInTheDocument();
+					expect(screen.getByText("設定")).toBeInTheDocument();
+					expect(screen.getByText("ログアウト")).toBeInTheDocument();
 
-				// 管理者メニューは表示されない
-				expect(screen.queryByText("管理画面")).not.toBeInTheDocument();
-				expect(screen.queryByText("ユーザー管理")).not.toBeInTheDocument();
-			}, { timeout: 5000 });
+					// 管理者メニューは表示されない
+					expect(screen.queryByText("管理画面")).not.toBeInTheDocument();
+					expect(screen.queryByText("ユーザー管理")).not.toBeInTheDocument();
+				},
+				{ timeout: 5000 },
+			);
 		});
 
 		it("プロフィールをクリックすると/profileに遷移する", async () => {
@@ -148,9 +154,12 @@ describe("UserAuthMenu", () => {
 			const avatarButton = screen.getByRole("button");
 			await user.click(avatarButton);
 
-			await waitFor(() => {
-				expect(screen.getByText("プロフィール")).toBeInTheDocument();
-			}, { timeout: 5000 });
+			await waitFor(
+				() => {
+					expect(screen.getByText("プロフィール")).toBeInTheDocument();
+				},
+				{ timeout: 5000 },
+			);
 
 			const profileItem = screen.getByText("プロフィール");
 			await user.click(profileItem);
@@ -165,18 +174,24 @@ describe("UserAuthMenu", () => {
 			const avatarButton = screen.getByRole("button");
 			await user.click(avatarButton);
 
-			await waitFor(() => {
-				expect(screen.getByText("ログアウト")).toBeInTheDocument();
-			}, { timeout: 5000 });
+			await waitFor(
+				() => {
+					expect(screen.getByText("ログアウト")).toBeInTheDocument();
+				},
+				{ timeout: 5000 },
+			);
 
 			const logoutItem = screen.getByText("ログアウト");
 			await user.click(logoutItem);
 
-			await waitFor(() => {
-				expect(mockLogout).toHaveBeenCalled();
-				expect(mockPush).toHaveBeenCalledWith("/");
-				expect(mockRefresh).toHaveBeenCalled();
-			}, { timeout: 5000 });
+			await waitFor(
+				() => {
+					expect(mockLogout).toHaveBeenCalled();
+					expect(mockPush).toHaveBeenCalledWith("/");
+					expect(mockRefresh).toHaveBeenCalled();
+				},
+				{ timeout: 5000 },
+			);
 		});
 	});
 
@@ -203,16 +218,19 @@ describe("UserAuthMenu", () => {
 			const avatarButton = screen.getByRole("button");
 			await user.click(avatarButton);
 
-			await waitFor(() => {
-				// 一般メニュー
-				expect(screen.getByText("プロフィール")).toBeInTheDocument();
-				expect(screen.getByText("ダッシュボード")).toBeInTheDocument();
-				expect(screen.getByText("設定")).toBeInTheDocument();
+			await waitFor(
+				() => {
+					// 一般メニュー
+					expect(screen.getByText("プロフィール")).toBeInTheDocument();
+					expect(screen.getByText("ダッシュボード")).toBeInTheDocument();
+					expect(screen.getByText("設定")).toBeInTheDocument();
 
-				// 管理者メニュー
-				expect(screen.getByText("管理画面")).toBeInTheDocument();
-				expect(screen.getByText("ユーザー管理")).toBeInTheDocument();
-			}, { timeout: 5000 });
+					// 管理者メニュー
+					expect(screen.getByText("管理画面")).toBeInTheDocument();
+					expect(screen.getByText("ユーザー管理")).toBeInTheDocument();
+				},
+				{ timeout: 5000 },
+			);
 		});
 
 		it("管理画面をクリックすると/adminに遷移する", async () => {
@@ -221,9 +239,12 @@ describe("UserAuthMenu", () => {
 			const avatarButton = screen.getByRole("button");
 			await user.click(avatarButton);
 
-			await waitFor(() => {
-				expect(screen.getByText("管理画面")).toBeInTheDocument();
-			}, { timeout: 5000 });
+			await waitFor(
+				() => {
+					expect(screen.getByText("管理画面")).toBeInTheDocument();
+				},
+				{ timeout: 5000 },
+			);
 
 			const adminItem = screen.getByText("管理画面");
 			await user.click(adminItem);
@@ -292,19 +313,25 @@ describe("UserAuthMenu", () => {
 			const avatarButton = screen.getByRole("button");
 			await user.click(avatarButton);
 
-			await waitFor(() => {
-				expect(screen.getByText("ログアウト")).toBeInTheDocument();
-			}, { timeout: 5000 });
+			await waitFor(
+				() => {
+					expect(screen.getByText("ログアウト")).toBeInTheDocument();
+				},
+				{ timeout: 5000 },
+			);
 
 			const logoutItem = screen.getByText("ログアウト");
 			await user.click(logoutItem);
 
-			await waitFor(() => {
-				expect(mockLogout).toHaveBeenCalled();
-				// 失敗時はリダイレクトされない
-				expect(mockPush).not.toHaveBeenCalled();
-				expect(mockRefresh).not.toHaveBeenCalled();
-			}, { timeout: 5000 });
+			await waitFor(
+				() => {
+					expect(mockLogout).toHaveBeenCalled();
+					// 失敗時はリダイレクトされない
+					expect(mockPush).not.toHaveBeenCalled();
+					expect(mockRefresh).not.toHaveBeenCalled();
+				},
+				{ timeout: 5000 },
+			);
 		});
 	});
 });

@@ -1,5 +1,3 @@
-import { NumberedList, SimpleList } from "@/components/ui/list";
-import { PageHeader } from "@/components/ui/page-header";
 // サンプルページ: SimpleList, NumberedList のバリエーション例
 import {
 	FaCheck,
@@ -7,6 +5,8 @@ import {
 	FaRegStar,
 	FaTriangleExclamation,
 } from "react-icons/fa6";
+import { NumberedList, SimpleList } from "@/components/ui/list";
+import { PageHeader } from "@/components/ui/page-header";
 
 export default function ListExamplesPage() {
 	return (

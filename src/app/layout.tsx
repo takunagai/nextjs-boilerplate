@@ -1,3 +1,6 @@
+import type { Metadata, Viewport } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import { SessionProvider } from "next-auth/react";
 import { UserAuthMenu } from "@/components/auth/user-auth-menu";
 import { WhalesAnimation } from "@/components/background/whales-animation";
 import { AnnouncementBar } from "@/components/layout/announcement-bar";
@@ -11,9 +14,6 @@ import { ScrollToTop } from "@/components/ui/scroll-to-top";
 import { auth } from "@/lib/auth";
 import { APP, META } from "@/lib/constants";
 import { HEADER_NAVIGATION } from "@/lib/constants/header-navigation";
-import type { Metadata, Viewport } from "next";
-import { SessionProvider } from "next-auth/react";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({

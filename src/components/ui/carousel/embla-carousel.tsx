@@ -1,15 +1,15 @@
 "use client";
 
-import Image from "next/image";
-import { cn } from "@/lib/utils";
 import type { EmblaOptionsType } from "embla-carousel";
-import type { AutoplayOptionsType } from "embla-carousel-autoplay";
 import Autoplay from "embla-carousel-autoplay";
+import type { AutoplayOptionsType } from "embla-carousel-autoplay";
 import ClassNames from "embla-carousel-class-names";
 import Fade from "embla-carousel-fade";
 import useEmblaCarousel from "embla-carousel-react";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { cn } from "@/lib/utils";
 
 // 型定義
 export interface EmblaCarouselProps {

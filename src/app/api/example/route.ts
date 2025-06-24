@@ -4,14 +4,14 @@
  * サーバーサイドユーティリティを使用したAPIルートの実装例です。
  */
 
-import {
-	validateRequest,
-	successResponse,
-	errorResponse,
-	createApiError,
-} from "@/lib/server";
 import type { NextRequest } from "next/server";
 import { z } from "zod";
+import {
+	createApiError,
+	errorResponse,
+	successResponse,
+	validateRequest,
+} from "@/lib/server";
 
 // リクエストのバリデーションスキーマ
 const MessageSchema = z.object({

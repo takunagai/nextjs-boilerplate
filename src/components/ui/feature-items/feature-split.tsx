@@ -1,8 +1,8 @@
+import Image from "next/image";
+import Link from "next/link";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
-import Link from "next/link";
 import { DynamicHeading, type HeadingLevel } from "./components";
 import type { FeatureItem } from "./index";
 

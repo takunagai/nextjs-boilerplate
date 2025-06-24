@@ -1,5 +1,6 @@
 "use client";
 
+import { FaArrowUpRightFromSquare, FaLine, FaPhone } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -9,7 +10,6 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { FaPhone, FaLine, FaArrowUpRightFromSquare } from "react-icons/fa6";
 
 /**
  * 電話とLINEでのお問い合わせ方法を表示するコンポーネント

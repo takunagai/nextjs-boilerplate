@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button";
-import { Container } from "@/components/ui/container";
-import { cn } from "@/lib/utils";
 import Link from "next/link";
 import React from "react";
 import { FaArrowRight, FaArrowUpRightFromSquare } from "react-icons/fa6";
+import { Button } from "@/components/ui/button";
+import { Container } from "@/components/ui/container";
+import { cn } from "@/lib/utils";
 
 // ルートコンポーネントのProps
 export interface CTASectionRootProps extends React.HTMLAttributes<HTMLElement> {

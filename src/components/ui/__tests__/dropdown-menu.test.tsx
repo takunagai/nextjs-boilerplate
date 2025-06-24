@@ -1,21 +1,21 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { vi } from "vitest";
 import {
 	DropdownMenu,
-	DropdownMenuTrigger,
+	DropdownMenuCheckboxItem,
 	DropdownMenuContent,
 	DropdownMenuGroup,
 	DropdownMenuItem,
 	DropdownMenuLabel,
-	DropdownMenuSeparator,
-	DropdownMenuShortcut,
-	DropdownMenuCheckboxItem,
 	DropdownMenuRadioGroup,
 	DropdownMenuRadioItem,
+	DropdownMenuSeparator,
+	DropdownMenuShortcut,
 	DropdownMenuSub,
-	DropdownMenuSubTrigger,
 	DropdownMenuSubContent,
+	DropdownMenuSubTrigger,
+	DropdownMenuTrigger,
 } from "../dropdown-menu";
-import { vi } from "vitest";
 
 // Radix UIのモック
 vi.mock("@radix-ui/react-dropdown-menu", () => ({
@@ -50,7 +50,13 @@ vi.mock("@radix-ui/react-dropdown-menu", () => ({
 			{children}
 		</div>
 	),
-	Item: ({ children, className, "data-inset": dataInset, "data-variant": dataVariant, ...props }: any) => (
+	Item: ({
+		children,
+		className,
+		"data-inset": dataInset,
+		"data-variant": dataVariant,
+		...props
+	}: any) => (
 		<div
 			data-testid="dropdown-menu-item"
 			className={className}
@@ -113,7 +119,12 @@ vi.mock("@radix-ui/react-dropdown-menu", () => ({
 			{children}
 		</div>
 	),
-	SubTrigger: ({ children, className, "data-inset": dataInset, ...props }: any) => (
+	SubTrigger: ({
+		children,
+		className,
+		"data-inset": dataInset,
+		...props
+	}: any) => (
 		<div
 			data-testid="dropdown-menu-sub-trigger"
 			className={className}

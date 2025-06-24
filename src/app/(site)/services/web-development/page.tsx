@@ -1,3 +1,6 @@
+import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
 import ColumnLayout from "@/components/layout/column-layout";
 import {
 	BreadcrumbJsonLd,
@@ -13,9 +16,6 @@ import { Container } from "@/components/ui/container";
 import { PageHeader } from "@/components/ui/page-header";
 import { META } from "@/lib/constants";
 import { createBreadcrumbs } from "@/lib/utils";
-import type { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
 
 // ページ固有の定数を定義
 const PAGE_PATH = "/services/web-development";

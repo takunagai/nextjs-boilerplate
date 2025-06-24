@@ -1,6 +1,6 @@
 "use client";
 
-import { type VariantProps, cva } from "class-variance-authority";
+import { cva, type VariantProps } from "class-variance-authority";
 import Image from "next/image";
 import {
 	type KeyboardEvent as ReactKeyboardEvent,
@@ -171,7 +171,9 @@ export function Gallery({
 		setSelectedImage(items[newIndex]);
 	};
 
-	const handleModalKeyDown = (e: ReactKeyboardEvent<HTMLElement> | KeyboardEvent) => {
+	const handleModalKeyDown = (
+		e: ReactKeyboardEvent<HTMLElement> | KeyboardEvent,
+	) => {
 		if (e.key === "Escape") {
 			closeModal();
 		} else if (e.key === "ArrowLeft") {
@@ -202,7 +204,10 @@ export function Gallery({
 				}
 			: {};
 
-	const handleKeyDown = (e: ReactKeyboardEvent<HTMLElement>, item: GalleryItem) => {
+	const handleKeyDown = (
+		e: ReactKeyboardEvent<HTMLElement>,
+		item: GalleryItem,
+	) => {
 		if (e.key === "Enter" || e.key === " ") {
 			e.preventDefault();
 			handleImageClick(item);

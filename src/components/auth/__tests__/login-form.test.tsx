@@ -1,9 +1,9 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { LoginForm } from "../login-form";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { useRouter } from "next/navigation";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { useAuth } from "@/hooks/useAuth";
 import { useLoginForm } from "@/hooks/useLoginForm";
-import { useRouter } from "next/navigation";
+import { LoginForm } from "../login-form";
 
 // Mock dependencies
 vi.mock("@/hooks/useAuth");
@@ -190,12 +190,10 @@ describe("LoginForm", () => {
 		});
 
 		it("calls handleLogin and does not redirect on failed login", async () => {
-			const specificMockHandleLogin = vi
-				.fn()
-				.mockResolvedValueOnce({
-					success: false,
-					error: "Invalid credentials",
-				});
+			const specificMockHandleLogin = vi.fn().mockResolvedValueOnce({
+				success: false,
+				error: "Invalid credentials",
+			});
 			const specificMockHandleSubmit = vi.fn(
 				(dataHandler) => (e?: React.BaseSyntheticEvent) => {
 					e?.preventDefault();

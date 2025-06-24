@@ -1,10 +1,10 @@
-import { cn } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 import type { ReactNode } from "react";
-import { FeatureSplit } from "./feature-split";
+import { cn } from "@/lib/utils";
+import type { HeadingLevel } from "./components";
 import { FeatureOverlay } from "./feature-overlay";
 import { FeatureSimple } from "./feature-simple";
-import { HeadingLevel } from "./components";
+import { FeatureSplit } from "./feature-split";
 
 // 基本的な特徴アイテムの型定義
 export interface FeatureItem {

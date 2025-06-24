@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import { vi } from "vitest";
 import {
 	Pagination,
 	PaginationContent,
@@ -8,7 +9,6 @@ import {
 	PaginationNext,
 	PaginationPrevious,
 } from "../pagination";
-import { vi } from "vitest";
 
 // アイコンのモック
 vi.mock("react-icons/lu", () => ({

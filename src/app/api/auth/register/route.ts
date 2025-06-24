@@ -1,16 +1,18 @@
+import type { NextRequest } from "next/server";
+import { z } from "zod";
+import { validateCsrfInApiRoute } from "@/lib/security/csrf-validation";
 import {
 	createApiError,
 	createApiResponse,
 	errorResponse,
 } from "@/lib/server/api/response";
-import { validateCsrfInApiRoute } from "@/lib/security/csrf-validation";
-import { z } from "zod";
-import type { NextRequest } from "next/server";
 
 // 登録リクエストの検証スキーマ
 const registerSchema = z.object({
 	name: z.string().min(1, { message: "氏名は必須です" }),
-	email: z.string().email({ message: "有効なメールアドレスを入力してください" }),
+	email: z
+		.string()
+		.email({ message: "有効なメールアドレスを入力してください" }),
 	password: z
 		.string()
 		.min(8, { message: "パスワードは8文字以上で入力してください" }),
@@ -26,9 +28,9 @@ export async function POST(req: NextRequest) {
 				createApiError.custom(
 					"CSRF_VALIDATION_FAILED",
 					"CSRF検証に失敗しました",
-					{ details: csrfValidation.error }
+					{ details: csrfValidation.error },
 				),
-				{ status: 403 }
+				{ status: 403 },
 			);
 		}
 

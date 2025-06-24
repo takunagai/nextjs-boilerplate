@@ -1,3 +1,16 @@
+import type { Metadata } from "next";
+import Image from "next/image";
+import {
+	FaBriefcase,
+	FaCode,
+	FaEnvelope,
+	FaGithub,
+	FaGraduationCap,
+	FaLinkedin,
+	FaServer,
+	FaTwitter,
+	FaUser,
+} from "react-icons/fa6";
 import {
 	ArticleJsonLd,
 	BreadcrumbJsonLd,
@@ -15,19 +28,6 @@ import {
 import { Container } from "@/components/ui/container";
 import { META } from "@/lib/constants";
 import { createBreadcrumbs } from "@/lib/utils";
-import type { Metadata } from "next";
-import Image from "next/image";
-import {
-	FaBriefcase,
-	FaCode,
-	FaEnvelope,
-	FaGithub,
-	FaGraduationCap,
-	FaLinkedin,
-	FaServer,
-	FaTwitter,
-	FaUser,
-} from "react-icons/fa6";
 
 export const metadata: Metadata = generateMetadata({
 	title: "自己紹介",
@@ -76,7 +76,7 @@ export default function AboutPage() {
 			<Container width="md" className="space-y-8" paddingY="lg">
 				{/* プロフィールカード */}
 				<div className="bg-card rounded-lg overflow-hidden shadow-sm border border-border">
-					<div className="bg-primary/10 h-32 relative"></div>
+					<div className="bg-primary/10 h-32 relative" />
 					<div className="px-6 pb-6">
 						<div className="flex flex-col md:flex-row gap-6">
 							<div className="relative -mt-16">
@@ -159,7 +159,7 @@ export default function AboutPage() {
 										<div
 											className="bg-primary h-2 rounded-full"
 											style={{ width: "90%" }}
-										></div>
+										/>
 									</div>
 								</li>
 								<li>
@@ -171,7 +171,7 @@ export default function AboutPage() {
 										<div
 											className="bg-primary h-2 rounded-full"
 											style={{ width: "85%" }}
-										></div>
+										/>
 									</div>
 								</li>
 								<li>
@@ -183,7 +183,7 @@ export default function AboutPage() {
 										<div
 											className="bg-primary h-2 rounded-full"
 											style={{ width: "70%" }}
-										></div>
+										/>
 									</div>
 								</li>
 								<li>
@@ -195,7 +195,7 @@ export default function AboutPage() {
 										<div
 											className="bg-primary h-2 rounded-full"
 											style={{ width: "85%" }}
-										></div>
+										/>
 									</div>
 								</li>
 							</ul>
@@ -216,7 +216,7 @@ export default function AboutPage() {
 										<div
 											className="bg-primary h-2 rounded-full"
 											style={{ width: "65%" }}
-										></div>
+										/>
 									</div>
 								</li>
 								<li>
@@ -228,7 +228,7 @@ export default function AboutPage() {
 										<div
 											className="bg-primary h-2 rounded-full"
 											style={{ width: "45%" }}
-										></div>
+										/>
 									</div>
 								</li>
 								<li>
@@ -240,7 +240,7 @@ export default function AboutPage() {
 										<div
 											className="bg-primary h-2 rounded-full"
 											style={{ width: "75%" }}
-										></div>
+										/>
 									</div>
 								</li>
 								<li>
@@ -252,7 +252,7 @@ export default function AboutPage() {
 										<div
 											className="bg-primary h-2 rounded-full"
 											style={{ width: "40%" }}
-										></div>
+										/>
 									</div>
 								</li>
 							</ul>

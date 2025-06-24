@@ -24,7 +24,10 @@ test.describe("お問い合わせフォームのテスト", () => {
 		await expect(page.getByRole("tab", { name: "電話・LINE" })).toBeVisible();
 
 		// デフォルトでメールタブが選択されていることを確認
-		await expect(page.getByRole("tab", { name: "メール" })).toHaveAttribute("aria-selected", "true");
+		await expect(page.getByRole("tab", { name: "メール" })).toHaveAttribute(
+			"aria-selected",
+			"true",
+		);
 
 		// メールフォームが表示されていることを確認
 		await expect(page.getByText("メールフォーム")).toBeVisible();
@@ -59,7 +62,9 @@ test.describe("お問い合わせフォームのテスト", () => {
 		expect(errorElements).toBeGreaterThan(0);
 
 		// 必須項目にエラー表示があることを確認
-		expect(errorMessages.filter(text => text.includes("*")).length).toBeGreaterThan(2);
+		expect(
+			errorMessages.filter((text) => text.includes("*")).length,
+		).toBeGreaterThan(2);
 	});
 
 	test("無効なメールアドレスを入力するとエラーが表示される", async ({

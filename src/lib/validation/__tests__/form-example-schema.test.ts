@@ -1,6 +1,6 @@
 import {
-	formExampleSchema,
 	type FormExampleValues,
+	formExampleSchema,
 } from "../form-example-schema";
 
 describe("form-example-schema", () => {

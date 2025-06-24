@@ -1,6 +1,14 @@
 "use client";
 
 import Image from "next/image";
+import { useState } from "react";
+import {
+	FaCheckCircle,
+	FaExclamationCircle,
+	FaInfoCircle,
+	FaStar,
+	FaUserCircle,
+} from "react-icons/fa";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -30,14 +38,6 @@ import {
 } from "@/components/ui/timeline";
 import { Toggle } from "@/components/ui/toggle";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { useState } from "react";
-import {
-	FaCheckCircle,
-	FaExclamationCircle,
-	FaInfoCircle,
-	FaStar,
-	FaUserCircle,
-} from "react-icons/fa";
 
 export default function UIComponentsPage() {
 	const [dialogOpen, setDialogOpen] = useState(false);

@@ -1,8 +1,8 @@
 import {
 	AUTH_ERROR_CODES,
-	getAuthErrorMessage,
 	type AuthErrorCode,
 	type AuthResult,
+	getAuthErrorMessage,
 } from "../auth-errors";
 
 describe("auth-errors", () => {
@@ -21,7 +21,9 @@ describe("auth-errors", () => {
 		it("定数オブジェクトが正しい型で定義されている", () => {
 			// as constによって型レベルでの読み取り専用になっていることを確認
 			expect(typeof AUTH_ERROR_CODES.INVALID_CREDENTIALS).toBe("string");
-			expect(AUTH_ERROR_CODES.INVALID_CREDENTIALS).toBe("auth/invalid-credentials");
+			expect(AUTH_ERROR_CODES.INVALID_CREDENTIALS).toBe(
+				"auth/invalid-credentials",
+			);
 		});
 	});
 

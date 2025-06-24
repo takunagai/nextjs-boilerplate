@@ -1,9 +1,9 @@
+import type { ReactNode } from "react";
+import { FaCheck, FaXmark } from "react-icons/fa6";
+import { HiQuestionMarkCircle } from "react-icons/hi";
 import { Badge } from "@/components/ui/badge";
 import { Table } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
-import { type ReactNode } from "react";
-import { FaCheck, FaXmark } from "react-icons/fa6";
-import { HiQuestionMarkCircle } from "react-icons/hi";
 
 export type Feature = {
 	key: string;

@@ -1,9 +1,8 @@
-import { Container } from "@/components/ui/container";
-import { Table } from "@/components/ui/table";
-import { FaCaretDown } from "react-icons/fa6";
-import { PageHeader } from "@/components/ui/page-header";
-
 import type { Metadata } from "next";
+import { FaCaretDown } from "react-icons/fa6";
+import { Container } from "@/components/ui/container";
+import { PageHeader } from "@/components/ui/page-header";
+import { Table } from "@/components/ui/table";
 
 export const metadata: Metadata = {
 	title: "テーブルサンプル | Next.js Boilerplate",

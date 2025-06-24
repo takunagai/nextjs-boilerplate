@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import Link from "next/link";
 import {
 	BreadcrumbJsonLd,
 	generateMetadata,
@@ -5,21 +7,19 @@ import {
 	WebsiteJsonLd,
 } from "@/components/seo";
 import { ContentItems } from "@/components/services/content-items";
+import { Badge } from "@/components/ui/badge";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Container } from "@/components/ui/container";
 import { Heading } from "@/components/ui/heading";
 import { PageHeader } from "@/components/ui/page-header";
 import { META } from "@/lib/constants";
 import {
-	portfolioItems,
-	portfolioCategories,
 	getAllServiceTags,
 	getPortfolioItemsByTag,
+	portfolioCategories,
+	portfolioItems,
 } from "@/lib/data/portfolio-data";
 import { createBreadcrumbs } from "@/lib/utils";
-import type { Metadata } from "next";
-import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
 
 export const metadata: Metadata = generateMetadata({
 	title: "ポートフォリオ",

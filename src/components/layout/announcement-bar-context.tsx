@@ -1,6 +1,12 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import {
+	createContext,
+	type ReactNode,
+	useContext,
+	useEffect,
+	useState,
+} from "react";
 
 interface AnnouncementBarContextType {
 	isVisible: boolean;
@@ -22,7 +28,7 @@ export function AnnouncementBarProvider({ children }: { children: ReactNode }) {
 	useEffect(() => {
 		const stored = localStorage.getItem("announcement-bar-closed");
 		const shouldShow = stored !== "true";
-		
+
 		// 初回表示時のアニメーション遅延
 		if (shouldShow) {
 			setTimeout(() => setIsVisible(true), 100);

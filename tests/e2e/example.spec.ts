@@ -12,13 +12,15 @@ test("ホームページが正しく表示される", async ({ page }) => {
 
 	// ページタイトルが表示されていることを確認
 	await expect(page).toHaveTitle(/Next\.js Boilerplate/);
-	
+
 	// ヘッダーが表示されていることを確認
 	const header = await page.locator("header");
 	await expect(header).toBeVisible();
-	
+
 	// ヘッダー内のロゴテキストが表示されていることを確認
-	await expect(page.locator("header").getByText("Next.js Boilerplate").first()).toBeVisible();
+	await expect(
+		page.locator("header").getByText("Next.js Boilerplate").first(),
+	).toBeVisible();
 
 	// ナビゲーションメニューが表示されていることを確認
 	// 複数のnavが存在するため、ヘッダー内のnavを特定

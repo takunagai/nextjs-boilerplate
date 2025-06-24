@@ -1,11 +1,11 @@
-import { CTASection } from "@/components/sections/cta-section";
-import { Container } from "@/components/ui/container";
 import {
 	FaArrowRight,
 	FaArrowUpRightFromSquare,
 	FaDownload,
 	FaStar,
 } from "react-icons/fa6";
+import { CTASection } from "@/components/sections/cta-section";
+import { Container } from "@/components/ui/container";
 
 export default function CTASectionExamplesPage() {
 	return (

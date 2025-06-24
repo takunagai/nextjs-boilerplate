@@ -1,8 +1,8 @@
 "use client";
 
-import { APP } from "@/lib/constants";
 import Link from "next/link";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
+import { APP } from "@/lib/constants";
 
 interface AuthLayoutProps {
 	children: ReactNode;

@@ -59,7 +59,7 @@ function validateCsrf(req: NextRequest): boolean {
 	// TODO: CSRFトークン検証をAPI route内で実装
 	// middlewareでnode:cryptoモジュールを使用するとWebpackエラーが発生するため、
 	// API routes内で直接CSRFトークン検証を行う方式に変更する必要があります
-	
+
 	// 現在はOriginヘッダーベースの検証のみ実行
 
 	return true;

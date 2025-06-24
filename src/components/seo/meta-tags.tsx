@@ -1,5 +1,5 @@
-import { APP, META } from "@/lib/constants";
 import type { Metadata, Viewport } from "next";
+import { APP, META } from "@/lib/constants";
 
 /**
  * メタタグ生成のためのプロパティ
@@ -45,10 +45,10 @@ export function generateMetadata({
 	noIndex = false,
 }: MetaTagsProps): Metadata {
 	// タイトルの生成
-	const metaTitle = title 
-		? `${title} | ${APP.NAME}` 
-		: title === "" 
-			? ` | ${APP.NAME}` 
+	const metaTitle = title
+		? `${title} | ${APP.NAME}`
+		: title === ""
+			? ` | ${APP.NAME}`
 			: APP.NAME;
 
 	// 完全なOGP画像URLの生成

@@ -1,10 +1,10 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { FiBarChart2, FiCode, FiGlobe, FiMapPin } from "react-icons/fi";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { FeatureItems, FeatureSplit } from "@/components/ui/feature-items";
 import { PageHeader } from "@/components/ui/page-header";
-import type { Metadata } from "next";
-import Link from "next/link";
-import { FiBarChart2, FiCode, FiGlobe, FiMapPin } from "react-icons/fi";
 
 export const metadata: Metadata = {
 	title: "特徴紹介セクション | サンプルページ",

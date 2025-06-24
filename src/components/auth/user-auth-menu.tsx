@@ -1,5 +1,14 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import {
+	FaChartLine,
+	FaGear,
+	FaRightFromBracket,
+	FaShieldHalved,
+	FaUser,
+	FaUsers,
+} from "react-icons/fa6";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,15 +22,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/hooks/useAuth";
-import { useRouter } from "next/navigation";
-import {
-	FaUser,
-	FaGear,
-	FaRightFromBracket,
-	FaShieldHalved,
-	FaChartLine,
-	FaUsers,
-} from "react-icons/fa6";
 
 /**
  * ユーザー認証メニューコンポーネント

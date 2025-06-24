@@ -1,6 +1,6 @@
+import type { Metadata } from "next";
 import { Container } from "@/components/ui/container";
 import { FeatureComparison } from "@/components/ui/feature-comparison";
-import { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "機能比較表サンプル - Next.js Boilerplate",

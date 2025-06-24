@@ -1,10 +1,10 @@
+import { FaPuzzlePiece } from "react-icons/fa6";
 import { Container } from "@/components/ui/container";
 import {
 	type ContentItem,
 	ContentItems,
 } from "@/components/ui/content-items/index";
 import { Heading } from "@/components/ui/heading";
-import { FaPuzzlePiece } from "react-icons/fa6";
 import { FeatureItems } from "../ui/feature-items";
 
 interface ServiceFeaturesSectionProps {

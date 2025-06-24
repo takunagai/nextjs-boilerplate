@@ -1,7 +1,7 @@
-import { Button } from "@/components/ui/button";
-import { Container } from "@/components/ui/container";
 import Link from "next/link";
 import { FaArrowRight, FaCircleCheck } from "react-icons/fa6";
+import { Button } from "@/components/ui/button";
+import { Container } from "@/components/ui/container";
 
 type FeatureItem = {
 	id: string;

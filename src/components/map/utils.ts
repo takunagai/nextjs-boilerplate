@@ -93,8 +93,8 @@ export function generateGoogleMapEmbedUrl(
  */
 export function getMapUrlByAddress(
 	address: string,
-	zoom: number = 15,
-	language: string = "ja",
+	zoom = 15,
+	language = "ja",
 ): string {
 	return generateGoogleMapEmbedUrl({
 		address,
@@ -114,8 +114,8 @@ export function getMapUrlByAddress(
 export function getMapUrlByLatLng(
 	lat: number,
 	lng: number,
-	zoom: number = 15,
-	language: string = "ja",
+	zoom = 15,
+	language = "ja",
 ): string {
 	return generateGoogleMapEmbedUrl({
 		lat,
@@ -135,8 +135,8 @@ export function getMapUrlByLatLng(
  */
 export function getMapUrlByQuery(
 	query: string,
-	zoom: number = 15,
-	language: string = "ja",
+	zoom = 15,
+	language = "ja",
 ): string {
 	return generateGoogleMapEmbedUrl({
 		query,

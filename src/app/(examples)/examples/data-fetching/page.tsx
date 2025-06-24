@@ -1,7 +1,7 @@
-import { Container } from "@/components/ui/container";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Suspense } from "react";
+import { Container } from "@/components/ui/container";
 import { PageHeader } from "@/components/ui/page-header";
+import { Skeleton } from "@/components/ui/skeleton";
 
 // ユーザーの型定義
 interface User {

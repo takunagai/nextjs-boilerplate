@@ -1,6 +1,6 @@
-import { generateMetadata, generateViewport } from "../meta-tags";
-import { APP, META } from "@/lib/constants";
 import { vi } from "vitest";
+import { APP, META } from "@/lib/constants";
+import { generateMetadata, generateViewport } from "../meta-tags";
 
 // 定数のモック
 vi.mock("@/lib/constants", () => ({

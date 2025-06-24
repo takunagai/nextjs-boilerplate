@@ -1,10 +1,10 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
+	type GoogleMapEmbedOptions,
 	generateGoogleMapEmbedUrl,
 	getMapUrlByAddress,
 	getMapUrlByLatLng,
 	getMapUrlByQuery,
-	type GoogleMapEmbedOptions,
 } from "../utils";
 
 const MOCK_API_KEY = "test_api_key_123";

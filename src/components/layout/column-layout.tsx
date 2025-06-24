@@ -1,6 +1,6 @@
-import React from "react";
-import type { ReactNode, JSXElementConstructor } from "react";
 import { cva } from "class-variance-authority";
+import React from "react";
+import type { JSXElementConstructor, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 /**

@@ -7,11 +7,11 @@
  * メール送信、データベース保存などのサーバーサイド処理を行います。
  */
 
+import { ActionError, safeAction, validateAction } from "@/lib/server";
 import {
-	contactFormSchema,
 	type ContactFormValues,
+	contactFormSchema,
 } from "@/lib/validation/contact-schema";
-import { validateAction, safeAction, ActionError } from "@/lib/server";
 
 /**
  * お問い合わせフォームを送信するサーバーアクション

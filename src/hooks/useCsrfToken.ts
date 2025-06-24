@@ -49,7 +49,8 @@ export function useCsrfToken(): UseCsrfTokenReturn {
 				throw new Error(data.error || "CSRFトークンの取得に失敗しました");
 			}
 		} catch (err) {
-			const errorMessage = err instanceof Error ? err.message : "不明なエラーが発生しました";
+			const errorMessage =
+				err instanceof Error ? err.message : "不明なエラーが発生しました";
 			setError(errorMessage);
 			console.error("CSRFトークン取得エラー:", err);
 		} finally {

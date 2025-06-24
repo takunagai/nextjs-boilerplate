@@ -1,8 +1,8 @@
 "use client";
 
+import { FaMoon, FaSun } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
 import { useThemeToggle } from "@/hooks/use-theme-toggle";
-import { FaSun, FaMoon } from "react-icons/fa6";
 
 export default function ThemeSwitcherContent() {
 	const { theme, toggleTheme, mounted } = useThemeToggle();

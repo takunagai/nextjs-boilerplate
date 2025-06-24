@@ -1,6 +1,6 @@
 "use client";
 
-import { useSession, signIn, signOut } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { useCallback } from "react";
 import type { AuthResult } from "@/lib/auth/auth-errors";
 import { AUTH_ERROR_CODES, getAuthErrorMessage } from "@/lib/auth/auth-errors";

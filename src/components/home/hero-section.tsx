@@ -1,12 +1,12 @@
 "use client";
 
-import { DigitalConstellation } from "@/components/background/digital-constellation";
-import { Button } from "@/components/ui/button";
-import { Container } from "@/components/ui/container";
 import Image from "next/image";
 import Link from "next/link";
 import { FaCaretDown } from "react-icons/fa6";
 import { useIsClient } from "usehooks-ts";
+import { DigitalConstellation } from "@/components/background/digital-constellation";
+import { Button } from "@/components/ui/button";
+import { Container } from "@/components/ui/container";
 
 export function HeroSection() {
 	const isClient = useIsClient();

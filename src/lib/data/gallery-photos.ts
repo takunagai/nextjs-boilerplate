@@ -1,4 +1,4 @@
-import { Photo } from "@/components/masonry-gallery/types";
+import type { Photo } from "@/components/masonry-gallery/types";
 
 /**
  * ダミー画像データ

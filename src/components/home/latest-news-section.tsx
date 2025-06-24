@@ -1,12 +1,12 @@
+import { format } from "date-fns";
+import Link from "next/link";
+import { IoArrowForward, IoInformationCircle } from "react-icons/io5";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { LATEST_NEWS_COUNT } from "@/lib/constants/news";
 import type { NewsItem } from "@/lib/data/news";
 import { getAllNews } from "@/lib/data/news";
-import { format } from "date-fns";
-import Link from "next/link";
-import { IoArrowForward, IoInformationCircle } from "react-icons/io5";
 
 interface LatestNewsSectionProps {
 	className?: string;

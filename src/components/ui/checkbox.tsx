@@ -1,8 +1,8 @@
 "use client";
 
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
-import { FaCheck } from "react-icons/fa6";
 import type * as React from "react";
+import { FaCheck } from "react-icons/fa6";
 
 import { cn } from "@/lib/utils";
 

@@ -1,7 +1,7 @@
-import { render, screen, fireEvent } from "@testing-library/react";
-import { Sidebar } from "../sidebar";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { usePathname } from "next/navigation";
-import { vi, type MockedFunction } from "vitest";
+import { type MockedFunction, vi } from "vitest";
+import { Sidebar } from "../sidebar";
 
 // Next.jsのモック
 vi.mock("next/navigation", () => ({
@@ -11,9 +11,9 @@ vi.mock("next/navigation", () => ({
 // Next.js Linkコンポーネントのモック
 vi.mock("next/link", () => ({
 	default: ({ children, href, className, ...props }: any) => (
-		<a 
-			href={href} 
-			className={className} 
+		<a
+			href={href}
+			className={className}
 			{...props}
 			onClick={(e) => {
 				e.preventDefault(); // デフォルト動作を防止

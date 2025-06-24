@@ -1,7 +1,7 @@
 "use client";
 
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 
@@ -91,7 +91,7 @@ function Constellation({
 
 			const mousePos = new THREE.Vector2(
 				(event.clientX / size.width) * 2 - 1,
-				-(event.clientY / size.height) * 2 + 1
+				-(event.clientY / size.height) * 2 + 1,
 			);
 
 			// レイキャスティングでクリック位置を3D空間に変換
@@ -108,11 +108,11 @@ function Constellation({
 				maxLife: 1,
 			};
 
-			setRipples(prev => [...prev, newRipple]);
+			setRipples((prev) => [...prev, newRipple]);
 
 			// 近くのノードを爆発させる
-			setNodes(prevNodes => {
-				return prevNodes.map(node => {
+			setNodes((prevNodes) => {
+				return prevNodes.map((node) => {
 					const dist = node.position.distanceTo(intersectPoint);
 					if (dist < 3) {
 						return {
@@ -140,11 +140,11 @@ function Constellation({
 					color: new THREE.Color().setHSL(
 						0.6 + Math.random() * 0.3,
 						0.8,
-						0.5 + Math.random() * 0.3
+						0.5 + Math.random() * 0.3,
 					),
 				});
 			}
-			setParticles(prev => [...prev, ...newParticles]);
+			setParticles((prev) => [...prev, ...newParticles]);
 		};
 
 		if (mouseInfluence) {
@@ -159,70 +159,80 @@ function Constellation({
 	}, [size, mouseInfluence, camera, raycaster]);
 
 	// ジオメトリとマテリアルのメモ化
-	const [pointsGeometry, lineGeometry, particleGeometry, rippleGeometry] = useMemo(() => {
-		const pointsGeo = new THREE.BufferGeometry();
-		const lineGeo = new THREE.BufferGeometry();
-		const particleGeo = new THREE.BufferGeometry();
-		const rippleGeo = new THREE.BufferGeometry();
+	const [pointsGeometry, lineGeometry, particleGeometry, rippleGeometry] =
+		useMemo(() => {
+			const pointsGeo = new THREE.BufferGeometry();
+			const lineGeo = new THREE.BufferGeometry();
+			const particleGeo = new THREE.BufferGeometry();
+			const rippleGeo = new THREE.BufferGeometry();
 
-		// メインノード用
-		const positions = new Float32Array(nodeCount * 3);
-		const colors = new Float32Array(nodeCount * 3);
-		const sizes = new Float32Array(nodeCount);
+			// メインノード用
+			const positions = new Float32Array(nodeCount * 3);
+			const colors = new Float32Array(nodeCount * 3);
+			const sizes = new Float32Array(nodeCount);
 
-		for (let i = 0; i < nodeCount; i++) {
-			positions[i * 3] = 0;
-			positions[i * 3 + 1] = 0;
-			positions[i * 3 + 2] = 0;
+			for (let i = 0; i < nodeCount; i++) {
+				positions[i * 3] = 0;
+				positions[i * 3 + 1] = 0;
+				positions[i * 3 + 2] = 0;
 
-			// 青〜紫のグラデーション
-			colors[i * 3] = 0.4 + Math.random() * 0.3; // R
-			colors[i * 3 + 1] = 0.6 + Math.random() * 0.3; // G
-			colors[i * 3 + 2] = 0.9 + Math.random() * 0.1; // B
+				// 青〜紫のグラデーション
+				colors[i * 3] = 0.4 + Math.random() * 0.3; // R
+				colors[i * 3 + 1] = 0.6 + Math.random() * 0.3; // G
+				colors[i * 3 + 2] = 0.9 + Math.random() * 0.1; // B
 
-			sizes[i] = 0.05 + Math.random() * 0.05;
-		}
+				sizes[i] = 0.05 + Math.random() * 0.05;
+			}
 
-		pointsGeo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-		pointsGeo.setAttribute("color", new THREE.BufferAttribute(colors, 3));
-		pointsGeo.setAttribute("size", new THREE.BufferAttribute(sizes, 1));
+			pointsGeo.setAttribute(
+				"position",
+				new THREE.BufferAttribute(positions, 3),
+			);
+			pointsGeo.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+			pointsGeo.setAttribute("size", new THREE.BufferAttribute(sizes, 1));
 
-		// ラインジオメトリは動的に更新
-		lineGeo.setAttribute(
-			"position",
-			new THREE.BufferAttribute(new Float32Array(nodeCount * nodeCount * 6), 3),
-		);
-		lineGeo.setAttribute(
-			"color",
-			new THREE.BufferAttribute(new Float32Array(nodeCount * nodeCount * 6), 3),
-		);
+			// ラインジオメトリは動的に更新
+			lineGeo.setAttribute(
+				"position",
+				new THREE.BufferAttribute(
+					new Float32Array(nodeCount * nodeCount * 6),
+					3,
+				),
+			);
+			lineGeo.setAttribute(
+				"color",
+				new THREE.BufferAttribute(
+					new Float32Array(nodeCount * nodeCount * 6),
+					3,
+				),
+			);
 
-		// パーティクル用
-		particleGeo.setAttribute(
-			"position",
-			new THREE.BufferAttribute(new Float32Array(1000 * 3), 3),
-		);
-		particleGeo.setAttribute(
-			"color",
-			new THREE.BufferAttribute(new Float32Array(1000 * 3), 3),
-		);
-		particleGeo.setAttribute(
-			"size",
-			new THREE.BufferAttribute(new Float32Array(1000), 1),
-		);
+			// パーティクル用
+			particleGeo.setAttribute(
+				"position",
+				new THREE.BufferAttribute(new Float32Array(1000 * 3), 3),
+			);
+			particleGeo.setAttribute(
+				"color",
+				new THREE.BufferAttribute(new Float32Array(1000 * 3), 3),
+			);
+			particleGeo.setAttribute(
+				"size",
+				new THREE.BufferAttribute(new Float32Array(1000), 1),
+			);
 
-		// 波紋用
-		rippleGeo.setAttribute(
-			"position",
-			new THREE.BufferAttribute(new Float32Array(100 * 64 * 2 * 3), 3),
-		);
-		rippleGeo.setAttribute(
-			"color",
-			new THREE.BufferAttribute(new Float32Array(100 * 64 * 2 * 3), 3),
-		);
+			// 波紋用
+			rippleGeo.setAttribute(
+				"position",
+				new THREE.BufferAttribute(new Float32Array(100 * 64 * 2 * 3), 3),
+			);
+			rippleGeo.setAttribute(
+				"color",
+				new THREE.BufferAttribute(new Float32Array(100 * 64 * 2 * 3), 3),
+			);
 
-		return [pointsGeo, lineGeo, particleGeo, rippleGeo];
-	}, [nodeCount]);
+			return [pointsGeo, lineGeo, particleGeo, rippleGeo];
+		}, [nodeCount]);
 
 	// アニメーションループ
 	useFrame((state) => {
@@ -291,7 +301,8 @@ function Constellation({
 			// サイズとカラーパルス効果
 			const pulse = Math.sin(node.pulsePhase) * 0.3 + 0.7;
 			const energyPulse = node.energy * pulse;
-			sizes[i] = (0.08 + energyPulse * 0.15) * (0.8 + Math.sin(time * 2 + i) * 0.2);
+			sizes[i] =
+				(0.08 + energyPulse * 0.15) * (0.8 + Math.sin(time * 2 + i) * 0.2);
 
 			// 動的カラーエフェクト
 			const hue = 0.6 + node.energy * 0.3; // 青から紫へ
@@ -320,7 +331,8 @@ function Constellation({
 					const energyFlow = Math.sin(time * 3 + dist) * 0.5 + 0.5;
 
 					// ラインを追加
-					const opacity = (1 - dist / connectionDistance) * (0.3 + avgEnergy * 0.7);
+					const opacity =
+						(1 - dist / connectionDistance) * (0.3 + avgEnergy * 0.7);
 
 					// 開始点
 					linePositions[lineIndex * 6] = node.position.x;
@@ -334,7 +346,11 @@ function Constellation({
 
 					// 動的ラインカラー
 					const lineHue = 0.6 + avgEnergy * 0.3 + energyFlow * 0.2;
-					const lineColor = new THREE.Color().setHSL(lineHue, 0.8, 0.5 + avgEnergy * 0.3);
+					const lineColor = new THREE.Color().setHSL(
+						lineHue,
+						0.8,
+						0.5 + avgEnergy * 0.3,
+					);
 
 					for (let k = 0; k < 2; k++) {
 						lineColors[lineIndex * 6 + k * 3] = lineColor.r * opacity;
@@ -349,9 +365,12 @@ function Constellation({
 
 		// パーティクルの更新
 		if (particleMesh.current && particles.length > 0) {
-			const particlePositions = particleMesh.current.geometry.attributes.position.array as Float32Array;
-			const particleColors = particleMesh.current.geometry.attributes.color.array as Float32Array;
-			const particleSizes = particleMesh.current.geometry.attributes.size.array as Float32Array;
+			const particlePositions = particleMesh.current.geometry.attributes
+				.position.array as Float32Array;
+			const particleColors = particleMesh.current.geometry.attributes.color
+				.array as Float32Array;
+			const particleSizes = particleMesh.current.geometry.attributes.size
+				.array as Float32Array;
 
 			particles.forEach((particle, i) => {
 				particle.life -= 0.02;
@@ -379,7 +398,7 @@ function Constellation({
 			});
 
 			// 死んだパーティクルを削除
-			setParticles(prev => prev.filter(p => p.life > 0));
+			setParticles((prev) => prev.filter((p) => p.life > 0));
 
 			particleMesh.current.geometry.attributes.position.needsUpdate = true;
 			particleMesh.current.geometry.attributes.color.needsUpdate = true;
@@ -388,8 +407,10 @@ function Constellation({
 
 		// 波紋の更新
 		if (rippleMesh.current && ripples.length > 0) {
-			const ripplePositions = rippleMesh.current.geometry.attributes.position.array as Float32Array;
-			const rippleColors = rippleMesh.current.geometry.attributes.color.array as Float32Array;
+			const ripplePositions = rippleMesh.current.geometry.attributes.position
+				.array as Float32Array;
+			const rippleColors = rippleMesh.current.geometry.attributes.color
+				.array as Float32Array;
 			let rippleIndex = 0;
 
 			ripples.forEach((ripple) => {
@@ -430,7 +451,7 @@ function Constellation({
 			});
 
 			// 死んだ波紋を削除
-			setRipples(prev => prev.filter(r => r.life > 0));
+			setRipples((prev) => prev.filter((r) => r.life > 0));
 
 			rippleMesh.current.geometry.attributes.position.needsUpdate = true;
 			rippleMesh.current.geometry.attributes.color.needsUpdate = true;

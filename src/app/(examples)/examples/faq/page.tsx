@@ -1,7 +1,4 @@
-import { Container } from "@/components/ui/container";
-import { FAQ } from "@/components/ui/faq";
-import type { FAQItem } from "@/components/ui/faq/faq-types";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import {
 	FaBox,
 	FaCircleExclamation,
@@ -12,6 +9,9 @@ import {
 	FaQuestion,
 	FaTruckFast,
 } from "react-icons/fa6";
+import { Container } from "@/components/ui/container";
+import { FAQ } from "@/components/ui/faq";
+import type { FAQItem } from "@/components/ui/faq/faq-types";
 
 // メタデータの設定
 export const metadata: Metadata = {

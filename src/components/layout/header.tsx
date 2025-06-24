@@ -1,6 +1,6 @@
 "use client";
 
-import { type VariantProps, cva } from "class-variance-authority";
+import { cva, type VariantProps } from "class-variance-authority";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -13,9 +13,9 @@ import { useScroll } from "@/hooks/useScroll";
 import { APP } from "@/lib/constants";
 import type { HeaderLink } from "@/lib/constants/header-navigation";
 import { cn } from "@/lib/utils";
+import { useAnnouncementBar } from "./announcement-bar-context";
 import { DesktopNavigation } from "./header/desktop-navigation";
 import { MobileNavigation } from "./header/mobile-navigation";
-import { useAnnouncementBar } from "./announcement-bar-context";
 
 // ヘッダーのバリアントを定義
 const headerVariants = cva(
@@ -86,7 +86,8 @@ export function Header({
 }: HeaderProps) {
 	const pathname = usePathname();
 	const [isOpen, setIsOpen] = React.useState(false);
-	const { isVisible: isAnnouncementVisible, height: announcementHeight } = useAnnouncementBar();
+	const { isVisible: isAnnouncementVisible, height: announcementHeight } =
+		useAnnouncementBar();
 
 	// クライアントサイドでのレンダリングかを判定
 	const isClient = useIsClient();

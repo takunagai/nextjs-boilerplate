@@ -1,6 +1,6 @@
+import type { Metadata } from "next";
 import { EmblaCarousel } from "@/components/ui/carousel/embla-carousel";
 import { PageHeader } from "@/components/ui/page-header";
-import type { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "カルーセル - サンプル",

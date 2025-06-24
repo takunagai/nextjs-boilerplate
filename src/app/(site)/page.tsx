@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { FiBarChart2, FiCode, FiGlobe, FiMapPin } from "react-icons/fi";
 import { FeatureListSection } from "@/components/home/feature-list-section";
 import { FeaturesSection } from "@/components/home/features-section";
 import { GallerySection } from "@/components/home/gallery-section";
@@ -13,8 +15,6 @@ import {
 } from "@/components/seo";
 import type { ContentItem } from "@/components/ui/content-items";
 import { APP } from "@/lib/constants";
-import type { Metadata } from "next";
-import { FiBarChart2, FiCode, FiGlobe, FiMapPin } from "react-icons/fi";
 
 export const metadata: Metadata = generateMetadata({
 	title: "モダンなWebアプリケーション開発の出発点",

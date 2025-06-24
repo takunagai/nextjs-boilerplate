@@ -1,6 +1,6 @@
+import Link from "next/link";
 import { Container } from "@/components/ui/container";
 import { PageHeader } from "@/components/ui/page-header";
-import Link from "next/link";
 
 export default function ExamplesPage() {
 	const examples = [

@@ -1,6 +1,6 @@
-import { render, screen, fireEvent } from "@testing-library/react";
-import { Button, buttonVariants } from "../button";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { vi } from "vitest";
+import { Button, buttonVariants } from "../button";
 
 describe("Button", () => {
 	describe("基本的な動作", () => {

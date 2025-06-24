@@ -1,9 +1,8 @@
 import "@testing-library/jest-dom";
-import { vi } from "vitest";
 import { configure } from "@testing-library/react";
-
 // React Testing Library utilities
 import { act } from "react";
+import { vi } from "vitest";
 
 // Mock ResizeObserver
 class ResizeObserver {
@@ -44,13 +43,16 @@ configure({
 });
 
 // Zod v4 エラーのunhandled promise rejectionをキャッチ
-if (typeof global.process !== 'undefined') {
-	global.process.on('unhandledRejection', (reason: any) => {
+if (typeof global.process !== "undefined") {
+	global.process.on("unhandledRejection", (reason: any) => {
 		// ZodErrorの場合は無視
-		if (reason && (reason._tag === 'Symbol({{zod.error}})' || reason.name === 'ZodError')) {
+		if (
+			reason &&
+			(reason._tag === "Symbol({{zod.error}})" || reason.name === "ZodError")
+		) {
 			return;
 		}
 		// その他のエラーは通常通り処理
-		console.error('Unhandled promise rejection:', reason);
+		console.error("Unhandled promise rejection:", reason);
 	});
 }

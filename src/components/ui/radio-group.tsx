@@ -1,8 +1,8 @@
 "use client";
 
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
-import { FaCircle } from "react-icons/fa6";
 import type * as React from "react";
+import { FaCircle } from "react-icons/fa6";
 
 import { cn } from "@/lib/utils";
 

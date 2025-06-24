@@ -1,6 +1,6 @@
-import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
 
 export interface NewsItemProps {
 	id: string;

@@ -1,6 +1,6 @@
-import { renderHook, act } from "@testing-library/react";
-import { useScroll } from "../useScroll";
+import { act, renderHook } from "@testing-library/react";
 import { vi } from "vitest";
+import { useScroll } from "../useScroll";
 
 // グローバルな window プロパティをモック
 const mockScrollY = vi.fn();

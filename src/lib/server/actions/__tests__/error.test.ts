@@ -1,10 +1,10 @@
-import { z } from "zod";
 import { vi } from "vitest";
+import { z } from "zod";
 import {
-	safeAction,
-	isActionSuccess,
-	isActionError,
 	type ActionResult,
+	isActionError,
+	isActionSuccess,
+	safeAction,
 } from "../error";
 import { ActionError } from "../validation";
 

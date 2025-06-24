@@ -1,7 +1,14 @@
-import { renderHook, act } from "@testing-library/react";
-import { useLoginForm, type LoginFormInputs } from "../useLoginForm";
+import { act, renderHook } from "@testing-library/react";
+import {
+	beforeEach,
+	describe,
+	expect,
+	it,
+	type MockedFunction,
+	vi,
+} from "vitest";
 import { useAuth } from "../useAuth";
-import { vi, describe, it, expect, beforeEach, type MockedFunction } from "vitest";
+import { type LoginFormInputs, useLoginForm } from "../useLoginForm";
 
 // useAuthのモック
 vi.mock("../useAuth", () => ({
@@ -57,7 +64,7 @@ describe("useLoginForm", () => {
 						() => {},
 						(formErrors) => {
 							errors = formErrors;
-						}
+						},
 					)();
 				} catch (error: any) {
 					// ZodErrorの場合、issuesからエラーメッセージを取得
@@ -91,7 +98,7 @@ describe("useLoginForm", () => {
 						() => {},
 						(formErrors) => {
 							errors = formErrors;
-						}
+						},
 					)();
 				} catch (error: any) {
 					// ZodErrorの場合、issuesからエラーメッセージを取得
@@ -335,7 +342,7 @@ describe("useLoginForm", () => {
 						() => {},
 						(formErrors) => {
 							errors = formErrors;
-						}
+						},
 					)();
 				} catch (error: any) {
 					// ZodErrorの場合、issuesからエラーメッセージを取得

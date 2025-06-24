@@ -1,8 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import type React from "react";
 import { useCallback, useEffect } from "react";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
 import type { GalleryItem } from "./gallery";
 

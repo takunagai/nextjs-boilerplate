@@ -1,7 +1,7 @@
 "use client";
 
-import { FEATURES } from "@/lib/constants";
 import dynamic from "next/dynamic";
+import { FEATURES } from "@/lib/constants";
 
 // プレースホルダーをコンポーネントとして分離
 const ThemeSwitcherPlaceholder = dynamic(

@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { RegisterForm } from "../register-form";
 
 // Mock next/navigation
@@ -31,37 +31,37 @@ describe("RegisterForm Simple Validation Tests", () => {
 		// fetchをモックしてAPIコールを防ぐ
 		const mockFetch = vi.fn().mockResolvedValue({
 			ok: true,
-			json: () => Promise.resolve({ success: true })
+			json: () => Promise.resolve({ success: true }),
 		});
 		global.fetch = mockFetch;
-		
+
 		render(<RegisterForm />);
-		
+
 		const submitButton = screen.getByRole("button", { name: "登録" });
 		const nameInput = screen.getByLabelText(/氏名/);
-		
+
 		// フォームフィールドの基本確認のみを行う（送信はしない）
 		expect(submitButton).toBeInTheDocument();
 		expect(nameInput).toBeInTheDocument();
-		expect(nameInput).toHaveAttribute('name', 'name');
+		expect(nameInput).toHaveAttribute("name", "name");
 	});
-	
+
 	it("should not call onSubmit when validation fails", async () => {
 		// fetchをモックしてAPIコールを防ぐ
 		const mockFetch = vi.fn().mockResolvedValue({
 			ok: true,
-			json: () => Promise.resolve({ success: true })
+			json: () => Promise.resolve({ success: true }),
 		});
 		global.fetch = mockFetch;
-		
+
 		render(<RegisterForm />);
-		
+
 		const submitButton = screen.getByRole("button", { name: "登録" });
 		const nameInput = screen.getByLabelText(/氏名/);
-		
+
 		// フォームフィールドの基本確認のみを行う（送信はしない）
 		expect(nameInput).toBeInTheDocument();
 		expect(submitButton).toBeInTheDocument();
-		expect(nameInput).toHaveAttribute('name', 'name');
+		expect(nameInput).toHaveAttribute("name", "name");
 	});
 });

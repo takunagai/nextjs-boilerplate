@@ -1,7 +1,7 @@
 "use client";
 
-import { Heading } from "@/components/ui/heading";
 import { FaPuzzlePiece } from "react-icons/fa6";
+import { Heading } from "@/components/ui/heading";
 import { PageHeader } from "@/components/ui/page-header";
 
 export default function HeadingExamplesPage() {

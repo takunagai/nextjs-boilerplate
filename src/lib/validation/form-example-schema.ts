@@ -22,11 +22,13 @@ export const formExampleSchema = z.object({
 		.string()
 		.min(10, { message: "メッセージは10文字以上で入力してください" })
 		.max(500, { message: "メッセージは500文字以内で入力してください" }),
-	terms: z.boolean({
-		required_error: "利用規約への同意が必要です",
-	}).refine((val) => val === true, {
-		message: "利用規約に同意してください",
-	}),
+	terms: z
+		.boolean({
+			required_error: "利用規約への同意が必要です",
+		})
+		.refine((val) => val === true, {
+			message: "利用規約に同意してください",
+		}),
 });
 
 export type FormExampleValues = z.infer<typeof formExampleSchema>;

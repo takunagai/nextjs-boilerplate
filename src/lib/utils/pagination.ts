@@ -20,7 +20,8 @@ export function calculatePagination(
 	const validItemsPerPage = Math.max(1, itemsPerPage);
 
 	// 総ページ数を計算
-	const totalPages = validTotalItems === 0 ? 0 : Math.ceil(validTotalItems / validItemsPerPage);
+	const totalPages =
+		validTotalItems === 0 ? 0 : Math.ceil(validTotalItems / validItemsPerPage);
 
 	// 現在のページが範囲外の場合は調整
 	const page = Math.max(1, Math.min(currentPage, totalPages || 1));

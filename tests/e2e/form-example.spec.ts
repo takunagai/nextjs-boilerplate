@@ -36,7 +36,9 @@ test.describe("フォームサンプルのテスト", () => {
 		await page.waitForTimeout(1000);
 
 		// エラー要素が表示されていることを確認
-		const errorElements = await page.locator(".text-destructive, [role='alert'], .text-red-500").count();
+		const errorElements = await page
+			.locator(".text-destructive, [role='alert'], .text-red-500")
+			.count();
 		expect(errorElements).toBeGreaterThan(0);
 
 		// フォームが送信されずにページに残っていることを確認
@@ -92,7 +94,9 @@ test.describe("フォームサンプルのテスト", () => {
 		await page.waitForTimeout(1000);
 
 		// エラー要素が表示されていることを確認
-		const errorElements = await page.locator(".text-destructive, [role='alert'], .text-red-500").count();
+		const errorElements = await page
+			.locator(".text-destructive, [role='alert'], .text-red-500")
+			.count();
 		expect(errorElements).toBeGreaterThan(0);
 
 		// フォームが送信されずにページに残っていることを確認
@@ -136,7 +140,9 @@ test.describe("フォームサンプルのテスト", () => {
 				const emailValue = await page.getByLabel("メールアドレス").inputValue();
 				const messageValue = await page.getByLabel("メッセージ").inputValue();
 
-				console.log(`Retry ${retryCount}: name="${nameValue}", email="${emailValue}", message="${messageValue}"`);
+				console.log(
+					`Retry ${retryCount}: name="${nameValue}", email="${emailValue}", message="${messageValue}"`,
+				);
 
 				if (nameValue === "" && emailValue === "" && messageValue === "") {
 					formReset = true;
@@ -151,7 +157,10 @@ test.describe("フォームサンプルのテスト", () => {
 		// フォームリセットが確認できない場合は、より詳細なデバッグ情報を出力
 		if (!formReset) {
 			const allText = await page.locator("body").textContent();
-			console.log("Form not reset after max retries. Page content (first 1000 chars):", allText?.substring(0, 1000));
+			console.log(
+				"Form not reset after max retries. Page content (first 1000 chars):",
+				allText?.substring(0, 1000),
+			);
 
 			// 成功メッセージを含む可能性のある要素を探す
 			const successPatterns = [
@@ -173,18 +182,25 @@ test.describe("フォームサンプルのテスト", () => {
 
 			if (!foundSuccess) {
 				// 最後の手段として、送信ボタンの状態をチェック
-				const submitButtonText = await page.getByRole("button", { name: /送信/ }).textContent();
+				const submitButtonText = await page
+					.getByRole("button", { name: /送信/ })
+					.textContent();
 				console.log("Submit button text:", submitButtonText);
 
 				if (submitButtonText === "送信する") {
-					console.log("Submit button returned to normal state - assuming success");
+					console.log(
+						"Submit button returned to normal state - assuming success",
+					);
 					formReset = true;
 				}
 			}
 		}
 
 		// 最終的にフォーム送信の成功を判定
-		expect(formReset, "Form submission should reset form fields or show success message").toBeTruthy();
+		expect(
+			formReset,
+			"Form submission should reset form fields or show success message",
+		).toBeTruthy();
 
 		// WebKitの場合は送信ボタンの状態で成功を判定しているため、フォームリセットの確認は条件付きで行う
 		if (formReset) {
@@ -192,16 +208,25 @@ test.describe("フォームサンプルのテスト", () => {
 			try {
 				// フォームがリセットされていることを確認（ただし、WebKitでは部分的な場合あり）
 				await expect(page.getByLabel("お名前")).toHaveValue("");
-				
+
 				// WebKitでは完全なリセットが動作しない場合があるため、エラーをキャッチ
 				try {
-					await expect(page.getByLabel("メールアドレス")).toHaveValue("", { timeout: 2000 });
-					await expect(page.getByLabel("メッセージ")).toHaveValue("", { timeout: 2000 });
+					await expect(page.getByLabel("メールアドレス")).toHaveValue("", {
+						timeout: 2000,
+					});
+					await expect(page.getByLabel("メッセージ")).toHaveValue("", {
+						timeout: 2000,
+					});
 				} catch (resetError) {
-					console.log("Partial form reset detected (WebKit behavior) - continuing with success");
+					console.log(
+						"Partial form reset detected (WebKit behavior) - continuing with success",
+					);
 				}
 			} catch (error) {
-				console.log("Form reset verification failed, but form submission was successful:", error);
+				console.log(
+					"Form reset verification failed, but form submission was successful:",
+					error,
+				);
 			}
 		}
 
@@ -212,7 +237,9 @@ test.describe("フォームサンプルのテスト", () => {
 					page.locator('button[role="checkbox"][aria-checked="true"]'),
 				).not.toBeVisible({ timeout: 2000 });
 			} catch (checkboxError) {
-				console.log("Checkbox reset failed (WebKit behavior) - but form submission was successful");
+				console.log(
+					"Checkbox reset failed (WebKit behavior) - but form submission was successful",
+				);
 			}
 		}
 	});

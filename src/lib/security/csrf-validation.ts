@@ -1,5 +1,5 @@
-import { NextRequest } from "next/server";
-import { verifyCsrfToken, CSRF_CONSTANTS } from "./csrf";
+import type { NextRequest } from "next/server";
+import { CSRF_CONSTANTS, verifyCsrfToken } from "./csrf";
 
 /**
  * API route内でCSRF検証を行うユーティリティ関数
@@ -68,14 +68,14 @@ export function validateCsrfInApiRoute(request: NextRequest): {
  * 検証に失敗した場合は適切なエラーレスポンスを返します
  */
 export function withCsrfProtection<T extends NextRequest>(
-	handler: (request: T) => Promise<Response>
+	handler: (request: T) => Promise<Response>,
 ) {
 	return async (request: T): Promise<Response> => {
 		const validation = validateCsrfInApiRoute(request);
-		
+
 		if (!validation.isValid) {
 			console.warn(`CSRF検証失敗: ${validation.error}`);
-			
+
 			return new Response(
 				JSON.stringify({
 					success: false,
@@ -87,7 +87,7 @@ export function withCsrfProtection<T extends NextRequest>(
 					headers: {
 						"Content-Type": "application/json",
 					},
-				}
+				},
 			);
 		}
 

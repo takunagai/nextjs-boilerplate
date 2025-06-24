@@ -2,8 +2,8 @@
 
 import * as React from "react";
 import { FaChevronUp } from "react-icons/fa6";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 interface ScrollToTopProps extends React.HTMLAttributes<HTMLButtonElement> {
 	/**

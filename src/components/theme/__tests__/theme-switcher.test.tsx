@@ -1,7 +1,7 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import { ThemeSwitcher } from "../theme-switcher";
-import { FEATURES } from "@/lib/constants";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { vi } from "vitest";
+import { FEATURES } from "@/lib/constants";
+import { ThemeSwitcher } from "../theme-switcher";
 
 // モックの設定
 vi.mock("@/lib/constants", () => ({

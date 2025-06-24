@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
 import { cva } from "class-variance-authority";
 import clsx from "clsx";
+import type { ReactNode } from "react";
 
 export type NumberedListItem = {
 	text: ReactNode;

@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { NewsPagination } from "../news-pagination";
 import { vi } from "vitest";
+import { NewsPagination } from "../news-pagination";
 
 // 定数のモック
 vi.mock("@/lib/constants/news", () => ({
@@ -283,7 +283,7 @@ describe("NewsPagination", () => {
 			// 省略記号のアイコンで検索
 			const ellipsisIcons = screen.getAllByTestId("ellipsis-icon");
 			expect(ellipsisIcons.length).toBeGreaterThan(0);
-			
+
 			// 親要素がaria-hidden属性を持っているかチェック
 			const ellipsisElement = ellipsisIcons[0]?.closest('[aria-hidden="true"]');
 			expect(ellipsisElement).toBeInTheDocument();

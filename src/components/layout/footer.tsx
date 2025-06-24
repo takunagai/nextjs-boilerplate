@@ -1,6 +1,4 @@
-import { APP, FOOTER_NAVIGATION, type FooterNavGroup } from "@/lib/constants";
-import { cn } from "@/lib/utils";
-import { type VariantProps, cva } from "class-variance-authority";
+import { cva, type VariantProps } from "class-variance-authority";
 import Link from "next/link";
 import {
 	FaFacebook,
@@ -9,8 +7,9 @@ import {
 	FaXTwitter,
 	FaYoutube,
 } from "react-icons/fa6";
-
 import { Container } from "@/components/ui/container";
+import { APP, FOOTER_NAVIGATION, type FooterNavGroup } from "@/lib/constants";
+import { cn } from "@/lib/utils";
 
 // ソーシャルメディアプラットフォームの定義
 type SocialPlatform = "GITHUB" | "X" | "INSTAGRAM" | "FACEBOOK" | "YOUTUBE";

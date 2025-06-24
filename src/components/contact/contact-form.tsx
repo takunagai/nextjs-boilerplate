@@ -1,9 +1,9 @@
 "use client";
 
+import { FaEnvelope, FaPhone } from "react-icons/fa6";
 import { ContactEmailForm } from "@/components/contact/contact-mailform";
 import { ContactPhoneAndLine } from "@/components/contact/contact-phone-and-line";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { FaEnvelope, FaPhone } from "react-icons/fa6";
 
 /**
  * お問い合わせフォームのメインコンポーネント

@@ -1,16 +1,16 @@
+import type { Metadata } from "next";
 import {
 	BreadcrumbJsonLd,
-	WebsiteJsonLd,
 	generateMetadata,
 	generateViewport,
+	WebsiteJsonLd,
 } from "@/components/seo";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
+import { PageHeader } from "@/components/ui/page-header";
 import { META } from "@/lib/constants";
 import { createBreadcrumbs } from "@/lib/utils";
-import type { Metadata } from "next";
-import { PageHeader } from "@/components/ui/page-header";
 
 export const metadata: Metadata = generateMetadata({
 	title: "プライバシーポリシー",

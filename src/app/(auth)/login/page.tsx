@@ -1,6 +1,6 @@
+import type { Metadata } from "next";
 import { LoginForm } from "@/components/auth/login-form";
 import { PageHeader } from "@/components/ui/page-header";
-import type { Metadata } from "next";
 
 // メタデータ
 export const metadata: Metadata = {

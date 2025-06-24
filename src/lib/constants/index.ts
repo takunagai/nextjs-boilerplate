@@ -5,12 +5,10 @@
 
 // アプリケーション全般
 export { APP, FEATURES } from "./app";
-
-// ルート
-export { ROUTES } from "./routes";
-
 // メタデータ
 export { META } from "./meta";
+// ルート
+export { ROUTES } from "./routes";
 
 // テーマ
 export { THEME, THEME_STORAGE_KEY } from "./theme";

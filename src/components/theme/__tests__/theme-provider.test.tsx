@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
-import { ThemeProvider } from "../theme-provider";
-import { FEATURES } from "@/lib/constants";
 import { vi } from "vitest";
+import { FEATURES } from "@/lib/constants";
+import { ThemeProvider } from "../theme-provider";
 
 // next-themesのモック
 vi.mock("next-themes", () => ({
