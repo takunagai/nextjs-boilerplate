@@ -15,10 +15,11 @@ import type { HeaderLink } from "@/lib/constants/header-navigation";
 import { cn } from "@/lib/utils";
 import { DesktopNavigation } from "./header/desktop-navigation";
 import { MobileNavigation } from "./header/mobile-navigation";
+import { useAnnouncementBar } from "./announcement-bar-context";
 
 // ヘッダーのバリアントを定義
 const headerVariants = cva(
-	"w-full fixed top-0 left-0 right-0 z-40 transition-all ease-in-out duration-300",
+	"w-full fixed left-0 right-0 z-40 transition-all ease-in-out duration-300",
 	{
 		variants: {
 			background: {
@@ -85,6 +86,7 @@ export function Header({
 }: HeaderProps) {
 	const pathname = usePathname();
 	const [isOpen, setIsOpen] = React.useState(false);
+	const { isVisible: isAnnouncementVisible, height: announcementHeight } = useAnnouncementBar();
 
 	// クライアントサイドでのレンダリングかを判定
 	const isClient = useIsClient();
@@ -190,6 +192,9 @@ export function Header({
 		return items.map(convertToNavItem);
 	}, [items, pathname]);
 
+	// ヘッダーの位置を計算
+	const headerTop = isAnnouncementVisible ? announcementHeight : 0;
+
 	return (
 		<header
 			className={cn(
@@ -199,6 +204,7 @@ export function Header({
 				scrollDirectionEffect,
 				className,
 			)}
+			style={{ top: `${headerTop}px` }}
 			{...props}
 		>
 			<Container paddingX="md" paddingY="none" as="div" className="h-full">

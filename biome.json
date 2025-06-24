@@ -12,6 +12,9 @@
 			"!src/components/seo/json-ld.tsx",
 			"!.next/**",
 			"!node_modules/**",
+			"!coverage/**",
+			"!.claude/**",
+			"!reference/**",
 			"!*.json",
 			"!*.md"
 		]

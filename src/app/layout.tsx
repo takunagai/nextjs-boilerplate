@@ -1,7 +1,10 @@
 import { UserAuthMenu } from "@/components/auth/user-auth-menu";
 import { WhalesAnimation } from "@/components/background/whales-animation";
+import { AnnouncementBar } from "@/components/layout/announcement-bar";
+import { AnnouncementBarProvider } from "@/components/layout/announcement-bar-context";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
+import { MainContent } from "@/components/layout/main-content";
 import { OrganizationJsonLd, WebsiteJsonLd } from "@/components/seo";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { ScrollToTop } from "@/components/ui/scroll-to-top";
@@ -107,18 +110,21 @@ export default async function RootLayout({
 			>
 				<ThemeProvider>
 					<SessionProvider session={session}>
-						<WhalesAnimation />
-						<div className="flex flex-col min-h-screen">
-							<Header
-								background="transparent"
-								logoText={APP.NAME}
-								items={HEADER_NAVIGATION}
-								rightContent={<UserAuthMenu />}
-							/>
-							<main className="flex-grow">{children}</main>
-							<Footer />
-							<ScrollToTop />
-						</div>
+						<AnnouncementBarProvider>
+							<WhalesAnimation />
+							<div className="flex flex-col min-h-screen">
+								<AnnouncementBar />
+								<Header
+									background="transparent"
+									logoText={APP.NAME}
+									items={HEADER_NAVIGATION}
+									rightContent={<UserAuthMenu />}
+								/>
+								<MainContent>{children}</MainContent>
+								<Footer />
+								<ScrollToTop />
+							</div>
+						</AnnouncementBarProvider>
 					</SessionProvider>
 				</ThemeProvider>
 			</body>
