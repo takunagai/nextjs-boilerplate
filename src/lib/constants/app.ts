@@ -5,7 +5,7 @@ export const APP = {
 	/**
 	 * アプリケーション名
 	 */
-	NAME: "Next.js Boilerplate",
+	NAME: "ナガイ商店.com",
 
 	/**
 	 * バージョン番号
@@ -16,7 +16,7 @@ export const APP = {
 	 * アプリケーションの説明
 	 */
 	DESCRIPTION:
-		"Next.js、TypeScript、Tailwind CSSを組み合わせた最新のボイラープレートで、高速で美しいWebアプリケーションを構築しましょう。",
+		"AI × 人の感性で、あなたの「できたらいいな」を一緒に実現する、AI活用パートナー永井拓也のサービスサイトです。",
 
 	/**
 	 * 著作権所有者
