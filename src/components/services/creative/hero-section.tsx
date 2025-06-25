@@ -6,18 +6,11 @@ import { HeroContainer } from "@/components/ui/hero-container";
 
 export function CreativeHeroSection() {
 	return (
-		<HeroContainer
-			backgroundGradient="from-blue-600/10 via-orange-400/5 to-background"
-			decorationColors={{
-				primary: "bg-orange-500/10",
-				secondary: "bg-blue-500/10",
-			}}
-		>
+		<HeroContainer>
 			<Container width="2xl" paddingY="xl" paddingX="lg">
 				<div className="flex flex-col items-center text-center max-w-4xl mx-auto">
 					<h1 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-foreground">
-						<span className="text-blue-600">AI</span> の創造力 ×{" "}
-						<span className="text-orange-500">人の感性</span>で、
+						<span className="text-primary">AI</span> の創造力 × 人の感性で、
 						<br />
 						あなたのアイデアを<span className="text-primary">カタチ</span>に
 					</h1>

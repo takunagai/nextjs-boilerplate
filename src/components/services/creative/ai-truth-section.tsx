@@ -33,10 +33,10 @@ export function CreativeAITruthSection() {
 
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
 					{/* AI だけじゃダメな理由 */}
-					<Card className="h-full border-2 border-red-200 bg-red-50/50">
+					<Card className="h-full border-2 border-muted bg-muted/20">
 						<CardHeader className="text-center pb-4">
-							<div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-								<FaTriangleExclamation className="w-8 h-8 text-red-600" />
+							<div className="w-16 h-16 bg-muted/30 rounded-full flex items-center justify-center mx-auto mb-4">
+								<FaTriangleExclamation className="w-8 h-8 text-primary" />
 							</div>
 							<CardTitle className="text-xl text-red-800">
 								AI だけじゃダメな理由

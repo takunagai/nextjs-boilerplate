@@ -34,7 +34,7 @@ const serviceMenus: ServiceMenu[] = [
 		title: "AI ライティング",
 		subtitle: "もう記事作成に悩まない！SEO に強い文章を高速作成",
 		icon: FaPenToSquare,
-		iconColor: "text-blue-600",
+		iconColor: "text-primary",
 		items: [
 			{
 				title: "ブログ記事作成（SEO 対策込み）",
@@ -79,7 +79,7 @@ const serviceMenus: ServiceMenu[] = [
 		title: "画像生成",
 		subtitle: "イメージを伝えるだけで、プロ級のビジュアルが完成",
 		icon: FaImage,
-		iconColor: "text-purple-600",
+		iconColor: "text-primary",
 		items: [
 			{
 				title: "イメージ画像・イラスト制作",
@@ -115,7 +115,7 @@ const serviceMenus: ServiceMenu[] = [
 		title: "動画生成",
 		subtitle: "撮影不要！AI で魅力的な動画コンテンツを",
 		icon: FaVideo,
-		iconColor: "text-green-600",
+		iconColor: "text-primary",
 		items: [
 			{
 				title: "ショート動画（〜60秒）",
@@ -151,7 +151,7 @@ const serviceMenus: ServiceMenu[] = [
 		title: "サウンド生成",
 		subtitle: "オリジナル音源で、コンテンツに個性を",
 		icon: FaMusic,
-		iconColor: "text-orange-600",
+		iconColor: "text-primary",
 		items: [
 			{
 				title: "BGM 作成",
@@ -218,7 +218,7 @@ export function CreativeServiceMenuSection() {
 							>
 								<IconComponent
 									className={`w-5 h-5 ${
-										activeTab === service.id ? "text-white" : service.iconColor
+										activeTab === service.id ? "text-primary-foreground" : "text-muted-foreground"
 									}`}
 								/>
 								{service.title}
@@ -233,7 +233,7 @@ export function CreativeServiceMenuSection() {
 						{/* サービスヘッダー */}
 						<div className="text-center">
 							<Heading as="h3" className="text-2xl md:text-3xl mb-4">
-								<span className={activeService.iconColor}>
+								<span className="text-primary">
 									{activeService.title}
 								</span>
 							</Heading>
@@ -264,7 +264,7 @@ export function CreativeServiceMenuSection() {
 													key={featureIndex}
 													className="flex items-start gap-2 text-sm"
 												>
-													<FaCircleCheck className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+													<FaCircleCheck className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
 													<span>{feature}</span>
 												</li>
 											))}
@@ -278,7 +278,7 @@ export function CreativeServiceMenuSection() {
 
 				{/* CTA */}
 				<div className="text-center mt-12">
-					<div className="inline-block bg-gradient-to-r from-blue-600 to-orange-500 text-white px-8 py-4 rounded-full">
+					<div className="inline-block bg-primary text-primary-foreground px-8 py-4 rounded-full">
 						<p className="text-lg font-bold">
 							気になるサービスはありましたか？
 							<br />

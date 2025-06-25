@@ -6,7 +6,7 @@ import { Heading } from "@/components/ui/heading";
 
 export function CreativeFinalCTASection() {
 	return (
-		<section className="w-full py-16 md:py-24 bg-gradient-to-br from-blue-600 via-purple-600 to-orange-500 text-white relative overflow-hidden">
+		<section className="w-full py-16 md:py-24 bg-primary text-primary-foreground relative overflow-hidden">
 			{/* 背景装飾 */}
 			<div className="absolute inset-0 bg-black/20" />
 			<div className="absolute top-10 right-10 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
@@ -23,24 +23,23 @@ export function CreativeFinalCTASection() {
 					{/* アイコン */}
 					<div className="flex justify-center mb-6">
 						<div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-							<FaRocket className="w-10 h-10 text-white" />
+							<FaRocket className="w-10 h-10 text-primary-foreground" />
 						</div>
 					</div>
 
 					{/* メインメッセージ */}
 					<Heading
 						as="h2"
-						className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6 text-white"
+						className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6 text-primary-foreground"
 					>
-						<span className="text-yellow-300">AI</span> ×{" "}
-						<span className="text-orange-300">人の力</span>で、
+						<span className="text-primary-foreground">AI</span> × 人の力で、
 						<br />
 						あなたのクリエイティブを
 						<br />
-						<span className="text-cyan-300">加速</span>させます
+						<span className="text-primary-foreground">加速</span>させます
 					</Heading>
 
-					<p className="text-xl md:text-2xl mb-8 leading-relaxed text-white/90">
+					<p className="text-xl md:text-2xl mb-8 leading-relaxed text-primary-foreground/90">
 						まずは無料相談から！
 						<br />
 						あなたのアイデアを、私たちが形にします。

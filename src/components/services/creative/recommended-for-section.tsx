@@ -15,36 +15,36 @@ const recommendedUsers = [
 		title: "SNS投稿を効率化したい方",
 		description: "SNS 投稿用の画像や文章を量産したい",
 		icon: FaImages,
-		iconColor: "text-pink-600",
-		bgColor: "bg-pink-50",
-		borderColor: "border-pink-200",
+		iconColor: "text-primary",
+		bgColor: "bg-muted/30",
+		borderColor: "border-muted",
 	},
 	{
 		id: "blog",
 		title: "コンテンツ制作に悩む方",
 		description: "ブログ記事を定期的に更新したいけど時間がない",
 		icon: FaPenToSquare,
-		iconColor: "text-blue-600",
-		bgColor: "bg-blue-50",
-		borderColor: "border-blue-200",
+		iconColor: "text-primary",
+		bgColor: "bg-muted/30",
+		borderColor: "border-muted",
 	},
 	{
 		id: "video",
 		title: "動画制作を始めたい方",
 		description: "動画コンテンツを始めたいけど、編集スキルがない",
 		icon: FaVideo,
-		iconColor: "text-purple-600",
-		bgColor: "bg-purple-50",
-		borderColor: "border-purple-200",
+		iconColor: "text-primary",
+		bgColor: "bg-muted/30",
+		borderColor: "border-muted",
 	},
 	{
 		id: "sound",
 		title: "オリジナル音源が欲しい方",
 		description: "オリジナル BGM や効果音がほしい",
 		icon: FaMusic,
-		iconColor: "text-green-600",
-		bgColor: "bg-green-50",
-		borderColor: "border-green-200",
+		iconColor: "text-primary",
+		bgColor: "bg-muted/30",
+		borderColor: "border-muted",
 	},
 	{
 		id: "design",
@@ -52,9 +52,9 @@ const recommendedUsers = [
 		description:
 			"デザイナーに頼むほどじゃないけど、それなりのクオリティがほしい",
 		icon: FaPalette,
-		iconColor: "text-orange-600",
-		bgColor: "bg-orange-50",
-		borderColor: "border-orange-200",
+		iconColor: "text-primary",
+		bgColor: "bg-muted/30",
+		borderColor: "border-muted",
 	},
 ];
 
@@ -100,10 +100,10 @@ export function CreativeRecommendedForSection() {
 				</div>
 
 				<div className="text-center">
-					<div className="inline-block bg-gradient-to-r from-blue-600 to-orange-500 text-white px-8 py-4 rounded-full">
+					<div className="inline-block bg-primary text-primary-foreground px-8 py-4 rounded-full">
 						<Heading
 							as="h3"
-							className="text-xl md:text-2xl font-bold text-white"
+							className="text-xl md:text-2xl font-bold text-primary-foreground"
 						>
 							どれか一つでも当てはまったら、
 							<br />

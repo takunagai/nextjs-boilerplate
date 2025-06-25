@@ -32,8 +32,8 @@ const pricingCategories: PricingCategory[] = [
 		id: "writing",
 		title: "📝 ライティング料金",
 		icon: FaPenToSquare,
-		iconColor: "text-blue-600",
-		bgColor: "bg-blue-50",
+		iconColor: "text-primary",
+		bgColor: "bg-muted/30",
 		items: [
 			{
 				service: "ブログ記事",
@@ -67,8 +67,8 @@ const pricingCategories: PricingCategory[] = [
 		id: "image",
 		title: "🖼️ 画像生成料金",
 		icon: FaImage,
-		iconColor: "text-purple-600",
-		bgColor: "bg-purple-50",
+		iconColor: "text-primary",
+		bgColor: "bg-muted/30",
 		items: [
 			{
 				service: "イメージ画像",
@@ -95,8 +95,8 @@ const pricingCategories: PricingCategory[] = [
 		id: "video",
 		title: "🎬 動画生成料金",
 		icon: FaVideo,
-		iconColor: "text-green-600",
-		bgColor: "bg-green-50",
+		iconColor: "text-primary",
+		bgColor: "bg-muted/30",
 		items: [
 			{
 				service: "ショート動画",
@@ -117,8 +117,8 @@ const pricingCategories: PricingCategory[] = [
 		id: "sound",
 		title: "🎵 サウンド生成料金",
 		icon: FaMusic,
-		iconColor: "text-orange-600",
-		bgColor: "bg-orange-50",
+		iconColor: "text-primary",
+		bgColor: "bg-muted/30",
 		items: [
 			{
 				service: "BGM 作成",
@@ -151,7 +151,7 @@ export function CreativePricingSection() {
 					<Heading as="h2" align="center" className="mb-4">
 						料金プラン
 					</Heading>
-					<div className="inline-block bg-gradient-to-r from-red-500 to-pink-500 text-white px-8 py-3 rounded-full text-lg font-bold mb-6">
+					<div className="inline-block bg-primary text-primary-foreground px-8 py-3 rounded-full text-lg font-bold mb-6">
 						テスター特別価格（先着10名様限定）
 					</div>
 					<p className="text-lg text-muted-foreground max-w-3xl mx-auto">
@@ -236,8 +236,8 @@ export function CreativePricingSection() {
 						return (
 							<Card key={guarantee.title} className="text-center">
 								<CardHeader className="pb-4">
-									<div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-										<IconComponent className="w-8 h-8 text-blue-600" />
+									<div className="w-16 h-16 bg-muted/30 rounded-full flex items-center justify-center mx-auto mb-4">
+										<IconComponent className="w-8 h-8 text-primary" />
 									</div>
 									<CardTitle className="text-lg">{guarantee.title}</CardTitle>
 								</CardHeader>
@@ -253,7 +253,7 @@ export function CreativePricingSection() {
 
 				{/* 価格の説明 */}
 				<div className="text-center mt-12">
-					<div className="inline-block bg-gradient-to-r from-blue-600 to-orange-500 text-white px-8 py-4 rounded-full">
+					<div className="inline-block bg-primary text-primary-foreground px-8 py-4 rounded-full">
 						<p className="text-lg font-bold">
 							AI活用により実現した驚きの価格設定
 							<br />
