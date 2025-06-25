@@ -2,21 +2,18 @@ import Link from "next/link";
 import { FaCalendarCheck, FaArrowRight } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
+import { HeroContainer } from "@/components/ui/hero-container";
 
 export function ConsultingHeroSection() {
 	return (
-		<section className="relative h-[60vh] min-h-[400px] w-full flex items-center bg-gradient-to-br from-blue-600/10 via-blue-400/5 to-background">
-			{/* 背景装飾 */}
-			<div className="absolute inset-0 bg-grid-pattern opacity-5" />
-			<div className="absolute top-20 right-20 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl opacity-60" />
-			<div className="absolute bottom-20 left-20 w-60 h-60 bg-green-500/10 rounded-full blur-3xl opacity-40" />
-
-			<Container
-				width="2xl"
-				paddingY="xl"
-				paddingX="lg"
-				className="relative z-10"
-			>
+		<HeroContainer
+			backgroundGradient="from-blue-600/10 via-blue-400/5 to-background"
+			decorationColors={{
+				primary: "bg-blue-500/10",
+				secondary: "bg-green-500/10",
+			}}
+		>
+			<Container width="2xl" paddingY="xl" paddingX="lg">
 				<div className="flex flex-col items-center text-center max-w-4xl mx-auto">
 					<h1 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-foreground">
 						<span className="text-blue-600">AI</span> の「？」を「！」に変える、
@@ -52,6 +49,6 @@ export function ConsultingHeroSection() {
 					</div>
 				</div>
 			</Container>
-		</section>
+		</HeroContainer>
 	);
 }
