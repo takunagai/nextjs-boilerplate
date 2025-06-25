@@ -7,23 +7,25 @@ import { useIsClient } from "usehooks-ts";
 import { DigitalConstellation } from "@/components/background/digital-constellation";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
+import { useHeroHeight } from "@/hooks/use-hero-height";
 
 export function HeroSection() {
 	const isClient = useIsClient();
+	const { heroStyle, getScrollHeight } = useHeroHeight();
 
 	// スムーズスクロール処理関数
 	const handleScroll = () => {
-		// ビューポートの高さを取得
-		const viewportHeight = window.innerHeight;
-		// 現在のスクロール位置からビューポート1つ分下にスクロール
 		window.scrollTo({
-			top: viewportHeight,
+			top: getScrollHeight(),
 			behavior: "smooth",
 		});
 	};
 
 	return (
-		<section className="relative h-screen w-full flex items-center overflow-hidden">
+		<section
+			className="relative w-full flex items-center overflow-hidden"
+			style={heroStyle}
+		>
 			{/* 背景画像 */}
 			<div className="absolute inset-0 -z-30">
 				<Image
