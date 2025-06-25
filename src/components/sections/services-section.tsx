@@ -8,6 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
+import { FlowingComments } from "@/components/effects/flowing-comments";
 import { Heading } from "@/components/ui/heading";
 
 const services = [
@@ -66,8 +67,11 @@ const services = [
 
 export function ServicesSection() {
 	return (
-		<section className="w-full py-16 md:py-24 bg-background">
-			<Container width="2xl" paddingY="lg" paddingX="lg">
+		<section className="w-full py-16 md:py-24 bg-background relative overflow-hidden">
+			{/* 背景のコメント流しエフェクト */}
+			<FlowingComments maxComments={25} />
+			
+			<Container width="2xl" paddingY="lg" paddingX="lg" className="relative z-10">
 				<div className="text-center mb-12">
 					<Heading as="h2" align="center" className="mb-4">
 						3つのサービス紹介
@@ -83,7 +87,7 @@ export function ServicesSection() {
 						return (
 							<Card
 								key={service.id}
-								className={`h-full border-2 ${service.borderColor} hover:shadow-lg transition-all duration-300 hover:scale-[1.02]`}
+								className={`h-full border-2 ${service.borderColor} hover:shadow-lg transition-all duration-300 hover:scale-[1.02] relative z-20 bg-background/95 backdrop-blur-sm`}
 							>
 								<CardHeader className="text-center pb-4">
 									<div
