@@ -127,15 +127,21 @@ export default function AboutPage() {
 					</div>
 					<div className="space-y-4">
 						<p className="leading-7 text-lg">
-							<span className="font-semibold text-primary">はじめまして、永井拓也（Taku）です。</span>
+							<span className="font-semibold text-primary">
+								はじめまして、永井拓也（Taku）です。
+							</span>
 						</p>
 						<p className="leading-7">
-							15年以上ウェブ制作に携わってきた経験と、最新の AI 技術を組み合わせて、
-							あなたのビジネスの<span className="font-semibold">「できたらいいな」</span>を<span className="font-semibold">「できた！」</span>に変えるお手伝いをしています。
+							15年以上ウェブ制作に携わってきた経験と、最新の AI
+							技術を組み合わせて、 あなたのビジネスの
+							<span className="font-semibold">「できたらいいな」</span>を
+							<span className="font-semibold">「できた！」</span>
+							に変えるお手伝いをしています。
 						</p>
 						<p className="leading-7">
-							技術の話も、できるだけ分かりやすく。
-							一緒に、<span className="font-semibold text-primary">AI の可能性</span>を探していきましょう。
+							技術の話も、できるだけ分かりやすく。 一緒に、
+							<span className="font-semibold text-primary">AI の可能性</span>
+							を探していきましょう。
 						</p>
 					</div>
 				</section>
@@ -148,7 +154,9 @@ export default function AboutPage() {
 					</div>
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 						<div className="bg-muted/30 rounded-lg p-4 border border-border">
-							<h3 className="text-lg font-semibold mb-2">1. 総合的な制作スキル</h3>
+							<h3 className="text-lg font-semibold mb-2">
+								1. 総合的な制作スキル
+							</h3>
 							<ul className="space-y-1 text-sm text-muted-foreground">
 								<li>• 企画から運用まで、ワンストップで対応</li>
 								<li>• デザインもコーディングも分かるから、話が早い</li>
@@ -156,7 +164,9 @@ export default function AboutPage() {
 							</ul>
 						</div>
 						<div className="bg-muted/30 rounded-lg p-4 border border-border">
-							<h3 className="text-lg font-semibold mb-2">2. AI ツールの実践的な知識</h3>
+							<h3 className="text-lg font-semibold mb-2">
+								2. AI ツールの実践的な知識
+							</h3>
 							<ul className="space-y-1 text-sm text-muted-foreground">
 								<li>• ChatGPT、Claude、Midjourney など主要ツールを日常使用</li>
 								<li>• 最新情報を常にキャッチアップ</li>
@@ -164,7 +174,9 @@ export default function AboutPage() {
 							</ul>
 						</div>
 						<div className="bg-muted/30 rounded-lg p-4 border border-border">
-							<h3 className="text-lg font-semibold mb-2">3. 翻訳者としてのコミュニケーション力</h3>
+							<h3 className="text-lg font-semibold mb-2">
+								3. 翻訳者としてのコミュニケーション力
+							</h3>
 							<ul className="space-y-1 text-sm text-muted-foreground">
 								<li>• 難しい技術用語を、分かりやすい言葉に</li>
 								<li>• お客様の「なんとなく」を具体的な形に</li>
@@ -190,7 +202,9 @@ export default function AboutPage() {
 					</div>
 					<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 						<div>
-							<h3 className="text-lg font-semibold mb-4 text-primary">ウェブ制作</h3>
+							<h3 className="text-lg font-semibold mb-4 text-primary">
+								ウェブ制作
+							</h3>
 							<div className="space-y-2">
 								<Badge className="mr-2 mb-2">HTML / CSS / JavaScript</Badge>
 								<Badge className="mr-2 mb-2">WordPress</Badge>
@@ -200,7 +214,9 @@ export default function AboutPage() {
 							</div>
 						</div>
 						<div>
-							<h3 className="text-lg font-semibold mb-4 text-primary">AI ツール</h3>
+							<h3 className="text-lg font-semibold mb-4 text-primary">
+								AI ツール
+							</h3>
 							<div className="space-y-2">
 								<Badge className="mr-2 mb-2">ChatGPT Plus</Badge>
 								<Badge className="mr-2 mb-2">Claude Pro</Badge>
@@ -211,7 +227,9 @@ export default function AboutPage() {
 							</div>
 						</div>
 						<div>
-							<h3 className="text-lg font-semibold mb-4 text-primary">その他</h3>
+							<h3 className="text-lg font-semibold mb-4 text-primary">
+								その他
+							</h3>
 							<div className="space-y-2">
 								<Badge className="mr-2 mb-2">SEO / アクセス解析</Badge>
 								<Badge className="mr-2 mb-2">SNS マーケティング</Badge>
@@ -225,7 +243,9 @@ export default function AboutPage() {
 				<section className="bg-card rounded-lg p-6 border border-border shadow-sm">
 					<div className="flex items-center gap-2 mb-6">
 						<FaBriefcase className="h-5 w-5 text-primary" />
-						<h2 className="text-2xl font-bold">経歴とAI サービスを始めた理由</h2>
+						<h2 className="text-2xl font-bold">
+							経歴とAI サービスを始めた理由
+						</h2>
 					</div>
 
 					<div className="relative border-l-2 border-primary/20 ml-3 pl-8 mt-6">
@@ -246,8 +266,12 @@ export default function AboutPage() {
 								</div>
 								<ul className="text-sm text-muted-foreground space-y-1">
 									<li>• 企画・デザイン・コーディング・運用まで一貫して対応</li>
-									<li>• 中小企業から個人事業主まで、幅広いクライアントをサポート</li>
-									<li>• ユーザー目線を大切にした、使いやすいサイト作りが得意</li>
+									<li>
+										• 中小企業から個人事業主まで、幅広いクライアントをサポート
+									</li>
+									<li>
+										• ユーザー目線を大切にした、使いやすいサイト作りが得意
+									</li>
 								</ul>
 							</div>
 						</div>
@@ -260,9 +284,7 @@ export default function AboutPage() {
 
 							<div className="bg-muted/30 rounded-lg p-5">
 								<div className="flex flex-col sm:flex-row justify-between sm:items-center mb-2 gap-2">
-									<h3 className="text-lg font-semibold">
-										AI との出会い
-									</h3>
+									<h3 className="text-lg font-semibold">AI との出会い</h3>
 									<span className="bg-primary/10 text-primary text-xs px-2 py-1 rounded whitespace-nowrap">
 										2023年初頭 -
 									</span>
@@ -310,7 +332,10 @@ export default function AboutPage() {
 										<li>• コンテンツ作成が1日→1時間に</li>
 										<li>• コーディングの効率が3倍以上に</li>
 									</ul>
-									<p>でも同時に気づいたんです。AI にも「苦手なこと」があることに。</p>
+									<p>
+										でも同時に気づいたんです。AI
+										にも「苦手なこと」があることに。
+									</p>
 								</div>
 							</div>
 						</div>
@@ -326,10 +351,15 @@ export default function AboutPage() {
 									確信：AI と人の最強コンビ
 								</h3>
 								<div className="text-sm text-muted-foreground space-y-2">
-									<p>AI が作った「ちょっと変な部分」を、私の経験で調整する。この組み合わせなら、今までにない価値を提供できる。</p>
+									<p>
+										AI
+										が作った「ちょっと変な部分」を、私の経験で調整する。この組み合わせなら、今までにない価値を提供できる。
+									</p>
 									<div className="text-center mt-3 p-3 bg-primary/10 rounded-lg">
 										<p className="font-bold text-lg">
-											<span className="text-primary">AI の効率</span> × <span className="text-primary">人間の感性</span> = <span className="text-primary">最高のサービス</span>
+											<span className="text-primary">AI の効率</span> ×{" "}
+											<span className="text-primary">人間の感性</span> ={" "}
+											<span className="text-primary">最高のサービス</span>
 										</p>
 									</div>
 									<p>この方程式を確信して、AI サービス事業を立ち上げました。</p>
@@ -349,7 +379,12 @@ export default function AboutPage() {
 						<div className="bg-card rounded-lg p-4 border border-border">
 							<h3 className="text-lg font-semibold mb-3">お客様との関係</h3>
 							<ul className="space-y-2 text-sm text-muted-foreground">
-								<li>• <span className="font-semibold text-foreground">対等なパートナーとして</span></li>
+								<li>
+									•{" "}
+									<span className="font-semibold text-foreground">
+										対等なパートナーとして
+									</span>
+								</li>
 								<li>• 一方的な提案ではなく、一緒に考える</li>
 								<li>• お客様の強みを引き出すサポート</li>
 							</ul>
@@ -357,7 +392,10 @@ export default function AboutPage() {
 						<div className="bg-card rounded-lg p-4 border border-border">
 							<h3 className="text-lg font-semibold mb-3">仕事への姿勢</h3>
 							<ul className="space-y-2 text-sm text-muted-foreground">
-								<li>• <span className="font-semibold text-foreground">誠実さ</span></li>
+								<li>
+									•{" "}
+									<span className="font-semibold text-foreground">誠実さ</span>
+								</li>
 								<li>• できることとできないことを正直に</li>
 								<li>• 納期と品質の約束は必ず守る</li>
 							</ul>
@@ -365,7 +403,12 @@ export default function AboutPage() {
 						<div className="bg-card rounded-lg p-4 border border-border">
 							<h3 className="text-lg font-semibold mb-3">AI との向き合い方</h3>
 							<ul className="space-y-2 text-sm text-muted-foreground">
-								<li>• <span className="font-semibold text-foreground">道具として使いこなす</span></li>
+								<li>
+									•{" "}
+									<span className="font-semibold text-foreground">
+										道具として使いこなす
+									</span>
+								</li>
 								<li>• AI に振り回されない</li>
 								<li>• あくまで人間が主役</li>
 							</ul>

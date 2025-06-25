@@ -17,7 +17,14 @@ export const metadata: Metadata = generateMetadata({
 	title: "サービス",
 	description:
 		"AI × 人の感性で実現する、ウェブ制作・アプリ開発、プチコンサル&レクチャー、クリエイティブサービスを提供しています。",
-	keywords: ["サービス", "ウェブ制作", "アプリ開発", "コンサルティング", "AI", "クリエイティブ"],
+	keywords: [
+		"サービス",
+		"ウェブ制作",
+		"アプリ開発",
+		"コンサルティング",
+		"AI",
+		"クリエイティブ",
+	],
 	canonical: "/services",
 });
 
@@ -46,7 +53,9 @@ export default function ServicesPage() {
 
 			<div className="text-center">
 				<PageHeader title="サービス" />
-				<p className="text-muted-foreground">AI × 人の感性で実現する、革新的なサービスをご紹介します。</p>
+				<p className="text-muted-foreground">
+					AI × 人の感性で実現する、革新的なサービスをご紹介します。
+				</p>
 			</div>
 
 			<Container className="mt-8" width="lg">
