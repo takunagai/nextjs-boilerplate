@@ -26,10 +26,10 @@ export const FOOTER_NAVIGATION: MaxFourNavGroups = [
 	{
 		title: "サービス",
 		links: [
-			{ label: "機能紹介", href: "/features" },
-			{ label: "料金プラン", href: "/pricing" },
-			{ label: "導入事例", href: "/case-studies" },
-			{ label: "お問い合わせ", href: "/contact" },
+			{ label: "サービス一覧", href: "/services" },
+			{ label: "ウェブ制作・アプリ開発", href: "/services/web-development" },
+			{ label: "プチコンサル＆レクチャー", href: "/services/consulting" },
+			{ label: "クリエイティブ", href: "/services/creative" },
 		],
 	},
 	{
