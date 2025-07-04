@@ -1,14 +1,14 @@
-import Link from "next/link";
-import {
-	FaCalendarCheck,
-	FaEnvelope,
-	FaArrowRight,
-	FaLine,
-} from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
 import { Heading } from "@/components/ui/heading";
+import Link from "next/link";
+import {
+	FaArrowRight,
+	FaCalendarCheck,
+	FaEnvelope,
+	FaLine,
+} from "react-icons/fa6";
 
 const contactOptions = [
 	{
@@ -20,8 +20,8 @@ const contactOptions = [
 		icon: FaCalendarCheck,
 		buttonText: "無料相談を予約",
 		href: "/contact",
-		iconColor: "text-blue-600",
-		bgColor: "bg-blue-50",
+		iconColor: "text-primary",
+		bgColor: "bg-primary/10",
 		borderColor: "border-blue-200",
 	},
 	{
