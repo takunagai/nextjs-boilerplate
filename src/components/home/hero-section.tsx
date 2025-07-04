@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaCaretDown } from "react-icons/fa6";
 import { useIsClient } from "usehooks-ts";
-import { DigitalConstellation } from "@/components/background/digital-constellation";
+import { ParticleBackground } from "@/components/background/particle-background";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { useHeroHeight } from "@/hooks/use-hero-height";
@@ -26,31 +26,11 @@ export function HeroSection() {
 			className="relative w-full flex items-center overflow-hidden"
 			style={heroStyle}
 		>
-			{/* 背景画像 */}
-			<div className="absolute inset-0 -z-30">
-				<Image
-					src="/images/hero.jpg"
-					alt="ヒーロー背景画像"
-					fill
-					priority
-					className="object-cover"
-					sizes="100vw"
-				/>
-				{/* オーバーレイ */}
-				<div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
-			</div>
+			{/* 深い紺色のグラデーション背景 */}
+			<div className="absolute inset-0 bg-gradient-to-b from-[#0a0a1f] to-[#1a1a3e] -z-30" />
 
-			{/* モダンな背景グラデーション */}
-			<div className="absolute inset-0 bg-gradient-to-br from-background/40 via-background/20 to-transparent -z-20" />
-
-			{/* デジタルコンステレーション */}
-			<DigitalConstellation className="-z-10 opacity-70" />
-
-			{/* アクセント装飾 - 右上の円形グラデーション */}
-			<div className="absolute -top-20 -right-20 w-96 h-96 bg-primary/10 rounded-full blur-3xl opacity-70 -z-10" />
-
-			{/* アクセント装飾 - 左下の円形グラデーション */}
-			<div className="absolute -bottom-20 -left-20 w-80 h-80 bg-primary/20 rounded-full blur-3xl opacity-60 -z-10" />
+			{/* パーティクル背景 */}
+			<ParticleBackground className="-z-10" />
 
 			<Container width="2xl" paddingY="xl" paddingX="lg" className="z-0">
 				<div className="flex flex-col items-center text-center max-w-3xl mx-auto">
