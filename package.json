@@ -62,6 +62,8 @@
 	"devDependencies": {
 		"@biomejs/biome": "^2.0.5",
 		"@playwright/test": "^1.53.1",
+		"@stagewise-plugins/react": "^0.4.9",
+		"@stagewise/toolbar-next": "^0.4.9",
 		"@testing-library/dom": "^10.4.0",
 		"@testing-library/jest-dom": "^6.6.3",
 		"@testing-library/react": "^16.3.0",
