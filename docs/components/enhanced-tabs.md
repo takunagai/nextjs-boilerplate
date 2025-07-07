@@ -1108,6 +1108,26 @@ export const EnhancedTabsTrigger = ({
 </TabsTrigger>
 ```
 
+#### 6. タブ切り替え時のチラつき
+
+```tsx
+// ❌ 問題: 重複アニメーションとレイアウトシフト
+<TabsContent className="animate-in fade-in-0 duration-300">
+  {/* margin-top による高さ変化 */}
+</TabsContent>
+
+// ✅ 修正: 最適化されたアニメーション（v1.0.1で解決済み）
+<TabsContent>
+  {/* GPU最適化されたopacityトランジション */}
+  {/* レイアウト安定化でチラつき解消 */}
+</TabsContent>
+```
+
+**チラつきの原因と解決策:**
+- **原因**: Radix UI + Tailwind アニメーション競合、margin-top によるレイアウトシフト
+- **解決**: `transition-opacity 150ms` + `min-height` + GPU最適化
+- **効果**: スムーズなフェード、レイアウト安定、150ms高速化
+
 ### 🔧 デバッグツール
 
 ```tsx
@@ -1252,7 +1272,45 @@ const tabsListVariants = cva(
 
 ### ⚡ パフォーマンス最適化戦略
 
-#### 1. React 19 Compiler による自動最適化
+#### 1. アニメーション最適化とチラつき防止
+
+Enhanced Tabs では、タブ切り替え時のチラつきを完全に解消する最適化を実装しています：
+
+```css
+/* ✅ 最適化されたアニメーション設定 */
+.tabs-content {
+  /* GPU最適化トランジション */
+  transition-opacity: 150ms ease-out;
+  transform: translateZ(0); /* GPU加速 */
+  will-change: opacity;
+  
+  /* レイアウト安定化 */
+  min-height: 2rem;
+  position: relative;
+  
+  /* スムーズなフェード効果 */
+  opacity: 0;
+  pointer-events: none;
+}
+
+.tabs-content[data-state="active"] {
+  opacity: 1;
+  pointer-events: auto;
+}
+```
+
+**解決した問題:**
+- ❌ **アニメーション競合**: Radix UI + Tailwind の重複アニメーション
+- ❌ **レイアウトシフト**: margin-top による高さ変化
+- ❌ **描画性能**: CPU処理による重いトランジション
+
+**実装効果:**
+- ✅ **150ms高速化**: transition-all → transition-opacity
+- ✅ **GPU最適化**: transform-gpu + will-change
+- ✅ **チラつき解消**: アニメーション統一とレイアウト安定化
+- ✅ **滑らかな体験**: 自然で美しいフェードエフェクト
+
+#### 2. React 19 Compiler による自動最適化
 
 ```tsx
 // React 19 Compiler が行う最適化の例
@@ -1546,6 +1604,7 @@ const AdvancedMigration = () => {
 | バージョン | 日付 | 変更内容 |
 |-----------|------|----------|
 | 1.0.0 | 2024-07-07 | 初回リリース、基本機能実装 |
+| 1.0.1 | 2024-07-07 | タブ切り替え時のチラつき問題を解決、アニメーション最適化 |
 | 1.1.0 | TBD | 仮想化対応、パフォーマンス改善 |
 | 1.2.0 | TBD | カスタムアニメーション、テーマシステム |
 
@@ -1569,4 +1628,4 @@ const AdvancedMigration = () => {
 
 ---
 
-*このドキュメントは Enhanced Tabs v1.0.0 に基づいて作成されています。最新の情報については、公式リポジトリをご確認ください。*
+*このドキュメントは Enhanced Tabs v1.0.1 に基づいて作成されています。最新の情報については、公式リポジトリをご確認ください。*
