@@ -271,27 +271,31 @@ TabsTrigger.displayName = TabsPrimitive.Trigger.displayName;
 const tabsContentVariants = cva(
 	[
 		// ベーススタイル
-		"flex-1 w-full",
-		"transition-all duration-300 ease-in-out",
+		"flex-1 w-full relative",
+		// レイアウト安定化
+		"min-h-[2rem]",
+		// GPU最適化トランジション（opacityとtransformのみ）
+		"transition-opacity duration-150 ease-out",
+		"transform-gpu will-change-[opacity]",
 		// フォーカス管理
 		"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-		// アニメーション
-		"data-[state=active]:animate-in data-[state=active]:fade-in-0",
-		"data-[state=inactive]:animate-out data-[state=inactive]:fade-out-0",
+		// スムーズなフェード効果（Radix UIとの競合回避）
+		"data-[state=active]:opacity-100",
+		"data-[state=inactive]:opacity-0 data-[state=inactive]:pointer-events-none",
 	],
 	{
 		variants: {
 			variant: {
-				default: "mt-2 pt-2",
-				underline: "mt-4 pt-4 border-t border-transparent",
-				pills: "mt-4 pt-2",
-				minimal: "mt-2 pt-1",
+				default: "pt-2",
+				underline: "pt-4 border-t border-transparent",
+				pills: "pt-2",
+				minimal: "pt-1",
 			},
 			spacing: {
-				none: "mt-0 pt-0",
-				sm: "mt-2 pt-2",
-				md: "mt-4 pt-4",
-				lg: "mt-6 pt-6",
+				none: "pt-0",
+				sm: "pt-2",
+				md: "pt-4",
+				lg: "pt-6",
 			},
 		},
 		compoundVariants: [
