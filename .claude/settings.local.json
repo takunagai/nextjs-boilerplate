@@ -24,7 +24,11 @@
       "Bash(node:*)",
       "Bash(npx playwright test:*)",
       "Bash(pkill:*)",
-      "Bash(kill:*)"
+      "Bash(kill:*)",
+      "WebFetch(domain:ui.shadcn.com)",
+      "WebFetch(domain:www.radix-ui.com)",
+      "WebFetch(domain:glensea.com)",
+      "Bash(npx biome:*)"
     ]
   },
   "enableAllProjectMcpServers": false
