@@ -72,6 +72,11 @@ export default function ExamplesPage() {
 			href: "/examples/data-fetching",
 		},
 		{
+			title: "Enhanced Tabs",
+			description: "レスポンシブ対応で汎用性の高いタブコンポーネント。4つのバリアント、3つのサイズ、アクセシビリティ準拠。",
+			href: "/examples/enhanced-tabs",
+		},
+		{
 			title: "UIコンポーネント",
 			description: "shadcn/uiコンポーネントのサンプル集です。",
 			href: "/examples/ui-components",
