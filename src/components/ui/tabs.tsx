@@ -170,7 +170,8 @@ const tabsTriggerVariants = cva(
 					"rounded-t-md px-3 py-1.5",
 					"hover:bg-accent/50 hover:text-accent-foreground",
 					"data-[state=active]:bg-background data-[state=active]:text-foreground",
-					"data-[state=active]:shadow-sm data-[state=active]:border data-[state=active]:border-border/20",
+					"data-[state=active]:shadow-[0_-1px_3px_0_rgb(0_0_0_/_0.1),1px_0_2px_0_rgb(0_0_0_/_0.1),-1px_0_2px_0_rgb(0_0_0_/_0.1)]",
+					"data-[state=active]:border data-[state=active]:border-border/20",
 					"data-[state=active]:border-b-0",
 				],
 				underline: [
