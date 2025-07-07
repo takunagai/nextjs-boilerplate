@@ -55,8 +55,8 @@ const tabsListVariants = cva(
 		variants: {
 			variant: {
 				default: [
-					"bg-muted rounded-lg p-1",
-					"shadow-sm border border-border/20",
+					"bg-muted rounded-t-lg pt-1 px-1",
+					"shadow-sm border border-border/20 border-b-0",
 				],
 				underline: ["bg-transparent border-b border-border", "pb-0"],
 				pills: ["bg-transparent gap-1", "p-1"],
@@ -167,10 +167,11 @@ const tabsTriggerVariants = cva(
 		variants: {
 			variant: {
 				default: [
-					"rounded-md px-3 py-1.5",
+					"rounded-t-md px-3 py-1.5",
 					"hover:bg-accent/50 hover:text-accent-foreground",
 					"data-[state=active]:bg-background data-[state=active]:text-foreground",
 					"data-[state=active]:shadow-sm data-[state=active]:border data-[state=active]:border-border/20",
+					"data-[state=active]:border-b-0",
 				],
 				underline: [
 					"rounded-none border-b-2 border-transparent px-3 py-2",
@@ -286,7 +287,7 @@ const tabsContentVariants = cva(
 	{
 		variants: {
 			variant: {
-				default: "pt-2",
+				default: "pt-2 border-t border-border/20",
 				underline: "pt-4 border-t border-transparent",
 				pills: "pt-2",
 				minimal: "pt-1",
