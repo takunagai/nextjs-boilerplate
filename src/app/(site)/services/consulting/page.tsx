@@ -18,27 +18,28 @@ import { META } from "@/lib/constants";
 import { createBreadcrumbs } from "@/lib/utils";
 
 // ページ固有の定数を定義
-const PAGE_PATH = "/services/web-development";
-const PAGE_TITLE = "ウェブ制作";
+const PAGE_PATH = "/services/consulting";
+const PAGE_TITLE = "コンサルティング";
 
 export const metadata: Metadata = generateMetadata({
 	title: PAGE_TITLE,
 	description:
-		"最新の技術とデザインを活かした高品質なウェブサイト制作サービスを提供します。コーポレートサイト、ECサイト、ブログなど様々なニーズに対応可能です。",
+		"ITコンサルティングサービスでビジネスの成長をサポートします。デジタル変革、システム導入、業務効率化など幅広い分野でのコンサルティングを提供しています。",
 	keywords: [
-		"ウェブ制作",
-		"ウェブ開発",
-		"ホームページ制作",
-		"Webデザイン",
-		"コーポレートサイト",
-		"レスポンシブデザイン",
+		"コンサルティング",
+		"ITコンサルティング",
+		"デジタル変革",
+		"DX",
+		"システム導入",
+		"業務効率化",
+		"経営支援",
 	],
 	canonical: PAGE_PATH,
 });
 
 export const viewport = generateViewport();
 
-export default function WebDevelopmentPage() {
+export default function ConsultingPage() {
 	// パンくずリストのデータを定義
 	const breadcrumbItems = [
 		{ title: "ホーム", path: "/" },
@@ -52,17 +53,17 @@ export default function WebDevelopmentPage() {
 		<>
 			<WebsiteJsonLd
 				name={`${PAGE_TITLE} | ${META.DEFAULT_TITLE}`}
-				description="最新の技術とデザインを活かした高品質なウェブサイト制作サービスを提供します。"
+				description="ITコンサルティングサービスでビジネスの成長をサポートします。"
 				url={`${META.SITE_URL}${PAGE_PATH}`}
 			/>
 			<BreadcrumbJsonLd items={jsonLdBreadcrumbs} />
 			<div className="text-center">
 				<PageHeader 
-					title="ウェブ制作サービス" 
+					title="コンサルティングサービス" 
 					overlayBreadcrumbs={uiBreadcrumbs}
 				/>
 				<p className="text-muted-foreground">
-					お客様のビジネスを成功に導く高品質なウェブサイト制作
+					お客様のビジネス成長を支援するITコンサルティング
 				</p>
 			</div>
 
@@ -71,8 +72,8 @@ export default function WebDevelopmentPage() {
 					<ColumnLayout.Main className="md:w-3/4">
 						<div className="relative w-full h-64 md:h-80">
 							<Image
-								src="/dummy-images/street-photo-01.jpg"
-								alt="ウェブ開発のイメージ"
+								src="/dummy-images/street-photo-02.jpg"
+								alt="コンサルティングのイメージ"
 								fill
 								className="object-cover"
 								priority
@@ -81,40 +82,40 @@ export default function WebDevelopmentPage() {
 
 						<h2 className="text-2xl font-bold mt-6">サービス概要</h2>
 						<p className="text-muted-foreground mt-4">
-							当社のウェブ制作サービスでは、お客様のビジネス目標を達成するための最適なウェブサイトを構築します。
-							最新の技術とトレンドを取り入れながら、使いやすさとデザイン性を両立したサイト制作を行っています。
+							当社のITコンサルティングサービスでは、お客様のビジネス課題を深く理解し、最適なソリューションを提案します。
+							デジタル変革の推進から業務効率化、新規事業の立ち上げまで、幅広い分野でのコンサルティングを行っています。
 						</p>
 
-						<h2 className="text-2xl font-bold mt-8">ウェブ制作の特徴</h2>
+						<h2 className="text-2xl font-bold mt-8">コンサルティングの特徴</h2>
 						<ContentItems
 							items={[
 								{
-									title: "レスポンシブデザイン",
+									title: "デジタル変革（DX）支援",
 									description:
-										"あらゆるデバイスで最適な表示を実現するレスポンシブデザインを標準対応。スマートフォン、タブレット、PCなど、どの環境でも美しく機能的なサイトをご提供します。",
+										"既存のビジネスプロセスをデジタル化し、効率性と競争力を向上させます。最新技術の導入から組織変革まで、包括的なDX支援を行います。",
 									image: "/dummy-images/street-photo-01.jpg",
-									imageAlt: "レスポンシブデザインのイメージ",
+									imageAlt: "デジタル変革のイメージ",
 								},
 								{
-									title: "SEO対策",
+									title: "システム導入支援",
 									description:
-										"検索エンジン最適化を考慮した構造設計により、Googleなどの検索エンジンで上位表示されやすいサイト構築を行います。メタタグの最適化や構造化データの実装も対応。",
+										"お客様の業務に最適なシステムの選定から導入、運用まで一貫してサポート。既存システムとの連携も考慮した最適な導入計画を策定します。",
 									image: "/dummy-images/street-photo-02.jpg",
-									imageAlt: "SEO対策のイメージ",
+									imageAlt: "システム導入のイメージ",
 								},
 								{
-									title: "高速表示",
+									title: "業務効率化",
 									description:
-										"最新のNext.jsなどのフレームワークを活用し、高速表示を実現。ユーザー体験を向上させるとともに、離脱率の低減にも貢献します。",
+										"現在の業務プロセスを分析し、無駄を削減して効率化を図ります。RPAやワークフローシステムの導入により、大幅な工数削減を実現します。",
 									image: "/dummy-images/street-photo-03.jpg",
-									imageAlt: "高速表示のイメージ",
+									imageAlt: "業務効率化のイメージ",
 								},
 								{
-									title: "セキュリティ対策",
+									title: "IT戦略立案",
 									description:
-										"HTTPS対応やセキュリティ脆弱性対策など、安全なウェブサイト運用に必要な対策を実施。お客様とユーザーの大切な情報を守ります。",
+										"中長期的なIT戦略の策定を支援します。ビジネス目標に合わせたITロードマップの作成により、計画的なIT投資を実現します。",
 									image: "/dummy-images/street-photo-04.jpg",
-									imageAlt: "セキュリティ対策のイメージ",
+									imageAlt: "IT戦略のイメージ",
 								},
 							]}
 							columns={2}
@@ -122,19 +123,20 @@ export default function WebDevelopmentPage() {
 							imageHeight={180}
 						/>
 
-						<h2 className="text-2xl font-bold mt-8">制作実績</h2>
+						<h2 className="text-2xl font-bold mt-8">コンサルティング実績</h2>
 						<p>
-							これまで多くの企業様のウェブサイト制作をサポートしてきました。コーポレートサイト、ECサイト、ランディングページなど、様々なタイプのサイト制作に対応可能です。
+							これまで様々な業界・規模の企業様にコンサルティングサービスを提供してきました。
+							製造業、小売業、サービス業など、業界特有の課題に対応した実績があります。
 						</p>
 
 						<Card className="bg-gradient-to-r from-primary/10 to-secondary/10 border-0 mt-8">
 							<CardContent className="py-6">
 								<div className="text-center">
 									<span className="text-xl font-bold text-primary">
-										無料お見積り・ご相談受付中
+										無料相談・お見積り受付中
 									</span>
 									<p className="mt-2 text-base text-muted-foreground">
-										ウェブサイト制作についてのご質問やお見積りなど、お気軽にお問い合わせください。
+										ITコンサルティングについてのご相談やお見積りなど、お気軽にお問い合わせください。
 									</p>
 									<Link
 										href="/contact"

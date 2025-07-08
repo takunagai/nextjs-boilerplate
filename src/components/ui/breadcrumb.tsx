@@ -10,18 +10,24 @@ export type BreadcrumbItem = {
 export type BreadcrumbProps = {
 	items: BreadcrumbItem[];
 	className?: string;
+	variant?: "default" | "overlay";
 };
 
-export function Breadcrumb({ items, className }: BreadcrumbProps) {
+export function Breadcrumb({ items, className, variant = "default" }: BreadcrumbProps) {
 	// 項目が1つの場合（ホームのみ）は表示しない
 	if (items.length <= 1) {
 		return null;
 	}
 
+	const isOverlay = variant === "overlay";
+
 	return (
 		<>
 			<nav aria-label="パンくずリスト" className={cn("py-4", className)}>
-				<ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-balance">
+				<ol className={cn(
+					"flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-balance",
+					isOverlay && "text-foreground"
+				)}>
 					{items.map((item, i) => {
 						const isFirst = i === 0;
 						const isLast = i === items.length - 1;
@@ -42,7 +48,12 @@ export function Breadcrumb({ items, className }: BreadcrumbProps) {
 									<>
 										<Link
 											href={item.href}
-											className="text-muted-foreground hover:text-foreground transition-colors"
+											className={cn(
+												"transition-colors",
+												isOverlay 
+													? "text-foreground/70 hover:text-foreground" 
+													: "text-muted-foreground hover:text-foreground"
+											)}
 										>
 											<span
 												className={cn(
@@ -57,7 +68,12 @@ export function Breadcrumb({ items, className }: BreadcrumbProps) {
 										</Link>
 										{!isLast && (
 											<span
-												className="mx-2 text-muted-foreground"
+												className={cn(
+													"mx-2",
+													isOverlay 
+														? "text-foreground/50" 
+														: "text-muted-foreground"
+												)}
 												aria-hidden="true"
 											>
 												/
@@ -73,6 +89,8 @@ export function Breadcrumb({ items, className }: BreadcrumbProps) {
 											item.label.length > 20
 												? "overflow-hidden text-ellipsis whitespace-nowrap max-w-[10rem] sm:max-w-[15rem] md:max-w-none inline-block"
 												: "inline-block",
+											// オーバーレイ variant のスタイル
+											isOverlay && "text-foreground"
 										)}
 										aria-current="page"
 									>
@@ -86,16 +104,24 @@ export function Breadcrumb({ items, className }: BreadcrumbProps) {
 					{/* モバイルでのみ表示する省略記号（中間項目が3つ以上ある場合） */}
 					{items.length > 3 && (
 						<li className="flex sm:hidden items-center">
-							<span className="text-muted-foreground mx-2" aria-hidden="true">
+							<span className={cn(
+								"mx-2",
+								isOverlay ? "text-foreground/50" : "text-muted-foreground"
+							)} aria-hidden="true">
 								/
 							</span>
 							<span
-								className="text-muted-foreground"
+								className={cn(
+									isOverlay ? "text-foreground/70" : "text-muted-foreground"
+								)}
 								aria-label="省略された項目"
 							>
 								...
 							</span>
-							<span className="mx-2 text-muted-foreground" aria-hidden="true">
+							<span className={cn(
+								"mx-2",
+								isOverlay ? "text-foreground/50" : "text-muted-foreground"
+							)} aria-hidden="true">
 								/
 							</span>
 						</li>
