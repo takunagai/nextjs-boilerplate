@@ -1,7 +1,7 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { useMounted } from "./use-mounted";
 
 /**
  * テーマ切り替え機能を提供するカスタムフック
@@ -9,12 +9,7 @@ import { useEffect, useState } from "react";
  */
 export function useThemeToggle() {
 	const { theme, setTheme, resolvedTheme } = useTheme();
-	const [mounted, setMounted] = useState(false);
-
-	// コンポーネントがマウントされたことを検知
-	useEffect(() => {
-		setMounted(true);
-	}, []);
+	const mounted = useMounted();
 
 	// テーマを切り替える関数
 	const toggleTheme = () => {
