@@ -5,7 +5,8 @@
 
 import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef } from "react";
+import { useIsMobile } from "@/hooks/use-is-mobile";
 import * as THREE from "three";
 
 import { ConstellationLines } from "./constellation/constellation-lines";
@@ -102,16 +103,7 @@ interface DigitalConstellationProps {
 export function DigitalConstellation({
 	className = "",
 }: DigitalConstellationProps) {
-	const [isMobile, setIsMobile] = useState(false);
-
-	useEffect(() => {
-		const checkMobile = () => {
-			setIsMobile(window.innerWidth < 768);
-		};
-		checkMobile();
-		window.addEventListener("resize", checkMobile);
-		return () => window.removeEventListener("resize", checkMobile);
-	}, []);
+	const isMobile = useIsMobile();
 
 	const settings = isMobile ? DEFAULT_SETTINGS.MOBILE : DEFAULT_SETTINGS.DESKTOP;
 
