@@ -15,8 +15,6 @@ import { auth } from "@/lib/auth";
 import { APP, META } from "@/lib/constants";
 import { HEADER_NAVIGATION } from "@/lib/constants/header-navigation";
 import "./globals.css";
-import { StagewiseToolbar } from "@stagewise/toolbar-next";
-import { ReactPlugin } from "@stagewise-plugins/react";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -127,7 +125,6 @@ export default async function RootLayout({
 								<MainContent>{children}</MainContent>
 								<Footer />
 								<ScrollToTop />
-                                <StagewiseToolbar config={{ plugins: [ReactPlugin] }} />
 							</div>
 						</AnnouncementBarProvider>
 					</SessionProvider>
