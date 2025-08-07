@@ -24,7 +24,7 @@ export const formExampleSchema = z.object({
 		.max(500, { message: "メッセージは500文字以内で入力してください" }),
 	terms: z
 		.boolean({
-			required_error: "利用規約への同意が必要です",
+			error: "利用規約への同意が必要です",
 		})
 		.refine((val) => val === true, {
 			message: "利用規約に同意してください",
