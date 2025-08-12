@@ -1,7 +1,7 @@
 /**
  * フォーム送信処理の共通化フック
  */
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import type { FieldErrors, FieldValues, Path, UseFormReturn } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -130,24 +130,24 @@ export function useFormSubmission<TFormData extends FieldValues>({
 	}>({ type: null, message: "" });
 
 	// エラー状態リセット
-	const resetError = useCallback(() => {
+	const resetError = () => {
 		setSubmitError(null);
-	}, []);
+	};
 
 	// 送信状態リセット
-	const resetStatus = useCallback(() => {
+	const resetStatus = () => {
 		setSubmitStatus({ type: null, message: "" });
-	}, []);
+	};
 
 	// フィールドエラーの設定
-	const setFieldErrors = useCallback((fieldErrors: Record<string, string>) => {
+	const setFieldErrors = (fieldErrors: Record<string, string>) => {
 		for (const [field, message] of Object.entries(fieldErrors)) {
 			form.setError(field as Path<TFormData>, { message });
 		}
-	}, [form]);
+	};
 
 	// 送信処理
-	const handleSubmit = useCallback(async (data: TFormData): Promise<SubmissionResult> => {
+	const handleSubmit = async (data: TFormData): Promise<SubmissionResult> => {
 		setIsSubmitting(true);
 		setSubmitError(null);
 		setSubmitStatus({ type: null, message: "" });
@@ -234,20 +234,7 @@ export function useFormSubmission<TFormData extends FieldValues>({
 				setIsSubmitting(false);
 			}, UI_FORM.SUBMIT_DEBOUNCE);
 		}
-	}, [
-		submitFn,
-		onBeforeSubmit,
-		onAfterSubmit,
-		form,
-		autoResetForm,
-		autoSetFieldErrors,
-		showErrorToast,
-		showSuccessToast,
-		customErrorMessage,
-		customSuccessMessage,
-		redirectTo,
-		setFieldErrors,
-	]);
+	};
 
 	return {
 		isSubmitting,

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /**
  * スクロール状態の追跡用インターフェース
@@ -98,20 +98,17 @@ export function useScroll({
 	stateRef.current = state;
 
 	// スロットリング関数
-	const throttle = useCallback(
-		<T extends (...args: unknown[]) => void>(callback: T, delay: number) => {
-			let lastCall = 0;
-			return (...args: Parameters<T>) => {
-				const now = Date.now();
-				if (now - lastCall < delay) {
-					return;
-				}
-				lastCall = now;
-				return callback(...args);
-			};
-		},
-		[],
-	);
+	const throttle = <T extends (...args: unknown[]) => void>(callback: T, delay: number) => {
+		let lastCall = 0;
+		return (...args: Parameters<T>) => {
+			const now = Date.now();
+			if (now - lastCall < delay) {
+				return;
+			}
+			lastCall = now;
+			return callback(...args);
+		};
+	};
 
 	useEffect(() => {
 		// ページの初期スクロール位置を設定
