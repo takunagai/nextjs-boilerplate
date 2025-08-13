@@ -89,7 +89,7 @@ export function FlowingComments({
 			...comment,
 			size: Math.random() * sizeRange + baseSize,
 		})));
-	});
+	}, { debounceMs: 150 });
 
 	useEffect(() => {
 		// クライアントサイドでのみ実行

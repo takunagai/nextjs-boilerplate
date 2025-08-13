@@ -43,7 +43,7 @@ export function WhalesAnimation() {
 			width: clientWidth,
 			height: clientHeight,
 		});
-	}, [isClient]);
+	}, { deps: [isClient] });
 
 	// 泡を生成
 	useEffect(() => {

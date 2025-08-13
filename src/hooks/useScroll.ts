@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { throttle } from "./utils/performance";
 
 /**
  * スクロール方向の型
@@ -102,18 +103,7 @@ export function useScroll({
 	const stateRef = useRef(state);
 	stateRef.current = state;
 
-	// スロットリング関数
-	const throttle = <T extends (...args: unknown[]) => void>(callback: T, delay: number) => {
-		let lastCall = 0;
-		return (...args: Parameters<T>) => {
-			const now = Date.now();
-			if (now - lastCall < delay) {
-				return;
-			}
-			lastCall = now;
-			return callback(...args);
-		};
-	};
+	// 共通ユーティリティのthrottleを使用
 
 	useEffect(() => {
 		// ページの初期スクロール位置を設定
