@@ -16,14 +16,16 @@ export type {
 	FormServerActionHandler,
 	ServerActionHandler,
 } from "@/lib/types/actions";
-// 新しいServer Actions基盤（Next.js 15統合）
+// Server Actions実行関数
+export { executeServerAction } from "./actions";
+
+// Server Actionsユーティリティ
 export {
 	createActionError,
 	createErrorResult,
 	createSafeAction,
 	createSuccessResult,
-	executeServerAction,
-} from "./actions";
+} from "./action-utils";
 // 既存のサーバーアクションユーティリティ
 export * from "./actions/error";
 export * from "./actions/validation";

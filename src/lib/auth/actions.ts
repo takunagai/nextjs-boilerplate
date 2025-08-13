@@ -9,7 +9,7 @@
 
 import { redirect } from "next/navigation";
 import { z } from "zod";
-import { createSafeAction } from "@/lib/server/actions";
+import { createSafeAction } from "@/lib/server/action-utils";
 import type { AuthActionResult } from "@/lib/types/actions";
 import { signIn, signOut } from "./index";
 

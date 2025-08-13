@@ -9,7 +9,7 @@
 
 import type { ContactFormValues } from "@/lib/validation/contact-schema";
 import { contactFormSchema } from "@/lib/validation/contact-schema";
-import { createSafeAction } from "./actions";
+import { createSafeAction } from "./action-utils";
 
 /**
  * お問い合わせフォーム送信のServer Action
