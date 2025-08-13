@@ -66,7 +66,7 @@ export function FocusIndicator({
 		<div
 			className={cn(
 				"focus-within:transition-all focus-within:duration-200",
-				isKeyboardUser && "focus-within:" + focusClassName.replace(/^focus-within:/, ""),
+				isKeyboardUser && `focus-within:${focusClassName.replace(/^focus-within:/, "")}`,
 				className,
 			)}
 		>
@@ -200,8 +200,8 @@ export function AccessibleCollapse({
 	contentClassName,
 	triggerAriaLabel,
 }: AccessibleCollapseProps) {
-	const triggerId = `collapse-trigger-${Math.random().toString(36).substr(2, 9)}`;
-	const contentId = `collapse-content-${Math.random().toString(36).substr(2, 9)}`;
+	const triggerId = `collapse-trigger-${crypto.randomUUID()}`;
+	const contentId = `collapse-content-${crypto.randomUUID()}`;
 
 	return (
 		<div className={className}>

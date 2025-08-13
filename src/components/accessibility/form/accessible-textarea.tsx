@@ -35,7 +35,7 @@ export const AccessibleTextarea = forwardRef<HTMLTextAreaElement, AccessibleText
 		required,
 		...props
 	}, ref) => {
-		const textareaId = id || `textarea-${Math.random().toString(36).substr(2, 9)}`;
+		const textareaId = id || `textarea-${crypto.randomUUID()}`;
 		const errorId = error ? `${textareaId}-error` : undefined;
 		const descriptionId = description ? `${textareaId}-description` : undefined;
 
@@ -60,10 +60,9 @@ export const AccessibleTextarea = forwardRef<HTMLTextAreaElement, AccessibleText
 				<textarea
 					ref={ref}
 					id={textareaId}
-					aria-describedby={cn(
-						descriptionId,
-						errorId && errorId,
-					).trim() || undefined}
+					aria-describedby={
+						[descriptionId, errorId].filter(Boolean).join(" ") || undefined
+					}
 					aria-invalid={error ? "true" : undefined}
 					aria-required={required}
 					className={cn(

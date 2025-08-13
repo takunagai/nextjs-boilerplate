@@ -40,7 +40,7 @@ export function AccessibleRadioGroup({
 	optionClassName,
 	required,
 }: AccessibleRadioGroupProps) {
-	const groupId = `radio-group-${Math.random().toString(36).substr(2, 9)}`;
+	const groupId = `radio-group-${crypto.randomUUID()}`;
 	const errorId = error ? `${groupId}-error` : undefined;
 	const descriptionId = description ? `${groupId}-description` : undefined;
 
@@ -61,10 +61,9 @@ export function AccessibleRadioGroup({
 
 				<div
 					className="space-y-2 mt-2"
-					aria-describedby={cn(
-						descriptionId,
-						errorId && errorId,
-					).trim() || undefined}
+					aria-describedby={
+						[descriptionId, errorId].filter(Boolean).join(" ") || undefined
+					}
 				>
 					{options.map((option) => {
 						const optionId = `${name}-${option.value}`;

@@ -35,7 +35,7 @@ export const AccessibleInput = forwardRef<HTMLInputElement, AccessibleInputProps
 		required,
 		...props
 	}, ref) => {
-		const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`;
+		const inputId = id || `input-${crypto.randomUUID()}`;
 		const errorId = error ? `${inputId}-error` : undefined;
 		const descriptionId = description ? `${inputId}-description` : undefined;
 
@@ -60,10 +60,9 @@ export const AccessibleInput = forwardRef<HTMLInputElement, AccessibleInputProps
 				<input
 					ref={ref}
 					id={inputId}
-					aria-describedby={cn(
-						descriptionId,
-						errorId && errorId,
-					).trim() || undefined}
+					aria-describedby={
+						[descriptionId, errorId].filter(Boolean).join(" ") || undefined
+					}
 					aria-invalid={error ? "true" : undefined}
 					aria-required={required}
 					className={cn(

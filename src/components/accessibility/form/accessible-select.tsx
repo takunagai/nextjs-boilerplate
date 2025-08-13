@@ -39,7 +39,7 @@ export const AccessibleSelect = forwardRef<HTMLSelectElement, AccessibleSelectPr
 		placeholder,
 		...props
 	}, ref) => {
-		const selectId = id || `select-${Math.random().toString(36).substr(2, 9)}`;
+		const selectId = id || `select-${crypto.randomUUID()}`;
 		const errorId = error ? `${selectId}-error` : undefined;
 		const descriptionId = description ? `${selectId}-description` : undefined;
 
@@ -64,10 +64,9 @@ export const AccessibleSelect = forwardRef<HTMLSelectElement, AccessibleSelectPr
 				<select
 					ref={ref}
 					id={selectId}
-					aria-describedby={cn(
-						descriptionId,
-						errorId && errorId,
-					).trim() || undefined}
+					aria-describedby={
+						[descriptionId, errorId].filter(Boolean).join(" ") || undefined
+					}
 					aria-invalid={error ? "true" : undefined}
 					aria-required={required}
 					className={cn(

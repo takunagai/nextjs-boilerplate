@@ -31,7 +31,7 @@ export const AccessibleCheckbox = forwardRef<HTMLInputElement, AccessibleCheckbo
 		id,
 		...props
 	}, ref) => {
-		const checkboxId = id || `checkbox-${Math.random().toString(36).substr(2, 9)}`;
+		const checkboxId = id || `checkbox-${crypto.randomUUID()}`;
 		const errorId = error ? `${checkboxId}-error` : undefined;
 		const descriptionId = description ? `${checkboxId}-description` : undefined;
 
@@ -42,10 +42,9 @@ export const AccessibleCheckbox = forwardRef<HTMLInputElement, AccessibleCheckbo
 						ref={ref}
 						type="checkbox"
 						id={checkboxId}
-						aria-describedby={cn(
-							descriptionId,
-							errorId && errorId,
-						).trim() || undefined}
+						aria-describedby={
+							[descriptionId, errorId].filter(Boolean).join(" ") || undefined
+						}
 						aria-invalid={error ? "true" : undefined}
 						className={cn(
 							"mt-0.5 h-4 w-4 rounded border border-input bg-transparent",
