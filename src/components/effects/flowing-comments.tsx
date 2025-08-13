@@ -6,6 +6,7 @@
 
 import { useEffect, useState } from "react";
 import { useWindowResize } from "@/hooks/use-window-resize";
+import { UI_FLOWING_COMMENTS, UI_PERFORMANCE } from "@/lib/constants/ui";
 
 // 流れるメッセージデータ（「できること」をテーマに）
 const COMMENTS = [
@@ -66,7 +67,7 @@ interface FlowingCommentsProps {
 }
 
 export function FlowingComments({
-	maxComments = 15,
+	maxComments = UI_FLOWING_COMMENTS.DEFAULT_MAX_COMMENTS,
 	className = "",
 }: FlowingCommentsProps) {
 	const [comments, setComments] = useState<Comment[]>([]);
@@ -76,9 +77,9 @@ export function FlowingComments({
 	useWindowResize(
 		() => {
 			// 画面サイズに応じたサイズ設定
-			const isDesktop = window.innerWidth >= 768;
-			const baseSize = isDesktop ? 1.2 : 0.7;
-			const sizeRange = isDesktop ? 0.6 : 0.3;
+			const isDesktop = window.innerWidth >= UI_FLOWING_COMMENTS.DESKTOP_BREAKPOINT;
+			const baseSize = isDesktop ? UI_FLOWING_COMMENTS.DESKTOP_BASE_SIZE : UI_FLOWING_COMMENTS.MOBILE_BASE_SIZE;
+			const sizeRange = isDesktop ? UI_FLOWING_COMMENTS.DESKTOP_SIZE_RANGE : UI_FLOWING_COMMENTS.MOBILE_SIZE_RANGE;
 
 			setComments((prev) =>
 				prev.map((comment) => ({
@@ -87,7 +88,7 @@ export function FlowingComments({
 				})),
 			);
 		},
-		{ debounceMs: 150 },
+		{ debounceMs: UI_PERFORMANCE.RESIZE_DEBOUNCE },
 	);
 
 	useEffect(() => {
@@ -96,10 +97,10 @@ export function FlowingComments({
 
 		// 画面サイズに応じたサイズ設定を関数化
 		const getSizeParams = () => {
-			const isDesktop = window.innerWidth >= 768;
+			const isDesktop = window.innerWidth >= UI_FLOWING_COMMENTS.DESKTOP_BREAKPOINT;
 			return {
-				baseSize: isDesktop ? 1.2 : 0.7, // デスクトップ: 1.2-1.8rem, モバイル: 0.7-1.0rem
-				sizeRange: isDesktop ? 0.6 : 0.3,
+				baseSize: isDesktop ? UI_FLOWING_COMMENTS.DESKTOP_BASE_SIZE : UI_FLOWING_COMMENTS.MOBILE_BASE_SIZE,
+				sizeRange: isDesktop ? UI_FLOWING_COMMENTS.DESKTOP_SIZE_RANGE : UI_FLOWING_COMMENTS.MOBILE_SIZE_RANGE,
 			};
 		};
 
@@ -111,9 +112,9 @@ export function FlowingComments({
 			initialComments.push({
 				id: Math.random() * 1000000 + Date.now() + i, // 一意なIDを生成
 				text: COMMENTS[Math.floor(Math.random() * COMMENTS.length)],
-				top: Math.random() * 80 + 10, // 10%〜90%の範囲
-				duration: Math.random() * 10 + 15, // 15〜25秒
-				delay: Math.random() * 20, // 0〜20秒の初期遅延
+				top: Math.random() * (UI_FLOWING_COMMENTS.BOTTOM_LIMIT - UI_FLOWING_COMMENTS.TOP_LIMIT) + UI_FLOWING_COMMENTS.TOP_LIMIT,
+				duration: Math.random() * (UI_FLOWING_COMMENTS.DURATION_MAX - UI_FLOWING_COMMENTS.DURATION_MIN) + UI_FLOWING_COMMENTS.DURATION_MIN,
+				delay: Math.random() * UI_FLOWING_COMMENTS.INITIAL_DELAY_MAX,
 				size: Math.random() * sizeRange + baseSize,
 			});
 		}
@@ -131,14 +132,14 @@ export function FlowingComments({
 						...comment,
 						id: Math.random() * 1000000 + Date.now() + Math.random(), // 一意なIDを再生成
 						text: COMMENTS[Math.floor(Math.random() * COMMENTS.length)],
-						top: Math.random() * 80 + 10,
-						duration: Math.random() * 10 + 15,
-						delay: Math.random() * 5, // 更新時は短い遅延
+						top: Math.random() * (UI_FLOWING_COMMENTS.BOTTOM_LIMIT - UI_FLOWING_COMMENTS.TOP_LIMIT) + UI_FLOWING_COMMENTS.TOP_LIMIT,
+						duration: Math.random() * (UI_FLOWING_COMMENTS.DURATION_MAX - UI_FLOWING_COMMENTS.DURATION_MIN) + UI_FLOWING_COMMENTS.DURATION_MIN,
+						delay: Math.random() * UI_FLOWING_COMMENTS.UPDATE_DELAY_MAX,
 						size: Math.random() * sizeRange + baseSize,
 					};
 				}),
 			);
-		}, 30000); // 30秒ごとに更新
+		}, UI_FLOWING_COMMENTS.UPDATE_INTERVAL);
 
 		return () => {
 			clearInterval(interval);
@@ -166,12 +167,13 @@ export function FlowingComments({
 			{comments.map((comment) => (
 				<div
 					key={comment.id}
-					className="absolute whitespace-nowrap text-muted-foreground/20 font-medium select-none"
+					className="absolute whitespace-nowrap text-muted-foreground/20 font-medium select-none motion-safe:animate-flow-right motion-reduce:animate-none"
 					style={
 						{
 							top: `${comment.top}%`,
 							fontSize: `${comment.size}rem`,
-							animation: `flowRight ${comment.duration}s linear ${comment.delay}s infinite both`,
+							animationDuration: `${comment.duration}s`,
+							animationDelay: `${comment.delay}s`,
 						} satisfies React.CSSProperties
 					}
 				>
@@ -192,7 +194,7 @@ export function FlowingCommentsMobile({
 }) {
 	return (
 		<FlowingComments
-			maxComments={8}
+			maxComments={UI_FLOWING_COMMENTS.MOBILE_MAX_COMMENTS}
 			className={["hidden sm:block", className].filter(Boolean).join(" ")}
 		/>
 	);
@@ -208,7 +210,7 @@ export function FlowingCommentsDesktop({
 }) {
 	return (
 		<FlowingComments
-			maxComments={20}
+			maxComments={UI_FLOWING_COMMENTS.DESKTOP_MAX_COMMENTS}
 			className={["hidden md:block", className].filter(Boolean).join(" ")}
 		/>
 	);

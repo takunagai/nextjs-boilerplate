@@ -91,3 +91,37 @@ export const UI_PERFORMANCE = {
 	/** リサイズデバウンス（ms） */
 	RESIZE_DEBOUNCE: 150,
 } as const;
+
+// FlowingComments関連
+export const UI_FLOWING_COMMENTS = {
+	/** デスクトップブレークポイント（px） */
+	DESKTOP_BREAKPOINT: 768,
+	/** デスクトップ基本フォントサイズ（rem） */
+	DESKTOP_BASE_SIZE: 1.2,
+	/** デスクトップサイズ範囲（rem） */
+	DESKTOP_SIZE_RANGE: 0.6,
+	/** モバイル基本フォントサイズ（rem） */
+	MOBILE_BASE_SIZE: 0.7,
+	/** モバイルサイズ範囲（rem） */
+	MOBILE_SIZE_RANGE: 0.3,
+	/** アニメーション継続時間最小値（秒） */
+	DURATION_MIN: 15,
+	/** アニメーション継続時間最大値（秒） */
+	DURATION_MAX: 25,
+	/** 初期遅延最大値（秒） */
+	INITIAL_DELAY_MAX: 20,
+	/** 更新時遅延最大値（秒） */
+	UPDATE_DELAY_MAX: 5,
+	/** コメント更新間隔（ms） */
+	UPDATE_INTERVAL: 30000,
+	/** 配置範囲上部制限（%） */
+	TOP_LIMIT: 10,
+	/** 配置範囲下部制限（%） */
+	BOTTOM_LIMIT: 90,
+	/** デフォルト最大コメント数 */
+	DEFAULT_MAX_COMMENTS: 15,
+	/** モバイル向け最大コメント数 */
+	MOBILE_MAX_COMMENTS: 8,
+	/** デスクトップ向け最大コメント数 */
+	DESKTOP_MAX_COMMENTS: 20,
+} as const;
