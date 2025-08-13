@@ -79,7 +79,7 @@ export function LoginForm() {
 							autoComplete="email"
 							disabled={isLoading}
 							aria-describedby={errors.email ? "email-error" : undefined}
-							aria-invalid={errors.email ? "true" : "false"}
+							aria-invalid={!!errors.email}
 							{...register("email")}
 						/>
 						{errors.email && (
@@ -116,7 +116,7 @@ export function LoginForm() {
 							autoComplete="current-password"
 							disabled={isLoading}
 							aria-describedby={errors.password ? "password-error" : undefined}
-							aria-invalid={errors.password ? "true" : "false"}
+							aria-invalid={!!errors.password}
 							{...register("password")}
 						/>
 						{errors.password && (
