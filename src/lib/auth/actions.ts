@@ -61,10 +61,12 @@ async function handleLogin(
 		console.error("Login action failed:", error);
 		return {
 			success: false,
-			error:
-				error instanceof Error
+			error: {
+				code: "LOGIN_FAILED",
+				message: error instanceof Error
 					? error.message
 					: "ログインに失敗しました。メールアドレスとパスワードを確認してください。",
+			},
 		};
 	}
 }
@@ -109,7 +111,10 @@ export async function logoutAction(
 		console.error("Logout action failed:", error);
 		return {
 			success: false,
-			error: "ログアウトに失敗しました",
+			error: {
+				code: "LOGOUT_FAILED",
+				message: "ログアウトに失敗しました",
+			},
 		};
 	}
 }
@@ -144,14 +149,17 @@ export async function checkAuthAction(): Promise<AuthActionResult> {
 		// 現在はシンプルな成功レスポンスを返す
 		return {
 			success: true,
-			data: { redirectUrl: null },
+			data: { redirectUrl: undefined },
 			message: "認証状態を確認しました",
 		};
 	} catch (error) {
 		console.error("Auth check failed:", error);
 		return {
 			success: false,
-			error: "認証状態の確認に失敗しました",
+			error: {
+				code: "AUTH_CHECK_FAILED",
+				message: "認証状態の確認に失敗しました",
+			},
 		};
 	}
 }

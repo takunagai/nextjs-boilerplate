@@ -8,10 +8,7 @@
  */
 
 import { ActionError, safeAction, validateAction } from "@/lib/server";
-import {
-	type ContactFormValues,
-	contactFormSchema,
-} from "@/lib/validation/contact-schema";
+import { contactFormSchema } from "@/lib/validation/contact-schema";
 
 /**
  * お問い合わせフォームを送信するサーバーアクション

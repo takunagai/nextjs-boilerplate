@@ -34,7 +34,10 @@ export function createErrorResult(
 ): ActionResult<never> {
 	return {
 		success: false,
-		error,
+		error: {
+			code: "VALIDATION_ERROR",
+			message: error,
+		},
 		fieldErrors,
 	};
 }
@@ -113,7 +116,10 @@ export function createSafeAction<T extends z.ZodSchema, U>(
 			if (error instanceof z.ZodError) {
 				return {
 					success: false,
-					error: "入力データが正しくありません",
+					error: {
+						code: "VALIDATION_ERROR",
+						message: "入力データが正しくありません",
+					},
 					fieldErrors: error.flatten().fieldErrors,
 				};
 			}
@@ -121,8 +127,10 @@ export function createSafeAction<T extends z.ZodSchema, U>(
 			console.error("Safe action execution failed:", error);
 			return {
 				success: false,
-				error:
-					"システムエラーが発生しました。しばらくしてから再度お試しください。",
+				error: {
+					code: "SYSTEM_ERROR",
+					message: "システムエラーが発生しました。しばらくしてから再度お試しください。",
+				},
 			};
 		}
 	};

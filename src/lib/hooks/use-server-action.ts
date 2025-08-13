@@ -19,7 +19,7 @@ export interface UseServerActionReturn<T> {
 	readonly isError: boolean;
 	readonly data: T | null;
 	readonly error: string | null;
-	readonly fieldErrors: Record<string, string[]>;
+	readonly fieldErrors: Record<string, readonly string[]>;
 }
 
 /**
@@ -58,7 +58,7 @@ export function useServerAction<T>(
 	const isSuccess = state?.success === true;
 	const isError = state?.success === false;
 	const data = isSuccess ? state.data : null;
-	const error = isError ? state.error : null;
+	const error = isError && state.error ? state.error.message : null;
 	const fieldErrors = isError ? (state.fieldErrors ?? {}) : {};
 
 	return {

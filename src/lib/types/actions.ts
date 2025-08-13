@@ -19,7 +19,11 @@ export interface ActionSuccessResult<T = unknown> {
  */
 export interface ActionErrorResult {
 	readonly success: false;
-	readonly error: string;
+	readonly error: {
+		code: string;
+		message: string;
+		details?: Record<string, unknown>;
+	};
 	readonly fieldErrors?: Readonly<Record<string, readonly string[]>>;
 }
 
@@ -50,10 +54,9 @@ export interface ActionOptions {
 /**
  * 認証用のServer Action結果
  */
-export interface AuthActionResult
-	extends ActionSuccessResult<{ redirectUrl?: string }> {
+export type AuthActionResult = ActionResult<{ redirectUrl?: string }> & {
 	readonly redirectUrl?: string;
-}
+};
 
 /**
  * Server Actionハンドラーの型
@@ -70,3 +73,21 @@ export type FormServerActionHandler<T = unknown> = (
 	prevState: unknown,
 	formData: FormData,
 ) => Promise<ActionResult<T>>;
+
+/**
+ * 結果が成功しているかどうかをチェックするヘルパー関数
+ */
+export function isActionSuccess<T>(
+	result: ActionResult<T>,
+): result is ActionSuccessResult<T> {
+	return result.success === true;
+}
+
+/**
+ * 結果がエラーかどうかをチェックするヘルパー関数
+ */
+export function isActionError<T>(
+	result: ActionResult<T>,
+): result is ActionErrorResult {
+	return result.success === false;
+}

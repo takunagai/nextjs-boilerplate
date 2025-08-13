@@ -49,8 +49,10 @@ export async function executeServerAction<TInput, TOutput>(
 		console.error("Server Action execution failed:", error);
 		return {
 			success: false,
-			error:
-				"システムエラーが発生しました。しばらくしてから再度お試しください。",
+			error: {
+				code: "SYSTEM_ERROR",
+				message: "システムエラーが発生しました。しばらくしてから再度お試しください。",
+			},
 		};
 	}
 }
