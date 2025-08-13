@@ -1,7 +1,7 @@
 /**
  * Constellation 3D アニメーション関連の型定義
  */
-import * as THREE from "three";
+import type * as THREE from "three";
 
 export interface NodeData {
 	position: THREE.Vector3;

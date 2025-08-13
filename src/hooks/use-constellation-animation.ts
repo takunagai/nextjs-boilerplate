@@ -5,7 +5,12 @@ import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
 import { ANIMATION_CONSTANTS } from "@/constants/constellation";
-import type { MeshRefs, NodeData, ParticleData, RippleData } from "@/types/constellation";
+import type {
+	MeshRefs,
+	NodeData,
+	ParticleData,
+	RippleData,
+} from "@/types/constellation";
 
 interface UseConstellationAnimationProps {
 	meshRefs: MeshRefs;
@@ -31,17 +36,27 @@ export function useConstellationAnimation({
 	updateRipples,
 }: UseConstellationAnimationProps) {
 	useFrame((state) => {
-		if (!meshRefs.mesh.current || !meshRefs.lineMesh.current || nodes.length === 0) return;
+		if (
+			!meshRefs.mesh.current ||
+			!meshRefs.lineMesh.current ||
+			nodes.length === 0
+		)
+			return;
 
 		const time = state.clock.elapsedTime;
 		const mousePos3D = getMouse3DPosition();
 
 		// ジオメトリのバッファアクセス
-		const positions = meshRefs.mesh.current.geometry.attributes.position.array as Float32Array;
-		const sizes = meshRefs.mesh.current.geometry.attributes.size.array as Float32Array;
-		const colors = meshRefs.mesh.current.geometry.attributes.color.array as Float32Array;
-		const linePositions = meshRefs.lineMesh.current.geometry.attributes.position.array as Float32Array;
-		const lineColors = meshRefs.lineMesh.current.geometry.attributes.color.array as Float32Array;
+		const positions = meshRefs.mesh.current.geometry.attributes.position
+			.array as Float32Array;
+		const sizes = meshRefs.mesh.current.geometry.attributes.size
+			.array as Float32Array;
+		const colors = meshRefs.mesh.current.geometry.attributes.color
+			.array as Float32Array;
+		const linePositions = meshRefs.lineMesh.current.geometry.attributes.position
+			.array as Float32Array;
+		const lineColors = meshRefs.lineMesh.current.geometry.attributes.color
+			.array as Float32Array;
 
 		let lineIndex = 0;
 
@@ -49,7 +64,16 @@ export function useConstellationAnimation({
 		nodes.forEach((node, i) => {
 			updateNodePhysics(node, time, mousePos3D, mouseInfluence);
 			updateNodeVisuals(node, i, time, positions, sizes, colors);
-			lineIndex = updateNodeConnections(node, i, nodes, connectionDistance, linePositions, lineColors, lineIndex, time);
+			lineIndex = updateNodeConnections(
+				node,
+				i,
+				nodes,
+				connectionDistance,
+				linePositions,
+				lineColors,
+				lineIndex,
+				time,
+			);
 		});
 
 		// パーティクルの更新
@@ -69,19 +93,30 @@ export function useConstellationAnimation({
 }
 
 // ノードの物理演算更新
-function updateNodePhysics(node: NodeData, time: number, mousePos3D: THREE.Vector3, mouseInfluence: boolean) {
+function updateNodePhysics(
+	node: NodeData,
+	time: number,
+	mousePos3D: THREE.Vector3,
+	mouseInfluence: boolean,
+) {
 	// エネルギーレベルの更新
-	node.energy += (node.targetEnergy - node.energy) * ANIMATION_CONSTANTS.ENERGY_LERP_SPEED;
+	node.energy +=
+		(node.targetEnergy - node.energy) * ANIMATION_CONSTANTS.ENERGY_LERP_SPEED;
 	node.pulsePhase += ANIMATION_CONSTANTS.PULSE_SPEED;
 
 	// 爆発効果の減衰
-	if (node.explosionTime && time - node.explosionTime / 1000 > ANIMATION_CONSTANTS.EXPLOSION_DURATION_SEC) {
+	if (
+		node.explosionTime &&
+		time - node.explosionTime / 1000 >
+			ANIMATION_CONSTANTS.EXPLOSION_DURATION_SEC
+	) {
 		node.targetEnergy = 0.5 + Math.random() * 0.5;
 		delete node.explosionTime;
 	}
 
 	// 速度に基づいて位置を更新
-	const energyMultiplier = ANIMATION_CONSTANTS.VELOCITY_MULTIPLIER_BASE + node.energy;
+	const energyMultiplier =
+		ANIMATION_CONSTANTS.VELOCITY_MULTIPLIER_BASE + node.energy;
 	node.position.add(node.velocity.clone().multiplyScalar(energyMultiplier));
 
 	// 境界でバウンス
@@ -100,19 +135,33 @@ function updateNodePhysics(node: NodeData, time: number, mousePos3D: THREE.Vecto
 		const distToMouse = node.position.distanceTo(mousePos3D);
 		if (distToMouse < ANIMATION_CONSTANTS.MOUSE_INFLUENCE_RADIUS) {
 			const force = mousePos3D.clone().sub(node.position).normalize();
-			force.multiplyScalar(ANIMATION_CONSTANTS.MOUSE_FORCE_MULTIPLIER * (1 - distToMouse / ANIMATION_CONSTANTS.MOUSE_INFLUENCE_RADIUS));
+			force.multiplyScalar(
+				ANIMATION_CONSTANTS.MOUSE_FORCE_MULTIPLIER *
+					(1 - distToMouse / ANIMATION_CONSTANTS.MOUSE_INFLUENCE_RADIUS),
+			);
 			node.position.sub(force);
-			node.targetEnergy = Math.max(node.targetEnergy, ANIMATION_CONSTANTS.MOUSE_ENERGY_BOOST);
+			node.targetEnergy = Math.max(
+				node.targetEnergy,
+				ANIMATION_CONSTANTS.MOUSE_ENERGY_BOOST,
+			);
 		}
 	}
 }
 
 // ノードの視覚的更新
-function updateNodeVisuals(node: NodeData, index: number, time: number, positions: Float32Array, sizes: Float32Array, colors: Float32Array) {
+function updateNodeVisuals(
+	node: NodeData,
+	index: number,
+	time: number,
+	positions: Float32Array,
+	sizes: Float32Array,
+	colors: Float32Array,
+) {
 	// サイズとカラーパルス効果
 	const pulse = Math.sin(node.pulsePhase) * 0.3 + 0.7;
 	const energyPulse = node.energy * pulse;
-	sizes[index] = (0.08 + energyPulse * 0.15) * (0.8 + Math.sin(time * 2 + index) * 0.2);
+	sizes[index] =
+		(0.08 + energyPulse * 0.15) * (0.8 + Math.sin(time * 2 + index) * 0.2);
 
 	// 動的カラーエフェクト
 	const hue = ANIMATION_CONSTANTS.BASE_HUE + node.energy * 0.3;
@@ -131,9 +180,18 @@ function updateNodeVisuals(node: NodeData, index: number, time: number, position
 }
 
 // ノード接続の更新
-function updateNodeConnections(node: NodeData, index: number, nodes: NodeData[], connectionDistance: number, linePositions: Float32Array, lineColors: Float32Array, lineIndex: number, time: number): number {
+function updateNodeConnections(
+	node: NodeData,
+	index: number,
+	nodes: NodeData[],
+	connectionDistance: number,
+	linePositions: Float32Array,
+	lineColors: Float32Array,
+	lineIndex: number,
+	time: number,
+): number {
 	node.connections = [];
-	
+
 	for (let j = index + 1; j < nodes.length; j++) {
 		const dist = node.position.distanceTo(nodes[j].position);
 		if (dist < connectionDistance) {
@@ -155,8 +213,13 @@ function updateNodeConnections(node: NodeData, index: number, nodes: NodeData[],
 			linePositions[lineIndex * 6 + 5] = nodes[j].position.z;
 
 			// 動的ラインカラー
-			const lineHue = ANIMATION_CONSTANTS.BASE_HUE + avgEnergy * 0.3 + energyFlow * 0.2;
-			const lineColor = new THREE.Color().setHSL(lineHue, ANIMATION_CONSTANTS.SATURATION, ANIMATION_CONSTANTS.BASE_LIGHTNESS + avgEnergy * 0.3);
+			const lineHue =
+				ANIMATION_CONSTANTS.BASE_HUE + avgEnergy * 0.3 + energyFlow * 0.2;
+			const lineColor = new THREE.Color().setHSL(
+				lineHue,
+				ANIMATION_CONSTANTS.SATURATION,
+				ANIMATION_CONSTANTS.BASE_LIGHTNESS + avgEnergy * 0.3,
+			);
 
 			for (let k = 0; k < 2; k++) {
 				lineColors[lineIndex * 6 + k * 3] = lineColor.r * opacity;
@@ -167,22 +230,30 @@ function updateNodeConnections(node: NodeData, index: number, nodes: NodeData[],
 			lineIndex++;
 		}
 	}
-	
+
 	return lineIndex;
 }
 
 // パーティクルシステムの更新
-function updateParticleSystem(particleMesh: THREE.Points | null, particles: ParticleData[]) {
+function updateParticleSystem(
+	particleMesh: THREE.Points | null,
+	particles: ParticleData[],
+) {
 	if (!particleMesh || particles.length === 0) return;
 
-	const particlePositions = particleMesh.geometry.attributes.position.array as Float32Array;
-	const particleColors = particleMesh.geometry.attributes.color.array as Float32Array;
-	const particleSizes = particleMesh.geometry.attributes.size.array as Float32Array;
+	const particlePositions = particleMesh.geometry.attributes.position
+		.array as Float32Array;
+	const particleColors = particleMesh.geometry.attributes.color
+		.array as Float32Array;
+	const particleSizes = particleMesh.geometry.attributes.size
+		.array as Float32Array;
 
 	particles.forEach((particle, i) => {
 		particle.life -= ANIMATION_CONSTANTS.PARTICLE_LIFE_DECAY;
 		particle.position.add(particle.velocity);
-		particle.velocity.multiplyScalar(ANIMATION_CONSTANTS.PARTICLE_VELOCITY_DECAY);
+		particle.velocity.multiplyScalar(
+			ANIMATION_CONSTANTS.PARTICLE_VELOCITY_DECAY,
+		);
 
 		if (particle.life > 0) {
 			const lifeRatio = particle.life / particle.maxLife;
@@ -209,11 +280,16 @@ function updateParticleSystem(particleMesh: THREE.Points | null, particles: Part
 }
 
 // 波紋システムの更新
-function updateRippleSystem(rippleMesh: THREE.LineSegments | null, ripples: RippleData[]) {
+function updateRippleSystem(
+	rippleMesh: THREE.LineSegments | null,
+	ripples: RippleData[],
+) {
 	if (!rippleMesh || ripples.length === 0) return;
 
-	const ripplePositions = rippleMesh.geometry.attributes.position.array as Float32Array;
-	const rippleColors = rippleMesh.geometry.attributes.color.array as Float32Array;
+	const ripplePositions = rippleMesh.geometry.attributes.position
+		.array as Float32Array;
+	const rippleColors = rippleMesh.geometry.attributes.color
+		.array as Float32Array;
 	let rippleIndex = 0;
 
 	ripples.forEach((ripple) => {
@@ -259,7 +335,11 @@ function updateRippleSystem(rippleMesh: THREE.LineSegments | null, ripples: Ripp
 }
 
 // 未使用ラインをクリア
-function clearUnusedLines(linePositions: Float32Array, lineIndex: number, nodeCount: number) {
+function clearUnusedLines(
+	linePositions: Float32Array,
+	lineIndex: number,
+	nodeCount: number,
+) {
 	for (let i = lineIndex; i < nodeCount * nodeCount; i++) {
 		for (let j = 0; j < 6; j++) {
 			linePositions[i * 6 + j] = 0;
@@ -274,7 +354,7 @@ function updateGeometryAttributes(meshRefs: MeshRefs, lineIndex: number) {
 		meshRefs.mesh.current.geometry.attributes.size.needsUpdate = true;
 		meshRefs.mesh.current.geometry.attributes.color.needsUpdate = true;
 	}
-	
+
 	if (meshRefs.lineMesh.current) {
 		meshRefs.lineMesh.current.geometry.attributes.position.needsUpdate = true;
 		meshRefs.lineMesh.current.geometry.attributes.color.needsUpdate = true;

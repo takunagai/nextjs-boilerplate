@@ -1,12 +1,15 @@
-import { useCallback, useRef, useEffect } from "react";
-import { Particle } from "@/lib/particle/particle";
+import { useCallback, useEffect, useRef } from "react";
+import type { Particle } from "@/lib/particle/particle";
 
 interface UseParticleAnimationOptions {
 	particlesRef: React.MutableRefObject<Particle[]>;
 	getContext: () => CanvasRenderingContext2D | null;
 	getDimensions: () => { width: number; height: number };
 	clearCanvas: () => void;
-	drawConnections: (ctx: CanvasRenderingContext2D, particles: Particle[]) => void;
+	drawConnections: (
+		ctx: CanvasRenderingContext2D,
+		particles: Particle[],
+	) => void;
 }
 
 /**
@@ -37,7 +40,7 @@ export function useParticleAnimation({
 
 		// 現在のパーティクル配列を取得
 		const particles = particlesRef.current;
-		
+
 		// パーティクルの更新と描画（for文で効率化）
 		const particleCount = particles.length;
 		for (let i = 0; i < particleCount; i++) {
@@ -61,7 +64,7 @@ export function useParticleAnimation({
 	// アニメーション開始
 	const startAnimation = useCallback(() => {
 		if (isAnimatingRef.current) return;
-		
+
 		isAnimatingRef.current = true;
 		animate();
 	}, [animate]);

@@ -2,7 +2,7 @@
  * Constellation の波紋管理フック
  */
 import { useState } from "react";
-import * as THREE from "three";
+import type * as THREE from "three";
 
 import type { RippleData } from "@/types/constellation";
 

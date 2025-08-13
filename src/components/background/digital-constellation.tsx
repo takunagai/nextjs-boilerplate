@@ -6,13 +6,7 @@
 import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { useCallback, useRef } from "react";
-import { useIsMobile } from "@/hooks/use-is-mobile";
-import * as THREE from "three";
-
-import { ConstellationLines } from "./constellation/constellation-lines";
-import { ConstellationNodes } from "./constellation/constellation-nodes";
-import { ConstellationParticles } from "./constellation/constellation-particles";
-import { ConstellationRipples } from "./constellation/constellation-ripples";
+import type * as THREE from "three";
 import { DEFAULT_SETTINGS } from "@/constants/constellation";
 import { useConstellationAnimation } from "@/hooks/use-constellation-animation";
 import { useConstellationGeometries } from "@/hooks/use-constellation-geometries";
@@ -20,7 +14,12 @@ import { useConstellationMouse } from "@/hooks/use-constellation-mouse";
 import { useConstellationNodes } from "@/hooks/use-constellation-nodes";
 import { useConstellationParticles } from "@/hooks/use-constellation-particles";
 import { useConstellationRipples } from "@/hooks/use-constellation-ripples";
+import { useIsMobile } from "@/hooks/use-is-mobile";
 import type { ConstellationProps, MeshRefs } from "@/types/constellation";
+import { ConstellationLines } from "./constellation/constellation-lines";
+import { ConstellationNodes } from "./constellation/constellation-nodes";
+import { ConstellationParticles } from "./constellation/constellation-particles";
+import { ConstellationRipples } from "./constellation/constellation-ripples";
 
 function Constellation({
 	nodeCount = 150,
@@ -46,20 +45,24 @@ function Constellation({
 
 	// 状態管理フック
 	const { nodes, explodeNearbyNodes } = useConstellationNodes(nodeCount);
-	const { particles, createExplosion, updateParticles } = useConstellationParticles();
+	const { particles, createExplosion, updateParticles } =
+		useConstellationParticles();
 	const { ripples, createRipple, updateRipples } = useConstellationRipples();
 
 	// マウスインタラクション
-	const handleMouseClick = useCallback((position: THREE.Vector3) => {
-		// 波紋エフェクトを生成
-		createRipple(position);
-		
-		// 近くのノードを爆発させる
-		explodeNearbyNodes(position);
-		
-		// パーティクル爆発を生成
-		createExplosion(position);
-	}, [createRipple, explodeNearbyNodes, createExplosion]);
+	const handleMouseClick = useCallback(
+		(position: THREE.Vector3) => {
+			// 波紋エフェクトを生成
+			createRipple(position);
+
+			// 近くのノードを爆発させる
+			explodeNearbyNodes(position);
+
+			// パーティクル爆発を生成
+			createExplosion(position);
+		},
+		[createRipple, explodeNearbyNodes, createExplosion],
+	);
 
 	const { getMouse3DPosition } = useConstellationMouse({
 		mouseInfluence,
@@ -82,16 +85,28 @@ function Constellation({
 	return (
 		<>
 			{/* メインノード */}
-			<ConstellationNodes ref={meshRefs.mesh} geometry={geometries.pointsGeometry} />
+			<ConstellationNodes
+				ref={meshRefs.mesh}
+				geometry={geometries.pointsGeometry}
+			/>
 
 			{/* 接続線 */}
-			<ConstellationLines ref={meshRefs.lineMesh} geometry={geometries.lineGeometry} />
+			<ConstellationLines
+				ref={meshRefs.lineMesh}
+				geometry={geometries.lineGeometry}
+			/>
 
 			{/* パーティクル */}
-			<ConstellationParticles ref={meshRefs.particleMesh} geometry={geometries.particleGeometry} />
+			<ConstellationParticles
+				ref={meshRefs.particleMesh}
+				geometry={geometries.particleGeometry}
+			/>
 
 			{/* 波紋 */}
-			<ConstellationRipples ref={meshRefs.rippleMesh} geometry={geometries.rippleGeometry} />
+			<ConstellationRipples
+				ref={meshRefs.rippleMesh}
+				geometry={geometries.rippleGeometry}
+			/>
 		</>
 	);
 }
@@ -105,7 +120,9 @@ export function DigitalConstellation({
 }: DigitalConstellationProps) {
 	const isMobile = useIsMobile();
 
-	const settings = isMobile ? DEFAULT_SETTINGS.MOBILE : DEFAULT_SETTINGS.DESKTOP;
+	const settings = isMobile
+		? DEFAULT_SETTINGS.MOBILE
+		: DEFAULT_SETTINGS.DESKTOP;
 
 	return (
 		<div className={`absolute inset-0 ${className}`}>

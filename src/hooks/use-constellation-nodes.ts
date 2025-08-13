@@ -33,7 +33,7 @@ export function useConstellationNodes(nodeCount: number) {
 		setNodes(newNodes);
 	}, [nodeCount]);
 
-	const explodeNearbyNodes = (point: THREE.Vector3, radius: number = 3) => {
+	const explodeNearbyNodes = (point: THREE.Vector3, radius = 3) => {
 		const now = Date.now();
 		setNodes((prevNodes) => {
 			return prevNodes.map((node) => {

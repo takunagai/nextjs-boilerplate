@@ -8,18 +8,19 @@ interface ConstellationRipplesProps {
 	geometry: THREE.BufferGeometry;
 }
 
-export const ConstellationRipples = forwardRef<THREE.LineSegments, ConstellationRipplesProps>(
-	({ geometry }, ref) => {
-		return (
-			<lineSegments ref={ref} geometry={geometry}>
-				<lineBasicMaterial
-					vertexColors
-					transparent
-					blending={THREE.AdditiveBlending}
-				/>
-			</lineSegments>
-		);
-	},
-);
+export const ConstellationRipples = forwardRef<
+	THREE.LineSegments,
+	ConstellationRipplesProps
+>(({ geometry }, ref) => {
+	return (
+		<lineSegments ref={ref} geometry={geometry}>
+			<lineBasicMaterial
+				vertexColors
+				transparent
+				blending={THREE.AdditiveBlending}
+			/>
+		</lineSegments>
+	);
+});
 
 ConstellationRipples.displayName = "ConstellationRipples";

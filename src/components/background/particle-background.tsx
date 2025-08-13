@@ -1,12 +1,18 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { cn } from "@/lib/utils";
-import { Particle, drawParticleConnections, getParticleCount, initializeParticles, adjustParticlesForResize } from "@/lib/particle";
 import { useIsMobile } from "@/hooks/use-is-mobile";
-import { useParticleCanvas } from "@/hooks/use-particle-canvas";
 import { useParticleAnimation } from "@/hooks/use-particle-animation";
+import { useParticleCanvas } from "@/hooks/use-particle-canvas";
 import { useParticleInteraction } from "@/hooks/use-particle-interaction";
+import {
+	adjustParticlesForResize,
+	drawParticleConnections,
+	getParticleCount,
+	initializeParticles,
+	type Particle,
+} from "@/lib/particle";
+import { cn } from "@/lib/utils";
 
 interface ParticleBackgroundProps {
 	className?: string;
@@ -22,12 +28,13 @@ export function ParticleBackground({
 	const [isInitialized, setIsInitialized] = useState(false);
 
 	// キャンバス管理
-	const { canvasRef, getContext, getDimensions, clearCanvas } = useParticleCanvas({
-		onResize: (width, height) => {
-			// リサイズ時のパーティクル位置調整
-			adjustParticlesForResize(particlesRef.current, width, height);
-		},
-	});
+	const { canvasRef, getContext, getDimensions, clearCanvas } =
+		useParticleCanvas({
+			onResize: (width, height) => {
+				// リサイズ時のパーティクル位置調整
+				adjustParticlesForResize(particlesRef.current, width, height);
+			},
+		});
 
 	// 接続線描画の設定
 	const drawConnections = useCallback(
@@ -76,7 +83,7 @@ export function ParticleBackground({
 		};
 
 		setupParticles();
-	}, [getDimensions, startAnimation]);
+	}, [getDimensions, startAnimation, isInitialized, isMobile]);
 
 	return (
 		<canvas

@@ -49,19 +49,29 @@ export function useConstellationGeometries(nodeCount: number): GeometryRefs {
 		// パーティクル用ジオメトリ
 		particleGeo.setAttribute(
 			"position",
-			new THREE.BufferAttribute(new Float32Array(BUFFER_SIZES.MAX_PARTICLES * 3), 3),
+			new THREE.BufferAttribute(
+				new Float32Array(BUFFER_SIZES.MAX_PARTICLES * 3),
+				3,
+			),
 		);
 		particleGeo.setAttribute(
 			"color",
-			new THREE.BufferAttribute(new Float32Array(BUFFER_SIZES.MAX_PARTICLES * 3), 3),
+			new THREE.BufferAttribute(
+				new Float32Array(BUFFER_SIZES.MAX_PARTICLES * 3),
+				3,
+			),
 		);
 		particleGeo.setAttribute(
 			"size",
-			new THREE.BufferAttribute(new Float32Array(BUFFER_SIZES.MAX_PARTICLES), 1),
+			new THREE.BufferAttribute(
+				new Float32Array(BUFFER_SIZES.MAX_PARTICLES),
+				1,
+			),
 		);
 
 		// 波紋用ジオメトリ
-		const rippleBufferSize = BUFFER_SIZES.MAX_RIPPLES * BUFFER_SIZES.RIPPLE_SEGMENTS * 2 * 3;
+		const rippleBufferSize =
+			BUFFER_SIZES.MAX_RIPPLES * BUFFER_SIZES.RIPPLE_SEGMENTS * 2 * 3;
 		rippleGeo.setAttribute(
 			"position",
 			new THREE.BufferAttribute(new Float32Array(rippleBufferSize), 3),

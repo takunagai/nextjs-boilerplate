@@ -35,15 +35,18 @@ export function WhalesAnimation() {
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	// 画面サイズを取得
-	useWindowResize(() => {
-		if (!isClient) return;
-		
-		const { clientWidth, clientHeight } = document.documentElement;
-		setDimensions({
-			width: clientWidth,
-			height: clientHeight,
-		});
-	}, { deps: [isClient] });
+	useWindowResize(
+		() => {
+			if (!isClient) return;
+
+			const { clientWidth, clientHeight } = document.documentElement;
+			setDimensions({
+				width: clientWidth,
+				height: clientHeight,
+			});
+		},
+		{ deps: [isClient] },
+	);
 
 	// 泡を生成
 	useEffect(() => {

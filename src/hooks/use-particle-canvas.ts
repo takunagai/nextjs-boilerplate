@@ -19,10 +19,10 @@ export function useParticleCanvas(options: UseParticleCanvasOptions = {}) {
 
 		const width = window.innerWidth;
 		const height = window.innerHeight;
-		
+
 		canvas.width = width;
 		canvas.height = height;
-		
+
 		onResize?.(width, height);
 	}, [onResize]);
 
@@ -45,7 +45,7 @@ export function useParticleCanvas(options: UseParticleCanvasOptions = {}) {
 		const canvas = canvasRef.current;
 		const ctx = getContext();
 		if (!canvas || !ctx) return;
-		
+
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 	}, [getContext]);
 

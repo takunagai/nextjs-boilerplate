@@ -13,7 +13,10 @@ interface UseConstellationMouseProps {
 	onMouseClick: (position: THREE.Vector3) => void;
 }
 
-export function useConstellationMouse({ mouseInfluence, onMouseClick }: UseConstellationMouseProps) {
+export function useConstellationMouse({
+	mouseInfluence,
+	onMouseClick,
+}: UseConstellationMouseProps) {
 	const { camera, size, raycaster } = useThree();
 	const mouse = useRef<MouseState>({ x: 0, y: 0 });
 	const lastClick = useRef<number>(0);
@@ -27,7 +30,8 @@ export function useConstellationMouse({ mouseInfluence, onMouseClick }: UseConst
 
 		const handleClick = (event: MouseEvent) => {
 			const now = Date.now();
-			if (now - lastClick.current < ANIMATION_CONSTANTS.CLICK_DEBOUNCE_MS) return;
+			if (now - lastClick.current < ANIMATION_CONSTANTS.CLICK_DEBOUNCE_MS)
+				return;
 			lastClick.current = now;
 
 			const mousePos = new THREE.Vector2(

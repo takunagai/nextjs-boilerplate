@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef } from "react";
-import { Particle } from "@/lib/particle/particle";
+import type { Particle } from "@/lib/particle/particle";
 
 interface UseParticleInteractionOptions {
 	particlesRef: React.MutableRefObject<Particle[]>;

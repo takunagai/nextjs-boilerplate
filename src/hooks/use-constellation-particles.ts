@@ -10,7 +10,10 @@ import type { ParticleData } from "@/types/constellation";
 export function useConstellationParticles() {
 	const [particles, setParticles] = useState<ParticleData[]>([]);
 
-	const createExplosion = (position: THREE.Vector3, particleCount: number = ANIMATION_CONSTANTS.PARTICLE_COUNT_PER_EXPLOSION) => {
+	const createExplosion = (
+		position: THREE.Vector3,
+		particleCount: number = ANIMATION_CONSTANTS.PARTICLE_COUNT_PER_EXPLOSION,
+	) => {
 		const newParticles: ParticleData[] = [];
 		for (let i = 0; i < particleCount; i++) {
 			newParticles.push({
