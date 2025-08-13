@@ -23,11 +23,11 @@ class FormExamplePage {
 		await this.page.getByLabel("お名前").fill(data.name);
 		await this.page.getByLabel("メールアドレス").fill(data.email);
 		await this.page.getByLabel("メッセージ").fill(data.message);
-		
+
 		if (data.age) {
 			await this.page.getByLabel("年齢（任意）").fill(data.age);
 		}
-		
+
 		if (data.agreeTerms) {
 			await this.page.locator('button[role="checkbox"]').click();
 		}
@@ -70,7 +70,9 @@ test.describe("フォームサンプル", () => {
 	});
 
 	test("ページが正しく表示される", async ({ page }) => {
-		await expect(page.getByRole("heading", { name: "フォームサンプル" })).toBeVisible();
+		await expect(
+			page.getByRole("heading", { name: "フォームサンプル" }),
+		).toBeVisible();
 		await expect(page.locator("form")).toBeVisible();
 		await expect(page.getByLabel("お名前")).toBeVisible();
 		await expect(page.getByLabel("メールアドレス")).toBeVisible();

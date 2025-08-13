@@ -12,7 +12,7 @@ const TEST_USER = {
 };
 
 const ADMIN_USER = {
-	email: "admin@example.com", 
+	email: "admin@example.com",
 	password: "password123",
 };
 
@@ -33,7 +33,7 @@ class AuthFlowPage {
 		await this.page.locator('input[type="password"]').fill(password);
 		// フォーム内の送信ボタンを指定
 		await this.page.locator('form button[type="submit"]').click();
-		
+
 		// ログイン処理の完了を待つ（ページ遷移またはエラー表示）
 		await this.page.waitForTimeout(1500);
 	}
@@ -41,27 +41,33 @@ class AuthFlowPage {
 	// ログアウト実行
 	async logout() {
 		// アバターボタン（ドロップダウンメニューのトリガー）を探す
-		const avatarButton = this.page.locator('button[aria-haspopup="true"] > div > img, button[aria-haspopup="true"] > div > div').first();
-		
+		const avatarButton = this.page
+			.locator(
+				'button[aria-haspopup="true"] > div > img, button[aria-haspopup="true"] > div > div',
+			)
+			.first();
+
 		// アバターボタンが見つからない場合は、より広い範囲で探す
-		const dropdownTrigger = await avatarButton.isVisible() 
-			? avatarButton 
+		const dropdownTrigger = (await avatarButton.isVisible())
+			? avatarButton
 			: this.page.locator('button[aria-haspopup="true"]').first();
-		
+
 		// ドロップダウンメニューを開く
 		await dropdownTrigger.click();
 		await this.page.waitForTimeout(500);
-		
+
 		// ログアウトメニュー項目をクリック（複数のセレクタで試行）
-		const logoutItem = this.page.locator(
-			'[role="menuitem"]:has-text("ログアウト"), ' +
-			'div:has-text("ログアウト"):visible, ' +
-			'.text-destructive:has-text("ログアウト"), ' +
-			'*:has(svg) + span:has-text("ログアウト")'
-		).first();
-		
+		const logoutItem = this.page
+			.locator(
+				'[role="menuitem"]:has-text("ログアウト"), ' +
+					'div:has-text("ログアウト"):visible, ' +
+					'.text-destructive:has-text("ログアウト"), ' +
+					'*:has(svg) + span:has-text("ログアウト")',
+			)
+			.first();
+
 		await logoutItem.click();
-		
+
 		// ログアウト処理の完了を待つ
 		await this.page.waitForTimeout(1500);
 	}
@@ -77,21 +83,25 @@ class AuthFlowPage {
 		// ダッシュボードページにアクセスできるかで判定
 		await this.gotoDashboard();
 		const currentUrl = this.page.url();
-		
+
 		// ログイン画面にリダイレクトされていないかチェック
 		return !currentUrl.includes("/login");
 	}
 
 	// ログインエラーの存在確認
 	async hasLoginError() {
-		const errorElements = this.page.locator('.text-destructive, .error, [role="alert"]');
-		return await errorElements.count() > 0;
+		const errorElements = this.page.locator(
+			'.text-destructive, .error, [role="alert"]',
+		);
+		return (await errorElements.count()) > 0;
 	}
 
 	// ダッシュボード要素の存在確認
 	async hasDashboardContent() {
 		// ダッシュボードの特徴的な要素を確認
-		const dashboardHeader = this.page.locator('h1:has-text("ダッシュボード"), h2:has-text("ダッシュボード")').first();
+		const dashboardHeader = this.page
+			.locator('h1:has-text("ダッシュボード"), h2:has-text("ダッシュボード")')
+			.first();
 		return await dashboardHeader.isVisible();
 	}
 }
@@ -104,10 +114,12 @@ test.describe("認証フロー", () => {
 	});
 
 	test.describe("正常系フロー", () => {
-		test("完全な認証フロー: ログイン→ダッシュボード→ログアウト", async ({ page }) => {
+		test("完全な認証フロー: ログイン→ダッシュボード→ログアウト", async ({
+			page,
+		}) => {
 			// 1. ログインページへ移動
 			await authFlow.gotoLogin();
-			
+
 			// ログインページの要素確認
 			await expect(page.getByLabel("メールアドレス")).toBeVisible();
 			await expect(page.locator('input[type="password"]')).toBeVisible();
@@ -118,7 +130,7 @@ test.describe("認証フロー", () => {
 
 			// 3. ダッシュボードにリダイレクトされることを確認
 			await expect(page).toHaveURL(/\/dashboard/);
-			
+
 			// ダッシュボードのコンテンツが表示されることを確認
 			const hasDashboard = await authFlow.hasDashboardContent();
 			expect(hasDashboard).toBeTruthy();
@@ -135,7 +147,7 @@ test.describe("認証フロー", () => {
 		test("管理者ユーザーでのログイン", async ({ page }) => {
 			await authFlow.gotoLogin();
 			await authFlow.login(ADMIN_USER.email, ADMIN_USER.password);
-			
+
 			// 管理者としてダッシュボードにアクセスできることを確認
 			const isLoggedIn = await authFlow.isLoggedIn();
 			expect(isLoggedIn).toBeTruthy();
@@ -159,7 +171,7 @@ test.describe("認証フロー", () => {
 			await authFlow.gotoLogin();
 			await authFlow.login(TEST_USER.email, "wrongpassword");
 
-			// エラーメッセージが表示されることを確認  
+			// エラーメッセージが表示されることを確認
 			const hasError = await authFlow.hasLoginError();
 			expect(hasError).toBeTruthy();
 
@@ -173,11 +185,15 @@ test.describe("認証フロー", () => {
 
 			// バリデーションエラーが表示されることを確認
 			await page.waitForTimeout(1000);
-			const errorElements = await page.locator('.text-destructive, .error').count();
+			const errorElements = await page
+				.locator(".text-destructive, .error")
+				.count();
 			expect(errorElements).toBeGreaterThan(0);
 		});
 
-		test("未認証状態でダッシュボードアクセス→ログインページリダイレクト", async ({ page }) => {
+		test("未認証状態でダッシュボードアクセス→ログインページリダイレクト", async ({
+			page,
+		}) => {
 			// 未認証状態でダッシュボードにアクセス
 			await authFlow.gotoDashboard();
 
@@ -203,7 +219,9 @@ test.describe("認証フロー", () => {
 			expect(page.url().includes("/dashboard")).toBeTruthy();
 		});
 
-		test("ログイン後のブラウザバック・フォワードでセッション維持", async ({ page }) => {
+		test("ログイン後のブラウザバック・フォワードでセッション維持", async ({
+			page,
+		}) => {
 			// ログイン
 			await authFlow.gotoLogin();
 			await authFlow.login(TEST_USER.email, TEST_USER.password);
@@ -215,7 +233,7 @@ test.describe("認証フロー", () => {
 
 			// ダッシュボードに戻る
 			await authFlow.gotoDashboard();
-			
+
 			// セッションが維持されていることを確認
 			const hasDashboard = await authFlow.hasDashboardContent();
 			expect(hasDashboard).toBeTruthy();

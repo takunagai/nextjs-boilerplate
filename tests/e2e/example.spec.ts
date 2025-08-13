@@ -14,7 +14,9 @@ test("ホームページが正しく表示される", async ({ page }) => {
 	await expect(page).toHaveTitle(/ナガイ商店\.com/);
 
 	// メインヘッダーが表示されていることを確認（複数headerがあるため特定）
-	const mainHeader = page.locator('header').filter({ hasText: 'ナガイ商店.com' });
+	const mainHeader = page
+		.locator("header")
+		.filter({ hasText: "ナガイ商店.com" });
 	await expect(mainHeader).toBeVisible();
 
 	// ヘッダー内のロゴテキストが表示されていることを確認

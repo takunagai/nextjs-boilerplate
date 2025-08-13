@@ -14,10 +14,10 @@ class CsrfTestPage {
 		const response = await this.page.request.get("/api/csrf-token");
 		const body = await response.json();
 		const cookies = await this.page.context().cookies();
-		
+
 		return {
 			token: body.csrfToken,
-			cookies
+			cookies,
 		};
 	}
 
@@ -28,12 +28,15 @@ class CsrfTestPage {
 	}
 
 	// APIエンドポイントに直接リクエスト送信
-	async postToRegisterApi(data: any, options: {
-		csrfToken?: string;
-		origin?: string;
-		referer?: string;
-		cookies?: any;
-	} = {}) {
+	async postToRegisterApi(
+		data: any,
+		options: {
+			csrfToken?: string;
+			origin?: string;
+			referer?: string;
+			cookies?: any;
+		} = {},
+	) {
 		const headers: Record<string, string> = {
 			"Content-Type": "application/json",
 		};
@@ -45,12 +48,12 @@ class CsrfTestPage {
 
 		// Originヘッダー設定
 		if (options.origin) {
-			headers["origin"] = options.origin;
+			headers.origin = options.origin;
 		}
 
 		// Refererヘッダー設定
 		if (options.referer) {
-			headers["referer"] = options.referer;
+			headers.referer = options.referer;
 		}
 
 		// コンテキストを作成（Cookieを含める場合）
@@ -89,14 +92,16 @@ test.describe("CSRF脆弱性テスト", () => {
 	test.describe("CSRFトークンエンドポイント", () => {
 		test("CSRFトークンが正常に生成される", async ({ page }) => {
 			const tokenData = await csrfPage.getCsrfToken();
-			
+
 			// トークンが存在することを確認
 			expect(tokenData.token).toBeTruthy();
 			expect(typeof tokenData.token).toBe("string");
 			expect(tokenData.token.length).toBeGreaterThan(10);
-			
+
 			// CSRFクッキーが設定されることを確認
-			const csrfCookie = tokenData.cookies.find((c: any) => c.name === "__csrf_token");
+			const csrfCookie = tokenData.cookies.find(
+				(c: any) => c.name === "__csrf_token",
+			);
 			expect(csrfCookie).toBeTruthy();
 			expect(csrfCookie.httpOnly).toBe(true);
 			expect(csrfCookie.sameSite).toBe("Strict");
@@ -105,7 +110,7 @@ test.describe("CSRF脆弱性テスト", () => {
 		test("CSRFトークンは毎回異なる値が生成される", async ({ page }) => {
 			const token1 = await csrfPage.getCsrfToken();
 			const token2 = await csrfPage.getCsrfToken();
-			
+
 			// 異なるトークンが生成されることを確認
 			expect(token1.token).not.toBe(token2.token);
 		});
@@ -124,7 +129,7 @@ test.describe("CSRF脆弱性テスト", () => {
 			});
 
 			expect(response.status()).toBe(403);
-			
+
 			const body = await response.json();
 			expect(body.success).toBe(false);
 			expect(body.error.code).toBe("CSRF_VALIDATION_FAILED");
@@ -138,7 +143,7 @@ test.describe("CSRF脆弱性テスト", () => {
 			});
 
 			expect(response.status()).toBe(403);
-			
+
 			const body = await response.json();
 			expect(body.success).toBe(false);
 			expect(body.error.code).toBe("CSRF_VALIDATION_FAILED");
@@ -147,7 +152,7 @@ test.describe("CSRF脆弱性テスト", () => {
 		test("正しいCSRFトークンでのAPI呼び出しが成功する", async ({ page }) => {
 			// 有効なCSRFトークンを取得
 			const tokenData = await csrfPage.getCsrfToken();
-			
+
 			const response = await csrfPage.postToRegisterApi(validUserData, {
 				csrfToken: tokenData.token,
 				origin: csrfPage.getOrigin(),
@@ -157,7 +162,7 @@ test.describe("CSRF脆弱性テスト", () => {
 			// この場合、CSRFは通過し、実際の登録処理のバリデーション結果を確認
 			// (ユーザーが既に存在する場合など、別の理由で失敗する可能性あり)
 			expect([200, 201, 400, 409]).toContain(response.status());
-			
+
 			// 403 (CSRF error) でなければ成功
 			expect(response.status()).not.toBe(403);
 		});
@@ -166,19 +171,22 @@ test.describe("CSRF脆弱性テスト", () => {
 	test.describe("CSRF保護（Originヘッダーベース）", () => {
 		test("不正なOriginヘッダーでのリクエストが拒否される", async ({ page }) => {
 			const tokenData = await csrfPage.getCsrfToken();
-			
-			const response = await csrfPage.postToRegisterApi({
-				name: "Test User",
-				email: "test@example.com", 
-				password: "password123",
-			}, {
-				csrfToken: tokenData.token,
-				origin: "https://evil.com", // 不正なOrigin
-				cookies: tokenData.cookies,
-			});
+
+			const response = await csrfPage.postToRegisterApi(
+				{
+					name: "Test User",
+					email: "test@example.com",
+					password: "password123",
+				},
+				{
+					csrfToken: tokenData.token,
+					origin: "https://evil.com", // 不正なOrigin
+					cookies: tokenData.cookies,
+				},
+			);
 
 			expect(response.status()).toBe(403);
-			
+
 			const body = await response.json();
 			expect(body.success).toBe(false);
 			expect(body.error.message).toContain("CSRF");
@@ -186,16 +194,19 @@ test.describe("CSRF脆弱性テスト", () => {
 
 		test("Originヘッダーなしでのリクエストが拒否される", async ({ page }) => {
 			const tokenData = await csrfPage.getCsrfToken();
-			
-			const response = await csrfPage.postToRegisterApi({
-				name: "Test User",
-				email: "test@example.com",
-				password: "password123",
-			}, {
-				csrfToken: tokenData.token,
-				// origin: 省略（Originヘッダーなし）
-				cookies: tokenData.cookies,
-			});
+
+			const response = await csrfPage.postToRegisterApi(
+				{
+					name: "Test User",
+					email: "test@example.com",
+					password: "password123",
+				},
+				{
+					csrfToken: tokenData.token,
+					// origin: 省略（Originヘッダーなし）
+					cookies: tokenData.cookies,
+				},
+			);
 
 			expect(response.status()).toBe(403);
 		});
@@ -205,43 +216,52 @@ test.describe("CSRF脆弱性テスト", () => {
 		test("期限切れCSRFトークンが拒否される", async ({ page }) => {
 			// 期限切れトークンのシミュレーション（手動生成）
 			const expiredToken = "a".repeat(64); // 偽の期限切れトークン
-			
-			const response = await csrfPage.postToRegisterApi({
-				name: "Test User",
-				email: "test@example.com",
-				password: "password123",
-			}, {
-				csrfToken: expiredToken,
-				origin: csrfPage.getOrigin(),
-			});
+
+			const response = await csrfPage.postToRegisterApi(
+				{
+					name: "Test User",
+					email: "test@example.com",
+					password: "password123",
+				},
+				{
+					csrfToken: expiredToken,
+					origin: csrfPage.getOrigin(),
+				},
+			);
 
 			expect(response.status()).toBe(403);
 		});
 
 		test("空のCSRFトークンが拒否される", async ({ page }) => {
-			const response = await csrfPage.postToRegisterApi({
-				name: "Test User",
-				email: "test@example.com",
-				password: "password123",
-			}, {
-				csrfToken: "", // 空のトークン
-				origin: csrfPage.getOrigin(),
-			});
+			const response = await csrfPage.postToRegisterApi(
+				{
+					name: "Test User",
+					email: "test@example.com",
+					password: "password123",
+				},
+				{
+					csrfToken: "", // 空のトークン
+					origin: csrfPage.getOrigin(),
+				},
+			);
 
 			expect(response.status()).toBe(403);
 		});
 
 		test("異常に長いCSRFトークンが適切に処理される", async ({ page }) => {
 			const longToken = "a".repeat(10000); // 異常に長いトークン
-			
-			const response = await csrfPage.postToRegisterApi({
-				name: "Test User",
-				email: "test@example.com",
-				password: "password123",
-			}, {
-				csrfToken: longToken,
-				origin: csrfPage.getOrigin(),
-			});
+
+			const response = await csrfPage.postToRegisterApi(
+				{
+					name: "Test User",
+					email: "test@example.com",
+					password: "password123",
+				},
+				{
+					csrfToken: longToken,
+					origin: csrfPage.getOrigin(),
+				},
+			);
 
 			expect(response.status()).toBe(403);
 		});
@@ -251,7 +271,7 @@ test.describe("CSRF脆弱性テスト", () => {
 		test("GETリクエストはCSRF保護をスキップする", async ({ page }) => {
 			// GETリクエストはCSRF検証をスキップするべき
 			const response = await page.request.get("/api/csrf-token");
-			
+
 			// GETリクエストは成功する（CSRFトークンなしでも）
 			expect(response.status()).toBe(200);
 		});
@@ -281,13 +301,15 @@ test.describe("CSRF脆弱性テスト", () => {
 
 		test("CSRFトークンクッキーが適切な設定である", async ({ page }) => {
 			const tokenData = await csrfPage.getCsrfToken();
-			const csrfCookie = tokenData.cookies.find((c: any) => c.name === "__csrf_token");
+			const csrfCookie = tokenData.cookies.find(
+				(c: any) => c.name === "__csrf_token",
+			);
 
 			// セキュアクッキーの設定確認
 			expect(csrfCookie.httpOnly).toBe(true);
 			expect(csrfCookie.sameSite).toBe("Strict");
 			expect(csrfCookie.path).toBe("/");
-			
+
 			// 開発環境ではsecureがfalse、本番環境ではtrue
 			// この判定は環境によって異なるため、存在だけを確認
 			expect(typeof csrfCookie.secure).toBe("boolean");
@@ -297,26 +319,31 @@ test.describe("CSRF脆弱性テスト", () => {
 	test.describe("レート制限とCSRF", () => {
 		test("短時間での大量リクエストがレート制限される", async ({ page }) => {
 			const tokenData = await csrfPage.getCsrfToken();
-			
+
 			// 短時間で複数のリクエストを送信
-			const promises = Array(25).fill(null).map(async (_, i) => {
-				return csrfPage.postToRegisterApi({
-					name: `Test User ${i}`,
-					email: `test${i}@example.com`,
-					password: "password123",
-				}, {
-					csrfToken: tokenData.token,
-					origin: csrfPage.getOrigin(),
-					cookies: tokenData.cookies,
+			const promises = Array(25)
+				.fill(null)
+				.map(async (_, i) => {
+					return csrfPage.postToRegisterApi(
+						{
+							name: `Test User ${i}`,
+							email: `test${i}@example.com`,
+							password: "password123",
+						},
+						{
+							csrfToken: tokenData.token,
+							origin: csrfPage.getOrigin(),
+							cookies: tokenData.cookies,
+						},
+					);
 				});
-			});
 
 			const responses = await Promise.all(promises);
-			
+
 			// 一部のリクエストがレート制限（429）で拒否されることを確認
-			const rateLimited = responses.filter(r => r.status() === 429);
+			const rateLimited = responses.filter((r) => r.status() === 429);
 			expect(rateLimited.length).toBeGreaterThan(0);
-			
+
 			// レート制限エラーのレスポンスを確認
 			if (rateLimited.length > 0) {
 				const errorBody = await rateLimited[0].json();

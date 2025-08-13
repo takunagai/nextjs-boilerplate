@@ -97,7 +97,9 @@ test.describe("お問い合わせフォーム", () => {
 			expect(isInvalid).toBeTruthy();
 		});
 
-		test("電話連絡可で電話番号未入力時にエラーが表示される", async ({ page }) => {
+		test("電話連絡可で電話番号未入力時にエラーが表示される", async ({
+			page,
+		}) => {
 			await contactForm.fillBasicForm({
 				name: "テスト 太郎",
 				email: "test@example.com",
@@ -110,7 +112,10 @@ test.describe("お問い合わせフォーム", () => {
 			await expect(page.getByLabel("電話番号")).toBeVisible();
 			const telInput = page.getByLabel("電話番号");
 			const isRequired = await telInput.evaluate((input) => {
-				return input.hasAttribute("required") || input.getAttribute("aria-required") === "true";
+				return (
+					input.hasAttribute("required") ||
+					input.getAttribute("aria-required") === "true"
+				);
 			});
 			expect(isRequired).toBeTruthy();
 		});
@@ -125,8 +130,10 @@ test.describe("お問い合わせフォーム", () => {
 			});
 			await contactForm.submit();
 
-			const formText = await page.locator("form").textContent() || "";
-			expect(formText.includes("ハイフン") || formText.includes("-")).toBeTruthy();
+			const formText = (await page.locator("form").textContent()) || "";
+			expect(
+				formText.includes("ハイフン") || formText.includes("-"),
+			).toBeTruthy();
 		});
 	});
 
