@@ -22,19 +22,25 @@ export interface AccessibleInputProps
 	required?: boolean;
 }
 
-export const AccessibleInput = forwardRef<HTMLInputElement, AccessibleInputProps>(
-	({
-		label,
-		error,
-		description,
-		showLabel = true,
-		labelClassName,
-		containerClassName,
-		className,
-		id,
-		required,
-		...props
-	}, ref) => {
+export const AccessibleInput = forwardRef<
+	HTMLInputElement,
+	AccessibleInputProps
+>(
+	(
+		{
+			label,
+			error,
+			description,
+			showLabel = true,
+			labelClassName,
+			containerClassName,
+			className,
+			id,
+			required,
+			...props
+		},
+		ref,
+	) => {
 		const inputId = id || `input-${crypto.randomUUID()}`;
 		const errorId = error ? `${inputId}-error` : undefined;
 		const descriptionId = description ? `${inputId}-description` : undefined;
@@ -77,18 +83,14 @@ export const AccessibleInput = forwardRef<HTMLInputElement, AccessibleInputProps
 					{...props}
 				/>
 
-				{description && (
-					<AccessibilityDescription id={descriptionId!} visible>
+				{description && descriptionId && (
+					<AccessibilityDescription id={descriptionId} visible>
 						{description}
 					</AccessibilityDescription>
 				)}
 
 				{error && (
-					<ValidationError
-						fieldName={label}
-						error={error}
-						id={errorId}
-					/>
+					<ValidationError fieldName={label} error={error} id={errorId} />
 				)}
 			</div>
 		);

@@ -24,21 +24,27 @@ export interface AccessibleSelectProps
 	placeholder?: string;
 }
 
-export const AccessibleSelect = forwardRef<HTMLSelectElement, AccessibleSelectProps>(
-	({
-		label,
-		error,
-		description,
-		showLabel = true,
-		labelClassName,
-		containerClassName,
-		className,
-		id,
-		required,
-		options,
-		placeholder,
-		...props
-	}, ref) => {
+export const AccessibleSelect = forwardRef<
+	HTMLSelectElement,
+	AccessibleSelectProps
+>(
+	(
+		{
+			label,
+			error,
+			description,
+			showLabel = true,
+			labelClassName,
+			containerClassName,
+			className,
+			id,
+			required,
+			options,
+			placeholder,
+			...props
+		},
+		ref,
+	) => {
 		const selectId = id || `select-${crypto.randomUUID()}`;
 		const errorId = error ? `${selectId}-error` : undefined;
 		const descriptionId = description ? `${selectId}-description` : undefined;
@@ -94,18 +100,14 @@ export const AccessibleSelect = forwardRef<HTMLSelectElement, AccessibleSelectPr
 					))}
 				</select>
 
-				{description && (
-					<AccessibilityDescription id={descriptionId!} visible>
+				{description && descriptionId && (
+					<AccessibilityDescription id={descriptionId} visible>
 						{description}
 					</AccessibilityDescription>
 				)}
 
 				{error && (
-					<ValidationError
-						fieldName={label}
-						error={error}
-						id={errorId}
-					/>
+					<ValidationError fieldName={label} error={error} id={errorId} />
 				)}
 			</div>
 		);

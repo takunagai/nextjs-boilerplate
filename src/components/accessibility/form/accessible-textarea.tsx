@@ -22,19 +22,25 @@ export interface AccessibleTextareaProps
 	required?: boolean;
 }
 
-export const AccessibleTextarea = forwardRef<HTMLTextAreaElement, AccessibleTextareaProps>(
-	({
-		label,
-		error,
-		description,
-		showLabel = true,
-		labelClassName,
-		containerClassName,
-		className,
-		id,
-		required,
-		...props
-	}, ref) => {
+export const AccessibleTextarea = forwardRef<
+	HTMLTextAreaElement,
+	AccessibleTextareaProps
+>(
+	(
+		{
+			label,
+			error,
+			description,
+			showLabel = true,
+			labelClassName,
+			containerClassName,
+			className,
+			id,
+			required,
+			...props
+		},
+		ref,
+	) => {
 		const textareaId = id || `textarea-${crypto.randomUUID()}`;
 		const errorId = error ? `${textareaId}-error` : undefined;
 		const descriptionId = description ? `${textareaId}-description` : undefined;
@@ -76,18 +82,14 @@ export const AccessibleTextarea = forwardRef<HTMLTextAreaElement, AccessibleText
 					{...props}
 				/>
 
-				{description && (
-					<AccessibilityDescription id={descriptionId!} visible>
+				{description && descriptionId && (
+					<AccessibilityDescription id={descriptionId} visible>
 						{description}
 					</AccessibilityDescription>
 				)}
 
 				{error && (
-					<ValidationError
-						fieldName={label}
-						error={error}
-						id={errorId}
-					/>
+					<ValidationError fieldName={label} error={error} id={errorId} />
 				)}
 			</div>
 		);

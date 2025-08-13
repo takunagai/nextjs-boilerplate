@@ -66,7 +66,8 @@ export function FocusIndicator({
 		<div
 			className={cn(
 				"focus-within:transition-all focus-within:duration-200",
-				isKeyboardUser && `focus-within:${focusClassName.replace(/^focus-within:/, "")}`,
+				isKeyboardUser &&
+					`focus-within:${focusClassName.replace(/^focus-within:/, "")}`,
 				className,
 			)}
 		>
@@ -127,7 +128,6 @@ export function AccessibleToggle({
 	return (
 		<button
 			type="button"
-			role="button"
 			aria-pressed={isPressed}
 			aria-label={ariaLabel}
 			aria-labelledby={ariaLabelledBy}

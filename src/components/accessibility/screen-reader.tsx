@@ -23,7 +23,7 @@ export function ScreenReaderOnly({
 	return React.createElement(
 		Component,
 		{ className: cn("sr-only", className) },
-		children
+		children,
 	);
 }
 
@@ -67,7 +67,7 @@ export function useAnnounce() {
 		if (announceRef.current) {
 			announceRef.current.setAttribute("aria-live", priority);
 			announceRef.current.textContent = message;
-			
+
 			// メッセージをクリアして再度アナウンス可能にする
 			setTimeout(() => {
 				if (announceRef.current) {
@@ -148,7 +148,7 @@ export function ProgressAnnouncement({
 	format = (v, m) => `${Math.round((v / m) * 100)}%完了`,
 	className,
 }: ProgressAnnouncementProps) {
-	const percentage = Math.round((value / max) * 100);
+	const _percentage = Math.round((value / max) * 100);
 	const announcement = format(value, max);
 
 	return (

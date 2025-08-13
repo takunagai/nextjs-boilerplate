@@ -46,7 +46,7 @@ export function AccessibleRadioGroup({
 
 	return (
 		<div className={cn("space-y-3", containerClassName)}>
-			<fieldset role="radiogroup" aria-labelledby={groupId}>
+			<fieldset aria-labelledby={groupId}>
 				<legend
 					id={groupId}
 					className={cn("text-sm font-medium", labelClassName)}
@@ -99,18 +99,14 @@ export function AccessibleRadioGroup({
 					})}
 				</div>
 
-				{description && (
-					<AccessibilityDescription id={descriptionId!} visible>
+				{description && descriptionId && (
+					<AccessibilityDescription id={descriptionId} visible>
 						{description}
 					</AccessibilityDescription>
 				)}
 
 				{error && (
-					<ValidationError
-						fieldName={label}
-						error={error}
-						id={errorId}
-					/>
+					<ValidationError fieldName={label} error={error} id={errorId} />
 				)}
 			</fieldset>
 		</div>

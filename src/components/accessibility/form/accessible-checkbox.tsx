@@ -20,17 +20,23 @@ export interface AccessibleCheckboxProps
 	containerClassName?: string;
 }
 
-export const AccessibleCheckbox = forwardRef<HTMLInputElement, AccessibleCheckboxProps>(
-	({
-		label,
-		error,
-		description,
-		labelClassName,
-		containerClassName,
-		className,
-		id,
-		...props
-	}, ref) => {
+export const AccessibleCheckbox = forwardRef<
+	HTMLInputElement,
+	AccessibleCheckboxProps
+>(
+	(
+		{
+			label,
+			error,
+			description,
+			labelClassName,
+			containerClassName,
+			className,
+			id,
+			...props
+		},
+		ref,
+	) => {
 		const checkboxId = id || `checkbox-${crypto.randomUUID()}`;
 		const errorId = error ? `${checkboxId}-error` : undefined;
 		const descriptionId = description ? `${checkboxId}-description` : undefined;
@@ -66,18 +72,14 @@ export const AccessibleCheckbox = forwardRef<HTMLInputElement, AccessibleCheckbo
 					</label>
 				</div>
 
-				{description && (
-					<AccessibilityDescription id={descriptionId!} visible>
+				{description && descriptionId && (
+					<AccessibilityDescription id={descriptionId} visible>
 						{description}
 					</AccessibilityDescription>
 				)}
 
 				{error && (
-					<ValidationError
-						fieldName={label}
-						error={error}
-						id={errorId}
-					/>
+					<ValidationError fieldName={label} error={error} id={errorId} />
 				)}
 			</div>
 		);
