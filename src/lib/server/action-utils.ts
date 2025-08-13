@@ -129,7 +129,8 @@ export function createSafeAction<T extends z.ZodSchema, U>(
 				success: false,
 				error: {
 					code: "SYSTEM_ERROR",
-					message: "システムエラーが発生しました。しばらくしてから再度お試しください。",
+					message:
+						"システムエラーが発生しました。しばらくしてから再度お試しください。",
 				},
 			};
 		}

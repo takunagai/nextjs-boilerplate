@@ -63,9 +63,10 @@ async function handleLogin(
 			success: false,
 			error: {
 				code: "LOGIN_FAILED",
-				message: error instanceof Error
-					? error.message
-					: "ログインに失敗しました。メールアドレスとパスワードを確認してください。",
+				message:
+					error instanceof Error
+						? error.message
+						: "ログインに失敗しました。メールアドレスとパスワードを確認してください。",
 			},
 		};
 	}

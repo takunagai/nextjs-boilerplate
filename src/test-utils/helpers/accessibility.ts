@@ -14,7 +14,9 @@ export async function testA11y(ui: ReactElement, options = {}) {
 	// const results = await axe(container); // Disabled: jest-axe not installed
 	// expect(results).toHaveNoViolations(); // Disabled: jest-axe not installed
 
-	console.warn("testA11y: Accessibility testing disabled (jest-axe not installed)");
+	console.warn(
+		"testA11y: Accessibility testing disabled (jest-axe not installed)",
+	);
 	return { container, rerender, results: null };
 }
 

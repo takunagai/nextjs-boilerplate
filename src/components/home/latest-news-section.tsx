@@ -16,7 +16,7 @@ interface LatestNewsSectionProps {
  * トップページに表示する最新のお知らせセクション
  * @returns お知らせセクションコンポーネント
  */
-export async function LatestNewsSection({ className }: LatestNewsSectionProps) {
+export async function LatestNewsSection({ className: _className }: LatestNewsSectionProps) {
 	// 最新のニュースを取得（件数は定数で設定）
 	const allNews = await getAllNews();
 	const latestNews = allNews.slice(0, LATEST_NEWS_COUNT);

@@ -42,7 +42,7 @@ const expectSuccessResult = (
 };
 
 const expectErrorResult = (
-	result: ActionResult<any>,
+	result: ActionResult<{ message: string }>,
 	expectedCode: string,
 	expectedMessage: string,
 ) => {
