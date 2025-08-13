@@ -16,8 +16,26 @@ vi.mock("@/lib/server", async () => {
 	};
 });
 
+// テストヘルパー関数
+const createValidFormExample = (): FormExampleValues => ({
+	name: "山田太郎",
+	email: "yamada@example.com",
+	message: "これはテストメッセージです。10文字以上の入力です。",
+	terms: true,
+});
+
+const expectSuccessResult = (result: any, expectedMessage: string) => {
+	expect(result.success).toBe(true);
+	expect(result.data.message).toBe(expectedMessage);
+};
+
+const expectErrorResult = (result: any, expectedCode: string, expectedMessage: string) => {
+	expect(result.success).toBe(false);
+	expect(result.error.code).toBe(expectedCode);
+	expect(result.error.message).toBe(expectedMessage);
+};
+
 describe("フォームサンプル用サーバーアクション", () => {
-	// コンソール出力をモック化
 	beforeEach(() => {
 		vi.spyOn(console, "log").mockImplementation(() => {});
 		vi.spyOn(console, "error").mockImplementation(() => {});
@@ -28,114 +46,75 @@ describe("フォームサンプル用サーバーアクション", () => {
 	});
 
 	describe("submitExampleForm", () => {
-		const validFormData: FormExampleValues = {
-			name: "山田太郎",
-			email: "yamada@example.com",
-			message: "これはテストメッセージです。10文字以上の入力です。",
-			terms: true,
-		};
-
-		it("有効なデータが送信された場合、成功レスポンスを返す", async () => {
-			// validateActionのモックが有効なデータを返すように設定
+		it("有効なデータで送信成功", async () => {
+			const validFormData = createValidFormExample();
 			vi.mocked(validateAction).mockResolvedValueOnce(validFormData);
 
-			// サーバーアクションを実行
 			const result = await submitExampleForm(validFormData);
 
-			// 検証
-			expect(result.success).toBe(true);
-			expect(result.data).toEqual({
-				message: "フォームが正常に送信されました。",
-			});
-			expect(validateAction).toHaveBeenCalledWith(
-				formExampleSchema,
-				validFormData,
-			);
+			expectSuccessResult(result, "フォームが正常に送信されました。");
+			expect(validateAction).toHaveBeenCalledWith(formExampleSchema, validFormData);
 			expect(console.log).toHaveBeenCalled();
 		});
 
-		it("バリデーションエラーが発生した場合、エラーレスポンスを返す", async () => {
-			// バリデーションエラーをシミュレート
+		it("バリデーションエラーでエラーレスポンス", async () => {
 			const validationError = new ActionError(
 				"入力データが無効です",
 				"VALIDATION_ERROR",
-				{
-					fieldErrors: {
-						name: "名前を入力してください",
-					},
-				},
+				{ fieldErrors: { name: "名前を入力してください" } },
 			);
 			vi.mocked(validateAction).mockRejectedValueOnce(validationError);
 
-			// サーバーアクションを実行
-			const result = await submitExampleForm(validFormData);
+			const result = await submitExampleForm(createValidFormExample());
 
-			// 検証
-			expect(result.success).toBe(false);
-			expect(result.error).toEqual({
-				code: "FORM_ERROR",
-				message: "入力内容を確認してください",
-				details: {
-					fieldErrors: {
-						name: "名前を入力してください",
-					},
-				},
+			expectErrorResult(result, "FORM_ERROR", "入力内容を確認してください");
+			expect(result.error.details).toEqual({
+				fieldErrors: { name: "名前を入力してください" },
 			});
 			expect(console.error).toHaveBeenCalled();
 		});
 
-		it("予期しないエラーが発生した場合、汎用エラーレスポンスを返す", async () => {
-			// 予期しないエラーをシミュレート
-			vi.mocked(validateAction).mockRejectedValueOnce(
-				new Error("予期しないエラー"),
-			);
+		it("予期しないエラーで汎用エラーレスポンス", async () => {
+			vi.mocked(validateAction).mockRejectedValueOnce(new Error("予期しないエラー"));
 
-			// サーバーアクションを実行
-			const result = await submitExampleForm(validFormData);
+			const result = await submitExampleForm(createValidFormExample());
 
-			// 検証
-			expect(result.success).toBe(false);
-			expect(result.error).toEqual({
-				code: "FORM_ERROR",
-				message: "フォーム送信に失敗しました",
-			});
+			expectErrorResult(result, "FORM_ERROR", "フォーム送信に失敗しました");
 			expect(console.error).toHaveBeenCalled();
 		});
 	});
 
 	describe("checkExampleEmail", () => {
-		it("有効なメールアドレスの場合、存在確認結果を返す", async () => {
-			// example.comドメインのメールアドレス（存在するとみなす）
-			const result = await checkExampleEmail("test@example.com");
+		const emailTestCases = [
+			{
+				email: "test@example.com",
+				expected: { exists: true },
+				description: "example.comドメインは存在"
+			},
+			{
+				email: "test@gmail.com",
+				expected: { exists: false },
+				description: "example.com以外は存在しない"
+			},
+		];
 
-			expect(result.success).toBe(true);
-			expect(result.data).toEqual({ exists: true });
-		});
-
-		it("example.com以外のドメインの場合、存在しないと判定する", async () => {
-			const result = await checkExampleEmail("test@gmail.com");
-
-			expect(result.success).toBe(true);
-			expect(result.data).toEqual({ exists: false });
-		});
-
-		it("無効なメールアドレスの場合、エラーレスポンスを返す", async () => {
-			const result = await checkExampleEmail("invalid-email");
-
-			expect(result.success).toBe(false);
-			expect(result.error).toEqual({
-				code: "FORM_ERROR",
-				message: "有効なメールアドレスを入力してください",
+		emailTestCases.forEach(({ email, expected, description }) => {
+			it(description, async () => {
+				const result = await checkExampleEmail(email);
+				expect(result.success).toBe(true);
+				expect(result.data).toEqual(expected);
 			});
 		});
 
-		it("空のメールアドレスの場合、エラーレスポンスを返す", async () => {
-			const result = await checkExampleEmail("");
+		const errorTestCases = [
+			{ email: "invalid-email", description: "無効なメールアドレス" },
+			{ email: "", description: "空のメールアドレス" },
+		];
 
-			expect(result.success).toBe(false);
-			expect(result.error).toEqual({
-				code: "FORM_ERROR",
-				message: "有効なメールアドレスを入力してください",
+		errorTestCases.forEach(({ email, description }) => {
+			it(`${description}でエラー`, async () => {
+				const result = await checkExampleEmail(email);
+				expectErrorResult(result, "FORM_ERROR", "有効なメールアドレスを入力してください");
 			});
 		});
 	});
