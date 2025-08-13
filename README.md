@@ -2,16 +2,17 @@
 
 ![Node.js](https://img.shields.io/badge/Node.js-23-5FA04E?style=flat-square&logo=node.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript)
-![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react)
-![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js)
-![Auth.js](https://img.shields.io/badge/Auth.js-5(β)-blue?style=flat-square&logo=authjs)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=flat-square&logo=tailwind-css)
+![React](https://img.shields.io/badge/React-19.1-61DAFB?style=flat-square&logo=react)
+![Next.js](https://img.shields.io/badge/Next.js-15.3-black?style=flat-square&logo=next.js)
+![Auth.js](https://img.shields.io/badge/Auth.js-5.0(β)-blue?style=flat-square&logo=authjs)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1-06B6D4?style=flat-square&logo=tailwind-css)
+![Three.js](https://img.shields.io/badge/Three.js-0.179-000000?style=flat-square&logo=three.js)
 ![shadcn/ui](https://img.shields.io/badge/shadcn/ui-2-black?style=flat-square&logo=shadcnui)
-![Motion](https://img.shields.io/badge/motion-12-6E9F18?style=flat-square&logo=motion)
-![Biome](https://img.shields.io/badge/Biome-2(β)-60A5FA?style=flat-square&logo=biome)
-![Zod](https://img.shields.io/badge/zod-4(β)-3E67B1?style=flat-square&logo=zod)
-![Vitest](https://img.shields.io/badge/Vitest-3-6E9F18?style=flat-square&logo=vitest)
-![Playwright](https://img.shields.io/badge/Playwright-1-45ba4b?style=flat-square&logo=playwright)
+![Motion](https://img.shields.io/badge/motion-12.19-6E9F18?style=flat-square&logo=motion)
+![Biome](https://img.shields.io/badge/Biome-2.0-60A5FA?style=flat-square&logo=biome)
+![Zod](https://img.shields.io/badge/zod-4.0-3E67B1?style=flat-square&logo=zod)
+![Vitest](https://img.shields.io/badge/Vitest-3.2-6E9F18?style=flat-square&logo=vitest)
+![Playwright](https://img.shields.io/badge/Playwright-1.53-45ba4b?style=flat-square&logo=playwright)
 
 ## 概要
 
@@ -45,15 +46,19 @@
 ### UI/UX
 
 - **レスポンシブデザイン** - Tailwind CSS によるモバイルファーストアプローチ
-- **ダークモード対応** - Tailwind CSS v4 のネイティブダークモード機能
-  - ライトモード/ダークモードの2つの切替モード
-  - ユーザー設定を localStorage に保存し、次回訪問時に復元
-  - フラッシュ防止機能搭載（遷移アニメーションとトレードオフ）
+- **ダークモード対応** - next-themes + Tailwind CSS v4 による高度なテーマ管理
+  - ライト/ダーク/システム設定の3つのモード
+  - SSR対応のフラッシュ防止機能
+  - ユーザー設定の永続化（localStorage）
   - テーマ機能のON/OFF切替オプション
 - **レスポンシブレイアウト** - ビューポート幅に応じた最適なスタイル調整
   - CVA を活用した Container コンポーネント
 - **アニメーション** - motion によるモーション
-- **アクセシビリティ対応** - WAI-ARIA ガイドラインに準拠
+- **3D背景エフェクト** - Three.js とReact Three Fiberによる高品質な視覚効果
+  - Digital Constellation（デジタル星座エフェクト）
+  - Flowing Comments（コメント流れエフェクト）
+  - パフォーマンス最適化済み（GPU加速、フレーム制御）
+- **アクセシビリティ対応** - WCAG 2.1 AA準拠
 - **UIコンポーネント** - shadcn/ui による再利用可能なコンポーネント
 
 ### サーバーサイドユーティリティ
@@ -119,30 +124,26 @@
 ### SEO最適化
 
 - **メタデータ管理** - Next.js Metadata API による動的SEOメタタグ生成
-- **構造化データ** - JSON-LD形式のリッチスニペット対応（ウェブサイト、組織、記事など）
+- **構造化データ** - JSON-LD形式のリッチスニペット対応
 - **パンくずリスト** - ユーザビリティ向上とSEO対応の階層ナビゲーション
-- {**サイトマップ自動生成**} - 検索エンジンのクロール効率化（追加予定）
 - **robots.txt** - クローラー制御とインデックス最適化
 - **正規URL設定** - 重複コンテンツ問題の防止
 
 ### 開発体験
 
-- **型安全性** - TypeScript による堅牢なコード
-- **高速開発** - Next.js App Router とサーバーコンポーネント
-- **効率的な状態管理** - Immer による不変性を維持した状態更新
-- **フォームハンドリング** - React Hook Form と Zod による型安全なバリデーション
-- **コード品質** - Biome によるリンティングとフォーマット
-- **開発用サンプルページ** - 開発環境のみで表示、本番環境では環境変数で非表示に
+- **型安全性** - TypeScript による堅牢なコード基盤
+- **高速開発** - React 19 Compiler + Next.js App Router
+- **フォームハンドリング** - React Hook Form + Zod による型安全なバリデーション
+- **コード品質** - Biome によるリンティング・フォーマット
+- **開発用サンプルページ** - 環境変数による表示制御
 
 ### 事前構築済み
 
 - **レイアウトコンポーネント** - ヘッダー、フッター、ナビゲーション
-- **ユーティリティ** - 定数管理、日付操作、クラス名ユーティリティ
-- **テスト環境** - Vitest による高速なユニットテスト
-- **サーバーサイドユーティリティ** - API応答の標準化、バリデーション、エラーハンドリング
-- **認証システム** - Auth.js (NextAuth v5) によるJWT認証と保護されたルート
-- **ページテンプレート** - ホーム、説明、問い合わせ、プライバシーポリシー
-- **お知らせ** - 一覧 (カテゴリ絞り込み、ページネーション)、個別ページ、ホームページに表示
+- **認証システム** - Auth.js (NextAuth v5) によるJWT認証
+- **ページテンプレート** - ホーム、サービス、問い合わせ、プライバシーポリシー
+- **お知らせ機能** - 一覧・詳細ページ（カテゴリ絞り込み、ページネーション）
+- **テスト環境** - Vitest・Playwright による包括的テスト
 
 ## 技術スタック
 
@@ -159,6 +160,9 @@
 - **tw-animate-css** - アニメーション
 - **shadcn/ui** - 再利用可能なUIコンポーネント
 - **motion** - アニメーション
+- **Three.js** - 3Dグラフィックスライブラリ
+  - @react-three/fiber - React用Three.jsレンダラー
+  - @react-three/drei - 有用なヘルパーとアブストラクション
 - **embla-carousel-react** - カルーセル
   - embla-carousel-autoplay
   - embla-carousel-class-names
@@ -169,7 +173,7 @@
 ### 状態管理/ユーティリティ
 
 - **immer** - 不変状態管理
-- **date-fns** - 日付操作
+- **next-themes** - SSR対応テーマ管理
 - **class-variance-authority** - コンポーネントバリエーション
 - **clsx** - 条件付きクラス名
 - **tailwind-merge** - Tailwindクラス最適化
@@ -187,8 +191,7 @@
 
 ### バックエンド
 
-- (**PostgreSQL** - データベース) ※後で追加予定
-- (**Drizzle ORM** - ORM) ※後で追加予定
+- **データベース対応準備済み** - PostgreSQL、Drizzle ORM 等の追加が容易
 
 ### 開発ツール
 
@@ -198,7 +201,10 @@
 
 - **Vitest** - ユニットテスト
 - **Playwright** - E2Eテスト
-- (**Testing Library** - DOMテスト) ※後で追加予定
+- **Testing Library** - React/DOM テスト
+  - @testing-library/react - React コンポーネントテスト
+  - @testing-library/jest-dom - DOM マッチャー拡張
+  - @testing-library/user-event - ユーザーインタラクションテスト
 - **jsdom** - ブラウザ環境シミュレーション
 
 ## セットアップ手順
