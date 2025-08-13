@@ -1,5 +1,5 @@
 import { render as rtlRender } from "@testing-library/react";
-import { ReactElement } from "react";
+import type { ReactElement } from "react";
 
 /**
  * カスタムレンダー関数
@@ -8,7 +8,7 @@ import { ReactElement } from "react";
 function customRender(ui: ReactElement, options = {}) {
 	// 将来的にプロバイダーを追加する場合はここで設定
 	// 例: <ThemeProvider>, <AuthProvider> など
-	
+
 	return rtlRender(ui, options);
 }
 

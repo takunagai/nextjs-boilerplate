@@ -7,24 +7,25 @@ import { waitFor } from "@testing-library/react";
 /**
  * 指定時間待機する
  */
-export const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+export const sleep = (ms: number) =>
+	new Promise((resolve) => setTimeout(resolve, ms));
 
 /**
  * 条件が満たされるまで待機する拡張版
  */
 export const waitForCondition = async (
 	condition: () => boolean | Promise<boolean>,
-	options = { timeout: 5000, interval: 50 }
+	options = { timeout: 5000, interval: 50 },
 ) => {
 	const startTime = Date.now();
-	
+
 	while (Date.now() - startTime < options.timeout) {
 		if (await condition()) {
 			return true;
 		}
 		await sleep(options.interval);
 	}
-	
+
 	throw new Error(`Condition not met within ${options.timeout}ms`);
 };
 
@@ -38,9 +39,11 @@ export const waitForDebounce = async (debounceTime = 300) => {
 /**
  * 複数の要素が表示されるまで待つ
  */
-export const waitForElements = async (getters: (() => HTMLElement | null)[]) => {
+export const waitForElements = async (
+	getters: (() => HTMLElement | null)[],
+) => {
 	await waitFor(() => {
-		getters.forEach(getter => {
+		getters.forEach((getter) => {
 			const element = getter();
 			expect(element).toBeInTheDocument();
 		});

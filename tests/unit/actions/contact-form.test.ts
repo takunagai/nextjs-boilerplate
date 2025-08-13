@@ -4,6 +4,7 @@ import {
 	submitContactForm,
 } from "@/app/actions/contact-form";
 import { ActionError, validateAction } from "@/lib/server";
+import type { ActionResult } from "@/lib/types/actions";
 import type { ContactFormValues } from "@/lib/validation/contact-schema";
 import { contactFormSchema } from "@/lib/validation/contact-schema";
 
@@ -30,15 +31,26 @@ const createValidContactForm = (): ContactFormValues => ({
 	message: "これはテストメッセージです。10文字以上の入力です。",
 });
 
-const expectSuccessResult = (result: any, expectedMessage: string) => {
+const expectSuccessResult = (
+	result: ActionResult<{ message: string }>,
+	expectedMessage: string,
+) => {
 	expect(result.success).toBe(true);
-	expect(result.data.message).toBe(expectedMessage);
+	if (result.success) {
+		expect(result.data.message).toBe(expectedMessage);
+	}
 };
 
-const expectErrorResult = (result: any, expectedCode: string, expectedMessage: string) => {
+const expectErrorResult = (
+	result: ActionResult<any>,
+	expectedCode: string,
+	expectedMessage: string,
+) => {
 	expect(result.success).toBe(false);
-	expect(result.error.code).toBe(expectedCode);
-	expect(result.error.message).toBe(expectedMessage);
+	if (!result.success) {
+		expect(result.error.code).toBe(expectedCode);
+		expect(result.error.message).toBe(expectedMessage);
+	}
 };
 
 describe("お問い合わせフォーム用サーバーアクション", () => {
@@ -58,8 +70,14 @@ describe("お問い合わせフォーム用サーバーアクション", () => {
 
 			const result = await submitContactForm(validFormData);
 
-			expectSuccessResult(result, "お問い合わせを受け付けました。3営業日以内に返信いたします。");
-			expect(validateAction).toHaveBeenCalledWith(contactFormSchema, validFormData);
+			expectSuccessResult(
+				result,
+				"お問い合わせを受け付けました。3営業日以内に返信いたします。",
+			);
+			expect(validateAction).toHaveBeenCalledWith(
+				contactFormSchema,
+				validFormData,
+			);
 			expect(console.log).toHaveBeenCalled();
 		});
 
@@ -80,7 +98,9 @@ describe("お問い合わせフォーム用サーバーアクション", () => {
 		});
 
 		it("予期しないエラーで汎用エラーレスポンス", async () => {
-			vi.mocked(validateAction).mockRejectedValueOnce(new Error("予期しないエラー"));
+			vi.mocked(validateAction).mockRejectedValueOnce(
+				new Error("予期しないエラー"),
+			);
 
 			const result = await submitContactForm(createValidContactForm());
 
@@ -92,18 +112,27 @@ describe("お問い合わせフォーム用サーバーアクション", () => {
 		const emailTestCases = [
 			{
 				email: "test@example.com",
-				expected: { exists: true, message: "このメールアドレスは既に登録されています" },
-				description: "example.comドメインは登録済み"
+				expected: {
+					exists: true,
+					message: "このメールアドレスは既に登録されています",
+				},
+				description: "example.comドメインは登録済み",
 			},
 			{
 				email: "test@gmail.com",
-				expected: { exists: false, message: "このメールアドレスは使用可能です" },
-				description: "example.com以外は未登録"
+				expected: {
+					exists: false,
+					message: "このメールアドレスは使用可能です",
+				},
+				description: "example.com以外は未登録",
 			},
 			{
 				email: "",
-				expected: { exists: false, message: "このメールアドレスは使用可能です" },
-				description: "空文字は未登録"
+				expected: {
+					exists: false,
+					message: "このメールアドレスは使用可能です",
+				},
+				description: "空文字は未登録",
 			},
 		];
 
@@ -117,7 +146,11 @@ describe("お問い合わせフォーム用サーバーアクション", () => {
 
 		it("無効なメールアドレスでエラー", async () => {
 			const result = await checkEmailExists("invalid-email");
-			expectErrorResult(result, "VALIDATION_ERROR", "有効なメールアドレスを入力してください");
+			expectErrorResult(
+				result,
+				"VALIDATION_ERROR",
+				"有効なメールアドレスを入力してください",
+			);
 		});
 	});
 });

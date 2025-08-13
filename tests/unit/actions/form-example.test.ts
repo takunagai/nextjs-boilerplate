@@ -4,6 +4,7 @@ import {
 	submitExampleForm,
 } from "@/app/actions/form-example";
 import { ActionError, validateAction } from "@/lib/server";
+import type { ActionResult } from "@/lib/types/actions";
 import type { FormExampleValues } from "@/lib/validation/form-example-schema";
 import { formExampleSchema } from "@/lib/validation/form-example-schema";
 
@@ -24,15 +25,26 @@ const createValidFormExample = (): FormExampleValues => ({
 	terms: true,
 });
 
-const expectSuccessResult = (result: any, expectedMessage: string) => {
+const expectSuccessResult = (
+	result: ActionResult<{ message: string }>,
+	expectedMessage: string,
+) => {
 	expect(result.success).toBe(true);
-	expect(result.data.message).toBe(expectedMessage);
+	if (result.success) {
+		expect(result.data.message).toBe(expectedMessage);
+	}
 };
 
-const expectErrorResult = (result: any, expectedCode: string, expectedMessage: string) => {
+const expectErrorResult = (
+	result: ActionResult<{ message: string }>,
+	expectedCode: string,
+	expectedMessage: string,
+) => {
 	expect(result.success).toBe(false);
-	expect(result.error.code).toBe(expectedCode);
-	expect(result.error.message).toBe(expectedMessage);
+	if (!result.success) {
+		expect(result.error.code).toBe(expectedCode);
+		expect(result.error.message).toBe(expectedMessage);
+	}
 };
 
 describe("フォームサンプル用サーバーアクション", () => {
@@ -53,7 +65,10 @@ describe("フォームサンプル用サーバーアクション", () => {
 			const result = await submitExampleForm(validFormData);
 
 			expectSuccessResult(result, "フォームが正常に送信されました。");
-			expect(validateAction).toHaveBeenCalledWith(formExampleSchema, validFormData);
+			expect(validateAction).toHaveBeenCalledWith(
+				formExampleSchema,
+				validFormData,
+			);
 			expect(console.log).toHaveBeenCalled();
 		});
 
@@ -75,7 +90,9 @@ describe("フォームサンプル用サーバーアクション", () => {
 		});
 
 		it("予期しないエラーで汎用エラーレスポンス", async () => {
-			vi.mocked(validateAction).mockRejectedValueOnce(new Error("予期しないエラー"));
+			vi.mocked(validateAction).mockRejectedValueOnce(
+				new Error("予期しないエラー"),
+			);
 
 			const result = await submitExampleForm(createValidFormExample());
 
@@ -89,12 +106,12 @@ describe("フォームサンプル用サーバーアクション", () => {
 			{
 				email: "test@example.com",
 				expected: { exists: true },
-				description: "example.comドメインは存在"
+				description: "example.comドメインは存在",
 			},
 			{
 				email: "test@gmail.com",
 				expected: { exists: false },
-				description: "example.com以外は存在しない"
+				description: "example.com以外は存在しない",
 			},
 		];
 
@@ -114,7 +131,11 @@ describe("フォームサンプル用サーバーアクション", () => {
 		errorTestCases.forEach(({ email, description }) => {
 			it(`${description}でエラー`, async () => {
 				const result = await checkExampleEmail(email);
-				expectErrorResult(result, "FORM_ERROR", "有効なメールアドレスを入力してください");
+				expectErrorResult(
+					result,
+					"FORM_ERROR",
+					"有効なメールアドレスを入力してください",
+				);
 			});
 		});
 	});

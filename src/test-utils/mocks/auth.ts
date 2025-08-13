@@ -1,21 +1,33 @@
 import { vi } from "vitest";
-import type { AuthContextType } from "@/types/auth";
+import type { UseAuthReturn } from "@/hooks/useAuth";
+
+// Extend UseAuthReturn with additional mock properties
+interface AuthContextType extends UseAuthReturn {
+	signup: ReturnType<typeof vi.fn>;
+}
 
 /**
  * 認証関連のモックユーティリティ
  */
 
-export const createMockAuthContext = (overrides?: Partial<AuthContextType>): AuthContextType => ({
+export const createMockAuthContext = (
+	overrides?: Partial<AuthContextType>,
+): AuthContextType => ({
+	session: null,
+	status: "unauthenticated",
+	isLoading: false,
 	isAuthenticated: false,
-	isAuthLoading: false,
-	user: null,
+	user: undefined,
 	login: vi.fn(),
 	logout: vi.fn(),
+	updateSession: vi.fn(),
 	signup: vi.fn(),
 	...overrides,
 });
 
-export const createMockAuthUser = (overrides?: Partial<AuthContextType["user"]>) => ({
+export const createMockAuthUser = (
+	overrides?: Partial<AuthContextType["user"]>,
+) => ({
 	id: "1",
 	email: "test@example.com",
 	name: "Test User",
