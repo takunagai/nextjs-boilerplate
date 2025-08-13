@@ -90,9 +90,10 @@ export function RegisterForm() {
 			}
 		} catch (error) {
 			console.error("Registration error:", error);
-			const errorMessage = error instanceof Error 
-				? `登録処理中にエラーが発生しました: ${error.message}`
-				: "登録処理中にエラーが発生しました";
+			const errorMessage =
+				error instanceof Error
+					? `登録処理中にエラーが発生しました: ${error.message}`
+					: "登録処理中にエラーが発生しました";
 			toast.error(errorMessage);
 		} finally {
 			setIsLoading(false);

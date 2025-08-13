@@ -2,11 +2,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { act, renderHook } from "@testing-library/react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { z } from "zod";
 import { describe, expect, it, vi } from "vitest";
-
-import { useFormSubmission } from "../use-form-submission";
+import { z } from "zod";
 import type { SubmissionResult } from "../use-form-submission";
+import { useFormSubmission } from "../use-form-submission";
 
 // Toast のモック
 vi.mock("sonner", () => ({
@@ -121,7 +120,9 @@ describe("useFormSubmission", () => {
 		});
 
 		it("予期しないエラーの処理", async () => {
-			const mockSubmitFn = vi.fn().mockRejectedValue(new Error("ネットワークエラー"));
+			const mockSubmitFn = vi
+				.fn()
+				.mockRejectedValue(new Error("ネットワークエラー"));
 
 			const result = createTestSubmission({ submitFn: mockSubmitFn });
 
@@ -131,7 +132,9 @@ describe("useFormSubmission", () => {
 				await result.current.handleSubmit(testData);
 			});
 
-			expect(result.current.submitError).toBe("送信処理中にエラーが発生しました");
+			expect(result.current.submitError).toBe(
+				"送信処理中にエラーが発生しました",
+			);
 			expect(result.current.submitStatus).toEqual({
 				type: "error",
 				message: "送信処理中にエラーが発生しました",
@@ -180,7 +183,10 @@ describe("useFormSubmission", () => {
 			});
 
 			expect(mockOnBeforeSubmit).toHaveBeenCalledWith(testData);
-			expect(mockOnAfterSubmit).toHaveBeenCalledWith({ success: true }, testData);
+			expect(mockOnAfterSubmit).toHaveBeenCalledWith(
+				{ success: true },
+				testData,
+			);
 		});
 	});
 });

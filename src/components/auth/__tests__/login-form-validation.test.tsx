@@ -1,15 +1,15 @@
 import { screen } from "@testing-library/react";
 import { useRouter } from "next/navigation";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { 
-	render,
-	createMockAuthContext,
-	createMockRouter,
-	createMockForm,
-	createMockFormHandleSubmit,
-} from "@/test-utils";
 import { useAuth } from "@/hooks/useAuth";
 import { useLoginForm } from "@/hooks/useLoginForm";
+import {
+	createMockAuthContext,
+	createMockForm,
+	createMockFormHandleSubmit,
+	createMockRouter,
+	render,
+} from "@/test-utils";
 import { LoginForm } from "../login-form";
 
 // Mock dependencies
@@ -50,9 +50,9 @@ describe("LoginForm - バリデーション", () => {
 					form: createMockForm({
 						formState: { errors: { email: { message: errorMessage } } },
 					}),
-				})
+				}),
 			);
-			
+
 			render(<LoginForm />);
 			expect(screen.getByText(errorMessage)).toBeInTheDocument();
 		});
@@ -64,9 +64,9 @@ describe("LoginForm - バリデーション", () => {
 					form: createMockForm({
 						formState: { errors: { password: { message: errorMessage } } },
 					}),
-				})
+				}),
 			);
-			
+
 			render(<LoginForm />);
 			expect(screen.getByText(errorMessage)).toBeInTheDocument();
 		});
@@ -74,20 +74,20 @@ describe("LoginForm - バリデーション", () => {
 		it("複数のバリデーションエラーを同時に表示する", () => {
 			const emailError = "メールアドレスは必須です。";
 			const passwordError = "パスワードは6文字以上です。";
-			
+
 			mockUseLoginForm.mockReturnValueOnce(
 				createDefaultUseLoginFormReturnValue({
 					form: createMockForm({
-						formState: { 
-							errors: { 
+						formState: {
+							errors: {
 								email: { message: emailError },
-								password: { message: passwordError }
-							} 
+								password: { message: passwordError },
+							},
 						},
 					}),
-				})
+				}),
 			);
-			
+
 			render(<LoginForm />);
 			expect(screen.getByText(emailError)).toBeInTheDocument();
 			expect(screen.getByText(passwordError)).toBeInTheDocument();
@@ -98,9 +98,9 @@ describe("LoginForm - バリデーション", () => {
 		it("APIエラーメッセージを表示する", () => {
 			const errorMessage = "メールアドレスまたはパスワードが正しくありません。";
 			mockUseLoginForm.mockReturnValueOnce(
-				createDefaultUseLoginFormReturnValue({ error: errorMessage })
+				createDefaultUseLoginFormReturnValue({ error: errorMessage }),
 			);
-			
+
 			render(<LoginForm />);
 			expect(screen.getByText(errorMessage)).toBeInTheDocument();
 		});
@@ -108,9 +108,9 @@ describe("LoginForm - バリデーション", () => {
 		it("ネットワークエラーメッセージを表示する", () => {
 			const errorMessage = "ネットワークエラーが発生しました。";
 			mockUseLoginForm.mockReturnValueOnce(
-				createDefaultUseLoginFormReturnValue({ error: errorMessage })
+				createDefaultUseLoginFormReturnValue({ error: errorMessage }),
 			);
-			
+
 			render(<LoginForm />);
 			expect(screen.getByText(errorMessage)).toBeInTheDocument();
 		});

@@ -4,7 +4,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { submitContactForm } from "@/app/actions/contact-form";
-import { ErrorAnnouncement, SuccessAnnouncement } from "@/components/accessibility/screen-reader";
+import {
+	ErrorAnnouncement,
+	SuccessAnnouncement,
+} from "@/components/accessibility/screen-reader";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -173,7 +176,7 @@ export function ContactEmailForm() {
 			<CardContent>
 				{/* 送信状態メッセージ */}
 				{submitStatus.type === "success" && (
-					<SuccessAnnouncement 
+					<SuccessAnnouncement
 						message={submitStatus.message}
 						id="contact-form-success"
 						className="mb-6 p-4 rounded-lg bg-green-50 text-green-700 border border-green-200"
@@ -181,7 +184,7 @@ export function ContactEmailForm() {
 				)}
 
 				{submitStatus.type === "error" && (
-					<ErrorAnnouncement 
+					<ErrorAnnouncement
 						errors={[submitStatus.message]}
 						id="contact-form-error"
 						className="mb-6 p-4 rounded-lg bg-red-50 text-red-700 border border-red-200"

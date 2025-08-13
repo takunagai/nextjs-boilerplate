@@ -2,7 +2,7 @@
  * フォーム送信処理の共通化フック
  */
 import { useState } from "react";
-import type { FieldErrors, FieldValues, Path, UseFormReturn } from "react-hook-form";
+import type { FieldValues, Path, UseFormReturn } from "react-hook-form";
 import { toast } from "sonner";
 
 import { UI_FORM } from "@/lib/constants/ui";
@@ -75,7 +75,10 @@ export interface UseFormSubmissionOptions<TFormData extends FieldValues> {
 	/** 送信前の前処理 */
 	onBeforeSubmit?: (data: TFormData) => void | Promise<void>;
 	/** 送信後の後処理 */
-	onAfterSubmit?: (result: SubmissionResult, data: TFormData) => void | Promise<void>;
+	onAfterSubmit?: (
+		result: SubmissionResult,
+		data: TFormData,
+	) => void | Promise<void>;
 }
 
 // フックの戻り値の型定義
@@ -99,7 +102,7 @@ export interface UseFormSubmissionReturn<TFormData extends FieldValues> {
 
 /**
  * フォーム送信処理の共通化フック
- * 
+ *
  * @example
  * ```tsx
  * const { isSubmitting, submitError, handleSubmit } = useFormSubmission({
@@ -183,7 +186,8 @@ export function useFormSubmission<TFormData extends FieldValues>({
 
 			if (result.success) {
 				// 成功処理
-				const successMessage = (result.data as any)?.message || customSuccessMessage;
+				const successMessage =
+					(result.data as any)?.message || customSuccessMessage;
 				setSubmitStatus({ type: "success", message: successMessage });
 
 				if (autoResetForm) {
@@ -227,7 +231,7 @@ export function useFormSubmission<TFormData extends FieldValues>({
 			// 予期しないエラー
 			console.error("フォーム送信エラー:", error);
 			const errorMessage = "送信処理中にエラーが発生しました";
-			
+
 			setSubmitError(errorMessage);
 			setSubmitStatus({ type: "error", message: errorMessage });
 

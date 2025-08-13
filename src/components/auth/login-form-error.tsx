@@ -19,7 +19,9 @@ export function LoginFormError({ error, className = "" }: LoginFormErrorProps) {
 				"flex items-center gap-2 rounded-md bg-destructive/15",
 				"px-3 py-2 text-sm text-destructive",
 				className,
-			].filter(Boolean).join(" ")}
+			]
+				.filter(Boolean)
+				.join(" ")}
 			role="alert"
 		>
 			<FaCircleExclamation className="h-4 w-4 text-destructive" />

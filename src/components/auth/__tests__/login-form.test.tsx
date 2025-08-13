@@ -1,15 +1,15 @@
 import { fireEvent, screen, waitFor } from "@testing-library/react";
 import { useRouter } from "next/navigation";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { 
-	render,
-	createMockAuthContext,
-	createMockRouter,
-	createMockForm,
-	createMockFormHandleSubmit,
-} from "@/test-utils";
 import { useAuth } from "@/hooks/useAuth";
 import { useLoginForm } from "@/hooks/useLoginForm";
+import {
+	createMockAuthContext,
+	createMockForm,
+	createMockFormHandleSubmit,
+	createMockRouter,
+	render,
+} from "@/test-utils";
 import { LoginForm } from "../login-form";
 
 // Mock dependencies
@@ -41,10 +41,14 @@ describe("LoginForm - 送信処理", () => {
 	});
 
 	describe("フォーム送信", () => {
-
 		it("ログイン成功時に handleLogin を呼び出し、リダイレクトする", async () => {
-			const specificMockHandleLogin = vi.fn().mockResolvedValueOnce({ success: true });
-			const testData = { email: "testuser@example.com", password: "password123" };
+			const specificMockHandleLogin = vi
+				.fn()
+				.mockResolvedValueOnce({ success: true });
+			const testData = {
+				email: "testuser@example.com",
+				password: "password123",
+			};
 			const mockRouter = createMockRouter();
 
 			mockUseRouter.mockReturnValueOnce(mockRouter);
@@ -54,11 +58,11 @@ describe("LoginForm - 送信処理", () => {
 					form: createMockForm({
 						handleSubmit: createMockFormHandleSubmit(testData),
 					}),
-				})
+				}),
 			);
 
 			render(<LoginForm />);
-			
+
 			// フォーム送信
 			fireEvent.click(screen.getByRole("button", { name: "ログイン" }));
 
@@ -74,7 +78,10 @@ describe("LoginForm - 送信処理", () => {
 				success: false,
 				error: "Invalid credentials",
 			});
-			const testData = { email: "testuser@example.com", password: "wrongpassword" };
+			const testData = {
+				email: "testuser@example.com",
+				password: "wrongpassword",
+			};
 			const mockRouter = createMockRouter();
 
 			mockUseRouter.mockReturnValueOnce(mockRouter);
@@ -84,11 +91,11 @@ describe("LoginForm - 送信処理", () => {
 					form: createMockForm({
 						handleSubmit: createMockFormHandleSubmit(testData),
 					}),
-				})
+				}),
 			);
 
 			render(<LoginForm />);
-			
+
 			// フォーム送信
 			fireEvent.click(screen.getByRole("button", { name: "ログイン" }));
 
@@ -108,9 +115,9 @@ describe("LoginForm - 送信処理", () => {
 				createMockAuthContext({
 					isAuthenticated: true,
 					user: { id: "1", email: "test@example.com", name: "Test User" },
-				})
+				}),
 			);
-			
+
 			render(<LoginForm />);
 			expect(mockRouter.push).toHaveBeenCalledWith("/dashboard");
 		});
@@ -130,11 +137,11 @@ describe("LoginForm - 送信処理", () => {
 				createDefaultUseLoginFormReturnValue({
 					resetError: mockResetErrorFn,
 					form: createMockForm({ watch: mockWatchFn }),
-				})
+				}),
 			);
 
 			render(<LoginForm />);
-			
+
 			expect(mockWatchFn).toHaveBeenCalled();
 			watchCallback();
 

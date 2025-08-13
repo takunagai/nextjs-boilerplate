@@ -83,8 +83,8 @@ export function LoginForm() {
 							{...register("email")}
 						/>
 						{errors.email && (
-							<p 
-								className="text-sm text-destructive" 
+							<p
+								className="text-sm text-destructive"
 								role="alert"
 								aria-live="polite"
 								id="email-error"
@@ -120,7 +120,7 @@ export function LoginForm() {
 							{...register("password")}
 						/>
 						{errors.password && (
-							<p 
+							<p
 								className="text-sm text-destructive"
 								role="alert"
 								aria-live="polite"

@@ -1,8 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useForm } from "react-hook-form";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
@@ -59,7 +59,7 @@ function TestForm() {
 
 describe("Basic React Hook Form Validation", () => {
 	it("shows validation error on empty submission", async () => {
-		const user = userEvent.setup();
+		const _user = userEvent.setup();
 		render(<TestForm />);
 
 		const submitButton = screen.getByRole("button", { name: "送信" });
