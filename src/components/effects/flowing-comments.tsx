@@ -72,20 +72,14 @@ export function FlowingComments({
 	const [comments, setComments] = useState<Comment[]>([]);
 	const [isVisible, setIsVisible] = useState(false);
 
-	// 画面サイズに応じたサイズ設定を関数化
-	const getSizeParams = () => {
-		if (typeof window === "undefined") return { baseSize: 1.2, sizeRange: 0.6 };
-		const isDesktop = window.innerWidth >= 768;
-		return {
-			baseSize: isDesktop ? 1.2 : 0.7, // デスクトップ: 1.2-1.8rem, モバイル: 0.7-1.0rem
-			sizeRange: isDesktop ? 0.6 : 0.3,
-		};
-	};
-
 	// 画面リサイズ時にコメントサイズを再計算
 	useWindowResize(
 		() => {
-			const { baseSize, sizeRange } = getSizeParams();
+			// 画面サイズに応じたサイズ設定
+			const isDesktop = window.innerWidth >= 768;
+			const baseSize = isDesktop ? 1.2 : 0.7;
+			const sizeRange = isDesktop ? 0.6 : 0.3;
+
 			setComments((prev) =>
 				prev.map((comment) => ({
 					...comment,
@@ -99,6 +93,15 @@ export function FlowingComments({
 	useEffect(() => {
 		// クライアントサイドでのみ実行
 		if (typeof window === "undefined") return;
+
+		// 画面サイズに応じたサイズ設定を関数化
+		const getSizeParams = () => {
+			const isDesktop = window.innerWidth >= 768;
+			return {
+				baseSize: isDesktop ? 1.2 : 0.7, // デスクトップ: 1.2-1.8rem, モバイル: 0.7-1.0rem
+				sizeRange: isDesktop ? 0.6 : 0.3,
+			};
+		};
 
 		// 初期コメントを生成
 		const initialComments: Comment[] = [];
@@ -139,7 +142,7 @@ export function FlowingComments({
 		return () => {
 			clearInterval(interval);
 		};
-	}, [maxComments, getSizeParams]);
+	}, [maxComments]);
 
 	if (!isVisible) return null;
 
