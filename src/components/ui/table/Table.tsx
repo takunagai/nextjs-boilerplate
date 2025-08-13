@@ -182,7 +182,7 @@ function BaseTable<TData = Record<string, unknown>>({
 			const aValue = a[sortConfig.key as keyof TData];
 			const bValue = b[sortConfig.key as keyof TData];
 
-			return sortValues(aValue, bValue, sortConfig.direction);
+			return sortValues(aValue, bValue, sortConfig.direction as "asc" | "desc");
 		});
 	}, [data, sortConfig]);
 
