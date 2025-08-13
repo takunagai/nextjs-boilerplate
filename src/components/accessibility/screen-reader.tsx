@@ -43,14 +43,13 @@ export function LiveRegion({
 	className,
 }: LiveRegionProps) {
 	return (
-		<div
-			role="status"
+		<output
 			aria-live={priority}
 			aria-atomic="true"
 			className={cn("sr-only", className)}
 		>
 			{message}
-		</div>
+		</output>
 	);
 }
 
@@ -78,9 +77,8 @@ export function useAnnounce() {
 	};
 
 	const AnnouncementRegion = () => (
-		<div
+		<output
 			ref={announceRef}
-			role="status"
 			aria-live="polite"
 			aria-atomic="true"
 			className="sr-only"
@@ -196,7 +194,7 @@ export function ErrorAnnouncement({
 			) : (
 				<ul className="list-disc list-inside space-y-1">
 					{errors.map((error, index) => (
-						<li key={index}>{error}</li>
+						<li key={`error-${error}-${index}`}>{error}</li>
 					))}
 				</ul>
 			)}
@@ -277,9 +275,8 @@ export function SuccessAnnouncement({
 	visible = true,
 }: SuccessAnnouncementProps) {
 	return (
-		<div
+		<output
 			id={id}
-			role="status"
 			aria-live="polite"
 			className={cn(
 				visible ? "text-green-600 dark:text-green-400" : "sr-only",
@@ -287,6 +284,6 @@ export function SuccessAnnouncement({
 			)}
 		>
 			{message}
-		</div>
+		</output>
 	);
 }

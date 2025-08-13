@@ -221,9 +221,8 @@ export function AccessibleCollapse({
 			>
 				{triggerContent}
 			</button>
-			<div
+			<section
 				id={contentId}
-				role="region"
 				aria-labelledby={triggerId}
 				hidden={!isOpen}
 				className={cn(
@@ -233,7 +232,7 @@ export function AccessibleCollapse({
 				)}
 			>
 				{children}
-			</div>
+			</section>
 		</div>
 	);
 }

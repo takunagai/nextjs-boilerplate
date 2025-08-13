@@ -57,9 +57,9 @@ export const AccessibleInput = forwardRef<
 				>
 					{label}
 					{required && (
-						<span className="text-destructive ml-1" aria-label="必須">
+						<abbr className="text-destructive ml-1 no-underline" title="必須">
 							*
-						</span>
+						</abbr>
 					)}
 				</label>
 
