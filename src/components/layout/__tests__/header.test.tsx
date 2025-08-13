@@ -76,8 +76,8 @@ describe("Header", () => {
 
 			render(<Header items={mockItems} />);
 
-			expect(screen.getByAltText("Next.js Boilerplate")).toBeInTheDocument();
-			expect(screen.getByText("Next.js Boilerplate")).toBeInTheDocument();
+			expect(screen.getByAltText("ナガイ商店.com")).toBeInTheDocument();
+			expect(screen.getByText("ナガイ商店.com")).toBeInTheDocument();
 		});
 
 		it("カスタムロゴが表示される", () => {

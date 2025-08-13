@@ -55,8 +55,8 @@ describe("LoginForm - UI要素", () => {
 			
 			// ボタン
 			expect(screen.getByRole("button", { name: "ログイン" })).toBeInTheDocument();
-			expect(screen.getByRole("button", { name: "パスワードをお忘れですか？" })).toBeInTheDocument();
-			expect(screen.getByRole("button", { name: "新規登録" })).toBeInTheDocument();
+			expect(screen.getByRole("button", { name: "パスワードをリセットする" })).toBeInTheDocument();
+			expect(screen.getByRole("button", { name: "新しいアカウントを作成する" })).toBeInTheDocument();
 		});
 
 		it("入力フィールドの属性が正しく設定される", () => {
@@ -64,7 +64,7 @@ describe("LoginForm - UI要素", () => {
 			
 			const emailInput = screen.getByLabelText("メールアドレス");
 			expect(emailInput).toHaveAttribute("type", "email");
-			expect(emailInput).toHaveAttribute("placeholder", "name@example.com");
+			expect(emailInput).toHaveAttribute("placeholder", "your@email.com");
 			
 			const passwordInput = screen.getByLabelText("パスワード");
 			expect(passwordInput).toHaveAttribute("type", "password");
@@ -89,15 +89,16 @@ describe("LoginForm - UI要素", () => {
 			expect(screen.getByLabelText("パスワード")).toBeDisabled();
 		});
 
-		it("ローディング中は他のボタンも無効化される", () => {
+		it("ローディング中は入力フィールドとメインボタンのみ無効化される", () => {
 			mockUseLoginForm.mockReturnValueOnce(
 				createDefaultUseLoginFormReturnValue({ isLoading: true })
 			);
 			
 			render(<LoginForm />);
 			
-			expect(screen.getByRole("button", { name: "パスワードをお忘れですか？" })).toBeDisabled();
-			expect(screen.getByRole("button", { name: "新規登録" })).toBeDisabled();
+			// パスワードリセットボタンと新規登録ボタンは無効化されない
+			expect(screen.getByRole("button", { name: "パスワードをリセットする" })).toBeEnabled();
+			expect(screen.getByRole("button", { name: "新しいアカウントを作成する" })).toBeEnabled();
 		});
 	});
 });

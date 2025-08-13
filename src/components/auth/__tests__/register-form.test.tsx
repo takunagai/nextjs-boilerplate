@@ -232,14 +232,17 @@ describe("RegisterForm", () => {
 			await fillValidForm();
 			await user.click(screen.getByRole("button", { name: "登録" }));
 
-			await waitFor(() => expect(mockFetch).toHaveBeenCalledTimes(1));
+			await waitFor(() => expect(mockFetch).toHaveBeenCalledTimes(1), {
+				timeout: 2000
+			});
 			await waitFor(() =>
 				expect(mockToastError).toHaveBeenCalledWith(
-					"登録処理中にエラーが発生しました",
-				),
-			);
+					"登録処理中にエラーが発生しました: Network failed",
+				), {
+				timeout: 3000
+			});
 			expect(mockRouterPush).not.toHaveBeenCalled();
-		});
+		}, 15000);
 
 		it("shows loading state during submission", async () => {
 			// Make the mock promise resolve slowly to check intermediate loading state

@@ -46,8 +46,17 @@ function createTestSubmission(overrides = {}) {
 }
 
 describe("useFormSubmission", () => {
+	const originalConsoleError = console.error;
+
 	beforeEach(() => {
 		vi.clearAllMocks();
+		// console.error をモックして、テスト中の不要な出力を抑制
+		console.error = vi.fn();
+	});
+
+	afterEach(() => {
+		// console.error を元に戻す
+		console.error = originalConsoleError;
 	});
 
 	describe("初期化", () => {

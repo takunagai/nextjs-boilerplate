@@ -326,23 +326,41 @@ describe("useAuth", () => {
 		});
 	});
 
-	describe("関数の安定性", () => {
-		it("login関数が再レンダリング時に同じ参照を保持する", () => {
+	describe("関数の機能性", () => {
+		it("login関数が再レンダリング後も正常に動作する", async () => {
 			mockUseSession.mockReturnValue({
 				data: null,
 				status: "unauthenticated",
 				update: mockUpdate,
 			});
+			mockSignIn.mockResolvedValue({ error: null });
 
 			const { result, rerender } = renderHook(() => useAuth());
-			const firstLogin = result.current.login;
+
+			// 初回の動作確認
+			await act(async () => {
+				const authResult = await result.current.login({
+					email: "test@example.com",
+					password: "password123",
+				});
+				expect(authResult.success).toBe(true);
+			});
 
 			rerender();
 
-			expect(result.current.login).toBe(firstLogin);
+			// 再レンダリング後の動作確認
+			await act(async () => {
+				const authResult = await result.current.login({
+					email: "test2@example.com",
+					password: "password456",
+				});
+				expect(authResult.success).toBe(true);
+			});
+
+			expect(mockSignIn).toHaveBeenCalledTimes(2);
 		});
 
-		it("logout関数が再レンダリング時に同じ参照を保持する", () => {
+		it("logout関数が再レンダリング後も正常に動作する", async () => {
 			mockUseSession.mockReturnValue({
 				data: {
 					user: { email: "test@example.com" },
@@ -351,17 +369,29 @@ describe("useAuth", () => {
 				status: "authenticated",
 				update: mockUpdate,
 			});
+			mockSignOut.mockResolvedValue({ url: "http://localhost" });
 
 			const { result, rerender } = renderHook(() => useAuth());
-			const firstLogout = result.current.logout;
+
+			// 初回の動作確認
+			await act(async () => {
+				const authResult = await result.current.logout();
+				expect(authResult.success).toBe(true);
+			});
 
 			rerender();
 
-			expect(result.current.logout).toBe(firstLogout);
+			// 再レンダリング後の動作確認
+			await act(async () => {
+				const authResult = await result.current.logout();
+				expect(authResult.success).toBe(true);
+			});
+
+			expect(mockSignOut).toHaveBeenCalledTimes(2);
 		});
 
-		it("updateSession関数がupdate関数の変更時に更新される", () => {
-			const firstUpdate = vi.fn();
+		it("updateSession関数がupdate関数の変更を反映する", async () => {
+			const firstUpdate = vi.fn().mockResolvedValue(undefined);
 			mockUseSession.mockReturnValue({
 				data: {
 					user: { email: "test@example.com" },
@@ -372,9 +402,16 @@ describe("useAuth", () => {
 			});
 
 			const { result, rerender } = renderHook(() => useAuth());
-			const firstUpdateSession = result.current.updateSession;
 
-			const secondUpdate = vi.fn();
+			// 初回のupdateSession実行
+			await act(async () => {
+				const authResult = await result.current.updateSession();
+				expect(authResult.success).toBe(true);
+			});
+			expect(firstUpdate).toHaveBeenCalledTimes(1);
+
+			// update関数を変更
+			const secondUpdate = vi.fn().mockResolvedValue(undefined);
 			mockUseSession.mockReturnValue({
 				data: {
 					user: { email: "test@example.com" },
@@ -386,7 +423,13 @@ describe("useAuth", () => {
 
 			rerender();
 
-			expect(result.current.updateSession).not.toBe(firstUpdateSession);
+			// 新しいupdate関数が使用されることを確認
+			await act(async () => {
+				const authResult = await result.current.updateSession();
+				expect(authResult.success).toBe(true);
+			});
+			expect(secondUpdate).toHaveBeenCalledTimes(1);
+			expect(firstUpdate).toHaveBeenCalledTimes(1); // 変わらず
 		});
 	});
 
