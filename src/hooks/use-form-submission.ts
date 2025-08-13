@@ -20,6 +20,26 @@ export interface SubmissionResult<T = unknown> {
 	};
 }
 
+// 成功時の結果型
+export interface SuccessResult<T = unknown> extends SubmissionResult<T> {
+	success: true;
+	data?: T;
+	error?: never;
+}
+
+// エラー時の結果型
+export interface ErrorResult extends SubmissionResult<never> {
+	success: false;
+	data?: never;
+	error: {
+		message: string;
+		code?: string;
+		details?: {
+			fieldErrors?: Record<string, string>;
+		};
+	};
+}
+
 // エラー処理オプションの型定義
 export interface ErrorHandlingOptions {
 	/** フィールドエラーをフォームに自動設定するか */

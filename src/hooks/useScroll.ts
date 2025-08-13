@@ -3,73 +3,78 @@
 import { useEffect, useRef, useState } from "react";
 
 /**
+ * スクロール方向の型
+ */
+export type ScrollDirection = "up" | "down" | null;
+
+/**
  * スクロール状態の追跡用インターフェース
  */
-interface ScrollState {
+export interface ScrollState {
 	/**
 	 * 現在のスクロール方向（上/下/初期値はnull）
 	 */
-	direction: "up" | "down" | null;
+	readonly direction: ScrollDirection;
 
 	/**
 	 * 要素を表示すべきかどうか
 	 */
-	visible: boolean;
+	readonly visible: boolean;
 
 	/**
 	 * 現在のスクロール位置（px）
 	 */
-	scrollY: number;
+	readonly scrollY: number;
 
 	/**
 	 * ページ最上部にいるかどうか
 	 */
-	isAtTop: boolean;
+	readonly isAtTop: boolean;
 
 	/**
 	 * ページ最下部に到達したかどうか
 	 */
-	isAtBottom: boolean;
+	readonly isAtBottom: boolean;
 
 	/**
 	 * 前回のスクロール位置（px）
 	 */
-	previousScrollY: number;
+	readonly previousScrollY: number;
 }
 
 /**
  * useScrollフックの設定オプション
  */
-interface UseScrollOptions {
+export interface UseScrollOptions {
 	/**
 	 * スクロールアクションを実行する閾値（px）
 	 * @default 10
 	 */
-	threshold?: number;
+	readonly threshold?: number;
 
 	/**
 	 * 上部での常時表示マージン（px）
 	 * @default 0
 	 */
-	topOffset?: number;
+	readonly topOffset?: number;
 
 	/**
 	 * 方向変化時のみ状態を更新するかどうか
 	 * @default false
 	 */
-	onlyDirectionChange?: boolean;
+	readonly onlyDirectionChange?: boolean;
 
 	/**
 	 * スクロールイベントの発火間隔（ms）
 	 * @default 100
 	 */
-	throttleMs?: number;
+	readonly throttleMs?: number;
 
 	/**
 	 * 初期表示状態
 	 * @default true
 	 */
-	initiallyVisible?: boolean;
+	readonly initiallyVisible?: boolean;
 }
 
 /**

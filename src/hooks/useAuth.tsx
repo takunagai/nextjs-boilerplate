@@ -1,14 +1,37 @@
 "use client";
 
 import { signIn, signOut, useSession } from "next-auth/react";
+import type { Session } from "next-auth";
 import type { AuthResult } from "@/lib/auth/auth-errors";
 import { AUTH_ERROR_CODES, getAuthErrorMessage } from "@/lib/auth/auth-errors";
+
+/**
+ * ログイン認証情報の型
+ */
+export interface LoginCredentials {
+	readonly email: string;
+	readonly password: string;
+}
+
+/**
+ * useAuthフックの戻り値型
+ */
+export interface UseAuthReturn {
+	readonly session: Session | null;
+	readonly status: "loading" | "authenticated" | "unauthenticated";
+	readonly isLoading: boolean;
+	readonly isAuthenticated: boolean;
+	readonly user: Session["user"] | undefined;
+	readonly login: (credentials: LoginCredentials) => Promise<AuthResult>;
+	readonly logout: () => Promise<AuthResult>;
+	readonly updateSession: () => Promise<AuthResult>;
+}
 
 /**
  * 認証状態と認証関連機能へのアクセスを提供するカスタムフック
  * クライアントコンポーネントで使用可能
  */
-export function useAuth() {
+export function useAuth(): UseAuthReturn {
 	const { data: session, status, update } = useSession();
 	const isLoading = status === "loading";
 	const isAuthenticated = status === "authenticated";
@@ -16,10 +39,7 @@ export function useAuth() {
 	/**
 	 * ログイン関数
 	 */
-	const login = async (credentials: {
-		email: string;
-		password: string;
-	}): Promise<AuthResult> => {
+	const login = async (credentials: LoginCredentials): Promise<AuthResult> => {
 		try {
 			// 入力値の検証
 			if (!credentials.email || !credentials.password) {
