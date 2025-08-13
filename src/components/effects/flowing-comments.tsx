@@ -137,33 +137,17 @@ export function FlowingComments({
 	if (!isVisible) return null;
 
 	return (
-		<>
-			{/* CSS キーフレームアニメーションを定義 */}
-			<style dangerouslySetInnerHTML={{
-				__html: `
-					@keyframes flowRight {
-						0% {
-							transform: translateX(100vw);
-							opacity: 0;
-						}
-						5% {
-							opacity: 1;
-						}
-						95% {
-							opacity: 1;
-						}
-						100% {
-							transform: translateX(-100%);
-							opacity: 0;
-						}
-					}
-				`
-			}} />
-			
-			<div
-				className={`absolute inset-0 overflow-hidden pointer-events-none ${className}`}
-				aria-hidden="true"
-			>
+		<div
+			className={[
+				"absolute inset-0 overflow-hidden pointer-events-none",
+				className,
+			].filter(Boolean).join(" ")}
+			aria-hidden="true"
+			style={{
+				// CSS変数でキーフレームアニメーションを定義
+				"--flow-animation": "flowRight",
+			} as React.CSSProperties & { [key: string]: string }}
+		>
 				{comments.map((comment) => (
 					<div
 						key={comment.id}
@@ -172,13 +156,12 @@ export function FlowingComments({
 							top: `${comment.top}%`,
 							fontSize: `${comment.size}rem`,
 							animation: `flowRight ${comment.duration}s linear ${comment.delay}s infinite both`,
-						}}
+						} satisfies React.CSSProperties}
 					>
 						{comment.text}
 					</div>
 				))}
-			</div>
-		</>
+		</div>
 	);
 }
 
@@ -193,7 +176,7 @@ export function FlowingCommentsMobile({
 	return (
 		<FlowingComments
 			maxComments={8}
-			className={`hidden sm:block ${className}`}
+			className={["hidden sm:block", className].filter(Boolean).join(" ")}
 		/>
 	);
 }
@@ -209,7 +192,7 @@ export function FlowingCommentsDesktop({
 	return (
 		<FlowingComments
 			maxComments={20}
-			className={`hidden md:block ${className}`}
+			className={["hidden md:block", className].filter(Boolean).join(" ")}
 		/>
 	);
 }
