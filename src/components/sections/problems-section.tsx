@@ -1,6 +1,6 @@
-import { FaCheck } from "react-icons/fa6";
 import { Container } from "@/components/ui/container";
 import { Heading } from "@/components/ui/heading";
+import { FaCheck } from "react-icons/fa6";
 
 const problems = [
 	"ウェブサイトを作りたいけど予算が...",
@@ -23,6 +23,7 @@ export function ProblemsSection() {
 				<div className="max-w-2xl mx-auto space-y-4 mb-12">
 					{problems.map((problem, index) => (
 						<div
+							// biome-ignore lint/suspicious/noArrayIndexKey: 配列は定数なので内容変更がない
 							key={index}
 							className="flex items-start gap-3 p-4 bg-background rounded-lg shadow-sm hover:shadow-md transition-shadow"
 						>
