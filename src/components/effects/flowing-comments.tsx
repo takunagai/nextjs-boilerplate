@@ -109,7 +109,7 @@ export function FlowingComments({
 
 		for (let i = 0; i < maxComments; i++) {
 			initialComments.push({
-				id: i,
+				id: Math.random() * 1000000 + Date.now() + i, // 一意なIDを生成
 				text: COMMENTS[Math.floor(Math.random() * COMMENTS.length)],
 				top: Math.random() * 80 + 10, // 10%〜90%の範囲
 				duration: Math.random() * 10 + 15, // 15〜25秒
@@ -129,6 +129,7 @@ export function FlowingComments({
 
 					return {
 						...comment,
+						id: Math.random() * 1000000 + Date.now() + Math.random(), // 一意なIDを再生成
 						text: COMMENTS[Math.floor(Math.random() * COMMENTS.length)],
 						top: Math.random() * 80 + 10,
 						duration: Math.random() * 10 + 15,
