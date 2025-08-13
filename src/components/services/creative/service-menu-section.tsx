@@ -246,7 +246,7 @@ export function CreativeServiceMenuSection() {
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 							{activeService.items.map((item, index) => (
 								<Card
-									key={index}
+									key={item.title}
 									className="h-full hover:shadow-lg transition-all duration-300"
 								>
 									<CardHeader>

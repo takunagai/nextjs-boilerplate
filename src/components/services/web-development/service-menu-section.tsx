@@ -104,9 +104,9 @@ export function ServiceMenuSection() {
 								</CardHeader>
 								<CardContent className="space-y-4">
 									<ul className="space-y-3">
-										{service.features.map((feature, index) => (
+										{service.features.map((feature) => (
 											<li
-												key={index}
+												key={feature}
 												className="text-sm text-muted-foreground flex items-start gap-2"
 											>
 												<span className="text-primary text-xs mt-1">•</span>

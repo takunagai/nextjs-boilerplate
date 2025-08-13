@@ -189,7 +189,7 @@ export function CreativePricingSection() {
 											{/* 価格データ */}
 											{category.items.map((item, index) => (
 												<div
-													key={index}
+													key={item.service || `item-${index}`}
 													className={`grid grid-cols-4 gap-4 p-4 border-b last:border-b-0 items-center ${
 														item.highlight
 															? "bg-primary/5 border-primary/20"

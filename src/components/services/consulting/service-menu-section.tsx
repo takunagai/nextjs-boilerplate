@@ -138,9 +138,9 @@ export function ConsultingServiceMenuSection() {
 											こんな質問・内容OK！
 										</h4>
 										<ul className="space-y-2">
-											{service.features.map((feature, index) => (
+											{service.features.map((feature) => (
 												<li
-													key={index}
+													key={feature}
 													className="text-sm text-muted-foreground flex items-start gap-2"
 												>
 													<span className="text-primary text-xs mt-1">•</span>
@@ -154,9 +154,9 @@ export function ConsultingServiceMenuSection() {
 											受講後にはこんな成果が！
 										</h4>
 										<ul className="space-y-2">
-											{service.benefits.map((benefit, index) => (
+											{service.benefits.map((benefit) => (
 												<li
-													key={index}
+													key={benefit}
 													className="text-sm text-foreground flex items-start gap-2"
 												>
 													<span className="text-green-600 text-xs mt-1">✓</span>
