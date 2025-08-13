@@ -24,6 +24,52 @@ import { TableRow } from "./TableRow";
 import type { ColumnDef, Row, SortConfig, TableComponents } from "./types";
 
 /**
+ * 型安全なソート関数
+ */
+function sortValues(
+	aValue: unknown,
+	bValue: unknown,
+	direction: "asc" | "desc",
+): number {
+	// 同じ値の場合
+	if (aValue === bValue) return 0;
+
+	// null/undefined の処理
+	if (aValue === null || aValue === undefined) return 1;
+	if (bValue === null || bValue === undefined) return -1;
+
+	// 文字列の比較
+	if (typeof aValue === "string" && typeof bValue === "string") {
+		const result = aValue.localeCompare(bValue);
+		return direction === "asc" ? result : -result;
+	}
+
+	// 数値の比較
+	if (typeof aValue === "number" && typeof bValue === "number") {
+		const result = aValue - bValue;
+		return direction === "asc" ? result : -result;
+	}
+
+	// 日付の比較
+	if (aValue instanceof Date && bValue instanceof Date) {
+		const result = aValue.getTime() - bValue.getTime();
+		return direction === "asc" ? result : -result;
+	}
+
+	// ブール値の比較
+	if (typeof aValue === "boolean" && typeof bValue === "boolean") {
+		const result = aValue === bValue ? 0 : aValue ? 1 : -1;
+		return direction === "asc" ? result : -result;
+	}
+
+	// その他の型の場合は文字列に変換して比較
+	const aStr = String(aValue);
+	const bStr = String(bValue);
+	const result = aStr.localeCompare(bStr);
+	return direction === "asc" ? result : -result;
+}
+
+/**
  * テーブルコンポーネントのバリアント定義
  */
 const tableVariants = cva(
@@ -108,7 +154,7 @@ function BaseTable<TData = Record<string, unknown>>({
 	);
 
 	// ソートリクエスト処理
-	const requestSort = (key: keyof TData | (string & {})) => {
+	const requestSort = React.useCallback((key: keyof TData | (string & {})) => {
 		setSortConfig((prevSortConfig) => {
 			if (
 				prevSortConfig &&
@@ -126,40 +172,25 @@ function BaseTable<TData = Record<string, unknown>>({
 				return { key, direction: "asc" };
 			}
 		});
-	};
+	}, []);
 
-	// ソート済みデータの計算
-	const sortedData = (() => {
+	// ソート済みデータの計算（メモ化）
+	const sortedData = React.useMemo(() => {
 		if (!sortConfig || !data.length) return data;
 
 		return [...data].sort((a, b) => {
 			const aValue = a[sortConfig.key as keyof TData];
 			const bValue = b[sortConfig.key as keyof TData];
 
-			if (aValue === bValue) return 0;
-
-			// 異なる型に対して適切に処理
-			if (typeof aValue === "string" && typeof bValue === "string") {
-				return sortConfig.direction === "asc"
-					? aValue.localeCompare(bValue)
-					: bValue.localeCompare(aValue);
-			}
-
-			if (aValue === null || aValue === undefined) return 1;
-			if (bValue === null || bValue === undefined) return -1;
-
-			return sortConfig.direction === "asc"
-				? aValue > bValue
-					? 1
-					: -1
-				: aValue < bValue
-					? 1
-					: -1;
+			return sortValues(aValue, bValue, sortConfig.direction);
 		});
-	})();
+	}, [data, sortConfig]);
 
-	// 行データの生成
-	const rows: Row<TData>[] = sortedData.map((item) => ({ original: item }));
+	// 行データの生成（メモ化）
+	const rows: Row<TData>[] = React.useMemo(
+		() => sortedData.map((item) => ({ original: item })),
+		[sortedData],
+	);
 
 	return (
 		<table
