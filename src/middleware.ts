@@ -168,14 +168,7 @@ export async function middleware(request: NextRequest) {
 // ミドルウェアを適用するパス
 export const config = {
 	matcher: [
-		// APIルートとCSRF保護が必要なパス
-		"/api/:path*",
-		// レート制限を適用するパス
-		"/login",
-		"/register",
-		"/dashboard/:path*",
-		"/admin/:path*",
-		"/profile/:path*",
-		"/settings/:path*",
+		// すべてのページとAPIルートにセキュリティヘッダーを適用
+		"/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml).*)",
 	],
 };
