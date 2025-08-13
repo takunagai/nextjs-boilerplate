@@ -1,22 +1,21 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { checkIsMobile } from "@/lib/particle/particle-utils";
+import { useEffect, useState } from "react";
 
 /**
  * モバイルデバイス判定を行うカスタムフック
- * 
+ *
  * 画面幅768px未満をモバイルと判定し、リサイズイベントに応じて
  * リアルタイムで値を更新する
- * 
+ *
  * @param breakpoint ブレイクポイント（デフォルト: 768px）
  * @returns {boolean} モバイルデバイスかどうか
- * 
+ *
  * @example
  * ```tsx
  * function ResponsiveComponent() {
  *   const isMobile = useIsMobile();
- *   
+ *
  *   return (
  *     <div>
  *       {isMobile ? (
@@ -28,18 +27,18 @@ import { checkIsMobile } from "@/lib/particle/particle-utils";
  *   );
  * }
  * ```
- * 
+ *
  * @example
  * ```tsx
  * // カスタムブレイクポイント
  * function CustomComponent() {
  *   const isTablet = useIsMobile(1024); // 1024px未満をモバイル扱い
- *   
+ *
  *   return isTablet ? <TabletView /> : <DesktopView />;
  * }
  * ```
  */
-export function useIsMobile(breakpoint: number = 768): boolean {
+export function useIsMobile(breakpoint = 768): boolean {
 	// SSR時のデフォルト値はfalse
 	const [isMobile, setIsMobile] = useState(() => {
 		if (typeof window === "undefined") return false;

@@ -1,14 +1,14 @@
 import Link from "next/link";
 import {
+	FaArrowRight,
+	FaChalkboardUser,
 	FaCode,
 	FaPaintbrush,
-	FaChalkboardUser,
-	FaArrowRight,
 } from "react-icons/fa6";
+import { FlowingComments } from "@/components/effects/flowing-comments";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
-import { FlowingComments } from "@/components/effects/flowing-comments";
 import { Heading } from "@/components/ui/heading";
 
 const services = [
@@ -70,8 +70,13 @@ export function ServicesSection() {
 		<section className="w-full py-16 md:py-24 bg-background relative overflow-hidden">
 			{/* 背景のコメント流しエフェクト */}
 			<FlowingComments maxComments={25} />
-			
-			<Container width="2xl" paddingY="lg" paddingX="lg" className="relative z-10">
+
+			<Container
+				width="2xl"
+				paddingY="lg"
+				paddingX="lg"
+				className="relative z-10"
+			>
 				<div className="text-center mb-12">
 					<Heading as="h2" align="center" className="mb-4">
 						3つのサービス紹介

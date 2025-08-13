@@ -111,7 +111,7 @@ export function Header({
 	const isDesktop = useMediaQuery(mediaQueryString);
 
 	// ローカルストレージに画面サイズ情報を保存
-	const [storedViewportInfo, setStoredViewportInfo] = useLocalStorage<{
+	const [_storedViewportInfo, setStoredViewportInfo] = useLocalStorage<{
 		isDesktop: boolean;
 		timestamp: number;
 	}>("viewport-info", { isDesktop: false, timestamp: 0 });

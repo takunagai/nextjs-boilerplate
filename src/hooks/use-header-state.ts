@@ -5,11 +5,10 @@
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useIsClient, useLocalStorage, useMediaQuery } from "usehooks-ts";
-
-import { useScroll } from "@/hooks/useScroll";
-import type { HeaderLink } from "@/lib/constants/header-navigation";
 import { useAnnouncementBar } from "@/components/layout/announcement-bar-context";
 import type { NavItem } from "@/components/layout/header";
+import { useScroll } from "@/hooks/useScroll";
+import type { HeaderLink } from "@/lib/constants/header-navigation";
 
 // メディアクエリ文字列の生成（メモ化対象）
 const getMediaQueryString = (breakpoint: "sm" | "md" | "lg" | "xl"): string => {
@@ -38,23 +37,23 @@ export interface UseHeaderStateReturn {
 	isOpen: boolean;
 	setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 	pathname: string;
-	
+
 	// スクロール関連
 	scrollState: {
 		visible: boolean;
 		isAtTop: boolean;
 		direction: "up" | "down" | null;
 	};
-	
+
 	// アナウンスバー関連
 	announcementState: {
 		isVisible: boolean;
 		height: number;
 	};
-	
+
 	// ナビゲーション
 	navItems: NavItem[];
-	
+
 	// 計算されたスタイル状態
 	shouldHide: boolean;
 	headerTop: number;
@@ -70,33 +69,33 @@ export function useHeaderState({
 }: UseHeaderStateOptions): UseHeaderStateReturn {
 	const pathname = usePathname();
 	const [isOpen, setIsOpen] = useState(false);
-	
+
 	// クライアントサイドでのレンダリングかを判定
 	const isClient = useIsClient();
-	
+
 	// メディアクエリに基づいてデスクトップかどうかを判定
 	const mediaQueryString = useMemo(
 		() => getMediaQueryString(mobileMenuBreakpoint),
 		[mobileMenuBreakpoint],
 	);
 	const isDesktop = useMediaQuery(mediaQueryString);
-	
+
 	// アナウンスバー状態
 	const announcementState = useAnnouncementBar();
-	
+
 	// ローカルストレージに画面サイズ情報を保存（最適化済み）
 	const [, setStoredViewportInfo] = useLocalStorage<{
 		isDesktop: boolean;
 		timestamp: number;
 	}>("viewport-info", { isDesktop: false, timestamp: 0 });
-	
+
 	// 画面サイズ情報を更新（クライアントサイドのみ、必要時のみ更新）
 	useEffect(() => {
 		if (isClient && isDesktop !== undefined) {
 			setStoredViewportInfo((prev) => {
 				// 値が変わった場合のみ更新（無駄な更新を防止）
 				if (prev.isDesktop === isDesktop) return prev;
-				
+
 				return {
 					isDesktop,
 					timestamp: Date.now(),
@@ -104,20 +103,20 @@ export function useHeaderState({
 			});
 		}
 	}, [isClient, isDesktop, setStoredViewportInfo]);
-	
+
 	// スクロール状態を取得
 	const scrollState = useScroll({
 		threshold: 5,
 		throttleMs: 50,
 	});
-	
+
 	// デスクトップサイズになったらドロワーメニューを閉じる
 	useEffect(() => {
 		if (isDesktop && isOpen) {
 			setIsOpen(false);
 		}
 	}, [isDesktop, isOpen]);
-	
+
 	// ナビゲーションアイテムにアクティブステートを追加（メモ化）
 	const navItems = useMemo(() => {
 		// HeaderLinkからNavItemに変換する関数
@@ -128,26 +127,28 @@ export function useHeaderState({
 			active: pathname === item.href,
 			children: item.submenu?.map(convertToNavItem),
 		});
-		
+
 		return items.map(convertToNavItem);
 	}, [items, pathname]);
-	
+
 	// 計算された状態（メモ化）
 	const shouldHide = useMemo(
 		() => hideOnScroll && !isOpen && !scrollState.visible,
 		[hideOnScroll, isOpen, scrollState.visible],
 	);
-	
+
 	const headerTop = useMemo(
 		() => (announcementState.isVisible ? announcementState.height : 0),
 		[announcementState.isVisible, announcementState.height],
 	);
-	
+
 	// setIsOpen のメモ化（正しい型で）
-	const setIsOpenMemoized = useCallback<React.Dispatch<React.SetStateAction<boolean>>>((value) => {
+	const setIsOpenMemoized = useCallback<
+		React.Dispatch<React.SetStateAction<boolean>>
+	>((value) => {
 		setIsOpen(value);
 	}, []);
-	
+
 	return {
 		// 基本状態
 		isClient,
@@ -155,16 +156,16 @@ export function useHeaderState({
 		isOpen,
 		setIsOpen: setIsOpenMemoized,
 		pathname,
-		
+
 		// スクロール関連
 		scrollState,
-		
+
 		// アナウンスバー関連
 		announcementState,
-		
+
 		// ナビゲーション
 		navItems,
-		
+
 		// 計算されたスタイル状態
 		shouldHide,
 		headerTop,

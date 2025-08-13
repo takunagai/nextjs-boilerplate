@@ -176,7 +176,7 @@ describe("Map Utility Functions", () => {
 
 	describe("Helper Functions", () => {
 		// Spy on generateGoogleMapEmbedUrl to check its arguments
-		let generateUrlSpy: ReturnType<typeof vi.spyOn>;
+		let _generateUrlSpy: ReturnType<typeof vi.spyOn>;
 
 		beforeEach(() => {
 			// It's better to import the module and spy on its exports

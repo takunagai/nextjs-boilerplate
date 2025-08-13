@@ -64,7 +64,7 @@ export const generateAriaLabel = {
 	action: (action: string, target?: string): string => {
 		return target ? `${action} ${target}` : action;
 	},
-	
+
 	/**
 	 * ナビゲーション用のaria-labelを生成
 	 */
@@ -72,20 +72,23 @@ export const generateAriaLabel = {
 		const directionText = direction === "previous" ? "前" : "次";
 		return context ? `${context}の${directionText}` : `${directionText}へ`;
 	},
-	
+
 	/**
 	 * 状態用のaria-labelを生成
 	 */
-	state: (element: string, state: "open" | "closed" | "expanded" | "collapsed"): string => {
+	state: (
+		element: string,
+		state: "open" | "closed" | "expanded" | "collapsed",
+	): string => {
 		const stateText = {
 			open: "開く",
-			closed: "閉じる", 
+			closed: "閉じる",
 			expanded: "展開する",
 			collapsed: "折りたたむ",
 		}[state];
 		return `${element}を${stateText}`;
 	},
-	
+
 	/**
 	 * カウント情報付きのaria-labelを生成
 	 */
@@ -105,36 +108,38 @@ export const keyboardHandlers = {
 			callback();
 		}
 	},
-	
+
 	/**
 	 * 矢印キーナビゲーション
 	 */
-	arrowKeys: (callbacks: {
-		onLeft?: () => void;
-		onRight?: () => void;
-		onUp?: () => void;
-		onDown?: () => void;
-	}) => (event: React.KeyboardEvent) => {
-		switch (event.key) {
-			case "ArrowLeft":
-				event.preventDefault();
-				callbacks.onLeft?.();
-				break;
-			case "ArrowRight":
-				event.preventDefault();
-				callbacks.onRight?.();
-				break;
-			case "ArrowUp":
-				event.preventDefault();
-				callbacks.onUp?.();
-				break;
-			case "ArrowDown":
-				event.preventDefault();
-				callbacks.onDown?.();
-				break;
-		}
-	},
-	
+	arrowKeys:
+		(callbacks: {
+			onLeft?: () => void;
+			onRight?: () => void;
+			onUp?: () => void;
+			onDown?: () => void;
+		}) =>
+		(event: React.KeyboardEvent) => {
+			switch (event.key) {
+				case "ArrowLeft":
+					event.preventDefault();
+					callbacks.onLeft?.();
+					break;
+				case "ArrowRight":
+					event.preventDefault();
+					callbacks.onRight?.();
+					break;
+				case "ArrowUp":
+					event.preventDefault();
+					callbacks.onUp?.();
+					break;
+				case "ArrowDown":
+					event.preventDefault();
+					callbacks.onDown?.();
+					break;
+			}
+		},
+
 	/**
 	 * Escapeキーハンドラー
 	 */
@@ -153,31 +158,31 @@ export const focusManagement = {
 	 */
 	focus: (element: HTMLElement | null, delay = 0) => {
 		if (!element) return;
-		
+
 		if (delay > 0) {
 			setTimeout(() => element.focus(), delay);
 		} else {
 			element.focus();
 		}
 	},
-	
+
 	/**
 	 * フォーカス可能な要素を取得
 	 */
 	getFocusableElements: (container: HTMLElement): HTMLElement[] => {
 		const focusableSelectors = [
-			'a[href]',
-			'button:not([disabled])',
-			'textarea:not([disabled])',
-			'input:not([disabled])',
-			'select:not([disabled])',
+			"a[href]",
+			"button:not([disabled])",
+			"textarea:not([disabled])",
+			"input:not([disabled])",
+			"select:not([disabled])",
 			'[tabindex]:not([tabindex="-1"])',
 			'[contenteditable="true"]',
-		].join(', ');
-		
+		].join(", ");
+
 		return Array.from(container.querySelectorAll(focusableSelectors));
 	},
-	
+
 	/**
 	 * フォーカストラップの作成
 	 */
@@ -185,7 +190,7 @@ export const focusManagement = {
 		const focusableElements = focusManagement.getFocusableElements(container);
 		const firstElement = focusableElements[0];
 		const lastElement = focusableElements[focusableElements.length - 1];
-		
+
 		const handleKeyDown = (event: KeyboardEvent) => {
 			if (event.key === "Tab") {
 				if (event.shiftKey) {
@@ -203,12 +208,12 @@ export const focusManagement = {
 				}
 			}
 		};
-		
+
 		container.addEventListener("keydown", handleKeyDown);
-		
+
 		// 初期フォーカス
 		firstElement?.focus();
-		
+
 		// クリーンアップ関数
 		return () => {
 			container.removeEventListener("keydown", handleKeyDown);
@@ -223,23 +228,28 @@ export const accessibility = {
 	 */
 	checkPage: () => {
 		if (process.env.NODE_ENV !== "development") return;
-		
+
 		const issues: Array<{
 			check: AccessibilityCheckItem;
 			elements: NodeListOf<Element>;
 		}> = [];
-		
+
 		ACCESSIBILITY_CHECKS.forEach((check) => {
 			const elements = document.querySelectorAll(check.selector);
 			if (elements.length > 0) {
 				issues.push({ check, elements });
 			}
 		});
-		
+
 		if (issues.length > 0) {
 			console.group("🔍 アクセシビリティチェック結果");
 			issues.forEach(({ check, elements }) => {
-				const icon = check.level === "error" ? "❌" : check.level === "warning" ? "⚠️" : "ℹ️";
+				const icon =
+					check.level === "error"
+						? "❌"
+						: check.level === "warning"
+							? "⚠️"
+							: "ℹ️";
 				console.warn(`${icon} ${check.description}`, elements);
 			});
 			console.groupEnd();
@@ -247,26 +257,34 @@ export const accessibility = {
 			console.log("✅ アクセシビリティチェック: 問題なし");
 		}
 	},
-	
+
 	/**
 	 * 特定の要素のアクセシビリティをチェック
 	 */
 	checkElement: (element: HTMLElement): string[] => {
 		const issues: string[] = [];
-		
+
 		// 基本的なチェック
 		if (element.tagName === "IMG" && !element.getAttribute("alt")) {
 			issues.push("画像にalt属性が設定されていません");
 		}
-		
-		if (element.tagName === "BUTTON" && !element.textContent?.trim() && !element.getAttribute("aria-label")) {
+
+		if (
+			element.tagName === "BUTTON" &&
+			!element.textContent?.trim() &&
+			!element.getAttribute("aria-label")
+		) {
 			issues.push("ボタンにラベルが設定されていません");
 		}
-		
-		if (element.getAttribute("role") === "button" && !element.hasAttribute("tabindex") && element.tagName !== "BUTTON") {
+
+		if (
+			element.getAttribute("role") === "button" &&
+			!element.hasAttribute("tabindex") &&
+			element.tagName !== "BUTTON"
+		) {
 			issues.push("ボタンロールの要素にtabindexが設定されていません");
 		}
-		
+
 		return issues;
 	},
 };
@@ -278,49 +296,57 @@ export const colorContrast = {
 	 */
 	hexToRgb: (hex: string): { r: number; g: number; b: number } | null => {
 		const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-		return result ? {
-			r: parseInt(result[1], 16),
-			g: parseInt(result[2], 16),
-			b: parseInt(result[3], 16)
-		} : null;
+		return result
+			? {
+					r: Number.parseInt(result[1], 16),
+					g: Number.parseInt(result[2], 16),
+					b: Number.parseInt(result[3], 16),
+				}
+			: null;
 	},
-	
+
 	/**
 	 * 相対輝度を計算
 	 */
 	getLuminance: (r: number, g: number, b: number): number => {
 		const normalize = (value: number) => {
 			const normalized = value / 255;
-			return normalized <= 0.03928 
-				? normalized / 12.92 
-				: Math.pow((normalized + 0.055) / 1.055, 2.4);
+			return normalized <= 0.03928
+				? normalized / 12.92
+				: ((normalized + 0.055) / 1.055) ** 2.4;
 		};
-		
-		return 0.2126 * normalize(r) + 0.7152 * normalize(g) + 0.0722 * normalize(b);
+
+		return (
+			0.2126 * normalize(r) + 0.7152 * normalize(g) + 0.0722 * normalize(b)
+		);
 	},
-	
+
 	/**
 	 * コントラスト比を計算
 	 */
 	getContrastRatio: (color1: string, color2: string): number => {
 		const rgb1 = colorContrast.hexToRgb(color1);
 		const rgb2 = colorContrast.hexToRgb(color2);
-		
+
 		if (!rgb1 || !rgb2) return 1;
-		
+
 		const lum1 = colorContrast.getLuminance(rgb1.r, rgb1.g, rgb1.b);
 		const lum2 = colorContrast.getLuminance(rgb2.r, rgb2.g, rgb2.b);
-		
+
 		const brightest = Math.max(lum1, lum2);
 		const darkest = Math.min(lum1, lum2);
-		
+
 		return (brightest + 0.05) / (darkest + 0.05);
 	},
-	
+
 	/**
 	 * WCAG AA基準でのコントラストチェック
 	 */
-	meetsWCAG: (color1: string, color2: string, level: "AA" | "AAA" = "AA"): boolean => {
+	meetsWCAG: (
+		color1: string,
+		color2: string,
+		level: "AA" | "AAA" = "AA",
+	): boolean => {
 		const ratio = colorContrast.getContrastRatio(color1, color2);
 		return level === "AA" ? ratio >= 4.5 : ratio >= 7;
 	},

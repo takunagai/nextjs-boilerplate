@@ -22,7 +22,7 @@ const AnnouncementBarContext = createContext<AnnouncementBarContextType>({
 
 export function AnnouncementBarProvider({ children }: { children: ReactNode }) {
 	const [isVisible, setIsVisible] = useState(false);
-	const [isClosing, setIsClosing] = useState(false);
+	const [_isClosing, setIsClosing] = useState(false);
 	const height = 40; // h-10 = 40px
 
 	useEffect(() => {

@@ -3,11 +3,7 @@
 
 import type * as React from "react";
 import { cn } from "@/lib/utils";
-import type {
-	TableCellProps as BaseTableCellProps,
-	ColumnDef,
-	Row,
-} from "./types";
+import type { TableCellProps as BaseTableCellProps } from "./types";
 
 // Update TableCellProps to be generic
 export type TableCellProps<TData> = BaseTableCellProps<TData>;

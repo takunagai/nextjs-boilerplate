@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 };
 
 // カテゴリフィルタリングのためのサーバーアクション
-async function getFilteredNews(category?: string) {
+async function _getFilteredNews(category?: string) {
 	"use server";
 
 	if (!category || category === "all") {

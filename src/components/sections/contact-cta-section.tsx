@@ -1,7 +1,3 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Container } from "@/components/ui/container";
-import { Heading } from "@/components/ui/heading";
 import Link from "next/link";
 import {
 	FaArrowRight,
@@ -9,6 +5,10 @@ import {
 	FaEnvelope,
 	FaLine,
 } from "react-icons/fa6";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Container } from "@/components/ui/container";
+import { Heading } from "@/components/ui/heading";
 
 const contactOptions = [
 	{

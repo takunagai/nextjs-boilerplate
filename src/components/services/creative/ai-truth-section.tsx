@@ -1,4 +1,4 @@
-import { FaTriangleExclamation, FaEye, FaRocket } from "react-icons/fa6";
+import { FaEye, FaRocket, FaTriangleExclamation } from "react-icons/fa6";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
 import { Heading } from "@/components/ui/heading";
@@ -49,7 +49,9 @@ export function CreativeAITruthSection() {
 										key={index}
 										className="text-sm text-foreground/80 flex items-start gap-3"
 									>
-										<span className="text-amber-600 dark:text-amber-400 text-xs mt-1 font-semibold">⚠️</span>
+										<span className="text-amber-600 dark:text-amber-400 text-xs mt-1 font-semibold">
+											⚠️
+										</span>
 										<span className="leading-relaxed">{problem}</span>
 									</li>
 								))}
@@ -79,7 +81,9 @@ export function CreativeAITruthSection() {
 										key={index}
 										className="text-sm text-foreground/80 flex items-start gap-3"
 									>
-										<span className="text-blue-600 dark:text-blue-400 text-xs mt-1 font-semibold">✨</span>
+										<span className="text-blue-600 dark:text-blue-400 text-xs mt-1 font-semibold">
+											✨
+										</span>
 										<span className="leading-relaxed">{solution}</span>
 									</li>
 								))}
@@ -100,9 +104,13 @@ export function CreativeAITruthSection() {
 							<div className="flex items-center justify-center gap-4 mb-4 flex-wrap">
 								<FaRocket className="w-8 h-8 text-purple-600 dark:text-purple-400" />
 								<Heading as="h3" className="text-2xl md:text-3xl font-bold">
-									<span className="text-blue-600 dark:text-blue-400">AI の速さ</span>
+									<span className="text-blue-600 dark:text-blue-400">
+										AI の速さ
+									</span>
 									<span className="text-muted-foreground mx-2">×</span>
-									<span className="text-purple-600 dark:text-purple-400">人のセンス</span>
+									<span className="text-purple-600 dark:text-purple-400">
+										人のセンス
+									</span>
 									<span className="text-muted-foreground mx-2">=</span>
 									<span className="text-primary bg-gradient-to-r from-primary to-primary-foreground bg-clip-text text-transparent">
 										高品質なのに低価格！
@@ -112,7 +120,8 @@ export function CreativeAITruthSection() {
 							<p className="text-foreground/70 max-w-2xl leading-relaxed">
 								この絶妙なバランスこそが、私たちの強みです。
 								<br />
-								AI の効率性と人間の創造性、両方の良いとこ取りで、最高のクリエイティブを提供します。
+								AI
+								の効率性と人間の創造性、両方の良いとこ取りで、最高のクリエイティブを提供します。
 							</p>
 						</CardContent>
 					</Card>

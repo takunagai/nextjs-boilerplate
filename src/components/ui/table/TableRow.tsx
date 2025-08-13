@@ -1,14 +1,9 @@
 "use client"; // Potentially, if TableCell becomes a client component or if row-specific
 // interactions are added later. For now, it just maps props.
 
-import * as React from "react";
 import { cn } from "@/lib/utils";
 import { TableCell } from "./TableCell"; // The actual cell component
-import type {
-	TableRowProps as BaseTableRowProps,
-	ColumnDef,
-	Row,
-} from "./types";
+import type { TableRowProps as BaseTableRowProps } from "./types";
 
 // Update TableRowProps to be generic
 export type TableRowProps<TData> = BaseTableRowProps<TData>;

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FaCalendarCheck, FaArrowRight, FaRocket } from "react-icons/fa6";
+import { FaArrowRight, FaCalendarCheck, FaRocket } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { Heading } from "@/components/ui/heading";

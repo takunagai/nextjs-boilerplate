@@ -48,7 +48,7 @@ const COMMENTS = [
 	"プラグイン開発",
 	"テーマ制作",
 	"運用保守サポート",
-	"技術コンサル可能"
+	"技術コンサル可能",
 ];
 
 interface Comment {
@@ -74,7 +74,7 @@ export function FlowingComments({
 
 	// 画面サイズに応じたサイズ設定を関数化
 	const getSizeParams = () => {
-		if (typeof window === 'undefined') return { baseSize: 1.2, sizeRange: 0.6 };
+		if (typeof window === "undefined") return { baseSize: 1.2, sizeRange: 0.6 };
 		const isDesktop = window.innerWidth >= 768;
 		return {
 			baseSize: isDesktop ? 1.2 : 0.7, // デスクトップ: 1.2-1.8rem, モバイル: 0.7-1.0rem
@@ -83,22 +83,27 @@ export function FlowingComments({
 	};
 
 	// 画面リサイズ時にコメントサイズを再計算
-	useWindowResize(() => {
-		const { baseSize, sizeRange } = getSizeParams();
-		setComments(prev => prev.map(comment => ({
-			...comment,
-			size: Math.random() * sizeRange + baseSize,
-		})));
-	}, { debounceMs: 150 });
+	useWindowResize(
+		() => {
+			const { baseSize, sizeRange } = getSizeParams();
+			setComments((prev) =>
+				prev.map((comment) => ({
+					...comment,
+					size: Math.random() * sizeRange + baseSize,
+				})),
+			);
+		},
+		{ debounceMs: 150 },
+	);
 
 	useEffect(() => {
 		// クライアントサイドでのみ実行
-		if (typeof window === 'undefined') return;
+		if (typeof window === "undefined") return;
 
 		// 初期コメントを生成
 		const initialComments: Comment[] = [];
 		const { baseSize, sizeRange } = getSizeParams();
-		
+
 		for (let i = 0; i < maxComments; i++) {
 			initialComments.push({
 				id: i,
@@ -114,25 +119,27 @@ export function FlowingComments({
 
 		// 定期的にコメントを更新
 		const interval = setInterval(() => {
-			setComments(prev => prev.map(comment => {
-				// 更新時も画面サイズに応じたサイズ設定
-				const { baseSize, sizeRange } = getSizeParams();
-				
-				return {
-					...comment,
-					text: COMMENTS[Math.floor(Math.random() * COMMENTS.length)],
-					top: Math.random() * 80 + 10,
-					duration: Math.random() * 10 + 15,
-					delay: Math.random() * 5, // 更新時は短い遅延
-					size: Math.random() * sizeRange + baseSize,
-				};
-			}));
+			setComments((prev) =>
+				prev.map((comment) => {
+					// 更新時も画面サイズに応じたサイズ設定
+					const { baseSize, sizeRange } = getSizeParams();
+
+					return {
+						...comment,
+						text: COMMENTS[Math.floor(Math.random() * COMMENTS.length)],
+						top: Math.random() * 80 + 10,
+						duration: Math.random() * 10 + 15,
+						delay: Math.random() * 5, // 更新時は短い遅延
+						size: Math.random() * sizeRange + baseSize,
+					};
+				}),
+			);
 		}, 30000); // 30秒ごとに更新
 
 		return () => {
 			clearInterval(interval);
 		};
-	}, [maxComments]);
+	}, [maxComments, getSizeParams]);
 
 	if (!isVisible) return null;
 
@@ -141,26 +148,32 @@ export function FlowingComments({
 			className={[
 				"absolute inset-0 overflow-hidden pointer-events-none",
 				className,
-			].filter(Boolean).join(" ")}
+			]
+				.filter(Boolean)
+				.join(" ")}
 			aria-hidden="true"
-			style={{
-				// CSS変数でキーフレームアニメーションを定義
-				"--flow-animation": "flowRight",
-			} as React.CSSProperties & { [key: string]: string }}
+			style={
+				{
+					// CSS変数でキーフレームアニメーションを定義
+					"--flow-animation": "flowRight",
+				} as React.CSSProperties & { [key: string]: string }
+			}
 		>
-				{comments.map((comment) => (
-					<div
-						key={comment.id}
-						className="absolute whitespace-nowrap text-muted-foreground/20 font-medium select-none"
-						style={{
+			{comments.map((comment) => (
+				<div
+					key={comment.id}
+					className="absolute whitespace-nowrap text-muted-foreground/20 font-medium select-none"
+					style={
+						{
 							top: `${comment.top}%`,
 							fontSize: `${comment.size}rem`,
 							animation: `flowRight ${comment.duration}s linear ${comment.delay}s infinite both`,
-						} satisfies React.CSSProperties}
-					>
-						{comment.text}
-					</div>
-				))}
+						} satisfies React.CSSProperties
+					}
+				>
+					{comment.text}
+				</div>
+			))}
 		</div>
 	);
 }

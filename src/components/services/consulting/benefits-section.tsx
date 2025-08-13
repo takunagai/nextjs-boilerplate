@@ -1,4 +1,4 @@
-import { FaFile, FaList, FaDiscord, FaEnvelope } from "react-icons/fa6";
+import { FaDiscord, FaEnvelope, FaFile, FaList } from "react-icons/fa6";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
 import { Heading } from "@/components/ui/heading";

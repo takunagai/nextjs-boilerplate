@@ -1,4 +1,4 @@
-import { FaShield, FaVideo, FaDesktop } from "react-icons/fa6";
+import { FaDesktop, FaShield, FaVideo } from "react-icons/fa6";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
 import { Heading } from "@/components/ui/heading";

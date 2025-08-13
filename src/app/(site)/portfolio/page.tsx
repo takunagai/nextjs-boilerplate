@@ -10,12 +10,10 @@ import { ContentItems } from "@/components/services/content-items";
 import { Badge } from "@/components/ui/badge";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Container } from "@/components/ui/container";
-import { Heading } from "@/components/ui/heading";
 import { PageHeader } from "@/components/ui/page-header";
 import { META } from "@/lib/constants";
 import {
 	getAllServiceTags,
-	getPortfolioItemsByTag,
 	portfolioCategories,
 	portfolioItems,
 } from "@/lib/data/portfolio-data";

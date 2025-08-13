@@ -182,7 +182,7 @@ export function Gallery({
 				goToNext();
 			}
 		},
-		[],
+		[closeModal, goToNext, goToPrevious],
 	);
 
 	useEffect(() => {
@@ -213,7 +213,7 @@ export function Gallery({
 				handleImageClick(item);
 			}
 		},
-		[lightbox],
+		[handleImageClick],
 	);
 
 	return (

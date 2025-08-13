@@ -1,8 +1,8 @@
 "use client";
 
 import { cva, type VariantProps } from "class-variance-authority";
-import * as React from "react";
 import type { HTMLAttributes } from "react";
+import * as React from "react";
 import { cn } from "@/lib/utils";
 import { Tbody } from "./primitives/Tbody";
 import { Td } from "./primitives/Td";
@@ -162,15 +162,15 @@ function BaseTable<TData = Record<string, unknown>>({
 				prevSortConfig.direction === "asc"
 			) {
 				return { key, direction: "desc" };
-			} else if (
+			}
+			if (
 				prevSortConfig &&
 				prevSortConfig.key === key &&
 				prevSortConfig.direction === "desc"
 			) {
 				return null; // 3回目のクリックでソートを解除
-			} else {
-				return { key, direction: "asc" };
 			}
+			return { key, direction: "asc" };
 		});
 	}, []);
 
@@ -207,11 +207,10 @@ function BaseTable<TData = Record<string, unknown>>({
 			)}
 			{...props}
 		>
-			{props.children ? (
-				props.children
-			) : (
-				<>
-					{columns && columns.length > 0 && (
+			{props.children
+				? props.children
+				: columns &&
+					columns.length > 0 && (
 						<>
 							<TableHeader
 								columns={columns}
@@ -221,8 +220,6 @@ function BaseTable<TData = Record<string, unknown>>({
 							<TableBody rows={rows} columns={columns} />
 						</>
 					)}
-				</>
-			)}
 		</table>
 	);
 }

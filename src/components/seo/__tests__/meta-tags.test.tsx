@@ -1,5 +1,4 @@
 import { vi } from "vitest";
-import { APP, META } from "@/lib/constants";
 import { generateMetadata, generateViewport } from "../meta-tags";
 
 // 定数のモック

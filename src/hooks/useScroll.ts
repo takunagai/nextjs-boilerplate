@@ -196,7 +196,7 @@ export function useScroll({
 			window.removeEventListener("scroll", handleScroll);
 			window.removeEventListener("resize", handleScroll);
 		};
-	}, [threshold, topOffset, onlyDirectionChange, throttleMs, throttle]);
+	}, [threshold, topOffset, onlyDirectionChange, throttleMs]);
 
 	return state;
 }

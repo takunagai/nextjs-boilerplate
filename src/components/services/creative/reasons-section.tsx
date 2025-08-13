@@ -1,9 +1,9 @@
 import {
 	FaBolt,
 	FaDollarSign,
+	FaHandshake,
 	FaShieldHeart,
 	FaWrench,
-	FaHandshake,
 } from "react-icons/fa6";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";

@@ -1,9 +1,9 @@
 import {
-	FaComments,
-	FaMagnifyingGlass,
-	FaGears,
 	FaCircleCheck,
+	FaComments,
+	FaGears,
 	FaHandshake,
+	FaMagnifyingGlass,
 } from "react-icons/fa6";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
@@ -91,7 +91,7 @@ export function ProcessSection() {
 				</div>
 
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-					{processSteps.map((step, index) => {
+					{processSteps.map((step, _index) => {
 						const IconComponent = step.icon;
 						return (
 							<Card

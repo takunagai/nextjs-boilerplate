@@ -1,8 +1,8 @@
 import {
-	FaDollarSign,
 	FaClock,
-	FaLayerGroup,
+	FaDollarSign,
 	FaHandshake,
+	FaLayerGroup,
 	FaShield,
 } from "react-icons/fa6";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";

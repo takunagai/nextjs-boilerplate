@@ -1,4 +1,4 @@
-import { FaTrophy, FaClock, FaDollarSign, FaRocket } from "react-icons/fa6";
+import { FaClock, FaDollarSign, FaRocket, FaTrophy } from "react-icons/fa6";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
 import { Heading } from "@/components/ui/heading";

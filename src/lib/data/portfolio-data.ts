@@ -58,7 +58,7 @@ export const portfolioCategories: PortfolioCategory[] = [
 ];
 
 // サービスタグからカテゴリーを判定する関数
-function getCategoryFromTags(
+function _getCategoryFromTags(
 	tags: string[],
 ): "web" | "design" | "photo" | "logo" | "shop" | "other" {
 	if (tags.includes("カラーミーショップ") || tags.includes("EC")) {
@@ -281,7 +281,5 @@ export function getPortfolioItemsByTag(tag?: string): PortfolioItem[] {
 	if (!tag || tag === "all") {
 		return portfolioItems;
 	}
-	return portfolioItems.filter(
-		(item) => item.servicesTags && item.servicesTags.includes(tag),
-	);
+	return portfolioItems.filter((item) => item.servicesTags?.includes(tag));
 }

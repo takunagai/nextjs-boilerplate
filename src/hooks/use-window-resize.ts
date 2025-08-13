@@ -5,39 +5,39 @@ import { debounce } from "./utils/performance";
 
 /**
  * ウィンドウリサイズイベントを監視するカスタムフック
- * 
+ *
  * 指定されたコールバック関数をwindowのresizeイベント発生時に実行し、
  * 初回マウント時にも実行する。デバウンス機能でパフォーマンスを最適化
- * 
+ *
  * @param callback リサイズ時に実行される関数
  * @param options オプション設定
- * 
+ *
  * @example
  * ```tsx
  * function ResponsiveComponent() {
  *   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
- *   
+ *
  *   useWindowResize(() => {
  *     setDimensions({
  *       width: window.innerWidth,
  *       height: window.innerHeight
  *     });
  *   });
- *   
+ *
  *   return <div>Size: {dimensions.width} x {dimensions.height}</div>;
  * }
  * ```
- * 
+ *
  * @example
  * ```tsx
  * // デバウンス機能を使用した例
  * function ConfigurableComponent() {
  *   const [isLarge, setIsLarge] = useState(false);
- *   
+ *
  *   useWindowResize(() => {
  *     setIsLarge(window.innerWidth > 1024);
  *   }, { debounceMs: 300, deps: [] });
- *   
+ *
  *   return <div>{isLarge ? 'Large' : 'Small'} screen</div>;
  * }
  * ```
@@ -51,7 +51,7 @@ export interface UseWindowResizeOptions {
 
 export function useWindowResize(
 	callback: () => void,
-	options: UseWindowResizeOptions = {}
+	options: UseWindowResizeOptions = {},
 ): void {
 	const { debounceMs = 0, deps = [] } = options;
 
@@ -63,9 +63,8 @@ export function useWindowResize(
 		callback();
 
 		// デバウンス機能付きコールバック
-		const handleResize = debounceMs > 0 
-			? debounce(callback, debounceMs)
-			: callback;
+		const handleResize =
+			debounceMs > 0 ? debounce(callback, debounceMs) : callback;
 
 		// リサイズイベントリスナーを追加
 		window.addEventListener("resize", handleResize);

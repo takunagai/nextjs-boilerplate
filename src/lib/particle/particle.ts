@@ -1,8 +1,8 @@
 import {
 	PARTICLE_COLORS,
+	type ParticleColor,
 	PHYSICS_CONSTANTS,
 	RENDERING_CONSTANTS,
-	type ParticleColor,
 } from "@/constants/particle";
 
 /**
@@ -13,15 +13,15 @@ export class Particle {
 	// 位置
 	x: number;
 	y: number;
-	
+
 	// 速度
 	vx: number;
 	vy: number;
-	
+
 	// 見た目
 	radius: number;
 	color: ParticleColor;
-	
+
 	// アニメーション
 	pulseSpeed: number;
 	pulsePhase: number;
@@ -30,19 +30,28 @@ export class Particle {
 		// ランダムな初期位置
 		this.x = Math.random() * canvasWidth;
 		this.y = Math.random() * canvasHeight;
-		
+
 		// ランダムな初期速度
-		this.vx = (Math.random() - PHYSICS_CONSTANTS.VELOCITY_RANGE / 2) * PHYSICS_CONSTANTS.VELOCITY_BASE;
-		this.vy = (Math.random() - PHYSICS_CONSTANTS.VELOCITY_RANGE / 2) * PHYSICS_CONSTANTS.VELOCITY_BASE;
-		
+		this.vx =
+			(Math.random() - PHYSICS_CONSTANTS.VELOCITY_RANGE / 2) *
+			PHYSICS_CONSTANTS.VELOCITY_BASE;
+		this.vy =
+			(Math.random() - PHYSICS_CONSTANTS.VELOCITY_RANGE / 2) *
+			PHYSICS_CONSTANTS.VELOCITY_BASE;
+
 		// ランダムな半径
-		this.radius = Math.random() * PHYSICS_CONSTANTS.RADIUS_RANGE + PHYSICS_CONSTANTS.RADIUS_BASE;
-		
+		this.radius =
+			Math.random() * PHYSICS_CONSTANTS.RADIUS_RANGE +
+			PHYSICS_CONSTANTS.RADIUS_BASE;
+
 		// ランダムな色
-		this.color = PARTICLE_COLORS[Math.floor(Math.random() * PARTICLE_COLORS.length)];
-		
+		this.color =
+			PARTICLE_COLORS[Math.floor(Math.random() * PARTICLE_COLORS.length)];
+
 		// パルスアニメーション設定
-		this.pulseSpeed = Math.random() * PHYSICS_CONSTANTS.PULSE_SPEED_RANGE + PHYSICS_CONSTANTS.PULSE_SPEED_BASE;
+		this.pulseSpeed =
+			Math.random() * PHYSICS_CONSTANTS.PULSE_SPEED_RANGE +
+			PHYSICS_CONSTANTS.PULSE_SPEED_BASE;
 		this.pulsePhase = Math.random() * Math.PI * 2;
 	}
 
@@ -70,7 +79,10 @@ export class Particle {
 	 */
 	draw(ctx: CanvasRenderingContext2D, time: number): void {
 		// パルスエフェクトの計算
-		const pulse = Math.sin(time * this.pulseSpeed + this.pulsePhase) * PHYSICS_CONSTANTS.PULSE_AMPLITUDE + PHYSICS_CONSTANTS.PULSE_OFFSET;
+		const pulse =
+			Math.sin(time * this.pulseSpeed + this.pulsePhase) *
+				PHYSICS_CONSTANTS.PULSE_AMPLITUDE +
+			PHYSICS_CONSTANTS.PULSE_OFFSET;
 		const opacity = RENDERING_CONSTANTS.BASE_OPACITY * pulse;
 
 		// メインパーティクルの描画
@@ -81,7 +93,13 @@ export class Particle {
 
 		// グローエフェクトの描画
 		ctx.beginPath();
-		ctx.arc(this.x, this.y, this.radius * pulse * RENDERING_CONSTANTS.GLOW_RADIUS_MULTIPLIER, 0, Math.PI * 2);
+		ctx.arc(
+			this.x,
+			this.y,
+			this.radius * pulse * RENDERING_CONSTANTS.GLOW_RADIUS_MULTIPLIER,
+			0,
+			Math.PI * 2,
+		);
 		ctx.fillStyle = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${opacity * RENDERING_CONSTANTS.GLOW_OPACITY_MULTIPLIER})`;
 		ctx.fill();
 	}
@@ -96,13 +114,21 @@ export class Particle {
 		const distance = Math.sqrt(dx * dx + dy * dy);
 
 		if (distance < PHYSICS_CONSTANTS.MOUSE_INFLUENCE_RADIUS && distance > 0) {
-			const force = (PHYSICS_CONSTANTS.MOUSE_INFLUENCE_RADIUS - distance) / PHYSICS_CONSTANTS.MOUSE_FORCE_DECAY;
+			const force =
+				(PHYSICS_CONSTANTS.MOUSE_INFLUENCE_RADIUS - distance) /
+				PHYSICS_CONSTANTS.MOUSE_FORCE_DECAY;
 			this.vx -= (dx / distance) * force * PHYSICS_CONSTANTS.MOUSE_FORCE;
 			this.vy -= (dy / distance) * force * PHYSICS_CONSTANTS.MOUSE_FORCE;
 
 			// 速度制限
-			this.vx = Math.max(PHYSICS_CONSTANTS.VELOCITY_MIN, Math.min(PHYSICS_CONSTANTS.VELOCITY_MAX, this.vx));
-			this.vy = Math.max(PHYSICS_CONSTANTS.VELOCITY_MIN, Math.min(PHYSICS_CONSTANTS.VELOCITY_MAX, this.vy));
+			this.vx = Math.max(
+				PHYSICS_CONSTANTS.VELOCITY_MIN,
+				Math.min(PHYSICS_CONSTANTS.VELOCITY_MAX, this.vx),
+			);
+			this.vy = Math.max(
+				PHYSICS_CONSTANTS.VELOCITY_MIN,
+				Math.min(PHYSICS_CONSTANTS.VELOCITY_MAX, this.vy),
+			);
 		}
 	}
 

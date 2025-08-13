@@ -1,18 +1,18 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
+import { useState } from "react";
 import {
-	FaPenToSquare,
-	FaImage,
-	FaVideo,
-	FaMusic,
 	FaArrowUpRightFromSquare,
+	FaImage,
+	FaMusic,
+	FaPenToSquare,
+	FaVideo,
 } from "react-icons/fa6";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
 import { Heading } from "@/components/ui/heading";
-import { Button } from "@/components/ui/button";
 
 interface SampleItem {
 	id: string;

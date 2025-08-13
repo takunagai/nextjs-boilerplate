@@ -84,7 +84,7 @@ function UserListSkeleton() {
 }
 
 // エラーコンポーネント
-function ErrorDisplay({ error }: { error: Error }) {
+function _ErrorDisplay({ error }: { error: Error }) {
 	return (
 		<div className="rounded-lg border border-red-200 bg-red-50 p-4 text-red-800">
 			<h3 className="mb-2 text-lg font-semibold">エラーが発生しました</h3>

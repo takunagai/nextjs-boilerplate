@@ -43,15 +43,33 @@ describe("Button", () => {
 
 	describe("バリアント", () => {
 		const variants = [
-			{ variant: "default", expectedClasses: ["bg-primary", "text-primary-foreground"] },
-			{ variant: "destructive", expectedClasses: ["bg-destructive", "text-white"] },
+			{
+				variant: "default",
+				expectedClasses: ["bg-primary", "text-primary-foreground"],
+			},
+			{
+				variant: "destructive",
+				expectedClasses: ["bg-destructive", "text-white"],
+			},
 			{ variant: "success", expectedClasses: ["bg-green-600", "text-white"] },
 			{ variant: "warning", expectedClasses: ["bg-yellow-500", "text-white"] },
 			{ variant: "outline", expectedClasses: ["border", "bg-background"] },
-			{ variant: "secondary", expectedClasses: ["bg-secondary", "text-secondary-foreground"] },
-			{ variant: "ghost", expectedClasses: ["hover:bg-accent", "hover:text-accent-foreground"] },
-			{ variant: "link", expectedClasses: ["text-primary", "underline-offset-4"] },
-			{ variant: "hero", expectedClasses: ["bg-white/10", "text-white", "border-white/20"] },
+			{
+				variant: "secondary",
+				expectedClasses: ["bg-secondary", "text-secondary-foreground"],
+			},
+			{
+				variant: "ghost",
+				expectedClasses: ["hover:bg-accent", "hover:text-accent-foreground"],
+			},
+			{
+				variant: "link",
+				expectedClasses: ["text-primary", "underline-offset-4"],
+			},
+			{
+				variant: "hero",
+				expectedClasses: ["bg-white/10", "text-white", "border-white/20"],
+			},
 		] as const;
 
 		variants.forEach(({ variant, expectedClasses }) => {
@@ -65,18 +83,31 @@ describe("Button", () => {
 
 	describe("サイズ", () => {
 		const sizes = [
-			{ size: "default", expectedClasses: ["h-9", "px-4", "py-2"], text: "Default Size" },
+			{
+				size: "default",
+				expectedClasses: ["h-9", "px-4", "py-2"],
+				text: "Default Size",
+			},
 			{ size: "sm", expectedClasses: ["h-8", "px-3"], text: "Small" },
 			{ size: "lg", expectedClasses: ["h-10", "px-6"], text: "Large" },
-			{ size: "icon", expectedClasses: ["size-9"], text: "Icon Button", ariaLabel: "Icon Button" },
+			{
+				size: "icon",
+				expectedClasses: ["size-9"],
+				text: "Icon Button",
+				ariaLabel: "Icon Button",
+			},
 		] as const;
 
 		sizes.forEach(({ size, expectedClasses, text, ariaLabel }) => {
 			it(`${size} サイズが適用される`, () => {
 				const props = ariaLabel ? { "aria-label": ariaLabel } : {};
-				render(<Button size={size} {...props}>{ariaLabel ? "🔍" : text}</Button>);
-				
-				const button = ariaLabel 
+				render(
+					<Button size={size} {...props}>
+						{ariaLabel ? "🔍" : text}
+					</Button>,
+				);
+
+				const button = ariaLabel
 					? screen.getByRole("button", { name: ariaLabel })
 					: screen.getByRole("button", { name: text });
 				expect(button).toHaveClass(...expectedClasses);

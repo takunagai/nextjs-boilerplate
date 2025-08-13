@@ -2,14 +2,9 @@
 // or if TableBody itself needs client-side logic later.
 // For now, it just maps props, so it's borderline.
 
-import * as React from "react";
 import { cn } from "@/lib/utils";
 import { TableRow } from "./TableRow"; // The actual row component
-import type {
-	TableBodyProps as BaseTableBodyProps,
-	ColumnDef,
-	Row,
-} from "./types";
+import type { TableBodyProps as BaseTableBodyProps } from "./types";
 
 // Update TableBodyProps to be generic
 export type TableBodyProps<TData> = BaseTableBodyProps<TData>;

@@ -4,9 +4,9 @@
 
 export { Particle } from "./particle";
 export {
+	adjustParticlesForResize,
+	checkIsMobile,
 	drawParticleConnections,
 	getParticleCount,
 	initializeParticles,
-	adjustParticlesForResize,
-	checkIsMobile,
 } from "./particle-utils";

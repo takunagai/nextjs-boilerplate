@@ -73,7 +73,8 @@ export default function ExamplesPage() {
 		},
 		{
 			title: "Enhanced Tabs",
-			description: "レスポンシブ対応で汎用性の高いタブコンポーネント。4つのバリアント、3つのサイズ、アクセシビリティ準拠。",
+			description:
+				"レスポンシブ対応で汎用性の高いタブコンポーネント。4つのバリアント、3つのサイズ、アクセシビリティ準拠。",
 			href: "/examples/enhanced-tabs",
 		},
 		{

@@ -1,8 +1,8 @@
 import {
 	FaClockRotateLeft,
 	FaPenToSquare,
-	FaWandMagicSparkles,
 	FaUserTie,
+	FaWandMagicSparkles,
 } from "react-icons/fa6";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";

@@ -44,17 +44,19 @@ export function DesktopNavigation({
 									className="flex flex-row items-center gap-1 text-sm font-medium transition-colors hover:text-primary focus:text-primary focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 rounded py-2"
 									aria-haspopup="true"
 									aria-expanded={isOpen}
-									aria-label={`${item.label}のサブメニューを${isOpen ? '閉じる' : '開く'}`}
+									aria-label={`${item.label}のサブメニューを${isOpen ? "閉じる" : "開く"}`}
 									type="button"
 									onClick={() => handleDropdownToggle(item.href)}
-									onKeyDown={keyboardHandlers.buttonKeys(() => handleDropdownToggle(item.href))}
+									onKeyDown={keyboardHandlers.buttonKeys(() =>
+										handleDropdownToggle(item.href),
+									)}
 								>
 									<span>{item.label}</span>
-									<FaChevronDown 
+									<FaChevronDown
 										className={cn(
 											"h-3 w-3 opacity-70 transition-transform duration-150",
-											isOpen && "rotate-180"
-										)} 
+											isOpen && "rotate-180",
+										)}
 									/>
 								</button>
 
@@ -62,10 +64,9 @@ export function DesktopNavigation({
 								<div
 									className={cn(
 										"absolute left-0 min-w-[12rem] py-2 bg-background border border-border rounded-md shadow-md mt-1 transition-all duration-150 z-50",
-										isOpen || "group-hover:opacity-100 group-focus-within:opacity-100 group-hover:visible group-focus-within:visible",
-										isOpen 
-											? "opacity-100 visible" 
-											: "opacity-0 invisible"
+										isOpen ||
+											"group-hover:opacity-100 group-focus-within:opacity-100 group-hover:visible group-focus-within:visible",
+										isOpen ? "opacity-100 visible" : "opacity-0 invisible",
 									)}
 									role="menu"
 									aria-labelledby={`dropdown-${item.href}`}
@@ -84,7 +85,9 @@ export function DesktopNavigation({
 											)}
 											role="menuitem"
 											onClick={handleDropdownClose}
-											onKeyDown={keyboardHandlers.escapeKey(handleDropdownClose)}
+											onKeyDown={keyboardHandlers.escapeKey(
+												handleDropdownClose,
+											)}
 										>
 											{child.label}
 										</Link>
@@ -105,7 +108,9 @@ export function DesktopNavigation({
 								"text-sm font-medium transition-colors hover:text-primary focus:text-primary focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 rounded py-2",
 								item.active ? "text-foreground" : "text-muted-foreground",
 							)}
-							aria-label={item.external ? `${item.label} (外部リンク)` : undefined}
+							aria-label={
+								item.external ? `${item.label} (外部リンク)` : undefined
+							}
 						>
 							{item.label}
 						</Link>

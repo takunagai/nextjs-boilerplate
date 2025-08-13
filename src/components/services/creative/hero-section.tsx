@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FaCalendarCheck, FaArrowRight } from "react-icons/fa6";
+import { FaArrowRight, FaCalendarCheck } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { HeroContainer } from "@/components/ui/hero-container";
@@ -28,21 +28,25 @@ export function CreativeHeroSection() {
 					<div className="mb-8 space-y-4">
 						<p className="text-lg md:text-xl text-foreground/80 max-w-3xl leading-relaxed font-medium">
 							「時間がない」「スキルがない」「予算がない」...
-							<span className="text-primary font-semibold">そんな悩み、AI で解決できます！</span>
+							<span className="text-primary font-semibold">
+								そんな悩み、AI で解決できます！
+							</span>
 						</p>
 						<div className="max-w-3xl space-y-3">
 							<p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-								✨ 最新の AI ツールを使いこなして、プロ級のコンテンツをスピーディーに
+								✨ 最新の AI
+								ツールを使いこなして、プロ級のコンテンツをスピーディーに
 							</p>
 							<p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-								🎯 でも AI 任せじゃありません。15年のクリエイティブ経験で、AI の「ちょっと変」を「ちょうどいい」に仕上げます
+								🎯 でも AI 任せじゃありません。15年のクリエイティブ経験で、AI
+								の「ちょっと変」を「ちょうどいい」に仕上げます
 							</p>
 						</div>
 					</div>
 					<div className="flex flex-col sm:flex-row gap-4">
-						<Button 
-							asChild 
-							size="lg" 
+						<Button
+							asChild
+							size="lg"
 							className="text-base px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all duration-300 border-0"
 						>
 							<Link href="/contact">

@@ -33,10 +33,9 @@ export default function ExamplesLayout({
 							これは開発用のサンプルページです。本番環境では表示されますが、実際のプロジェクトでは削除または修正してください。
 						</p>
 						<p className="mt-2">
-							src/lib/constants/app.ts の{` `}
-							<code>FEATURES.SHOW_EXAMPLES = false</code>、または、環境変数{` `}
-							<code>NEXT_PUBLIC_SHOW_EXAMPLES=false</code>
-							{` `}
+							src/lib/constants/app.ts の{" "}
+							<code>FEATURES.SHOW_EXAMPLES = false</code>、または、環境変数{" "}
+							<code>NEXT_PUBLIC_SHOW_EXAMPLES=false</code>{" "}
 							で、このサンプルページを非表示にできます。
 						</p>
 					</CardContent>

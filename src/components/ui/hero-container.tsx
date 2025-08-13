@@ -1,8 +1,8 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { cn } from "@/lib/utils";
 import { useHeroHeight } from "@/hooks/use-hero-height";
+import { cn } from "@/lib/utils";
 import type { BaseHeroProps } from "@/types/hero";
 
 // ヒーローコンテナーのプロパティ型定義

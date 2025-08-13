@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { vi } from "vitest";
 import { FEATURES } from "@/lib/constants";
 import { ThemeSwitcher } from "../theme-switcher";
@@ -12,7 +12,7 @@ vi.mock("@/lib/constants", () => ({
 
 // 動的インポートのモック
 vi.mock("next/dynamic", () => ({
-	default: (importFn: () => Promise<any>, options?: any) => {
+	default: (_importFn: () => Promise<any>, options?: any) => {
 		// ssrオプションをチェック
 		const isSSR = options?.ssr !== false;
 

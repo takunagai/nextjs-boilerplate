@@ -1,8 +1,8 @@
 "use client";
 
 import type { EmblaOptionsType } from "embla-carousel";
-import Autoplay from "embla-carousel-autoplay";
 import type { AutoplayOptionsType } from "embla-carousel-autoplay";
+import Autoplay from "embla-carousel-autoplay";
 import ClassNames from "embla-carousel-class-names";
 import Fade from "embla-carousel-fade";
 import useEmblaCarousel from "embla-carousel-react";
@@ -106,7 +106,7 @@ export function EmblaCarousel({
 			emblaApi.off("select", onSelect);
 			emblaApi.off("reInit", onSelect);
 		};
-	}, [emblaApi]);
+	}, [emblaApi, onSelect]);
 
 	// ドットインジケーターのレンダリング
 	const renderDots = () => (

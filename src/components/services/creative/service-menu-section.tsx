@@ -2,16 +2,16 @@
 
 import { useState } from "react";
 import {
-	FaPenToSquare,
-	FaImage,
-	FaVideo,
-	FaMusic,
 	FaCircleCheck,
+	FaImage,
+	FaMusic,
+	FaPenToSquare,
+	FaVideo,
 } from "react-icons/fa6";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
 import { Heading } from "@/components/ui/heading";
-import { Button } from "@/components/ui/button";
 
 interface ServiceItem {
 	title: string;
@@ -218,7 +218,9 @@ export function CreativeServiceMenuSection() {
 							>
 								<IconComponent
 									className={`w-5 h-5 ${
-										activeTab === service.id ? "text-primary-foreground" : "text-muted-foreground"
+										activeTab === service.id
+											? "text-primary-foreground"
+											: "text-muted-foreground"
 									}`}
 								/>
 								{service.title}
@@ -233,9 +235,7 @@ export function CreativeServiceMenuSection() {
 						{/* サービスヘッダー */}
 						<div className="text-center">
 							<Heading as="h3" className="text-2xl md:text-3xl mb-4">
-								<span className="text-primary">
-									{activeService.title}
-								</span>
+								<span className="text-primary">{activeService.title}</span>
 							</Heading>
 							<p className="text-lg text-muted-foreground font-medium">
 								{activeService.subtitle}
