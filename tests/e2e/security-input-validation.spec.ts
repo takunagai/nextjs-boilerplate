@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { generateId } from "../../src/lib/utils/id";
 
 /**
  * 入力検証・サニタイゼーション セキュリティテスト
@@ -477,7 +478,7 @@ test.describe("入力検証・サニタイゼーション セキュリティテ�
 				await page.getByLabel("氏名").fill("テスト ユーザー");
 				await page
 					.getByLabel("メールアドレス")
-					.fill(`test${crypto.randomUUID()}@example.com`);
+					.fill(`test${generateId()}@example.com`);
 				await page.locator('input[type="password"]').first().fill(password);
 				await page.locator('input[type="password"]').last().fill(password);
 

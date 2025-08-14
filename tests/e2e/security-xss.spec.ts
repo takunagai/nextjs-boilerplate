@@ -1,4 +1,5 @@
 import { expect, type Page, test } from "@playwright/test";
+import { generateId } from "../../src/lib/utils/id";
 
 // テスト用のWindow型拡張
 declare global {
@@ -47,7 +48,7 @@ class SecurityTestPage {
 		await this.page.getByLabel("お名前").fill(payload);
 		await this.page
 			.getByLabel("メールアドレス")
-			.fill(`test${crypto.randomUUID()}@example.com`);
+			.fill(`test${generateId()}@example.com`);
 		await this.page.getByLabel("お問い合わせ内容").fill(payload);
 	}
 
