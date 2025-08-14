@@ -287,3 +287,78 @@ export function SuccessAnnouncement({
 		</output>
 	);
 }
+
+/**
+ * 統一されたフォームエラー表示コンポーネント
+ */
+export interface FormErrorDisplayProps {
+	error?: string | null;
+	title?: string;
+	id?: string;
+	className?: string;
+}
+
+export function FormErrorDisplay({
+	error,
+	title = "エラーが発生しました",
+	id,
+	className,
+}: FormErrorDisplayProps) {
+	if (!error) return null;
+
+	return (
+		<div
+			id={id}
+			role="alert"
+			className={cn(
+				"p-3 rounded-md bg-destructive/10 border border-destructive/20 text-destructive",
+				className,
+			)}
+			aria-live="polite"
+		>
+			<p className="text-sm font-medium">{title}</p>
+			<p className="text-sm">{error}</p>
+		</div>
+	);
+}
+
+/**
+ * 統一された操作結果表示コンポーネント
+ */
+export interface ActionResultDisplayProps {
+	result?: {
+		success: boolean;
+		message?: string;
+		error?: string;
+	} | null;
+	successTitle?: string;
+	errorTitle?: string;
+	className?: string;
+}
+
+export function ActionResultDisplay({
+	result,
+	successTitle: _successTitle,
+	errorTitle = "エラーが発生しました",
+	className,
+}: ActionResultDisplayProps) {
+	if (!result) return null;
+
+	if (result.success && result.message) {
+		return (
+			<SuccessAnnouncement message={result.message} className={className} />
+		);
+	}
+
+	if (!result.success && result.error) {
+		return (
+			<FormErrorDisplay
+				error={result.error}
+				title={errorTitle}
+				className={className}
+			/>
+		);
+	}
+
+	return null;
+}
