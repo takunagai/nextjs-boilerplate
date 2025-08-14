@@ -42,7 +42,7 @@ async function requireAuth() {
 	if (!session?.user?.id) {
 		throw new ActionError("認証が必要です", "AUTHENTICATION_ERROR");
 	}
-	return session;
+	return { ...session, user: { ...session.user, id: session.user.id } };
 }
 
 // フォーム用のスキーマ作成
