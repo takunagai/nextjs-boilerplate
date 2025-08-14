@@ -47,7 +47,7 @@ class SecurityTestPage {
 		await this.page.getByLabel("お名前").fill(payload);
 		await this.page
 			.getByLabel("メールアドレス")
-			.fill(`test${Math.random()}@example.com`);
+			.fill(`test${crypto.randomUUID()}@example.com`);
 		await this.page.getByLabel("お問い合わせ内容").fill(payload);
 	}
 

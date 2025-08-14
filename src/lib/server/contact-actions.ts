@@ -29,7 +29,7 @@ async function handleContactSubmission(data: ContactFormValues) {
 		// 成功レスポンス
 		return {
 			message: "お問い合わせを受け付けました。ありがとうございます。",
-			submissionId: `contact_${Date.now()}`,
+			submissionId: `contact_${crypto.randomUUID()}`,
 			data,
 		};
 	} catch (error) {

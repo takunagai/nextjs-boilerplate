@@ -477,7 +477,7 @@ test.describe("入力検証・サニタイゼーション セキュリティテ�
 				await page.getByLabel("氏名").fill("テスト ユーザー");
 				await page
 					.getByLabel("メールアドレス")
-					.fill(`test${Date.now()}@example.com`);
+					.fill(`test${crypto.randomUUID()}@example.com`);
 				await page.locator('input[type="password"]').first().fill(password);
 				await page.locator('input[type="password"]').last().fill(password);
 
