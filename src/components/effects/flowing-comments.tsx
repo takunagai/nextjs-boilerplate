@@ -53,7 +53,7 @@ const COMMENTS = [
 ];
 
 interface Comment {
-	id: number;
+	id: string;
 	text: string;
 	top: number;
 	duration: number;
@@ -110,7 +110,7 @@ export function FlowingComments({
 
 		for (let i = 0; i < maxComments; i++) {
 			initialComments.push({
-				id: Math.random() * 1000000 + Date.now() + i, // 一意なIDを生成
+				id: crypto.randomUUID(),
 				text: COMMENTS[Math.floor(Math.random() * COMMENTS.length)],
 				top: Math.random() * (UI_FLOWING_COMMENTS.BOTTOM_LIMIT - UI_FLOWING_COMMENTS.TOP_LIMIT) + UI_FLOWING_COMMENTS.TOP_LIMIT,
 				duration: Math.random() * (UI_FLOWING_COMMENTS.DURATION_MAX - UI_FLOWING_COMMENTS.DURATION_MIN) + UI_FLOWING_COMMENTS.DURATION_MIN,
@@ -130,7 +130,7 @@ export function FlowingComments({
 
 					return {
 						...comment,
-						id: Math.random() * 1000000 + Date.now() + Math.random(), // 一意なIDを再生成
+						id: crypto.randomUUID(),
 						text: COMMENTS[Math.floor(Math.random() * COMMENTS.length)],
 						top: Math.random() * (UI_FLOWING_COMMENTS.BOTTOM_LIMIT - UI_FLOWING_COMMENTS.TOP_LIMIT) + UI_FLOWING_COMMENTS.TOP_LIMIT,
 						duration: Math.random() * (UI_FLOWING_COMMENTS.DURATION_MAX - UI_FLOWING_COMMENTS.DURATION_MIN) + UI_FLOWING_COMMENTS.DURATION_MIN,
