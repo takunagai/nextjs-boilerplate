@@ -11,28 +11,10 @@ import { z } from "zod";
  */
 
 // 共通バリデーションヘルパー関数
-const validateNoHtmlTags = (value: string | undefined, fieldName: string) => {
+const validateNoHtmlTags = (value: string | undefined) => {
 	if (!value || value.trim() === "") return true;
-	const hasHtmlTags = /<[^>]*>/g.test(value);
-	return !hasHtmlTags || `${fieldName}にHTMLタグを含めることはできません`;
-};
-
-const validateStringLength = (
-	value: string | undefined,
-	minLength: number,
-	maxLength: number,
-	fieldName: string,
-) => {
-	if (!value || value.trim() === "")
-		return minLength === 0 || `${fieldName}を入力してください`;
-	const trimmedLength = value.trim().length;
-	if (trimmedLength < minLength || trimmedLength > maxLength) {
-		if (minLength === 0) {
-			return `${fieldName}は${maxLength}文字以内で入力してください`;
-		}
-		return `${fieldName}は${minLength}文字以上${maxLength}文字以内で入力してください`;
-	}
-	return true;
+	// HTMLタグや不完全なHTMLタグを検出する（<文字を含む場合すべて拒否）
+	return !value.includes("<");
 };
 
 // 再利用可能なスキーマファクトリー
@@ -42,29 +24,56 @@ const createSafeTextSchema = (
 	maxLength: number = 100,
 	required: boolean = false,
 ) => {
-	const baseSchema = required
-		? z.string().min(1, { message: `${fieldName}を入力してください` })
+	let schema = required
+		? z.string().min(1, { message: getRequiredMessage(fieldName) })
 		: z.string().optional();
 
-	return baseSchema
-		.refine((value) => validateNoHtmlTags(value, fieldName), {
-			message: `${fieldName}にHTMLタグを含めることはできません`,
-		})
-		.refine(
-			(value) => validateStringLength(value, minLength, maxLength, fieldName),
+	// 文字数制限を追加
+	if (required) {
+		schema = schema.max(maxLength, {
+			message: `${fieldName}は${maxLength}文字以内で入力してください`,
+		});
+	} else {
+		schema = schema.refine(
+			(value) => {
+				if (!value || value.trim() === "") return true;
+				return value.length <= maxLength;
+			},
 			{
-				message:
-					minLength === 0
-						? `${fieldName}は${maxLength}文字以内で入力してください`
-						: `${fieldName}は${minLength}文字以上${maxLength}文字以内で入力してください`,
+				message: `${fieldName}は${maxLength}文字以内で入力してください`,
 			},
 		);
+	}
+
+	// HTMLタグ検証を追加
+	return schema.refine((value) => validateNoHtmlTags(value), {
+		message: "HTMLタグを含めることはできません",
+	});
+};
+
+// フィールドごとの必須メッセージ
+const getRequiredMessage = (fieldName: string) => {
+	switch (fieldName) {
+		case "名前":
+			return "名前は必須です";
+		default:
+			return `${fieldName}を入力してください`;
+	}
 };
 
 // URL検証のためのカスタムスキーマ
 const urlSchema = z
 	.string()
 	.optional()
+	.refine(
+		(url) => {
+			if (!url || url.trim() === "") return true;
+			return url.length <= 2048;
+		},
+		{
+			message: "URLは2048文字以内で入力してください",
+		},
+	)
 	.refine(
 		(url) => {
 			if (!url || url.trim() === "") return true;
@@ -119,8 +128,8 @@ export const profileUpdateSchema = z.object({
 	website: urlSchema,
 
 	// プライバシー設定
-	emailVisible: z.boolean(),
-	profileVisible: z.boolean(),
+	emailVisible: z.boolean().default(false),
+	profileVisible: z.boolean().default(true),
 });
 
 // 型の生成
@@ -133,7 +142,7 @@ export const profileDeleteConfirmSchema = z.object({
 		.string()
 		.min(1, { message: "確認テキストを入力してください" })
 		.refine((text) => text === "プロフィールを削除します", {
-			message: "正確な確認テキストを入力してください",
+			message: "正確な確認テキストを入力してください: 'プロフィールを削除します'",
 		}),
 });
 

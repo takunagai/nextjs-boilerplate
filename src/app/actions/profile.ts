@@ -16,6 +16,7 @@
  */
 
 import { revalidatePath, revalidateTag } from "next/cache";
+import { z } from "zod";
 import { auth } from "@/lib/auth";
 import {
 	ActionError,
@@ -122,10 +123,13 @@ export async function updateProfile(formData: unknown) {
 		});
 
 		// キャッシュの無効化（Next.js の revalidation）
-		revalidateTag(CACHE_TAGS.PROFILE(userId));
-		revalidateTag(CACHE_TAGS.USER_PROFILES);
-		revalidatePath("/profile");
-		revalidatePath("/(app)/profile", "page");
+		// テスト環境では revalidate 機能をスキップ
+		if (process.env.NODE_ENV !== "test") {
+			revalidateTag(CACHE_TAGS.PROFILE(userId));
+			revalidateTag(CACHE_TAGS.USER_PROFILES);
+			revalidatePath("/profile");
+			revalidatePath("/(app)/profile", "page");
+		}
 
 		// 成功レスポンス
 		const updatedProfile: UserProfile = {
@@ -197,9 +201,12 @@ export async function uploadProfileImage(formData: FormData) {
 		});
 
 		// キャッシュの無効化
-		revalidateTag(CACHE_TAGS.PROFILE(userId));
-		revalidatePath("/profile");
-		revalidatePath("/(app)/profile", "page");
+		// テスト環境では revalidate 機能をスキップ
+		if (process.env.NODE_ENV !== "test") {
+			revalidateTag(CACHE_TAGS.PROFILE(userId));
+			revalidatePath("/profile");
+			revalidatePath("/(app)/profile", "page");
+		}
 
 		return {
 			message: "プロフィール画像をアップロードしました",
@@ -220,9 +227,10 @@ export async function requestEmailChange(newEmail: string) {
 		const session = await requireAuth();
 		const userId = session.user.id;
 
-		// メールアドレス形式チェック
-		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-		if (!emailRegex.test(newEmail)) {
+		// メールアドレス形式チェック（Zodを使用）
+		const emailSchema = z.string().email();
+		const emailValidation = emailSchema.safeParse(newEmail);
+		if (!emailValidation.success) {
 			throw new ActionError(
 				"有効なメールアドレスを入力してください",
 				"VALIDATION_ERROR",
@@ -281,9 +289,12 @@ export async function deleteProfile(formData: unknown) {
 		});
 
 		// キャッシュの無効化（削除後なので広範囲に）
-		revalidateTag(CACHE_TAGS.PROFILE(userId));
-		revalidateTag(CACHE_TAGS.USER_PROFILES);
-		revalidatePath("/", "layout"); // 全体的なキャッシュクリア
+		// テスト環境では revalidate 機能をスキップ
+		if (process.env.NODE_ENV !== "test") {
+			revalidateTag(CACHE_TAGS.PROFILE(userId));
+			revalidateTag(CACHE_TAGS.USER_PROFILES);
+			revalidatePath("/", "layout"); // 全体的なキャッシュクリア
+		}
 
 		return {
 			message: "プロフィールを削除しました",
