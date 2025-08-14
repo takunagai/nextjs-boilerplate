@@ -21,17 +21,28 @@ const AnnouncementBarContext = createContext<AnnouncementBarContextType>({
 });
 
 export function AnnouncementBarProvider({ children }: { children: ReactNode }) {
-	const [isVisible, setIsVisible] = useState(false);
+	// 初期状態をnullにしてSSR/CSRの不一致を防ぐ
+	const [isVisible, setIsVisible] = useState<boolean | null>(null);
 	const [_isClosing, setIsClosing] = useState(false);
 	const height = 40; // h-10 = 40px
 
 	useEffect(() => {
+		// クライアントサイドでのみ実行
+		if (typeof window === "undefined") return;
+
 		const stored = localStorage.getItem("announcement-bar-closed");
 		const shouldShow = stored !== "true";
 
-		// 初回表示時のアニメーション遅延
-		if (shouldShow) {
-			setTimeout(() => setIsVisible(true), 100);
+		// 初期状態を設定
+		setIsVisible(shouldShow);
+
+		// 開発環境でのリセット機能
+		if (process.env.NODE_ENV === "development") {
+			// グローバルに関数を公開
+			(window as any).resetAnnouncementBar = () => {
+				localStorage.removeItem("announcement-bar-closed");
+				setIsVisible(true);
+			};
 		}
 	}, []);
 
@@ -45,7 +56,7 @@ export function AnnouncementBarProvider({ children }: { children: ReactNode }) {
 	};
 
 	return (
-		<AnnouncementBarContext.Provider value={{ isVisible, height, close }}>
+		<AnnouncementBarContext.Provider value={{ isVisible: isVisible ?? false, height, close }}>
 			{children}
 		</AnnouncementBarContext.Provider>
 	);
