@@ -202,18 +202,30 @@ test.describe("XSS脆弱性テスト", () => {
 			// 外部サイトへのリダイレクトを試行
 			const maliciousCallbacks = [
 				"http://evil.com",
-				"https://evil.com/steal-data",
+				"https://evil.com/steal-data", 
 				"javascript:alert('redirect')",
 				"//evil.com",
 			];
 
 			for (const callback of maliciousCallbacks) {
+				console.log(`Testing malicious callback: ${callback}`);
+				
 				await securityPage.visitWithXSSParam("/login", "callbackUrl", callback);
+
+				// 少し待ってからURLを確認（リダイレクトがある場合の処理完了を待つ）
+				await page.waitForTimeout(1000);
 
 				// 悪意のあるリダイレクトが発生していないことを確認
 				const currentUrl = page.url();
-				expect(currentUrl).not.toContain("evil.com");
-				expect(currentUrl).not.toContain("javascript:");
+				console.log(`Current URL after visiting with malicious callback: ${currentUrl}`);
+				
+				// URLが元のドメイン（localhost:3000）内にあることを確認
+				expect(currentUrl).toMatch(/^https?:\/\/localhost:3000/);
+				
+				// 悪意のあるドメインが含まれていないことを確認
+				const urlWithoutQuery = currentUrl.split('?')[0]; // クエリパラメータを除外
+				expect(urlWithoutQuery).not.toContain("evil.com");
+				expect(urlWithoutQuery).not.toContain("javascript:");
 
 				// ログインページが正常に表示されることを確認
 				await expect(page.getByLabel("メールアドレス")).toBeVisible();
