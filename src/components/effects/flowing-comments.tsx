@@ -77,9 +77,14 @@ export function FlowingComments({
 	useWindowResize(
 		() => {
 			// 画面サイズに応じたサイズ設定
-			const isDesktop = window.innerWidth >= UI_FLOWING_COMMENTS.DESKTOP_BREAKPOINT;
-			const baseSize = isDesktop ? UI_FLOWING_COMMENTS.DESKTOP_BASE_SIZE : UI_FLOWING_COMMENTS.MOBILE_BASE_SIZE;
-			const sizeRange = isDesktop ? UI_FLOWING_COMMENTS.DESKTOP_SIZE_RANGE : UI_FLOWING_COMMENTS.MOBILE_SIZE_RANGE;
+			const isDesktop =
+				window.innerWidth >= UI_FLOWING_COMMENTS.DESKTOP_BREAKPOINT;
+			const baseSize = isDesktop
+				? UI_FLOWING_COMMENTS.DESKTOP_BASE_SIZE
+				: UI_FLOWING_COMMENTS.MOBILE_BASE_SIZE;
+			const sizeRange = isDesktop
+				? UI_FLOWING_COMMENTS.DESKTOP_SIZE_RANGE
+				: UI_FLOWING_COMMENTS.MOBILE_SIZE_RANGE;
 
 			setComments((prev) =>
 				prev.map((comment) => ({
@@ -97,10 +102,15 @@ export function FlowingComments({
 
 		// 画面サイズに応じたサイズ設定を関数化
 		const getSizeParams = () => {
-			const isDesktop = window.innerWidth >= UI_FLOWING_COMMENTS.DESKTOP_BREAKPOINT;
+			const isDesktop =
+				window.innerWidth >= UI_FLOWING_COMMENTS.DESKTOP_BREAKPOINT;
 			return {
-				baseSize: isDesktop ? UI_FLOWING_COMMENTS.DESKTOP_BASE_SIZE : UI_FLOWING_COMMENTS.MOBILE_BASE_SIZE,
-				sizeRange: isDesktop ? UI_FLOWING_COMMENTS.DESKTOP_SIZE_RANGE : UI_FLOWING_COMMENTS.MOBILE_SIZE_RANGE,
+				baseSize: isDesktop
+					? UI_FLOWING_COMMENTS.DESKTOP_BASE_SIZE
+					: UI_FLOWING_COMMENTS.MOBILE_BASE_SIZE,
+				sizeRange: isDesktop
+					? UI_FLOWING_COMMENTS.DESKTOP_SIZE_RANGE
+					: UI_FLOWING_COMMENTS.MOBILE_SIZE_RANGE,
 			};
 		};
 
@@ -112,8 +122,15 @@ export function FlowingComments({
 			initialComments.push({
 				id: crypto.randomUUID(),
 				text: COMMENTS[Math.floor(Math.random() * COMMENTS.length)],
-				top: Math.random() * (UI_FLOWING_COMMENTS.BOTTOM_LIMIT - UI_FLOWING_COMMENTS.TOP_LIMIT) + UI_FLOWING_COMMENTS.TOP_LIMIT,
-				duration: Math.random() * (UI_FLOWING_COMMENTS.DURATION_MAX - UI_FLOWING_COMMENTS.DURATION_MIN) + UI_FLOWING_COMMENTS.DURATION_MIN,
+				top:
+					Math.random() *
+						(UI_FLOWING_COMMENTS.BOTTOM_LIMIT - UI_FLOWING_COMMENTS.TOP_LIMIT) +
+					UI_FLOWING_COMMENTS.TOP_LIMIT,
+				duration:
+					Math.random() *
+						(UI_FLOWING_COMMENTS.DURATION_MAX -
+							UI_FLOWING_COMMENTS.DURATION_MIN) +
+					UI_FLOWING_COMMENTS.DURATION_MIN,
 				delay: Math.random() * UI_FLOWING_COMMENTS.INITIAL_DELAY_MAX,
 				size: Math.random() * sizeRange + baseSize,
 			});
@@ -132,8 +149,16 @@ export function FlowingComments({
 						...comment,
 						// React key は保持（再生成しない）
 						text: COMMENTS[Math.floor(Math.random() * COMMENTS.length)],
-						top: Math.random() * (UI_FLOWING_COMMENTS.BOTTOM_LIMIT - UI_FLOWING_COMMENTS.TOP_LIMIT) + UI_FLOWING_COMMENTS.TOP_LIMIT,
-						duration: Math.random() * (UI_FLOWING_COMMENTS.DURATION_MAX - UI_FLOWING_COMMENTS.DURATION_MIN) + UI_FLOWING_COMMENTS.DURATION_MIN,
+						top:
+							Math.random() *
+								(UI_FLOWING_COMMENTS.BOTTOM_LIMIT -
+									UI_FLOWING_COMMENTS.TOP_LIMIT) +
+							UI_FLOWING_COMMENTS.TOP_LIMIT,
+						duration:
+							Math.random() *
+								(UI_FLOWING_COMMENTS.DURATION_MAX -
+									UI_FLOWING_COMMENTS.DURATION_MIN) +
+							UI_FLOWING_COMMENTS.DURATION_MIN,
 						delay: Math.random() * UI_FLOWING_COMMENTS.UPDATE_DELAY_MAX,
 						size: Math.random() * sizeRange + baseSize,
 					};

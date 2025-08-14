@@ -56,7 +56,9 @@ export function AnnouncementBarProvider({ children }: { children: ReactNode }) {
 	};
 
 	return (
-		<AnnouncementBarContext.Provider value={{ isVisible: isVisible ?? false, height, close }}>
+		<AnnouncementBarContext.Provider
+			value={{ isVisible: isVisible ?? false, height, close }}
+		>
 			{children}
 		</AnnouncementBarContext.Provider>
 	);
