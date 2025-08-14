@@ -136,6 +136,9 @@
 - **フォームハンドリング** - React Hook Form + Zod による型安全なバリデーション
 - **コード品質** - Biome によるリンティング・フォーマット
 - **開発用サンプルページ** - 環境変数による表示制御
+- **開発者ユーティリティ** - コンポーネント状態のリセット機能
+  - AnnouncementBar の表示状態リセット
+  - 開発環境でのデバッグサポート
 
 ### 事前構築済み
 
@@ -256,6 +259,33 @@ npm run dev
 - テーマ機能自体の有効/無効の切り替え
 - ライト or ダークモードを選択可能
 - 設定は localStorage に保存され、次回訪問時に自動適用
+
+### 開発者向けユーティリティ
+
+#### AnnouncementBar のリセット
+
+AnnouncementBar は一度閉じると localStorage に状態が保存され、次回以降表示されません。  
+開発中に再度表示させたい場合は、以下の方法でリセットできます：
+
+**方法1: 開発環境専用のリセット関数（推奨）**
+```javascript
+// ブラウザのコンソールで実行
+window.resetAnnouncementBar()
+```
+
+**方法2: localStorage を手動でクリア**
+```javascript
+// ブラウザのコンソールで実行
+localStorage.removeItem('announcement-bar-closed')
+location.reload()
+```
+
+**方法3: 開発者ツール GUI から削除**
+1. F12 キーで開発者ツールを開く
+2. Application/Storage タブを選択
+3. Local Storage → サイトのドメインをクリック
+4. `announcement-bar-closed` の項目を削除
+5. ページをリロード
 
 ### 新しいページの追加
 
