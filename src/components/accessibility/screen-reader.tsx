@@ -57,7 +57,7 @@ export function LiveRegion({
  * 動的アナウンスメント用フック
  */
 export function useAnnounce() {
-	const announceRef = useRef<HTMLDivElement>(null);
+	const announceRef = useRef<HTMLOutputElement>(null);
 
 	const announce = (
 		message: string,
