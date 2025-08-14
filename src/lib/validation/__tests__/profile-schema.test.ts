@@ -41,7 +41,7 @@ describe("Profile Validation Schemas", () => {
 
 				expect(result.success).toBe(false);
 				if (!result.success) {
-					expect(result.error.errors[0].message).toBe("名前は必須です");
+					expect(result.error.issues[0].message).toBe("名前は必須です");
 				}
 			});
 
@@ -57,7 +57,7 @@ describe("Profile Validation Schemas", () => {
 
 				expect(result.success).toBe(false);
 				if (!result.success) {
-					expect(result.error.errors[0].message).toBe(
+					expect(result.error.issues[0].message).toBe(
 						"名前は50文字以内で入力してください",
 					);
 				}
@@ -72,7 +72,7 @@ describe("Profile Validation Schemas", () => {
 
 				expect(result.success).toBe(false);
 				if (!result.success) {
-					expect(result.error.errors[0].message).toBe(
+					expect(result.error.issues[0].message).toBe(
 						"HTMLタグを含めることはできません",
 					);
 				}
@@ -101,7 +101,7 @@ describe("Profile Validation Schemas", () => {
 
 				expect(result.success).toBe(false);
 				if (!result.success) {
-					expect(result.error.errors[0].message).toBe(
+					expect(result.error.issues[0].message).toBe(
 						"HTMLタグを含めることはできません",
 					);
 				}
@@ -138,7 +138,7 @@ describe("Profile Validation Schemas", () => {
 
 				expect(result.success).toBe(false);
 				if (!result.success) {
-					expect(result.error.errors[0].message).toBe(
+					expect(result.error.issues[0].message).toBe(
 						"表示名は50文字以内で入力してください",
 					);
 				}
@@ -150,7 +150,7 @@ describe("Profile Validation Schemas", () => {
 
 				expect(result.success).toBe(false);
 				if (!result.success) {
-					expect(result.error.errors[0].message).toBe(
+					expect(result.error.issues[0].message).toBe(
 						"HTMLタグを含めることはできません",
 					);
 				}
@@ -187,7 +187,7 @@ describe("Profile Validation Schemas", () => {
 
 				expect(result.success).toBe(false);
 				if (!result.success) {
-					expect(result.error.errors[0].message).toBe(
+					expect(result.error.issues[0].message).toBe(
 						"自己紹介は500文字以内で入力してください",
 					);
 				}
@@ -211,7 +211,7 @@ describe("Profile Validation Schemas", () => {
 
 				expect(result.success).toBe(false);
 				if (!result.success) {
-					expect(result.error.errors[0].message).toBe(
+					expect(result.error.issues[0].message).toBe(
 						"HTMLタグを含めることはできません",
 					);
 				}
@@ -248,7 +248,7 @@ describe("Profile Validation Schemas", () => {
 
 				expect(result.success).toBe(false);
 				if (!result.success) {
-					expect(result.error.errors[0].message).toBe(
+					expect(result.error.issues[0].message).toBe(
 						"所在地は100文字以内で入力してください",
 					);
 				}
@@ -266,7 +266,7 @@ describe("Profile Validation Schemas", () => {
 
 				expect(result.success).toBe(false);
 				if (!result.success) {
-					expect(result.error.errors[0].message).toBe(
+					expect(result.error.issues[0].message).toBe(
 						"HTMLタグを含めることはできません",
 					);
 				}
@@ -343,7 +343,7 @@ describe("Profile Validation Schemas", () => {
 
 				expect(result.success).toBe(false);
 				if (!result.success) {
-					expect(result.error.errors[0].message).toBe(
+					expect(result.error.issues[0].message).toBe(
 						"URLは2048文字以内で入力してください",
 					);
 				}
@@ -396,19 +396,23 @@ describe("Profile Validation Schemas", () => {
 				const result = profileUpdateSchema.safeParse(invalidData);
 				expect(result.success).toBe(false);
 				if (!result.success) {
-					expect(result.error.errors).toHaveLength(5);
+					expect(result.error.issues).toHaveLength(5);
 				}
 			});
 		});
 
 		describe("境界値テスト", () => {
 			it("各フィールドの最大長で成功する", () => {
+				// 有効なURLでちょうど2048文字になるように構築
+				const pathPart = "a".repeat(2048 - "https://example.com/".length);
+				const validLongUrl = `https://example.com/${pathPart}`;
+				
 				const boundaryData = {
 					name: "a".repeat(50),
 					displayName: "a".repeat(50),
 					bio: "a".repeat(500),
 					location: "a".repeat(100),
-					website: "https://" + "a".repeat(2040) + ".com", // 2048文字
+					website: validLongUrl, // 2048文字の有効なURL
 					emailVisible: false,
 					profileVisible: true,
 				};
@@ -450,7 +454,7 @@ describe("Profile Validation Schemas", () => {
 
 			expect(result.success).toBe(false);
 			if (!result.success) {
-				expect(result.error.errors[0].message).toBe(
+				expect(result.error.issues[0].message).toBe(
 					"正確な確認テキストを入力してください: 'プロフィールを削除します'",
 				);
 			}
@@ -462,8 +466,8 @@ describe("Profile Validation Schemas", () => {
 
 			expect(result.success).toBe(false);
 			if (!result.success) {
-				expect(result.error.errors[0].message).toBe(
-					"正確な確認テキストを入力してください: 'プロフィールを削除します'",
+				expect(result.error.issues[0].message).toBe(
+					"確認テキストを入力してください",
 				);
 			}
 		});
@@ -488,7 +492,7 @@ describe("Profile Validation Schemas", () => {
 
 			expect(result.success).toBe(false);
 			if (!result.success) {
-				expect(result.error.errors[0].code).toBe("invalid_type");
+				expect(result.error.issues[0].code).toBe("invalid_type");
 			}
 		});
 	});

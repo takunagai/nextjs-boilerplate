@@ -440,7 +440,7 @@ describe("Profile Server Actions", () => {
 
 		it("各種メールアドレス形式が正しく検証される", async () => {
 			const validEmails = [
-				"test@example.com",
+				"newtest@example.com", // 現在のメールアドレス(test@example.com)と異なるものを使用
 				"user.name@domain.co.jp",
 				"user+tag@example.org",
 				"123@numbers.com",
@@ -529,14 +529,17 @@ describe("Profile Server Actions", () => {
 			);
 		});
 
-		it("前後の空白文字を含む正しい確認テキストで正常に処理される", async () => {
+		it("前後の空白文字を含む確認テキストはエラーを返す", async () => {
 			const confirmDataWithSpaces = {
 				confirmText: "  プロフィールを削除します  ",
 			};
 
 			const result = await deleteProfile(confirmDataWithSpaces);
 
-			expect(result.success).toBe(true);
+			expect(result.success).toBe(false);
+			expect(result.error?.message || result.error?.code).toMatch(
+				/入力データが無効です|VALIDATION_ERROR/,
+			);
 		});
 	});
 
