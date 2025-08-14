@@ -110,13 +110,34 @@ async function measureApiPerformance(
 	return metrics;
 }
 
+// Set-Cookieヘッダーを適切なCookie形式に変換する関数
+function parseCookiesFromSetCookie(setCookieHeader: string): string {
+	if (!setCookieHeader) return "";
+	
+	const cookies: string[] = [];
+	const setCookies = setCookieHeader.split('\n');
+	
+	for (const setCookie of setCookies) {
+		if (setCookie.trim()) {
+			// "name=value; Path=/; HttpOnly" -> "name=value"
+			const cookiePart = setCookie.split(';')[0].trim();
+			if (cookiePart) {
+				cookies.push(cookiePart);
+			}
+		}
+	}
+	
+	return cookies.join('; ');
+}
+
 // CSRFトークンを取得する共通関数
 async function getCsrfToken(
 	request: APIRequestContext,
 ): Promise<{ token: string; cookies: string }> {
 	const response = await request.get("/api/csrf-token");
 	const responseBody = await response.json();
-	const cookies = response.headers()["set-cookie"] || "";
+	const setCookieHeader = response.headers()["set-cookie"] || "";
+	const cookies = parseCookiesFromSetCookie(setCookieHeader);
 
 	return {
 		token: responseBody.csrfToken,
