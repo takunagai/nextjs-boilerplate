@@ -106,6 +106,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Maintain consistent error handling patterns
 - Extract magic numbers to constants
 - Use TypeScript strict mode throughout
+- **Apply DRY Principle**: Extract common logic into reusable functions
+- **Use Validation Factories**: Create dynamic schemas with factory patterns
+- **Implement Unified Error Handling**: Use centralized error management
+- **Optimize Type Definitions**: Use schema inference for type safety
 
 ### Code Organization
 
@@ -206,6 +210,43 @@ return createError("Validation failed", 400, { fieldErrors });
 // Add background effects
 <FlowingComments maxComments={25} />
 <DigitalConstellation nodeCount={150} />
+```
+
+### DRY Refactoring Patterns
+
+```typescript
+// Use validation factories for flexible schema generation
+const profileSchema = createProfileSchemaWithFactory({
+  requireName: true,
+  maxBioLength: 500,
+  allowEmptyWebsite: true
+});
+
+// Unified error handling in Server Actions
+const result = await handleServerActionError(async () => {
+  return await updateProfile(data);
+});
+
+// Type-safe inference from schemas
+export type UserProfile = z.infer<typeof profileDataSchema>;
+export type ProfileFormValues = z.infer<typeof profileEditSchema>;
+```
+
+### Cache Management
+
+```typescript
+// Automatic cache invalidation after updates
+import { revalidateTag, revalidatePath } from "next/cache";
+
+export async function updateProfile(data: ProfileFormValues) {
+  // ... update logic
+  
+  // Invalidate relevant caches
+  revalidateTag("user-profile");
+  revalidatePath("/profile");
+  
+  return { success: true, data: updatedProfile };
+}
 ```
 
 ## Common Issues & Solutions

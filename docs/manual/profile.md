@@ -148,10 +148,34 @@ graph TD
     B --> C[プロフィール表示]
     C --> D[編集フォーム]
     D --> E[updateProfile Server Action]
-    E --> F[バリデーション]
+    E --> F[統一バリデーション]
     F --> G[データ更新]
-    G --> H[成功レスポンス]
+    G --> H[キャッシュ無効化]
+    H --> I[成功レスポンス]
 ```
+
+### リファクタリング成果（v1.1.0）
+
+#### 1. DRY原則の適用
+- **重複コード削除**: 共通処理を関数として抽出
+- **バリデーションファクトリー**: `createProfileSchemaWithFactory()` による動的スキーマ生成
+- **エラーハンドリング統一**: `handleServerActionError()` による一元化
+
+#### 2. 型定義の最適化
+```typescript
+// 改善前: 個別の型定義
+interface ProfileData { ... }
+interface FormData { ... }
+
+// 改善後: 統一された型階層
+export type UserProfile = z.infer<typeof profileDataSchema>;
+export type ProfileFormValues = z.infer<typeof profileEditSchema>;
+```
+
+#### 3. Server Actionsの改善
+- **キャッシュ戦略**: 更新後の自動キャッシュ無効化
+- **エラーハンドリング統一**: ActionError型による統一レスポンス
+- **パフォーマンス向上**: 不要な処理の削除と最適化
 
 ---
 
@@ -182,15 +206,37 @@ if (hasHtmlTags) {
 }
 ```
 
-### 4. 入力検証
+### 4. 統一バリデーションシステム
 
-| フィールド | バリデーション | 制限 |
-|-----------|---------------|------|
-| 名前 | 必須、長さ、HTMLタグ除去 | 1-50文字 |
-| 表示名 | 長さ、HTMLタグ除去 | 1-50文字 |
-| 自己紹介 | 長さ、HTMLタグ除去 | 500文字以内 |
-| 所在地 | 長さ、HTMLタグ除去 | 100文字以内 |
-| ウェブサイト | URL形式、プロトコル制限 | HTTP/HTTPS のみ |
+#### バリデーションファクトリー（v1.1.0新機能）
+```typescript
+// 動的スキーマ生成による柔軟性向上
+const schema = createProfileSchemaWithFactory({
+  requireName: true,
+  maxBioLength: 500,
+  allowEmptyWebsite: true
+});
+```
+
+#### フィールド別バリデーション
+
+| フィールド | バリデーション | 制限 | 実装 |
+|-----------|---------------|------|------|
+| 名前 | 必須、長さ、HTMLタグ除去 | 1-50文字 | `z.string().min(1).max(50).refine()` |
+| 表示名 | 長さ、HTMLタグ除去 | 1-50文字 | `z.string().optional().max(50)` |
+| 自己紹介 | 長さ、HTMLタグ除去 | 500文字以内 | `z.string().optional().max(500)` |
+| 所在地 | 長さ、HTMLタグ除去 | 100文字以内 | `z.string().optional().max(100)` |
+| ウェブサイト | URL形式、プロトコル制限 | HTTP/HTTPS のみ | `z.string().url().startsWith()` |
+
+#### エラーハンドリング統一
+```typescript
+// 統一されたエラーレスポンス
+interface ActionError {
+  message: string;
+  code: string;
+  fieldErrors?: Record<string, string>;
+}
+```
 
 ### 5. ファイルアップロード安全性
 
@@ -442,6 +488,12 @@ console.log("送信状態:", submitStatus);
 - **アクセシビリティ**: WCAG 2.1 AA準拠
 
 ### 更新履歴
+- **v1.1.0** (2025-01-14): リファクタリング完了
+  - DRY原則適用による重複コード削除
+  - バリデーションファクトリーによる動的スキーマ生成
+  - エラーハンドリング統一化
+  - Server Actionsキャッシュ戦略改善
+  - 型定義最適化による開発効率向上
 - **v1.0.0** (2025-01-14): 初版リリース
   - プロフィール編集機能実装
   - WCAG 2.1 AA準拠

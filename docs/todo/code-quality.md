@@ -14,6 +14,32 @@ Next.js 15 + React 19 + TypeScript環境での高品質なコード実装を保�
 
 ---
 
+## Phase 0: リファクタリング成果活用 (推奨パターン)
+
+### 🏭 DRY原則とファクトリーパターン
+- [ ] **バリデーションファクトリー**: 動的スキーマ生成の活用
+  ```typescript
+  // ✅ 推奨: 柔軟で再利用可能なスキーマ
+  const schema = createValidationSchemaFactory({
+    requireField: true,
+    maxLength: 500,
+    allowEmpty: false
+  });
+  
+  // ❌ 非推奨: 固定的な重複スキーマ
+  const schema1 = z.object({ name: z.string().min(1) });
+  const schema2 = z.object({ name: z.string().min(1) }); // 重複
+  ```
+- [ ] **統一エラーハンドリング**: 中央集約型エラー管理
+- [ ] **Schema-First型定義**: Zodスキーマからの型推論
+- [ ] **キャッシュ戦略**: 更新後の適切な無効化
+
+### 🔄 コード再利用性
+- [ ] **共通ロジック抽出**: 重複処理の関数化
+- [ ] **カスタムフック**: 状態管理とビジネスロジックの分離
+- [ ] **高階関数**: 処理パターンの抽象化
+- [ ] **型ユーティリティ**: Pick, Omit, Partialの積極活用
+
 ## Phase 1: TypeScript品質基準 (必須)
 
 ### 📘 型安全性の確保
