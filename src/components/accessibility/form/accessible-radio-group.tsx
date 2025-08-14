@@ -3,6 +3,8 @@
  */
 "use client";
 
+import { useId } from "react";
+
 import { cn } from "@/lib/utils";
 import { AccessibilityDescription, ValidationError } from "../screen-reader";
 
@@ -40,7 +42,8 @@ export function AccessibleRadioGroup({
 	optionClassName,
 	required,
 }: AccessibleRadioGroupProps) {
-	const groupId = `radio-group-${crypto.randomUUID()}`;
+	const generatedId = useId();
+	const groupId = `radio-group-${generatedId}`;
 	const errorId = error ? `${groupId}-error` : undefined;
 	const descriptionId = description ? `${groupId}-description` : undefined;
 

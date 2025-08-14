@@ -3,7 +3,7 @@
  */
 "use client";
 
-import { forwardRef } from "react";
+import { forwardRef, useId } from "react";
 
 import { cn } from "@/lib/utils";
 import { AccessibilityDescription, ValidationError } from "../screen-reader";
@@ -37,7 +37,8 @@ export const AccessibleCheckbox = forwardRef<
 		},
 		ref,
 	) => {
-		const checkboxId = id || `checkbox-${crypto.randomUUID()}`;
+		const generatedId = useId();
+		const checkboxId = id || `checkbox-${generatedId}`;
 		const errorId = error ? `${checkboxId}-error` : undefined;
 		const descriptionId = description ? `${checkboxId}-description` : undefined;
 

@@ -4,7 +4,7 @@
  */
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useId } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -200,8 +200,9 @@ export function AccessibleCollapse({
 	contentClassName,
 	triggerAriaLabel,
 }: AccessibleCollapseProps) {
-	const triggerId = `collapse-trigger-${crypto.randomUUID()}`;
-	const contentId = `collapse-content-${crypto.randomUUID()}`;
+	const generatedId = useId();
+	const triggerId = `collapse-trigger-${generatedId}`;
+	const contentId = `collapse-content-${generatedId}`;
 
 	return (
 		<div className={className}>

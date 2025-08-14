@@ -130,7 +130,7 @@ export function FlowingComments({
 
 					return {
 						...comment,
-						id: crypto.randomUUID(),
+						// React key は保持（再生成しない）
 						text: COMMENTS[Math.floor(Math.random() * COMMENTS.length)],
 						top: Math.random() * (UI_FLOWING_COMMENTS.BOTTOM_LIMIT - UI_FLOWING_COMMENTS.TOP_LIMIT) + UI_FLOWING_COMMENTS.TOP_LIMIT,
 						duration: Math.random() * (UI_FLOWING_COMMENTS.DURATION_MAX - UI_FLOWING_COMMENTS.DURATION_MIN) + UI_FLOWING_COMMENTS.DURATION_MIN,

@@ -3,7 +3,7 @@
  */
 "use client";
 
-import { forwardRef } from "react";
+import { forwardRef, useId } from "react";
 
 import { cn } from "@/lib/utils";
 import { AccessibilityDescription, ValidationError } from "../screen-reader";
@@ -41,7 +41,8 @@ export const AccessibleInput = forwardRef<
 		},
 		ref,
 	) => {
-		const inputId = id || `input-${crypto.randomUUID()}`;
+		const generatedId = useId();
+		const inputId = id || `input-${generatedId}`;
 		const errorId = error ? `${inputId}-error` : undefined;
 		const descriptionId = description ? `${inputId}-description` : undefined;
 
