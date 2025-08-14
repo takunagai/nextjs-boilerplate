@@ -93,7 +93,7 @@ export async function updateProfile(formData: unknown) {
 	return safeAction(async () => {
 		// 統一された認証チェック
 		const session = await requireAuth();
-		const userId = session.user.id!;
+		const userId = session.user.id;
 
 		// 入力データのバリデーション
 		const validatedData = await validateAction(
@@ -154,7 +154,7 @@ export async function uploadProfileImage(formData: FormData) {
 	return safeAction(async () => {
 		// 統一された認証チェック
 		const session = await requireAuth();
-		const userId = session.user.id!;
+		const userId = session.user.id;
 
 		const file = formData.get("image") as File;
 		if (!file) {
@@ -218,7 +218,7 @@ export async function requestEmailChange(newEmail: string) {
 	return safeAction(async () => {
 		// 統一された認証チェック
 		const session = await requireAuth();
-		const userId = session.user.id!;
+		const userId = session.user.id;
 
 		// メールアドレス形式チェック
 		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -263,7 +263,7 @@ export async function deleteProfile(formData: unknown) {
 	return safeAction(async () => {
 		// 統一された認証チェック
 		const session = await requireAuth();
-		const userId = session.user.id!;
+		const userId = session.user.id;
 
 		// 確認テキストのバリデーション
 		const _validatedData = await validateAction(
