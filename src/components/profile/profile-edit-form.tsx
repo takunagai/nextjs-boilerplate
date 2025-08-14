@@ -1,6 +1,6 @@
 /**
  * プロフィール編集フォームコンポーネント
- * 
+ *
  * WCAG 2.1 AA準拠のアクセシビリティ機能：
  * - セマンティックHTML構造
  * - 適切なARIA属性
@@ -16,14 +16,24 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { AccessibleInput } from "@/components/accessibility/form/accessible-input";
 import { AccessibleTextarea } from "@/components/accessibility/form/accessible-textarea";
 import { AccessibleCheckbox } from "@/components/accessibility/form/accessible-checkbox";
+import { FormErrorDisplay } from "@/components/accessibility/screen-reader";
 import { useFormSubmission } from "@/hooks/use-form-submission";
 import { updateProfile, uploadProfileImage } from "@/app/actions/profile";
-import { profileUpdateSchema, type ProfileUpdateFormValues } from "@/lib/validation/profile-schema";
+import {
+	profileUpdateSchema,
+	type ProfileUpdateFormValues,
+} from "@/lib/validation/profile-schema";
 import type { UserProfile } from "@/lib/auth/types";
 
 export interface ProfileEditFormProps {
@@ -35,8 +45,15 @@ export interface ProfileEditFormProps {
  * プロフィール編集フォーム
  */
 export function ProfileEditForm({ initialProfile }: ProfileEditFormProps) {
-	const [isImageUploading, setIsImageUploading] = useState(false);
-	const [profileImage, setProfileImage] = useState(initialProfile.image || "");
+	// React 19 Compiler で自動最適化されるため、useCallback/useMemo は不要
+	// ただし、useState の初期化は最適化可能
+	const [uploadState, setUploadState] = useState<{
+		isUploading: boolean;
+		imageUrl: string;
+	}>({
+		isUploading: false,
+		imageUrl: initialProfile.image || "",
+	});
 
 	// フォーム管理
 	const form = useForm<ProfileUpdateFormValues>({
@@ -53,7 +70,11 @@ export function ProfileEditForm({ initialProfile }: ProfileEditFormProps) {
 	});
 
 	// フォーム送信処理
-	const { handleSubmit, isSubmitting: isLoading, submitError: error } = useFormSubmission({
+	const {
+		handleSubmit,
+		isSubmitting: isLoading,
+		submitError: error,
+	} = useFormSubmission({
 		form,
 		submitFn: async (data) => {
 			const result = await updateProfile(data);
@@ -63,23 +84,30 @@ export function ProfileEditForm({ initialProfile }: ProfileEditFormProps) {
 	});
 
 	// プロフィール画像アップロード処理
-	const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+	const handleImageUpload = async (
+		event: React.ChangeEvent<HTMLInputElement>,
+	) => {
 		const file = event.target.files?.[0];
 		if (!file) return;
 
-		setIsImageUploading(true);
+		setUploadState((prev) => ({ ...prev, isUploading: true }));
 		try {
 			const formData = new FormData();
 			formData.append("image", file);
-			
+
 			const result = await uploadProfileImage(formData);
 			if (result.success && result.data?.imageUrl) {
-				setProfileImage(result.data.imageUrl);
+				setUploadState((prev) => ({
+					...prev,
+					imageUrl: result.data.imageUrl,
+					isUploading: false,
+				}));
+			} else {
+				setUploadState((prev) => ({ ...prev, isUploading: false }));
 			}
 		} catch (error) {
 			console.error("画像アップロードエラー:", error);
-		} finally {
-			setIsImageUploading(false);
+			setUploadState((prev) => ({ ...prev, isUploading: false }));
 		}
 	};
 
@@ -97,9 +125,9 @@ export function ProfileEditForm({ initialProfile }: ProfileEditFormProps) {
 					<div className="flex items-center gap-4">
 						{/* 現在の画像表示 */}
 						<div className="flex h-20 w-20 items-center justify-center rounded-full bg-primary/10 text-primary border-2 border-muted overflow-hidden">
-							{profileImage ? (
-								<Image 
-									src={profileImage} 
+							{uploadState.imageUrl ? (
+								<Image
+									src={uploadState.imageUrl}
 									alt={`${initialProfile.name || "ユーザー"}のプロフィール画像`}
 									width={80}
 									height={80}
@@ -119,18 +147,21 @@ export function ProfileEditForm({ initialProfile }: ProfileEditFormProps) {
 								id="profile-image-upload"
 								accept="image/jpeg,image/png,image/webp"
 								onChange={handleImageUpload}
-								disabled={isImageUploading}
+								disabled={uploadState.isUploading}
 								className="sr-only"
 								aria-describedby="profile-image-description"
 							/>
-							<label 
+							<label
 								htmlFor="profile-image-upload"
 								className="cursor-pointer inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary disabled:opacity-50 disabled:cursor-not-allowed"
 								aria-describedby="profile-image-description"
 							>
-								{isImageUploading ? "アップロード中..." : "画像を選択"}
+								{uploadState.isUploading ? "アップロード中..." : "画像を選択"}
 							</label>
-							<p id="profile-image-description" className="mt-1 text-xs text-muted-foreground">
+							<p
+								id="profile-image-description"
+								className="mt-1 text-xs text-muted-foreground"
+							>
 								JPEG、PNG、WebP形式、5MB以下
 							</p>
 						</div>
@@ -147,18 +178,12 @@ export function ProfileEditForm({ initialProfile }: ProfileEditFormProps) {
 					</CardDescription>
 				</CardHeader>
 				<CardContent>
-					<form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
-						{/* 表示エラー */}
-						{error && (
-							<div 
-								role="alert" 
-								className="p-3 rounded-md bg-destructive/10 border border-destructive/20 text-destructive"
-								aria-live="polite"
-							>
-								<p className="text-sm font-medium">エラーが発生しました</p>
-								<p className="text-sm">{error}</p>
-							</div>
-						)}
+					<form
+						onSubmit={form.handleSubmit(handleSubmit)}
+						className="space-y-6"
+					>
+						{/* 統一されたエラー表示 */}
+						<FormErrorDisplay error={error} />
 
 						{/* 名前（必須） */}
 						<AccessibleInput
@@ -214,7 +239,7 @@ export function ProfileEditForm({ initialProfile }: ProfileEditFormProps) {
 						{/* プライバシー設定 */}
 						<fieldset className="space-y-4">
 							<legend className="text-sm font-medium">プライバシー設定</legend>
-							
+
 							<AccessibleCheckbox
 								label="メールアドレスを公開する"
 								description="チェックすると、他のユーザーにメールアドレスが表示されます"
@@ -230,16 +255,16 @@ export function ProfileEditForm({ initialProfile }: ProfileEditFormProps) {
 
 						{/* 送信ボタン */}
 						<div className="flex gap-3 pt-4">
-							<Button 
-								type="submit" 
+							<Button
+								type="submit"
 								disabled={isLoading}
 								aria-describedby={isLoading ? "submit-status" : undefined}
 							>
 								{isLoading ? "更新中..." : "プロフィールを更新"}
 							</Button>
-							
-							<Button 
-								type="button" 
+
+							<Button
+								type="button"
 								variant="outline"
 								onClick={() => form.reset()}
 								disabled={isLoading}

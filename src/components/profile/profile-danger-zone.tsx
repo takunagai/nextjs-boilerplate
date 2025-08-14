@@ -1,6 +1,6 @@
 /**
  * プロフィール危険操作ゾーンコンポーネント
- * 
+ *
  * アカウント削除など、取り返しのつかない操作を扱うコンポーネント
  * WCAG 2.1 AA準拠のアクセシビリティ機能を実装
  */
@@ -12,12 +12,30 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card";
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from "@/components/ui/dialog";
 import { AccessibleInput } from "@/components/accessibility/form/accessible-input";
+import { FormErrorDisplay } from "@/components/accessibility/screen-reader";
 import { useFormSubmission } from "@/hooks/use-form-submission";
 import { deleteProfile, requestEmailChange } from "@/app/actions/profile";
-import { profileDeleteConfirmSchema, type ProfileDeleteConfirmValues } from "@/lib/validation/profile-schema";
+import {
+	profileDeleteConfirmSchema,
+	type ProfileDeleteConfirmValues,
+} from "@/lib/validation/profile-schema";
 
 export interface ProfileDangerZoneProps {
 	/** 現在のユーザーのメールアドレス */
@@ -42,7 +60,11 @@ export function ProfileDangerZone({ userEmail }: ProfileDangerZoneProps) {
 	});
 
 	// プロフィール削除処理
-	const { handleSubmit: handleDeleteSubmit, isSubmitting: isDeleting, submitError: deleteError } = useFormSubmission({
+	const {
+		handleSubmit: handleDeleteSubmit,
+		isSubmitting: isDeleting,
+		submitError: deleteError,
+	} = useFormSubmission({
 		form: deleteForm,
 		submitFn: async (data) => {
 			const result = await deleteProfile(data);
@@ -79,14 +101,16 @@ export function ProfileDangerZone({ userEmail }: ProfileDangerZoneProps) {
 				</CardDescription>
 			</CardHeader>
 			<CardContent className="space-y-4">
-				
 				{/* メールアドレス変更 */}
 				<div className="space-y-2">
 					<h3 className="text-sm font-medium">メールアドレス変更</h3>
 					<p className="text-sm text-muted-foreground">
 						現在: {userEmail || "未設定"}
 					</p>
-					<Dialog open={isEmailChangeDialogOpen} onOpenChange={setIsEmailChangeDialogOpen}>
+					<Dialog
+						open={isEmailChangeDialogOpen}
+						onOpenChange={setIsEmailChangeDialogOpen}
+					>
 						<DialogTrigger asChild>
 							<Button variant="outline" size="sm">
 								メールアドレスを変更
@@ -110,8 +134,8 @@ export function ProfileDangerZone({ userEmail }: ProfileDangerZoneProps) {
 								/>
 							</div>
 							<DialogFooter>
-								<Button 
-									variant="outline" 
+								<Button
+									variant="outline"
 									onClick={() => setIsEmailChangeDialogOpen(false)}
 								>
 									キャンセル
@@ -126,18 +150,23 @@ export function ProfileDangerZone({ userEmail }: ProfileDangerZoneProps) {
 
 				{/* アカウント削除 */}
 				<div className="space-y-2">
-					<h3 className="text-sm font-medium text-destructive">アカウント削除</h3>
+					<h3 className="text-sm font-medium text-destructive">
+						アカウント削除
+					</h3>
 					<p className="text-sm text-muted-foreground">
 						アカウントを削除すると、すべてのデータが永久に失われます。この操作は取り消せません。
 					</p>
-					
-					<Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+
+					<Dialog
+						open={isDeleteDialogOpen}
+						onOpenChange={setIsDeleteDialogOpen}
+					>
 						<DialogTrigger asChild>
 							<Button variant="destructive" size="sm">
 								アカウントを削除
 							</Button>
 						</DialogTrigger>
-						<DialogContent 
+						<DialogContent
 							className="sm:max-w-md"
 							aria-describedby="delete-account-description"
 						>
@@ -151,17 +180,15 @@ export function ProfileDangerZone({ userEmail }: ProfileDangerZoneProps) {
 								</DialogDescription>
 							</DialogHeader>
 
-							<form onSubmit={deleteForm.handleSubmit(handleDeleteSubmit)} className="space-y-4">
-								{/* エラー表示 */}
-								{deleteError && (
-									<div 
-										role="alert" 
-										className="p-3 rounded-md bg-destructive/10 border border-destructive/20 text-destructive"
-										aria-live="polite"
-									>
-										<p className="text-sm">{deleteError}</p>
-									</div>
-								)}
+							<form
+								onSubmit={deleteForm.handleSubmit(handleDeleteSubmit)}
+								className="space-y-4"
+							>
+								{/* 統一されたエラー表示 */}
+								<FormErrorDisplay
+									error={deleteError}
+									title="削除処理でエラーが発生しました"
+								/>
 
 								<AccessibleInput
 									label="確認テキスト"
@@ -173,17 +200,17 @@ export function ProfileDangerZone({ userEmail }: ProfileDangerZoneProps) {
 								/>
 
 								<DialogFooter className="flex gap-2">
-									<Button 
+									<Button
 										type="button"
-										variant="outline" 
+										variant="outline"
 										onClick={() => setIsDeleteDialogOpen(false)}
 										disabled={isDeleting}
 									>
 										キャンセル
 									</Button>
-									<Button 
+									<Button
 										type="submit"
-										variant="destructive" 
+										variant="destructive"
 										disabled={isDeleting}
 										aria-describedby={isDeleting ? "delete-status" : undefined}
 									>
