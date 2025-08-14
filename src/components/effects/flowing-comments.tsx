@@ -7,6 +7,7 @@
 import { useEffect, useState } from "react";
 import { useWindowResize } from "@/hooks/use-window-resize";
 import { UI_FLOWING_COMMENTS, UI_PERFORMANCE } from "@/lib/constants/ui";
+import { generateId } from "@/lib/utils/id";
 
 // 流れるメッセージデータ（「できること」をテーマに）
 const COMMENTS = [
@@ -120,7 +121,7 @@ export function FlowingComments({
 
 		for (let i = 0; i < maxComments; i++) {
 			initialComments.push({
-				id: crypto.randomUUID(),
+				id: generateId(),
 				text: COMMENTS[Math.floor(Math.random() * COMMENTS.length)],
 				top:
 					Math.random() *

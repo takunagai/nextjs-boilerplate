@@ -8,6 +8,7 @@
  */
 
 import type { ContactFormValues } from "@/lib/validation/contact-schema";
+import { generateId } from "@/lib/utils/id";
 import { contactFormSchema } from "@/lib/validation/contact-schema";
 import { createSafeAction } from "./action-utils";
 
@@ -29,7 +30,7 @@ async function handleContactSubmission(data: ContactFormValues) {
 		// 成功レスポンス
 		return {
 			message: "お問い合わせを受け付けました。ありがとうございます。",
-			submissionId: `contact_${crypto.randomUUID()}`,
+			submissionId: `contact_${generateId()}`,
 			data,
 		};
 	} catch (error) {
