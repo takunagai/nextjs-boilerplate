@@ -99,7 +99,7 @@ export function ProfileEditForm({ initialProfile }: ProfileEditFormProps) {
 			if (result.success && result.data?.imageUrl) {
 				setUploadState((prev) => ({
 					...prev,
-					imageUrl: result.data.imageUrl,
+					imageUrl: result.data?.imageUrl || "",
 					isUploading: false,
 				}));
 			} else {

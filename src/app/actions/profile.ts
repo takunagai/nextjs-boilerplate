@@ -103,7 +103,7 @@ export async function updateProfile(formData: unknown) {
 
 		// データのサニタイゼーション（追加の安全対策）
 		const sanitizedData: ProfileUpdateFormValues = {
-			name: validatedData.name.trim(),
+			name: (validatedData.name || "").trim(),
 			displayName: validatedData.displayName?.trim() || undefined,
 			bio: validatedData.bio?.trim() || undefined,
 			location: validatedData.location?.trim() || undefined,

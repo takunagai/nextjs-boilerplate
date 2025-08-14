@@ -1,7 +1,7 @@
 import type { NextAuthConfig } from "next-auth";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import type { CommonUserAttributes } from "./types";
+import type { CommonUserAttributes, UserRole } from "./types";
 
 // NextAuth型拡張
 declare module "next-auth" {
@@ -92,7 +92,7 @@ export const authConfig: NextAuthConfig = {
 		session: async ({ session, token }) => {
 			if (token && session.user) {
 				session.user.id = token.id as string;
-				session.user.role = token.role as string;
+				session.user.role = token.role as UserRole;
 			}
 			return session;
 		},

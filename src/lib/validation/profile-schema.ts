@@ -42,13 +42,11 @@ const createSafeTextSchema = (
 	maxLength: number = 100,
 	required: boolean = false,
 ) => {
-	let schema = z.string().optional();
+	const baseSchema = required
+		? z.string().min(1, { message: `${fieldName}を入力してください` })
+		: z.string().optional();
 
-	if (required) {
-		schema = z.string().min(1, { message: `${fieldName}を入力してください` });
-	}
-
-	return schema
+	return baseSchema
 		.refine((value) => validateNoHtmlTags(value, fieldName), {
 			message: `${fieldName}にHTMLタグを含めることはできません`,
 		})
