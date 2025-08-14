@@ -172,12 +172,10 @@ export function FlowingComments({
 						{
 							top: `${comment.top}%`,
 							fontSize: `${comment.size}rem`,
-							// 初期位置を画面右外に設定（アニメーション開始前の位置）
-							transform: "translateX(100vw)",
 							animationDuration: `${comment.duration}s`,
 							animationDelay: `${comment.delay}s`,
-							// アニメーションの初期状態を維持
-							animationFillMode: "backwards",
+							// アニメーション前後の状態を維持（delay中は0%、終了後は100%の状態）
+							animationFillMode: "both",
 						} satisfies React.CSSProperties
 					}
 				>
