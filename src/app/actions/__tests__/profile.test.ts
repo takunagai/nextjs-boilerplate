@@ -1,6 +1,6 @@
 /**
  * プロフィール管理 Server Actions のテスト
- * 
+ *
  * テスト対象:
  * - getProfile: プロフィール情報取得
  * - updateProfile: プロフィール情報更新
@@ -77,7 +77,9 @@ describe("Profile Server Actions", () => {
 			const result = await getProfile();
 
 			expect(result.success).toBe(false);
-			expect(result.error?.message || result.error?.code).toMatch(/認証が必要です|AUTHENTICATION_ERROR/);
+			expect(result.error?.message || result.error?.code).toMatch(
+				/認証が必要です|AUTHENTICATION_ERROR/,
+			);
 		});
 
 		it("セッションにユーザーIDがない場合エラーを返す", async () => {
@@ -88,7 +90,9 @@ describe("Profile Server Actions", () => {
 			const result = await getProfile();
 
 			expect(result.success).toBe(false);
-			expect(result.error?.message || result.error?.code).toMatch(/認証が必要です|AUTHENTICATION_ERROR/);
+			expect(result.error?.message || result.error?.code).toMatch(
+				/認証が必要です|AUTHENTICATION_ERROR/,
+			);
 		});
 
 		it("プロフィールデータの構造が正しい", async () => {
@@ -146,7 +150,9 @@ describe("Profile Server Actions", () => {
 			const result = await updateProfile(invalidData);
 
 			expect(result.success).toBe(false);
-			expect(result.error?.message || result.error?.code).toMatch(/入力データが無効です|VALIDATION_ERROR/);
+			expect(result.error?.message || result.error?.code).toMatch(
+				/入力データが無効です|VALIDATION_ERROR/,
+			);
 		});
 
 		it("名前の文字数制限 (1-50文字)", async () => {
@@ -159,7 +165,9 @@ describe("Profile Server Actions", () => {
 			const result = await updateProfile(longNameData);
 
 			expect(result.success).toBe(false);
-			expect(result.error?.message || result.error?.code).toMatch(/入力データが無効です|VALIDATION_ERROR/);
+			expect(result.error?.message || result.error?.code).toMatch(
+				/入力データが無効です|VALIDATION_ERROR/,
+			);
 		});
 
 		it("表示名の文字数制限 (1-50文字)", async () => {
@@ -171,7 +179,9 @@ describe("Profile Server Actions", () => {
 			const result = await updateProfile(longDisplayNameData);
 
 			expect(result.success).toBe(false);
-			expect(result.error?.message || result.error?.code).toMatch(/入力データが無効です|VALIDATION_ERROR/);
+			expect(result.error?.message || result.error?.code).toMatch(
+				/入力データが無効です|VALIDATION_ERROR/,
+			);
 		});
 
 		it("自己紹介の文字数制限 (500文字以内)", async () => {
@@ -183,7 +193,9 @@ describe("Profile Server Actions", () => {
 			const result = await updateProfile(longBioData);
 
 			expect(result.success).toBe(false);
-			expect(result.error?.message || result.error?.code).toMatch(/入力データが無効です|VALIDATION_ERROR/);
+			expect(result.error?.message || result.error?.code).toMatch(
+				/入力データが無効です|VALIDATION_ERROR/,
+			);
 		});
 
 		it("所在地の文字数制限 (100文字以内)", async () => {
@@ -195,7 +207,9 @@ describe("Profile Server Actions", () => {
 			const result = await updateProfile(longLocationData);
 
 			expect(result.success).toBe(false);
-			expect(result.error?.message || result.error?.code).toMatch(/入力データが無効です|VALIDATION_ERROR/);
+			expect(result.error?.message || result.error?.code).toMatch(
+				/入力データが無効です|VALIDATION_ERROR/,
+			);
 		});
 
 		it("ウェブサイトURL形式のバリデーション", async () => {
@@ -207,7 +221,9 @@ describe("Profile Server Actions", () => {
 			const result = await updateProfile(invalidUrlData);
 
 			expect(result.success).toBe(false);
-			expect(result.error?.message || result.error?.code).toMatch(/入力データが無効です|VALIDATION_ERROR/);
+			expect(result.error?.message || result.error?.code).toMatch(
+				/入力データが無効です|VALIDATION_ERROR/,
+			);
 		});
 
 		it("HTMLタグを含む入力でエラーを返す", async () => {
@@ -219,7 +235,9 @@ describe("Profile Server Actions", () => {
 			const result = await updateProfile(htmlData);
 
 			expect(result.success).toBe(false);
-			expect(result.error?.message || result.error?.code).toMatch(/入力データが無効です|VALIDATION_ERROR/);
+			expect(result.error?.message || result.error?.code).toMatch(
+				/入力データが無効です|VALIDATION_ERROR/,
+			);
 		});
 
 		it("未認証ユーザーでエラーを返す", async () => {
@@ -228,7 +246,9 @@ describe("Profile Server Actions", () => {
 			const result = await updateProfile(validUpdateData);
 
 			expect(result.success).toBe(false);
-			expect(result.error?.message || result.error?.code).toMatch(/認証が必要です|AUTHENTICATION_ERROR/);
+			expect(result.error?.message || result.error?.code).toMatch(
+				/認証が必要です|AUTHENTICATION_ERROR/,
+			);
 		});
 
 		it("データのトリミング処理が正しく動作する", async () => {
@@ -287,7 +307,9 @@ describe("Profile Server Actions", () => {
 			const result = await uploadProfileImage(formData);
 
 			expect(result.success).toBe(true);
-			expect(result.data?.message).toBe("プロフィール画像をアップロードしました");
+			expect(result.data?.message).toBe(
+				"プロフィール画像をアップロードしました",
+			);
 			expect(result.data?.imageUrl).toBe("/api/images/profile/test-user-id");
 		});
 
@@ -315,7 +337,9 @@ describe("Profile Server Actions", () => {
 			const result = await uploadProfileImage(formData);
 
 			expect(result.success).toBe(false);
-			expect(result.error?.message || result.error?.code).toMatch(/画像ファイルを選択してください|VALIDATION_ERROR/);
+			expect(result.error?.message || result.error?.code).toMatch(
+				/画像ファイルを選択してください|VALIDATION_ERROR/,
+			);
 		});
 
 		it("対応していないファイル形式でエラーを返す", async () => {
@@ -337,7 +361,9 @@ describe("Profile Server Actions", () => {
 			const result = await uploadProfileImage(formData);
 
 			expect(result.success).toBe(false);
-			expect(result.error?.message || result.error?.code).toMatch(/ファイルサイズは5MB以下にしてください|VALIDATION_ERROR/);
+			expect(result.error?.message || result.error?.code).toMatch(
+				/ファイルサイズは5MB以下にしてください|VALIDATION_ERROR/,
+			);
 		});
 
 		it("未認証ユーザーでエラーを返す", async () => {
@@ -348,11 +374,17 @@ describe("Profile Server Actions", () => {
 			const result = await uploadProfileImage(formData);
 
 			expect(result.success).toBe(false);
-			expect(result.error?.message || result.error?.code).toMatch(/認証が必要です|AUTHENTICATION_ERROR/);
+			expect(result.error?.message || result.error?.code).toMatch(
+				/認証が必要です|AUTHENTICATION_ERROR/,
+			);
 		});
 
 		it("ファイルサイズが境界値(5MB)で正常に処理される", async () => {
-			const file = createMockFile("boundary.jpg", "image/jpeg", 5 * 1024 * 1024); // 正確に5MB
+			const file = createMockFile(
+				"boundary.jpg",
+				"image/jpeg",
+				5 * 1024 * 1024,
+			); // 正確に5MB
 			const formData = createFormData(file);
 
 			const result = await uploadProfileImage(formData);
@@ -379,7 +411,9 @@ describe("Profile Server Actions", () => {
 			const result = await requestEmailChange(invalidEmail);
 
 			expect(result.success).toBe(false);
-			expect(result.error?.message || result.error?.code).toMatch(/有効なメールアドレスを入力してください|VALIDATION_ERROR/);
+			expect(result.error?.message || result.error?.code).toMatch(
+				/有効なメールアドレスを入力してください|VALIDATION_ERROR/,
+			);
 		});
 
 		it("現在のメールアドレスと同じ場合エラーを返す", async () => {
@@ -388,7 +422,9 @@ describe("Profile Server Actions", () => {
 			const result = await requestEmailChange(sameEmail);
 
 			expect(result.success).toBe(false);
-			expect(result.error?.message || result.error?.code).toMatch(/現在のメールアドレスと同じです|VALIDATION_ERROR/);
+			expect(result.error?.message || result.error?.code).toMatch(
+				/現在のメールアドレスと同じです|VALIDATION_ERROR/,
+			);
 		});
 
 		it("未認証ユーザーでエラーを返す", async () => {
@@ -397,7 +433,9 @@ describe("Profile Server Actions", () => {
 			const result = await requestEmailChange("new@example.com");
 
 			expect(result.success).toBe(false);
-			expect(result.error?.message || result.error?.code).toMatch(/認証が必要です|AUTHENTICATION_ERROR/);
+			expect(result.error?.message || result.error?.code).toMatch(
+				/認証が必要です|AUTHENTICATION_ERROR/,
+			);
 		});
 
 		it("各種メールアドレス形式が正しく検証される", async () => {
@@ -451,7 +489,9 @@ describe("Profile Server Actions", () => {
 			const result = await deleteProfile(invalidConfirmData);
 
 			expect(result.success).toBe(false);
-			expect(result.error?.message || result.error?.code).toMatch(/入力データが無効です|VALIDATION_ERROR/);
+			expect(result.error?.message || result.error?.code).toMatch(
+				/入力データが無効です|VALIDATION_ERROR/,
+			);
 		});
 
 		it("空の確認テキストでエラーを返す", async () => {
@@ -462,7 +502,9 @@ describe("Profile Server Actions", () => {
 			const result = await deleteProfile(emptyConfirmData);
 
 			expect(result.success).toBe(false);
-			expect(result.error?.message || result.error?.code).toMatch(/入力データが無効です|VALIDATION_ERROR/);
+			expect(result.error?.message || result.error?.code).toMatch(
+				/入力データが無効です|VALIDATION_ERROR/,
+			);
 		});
 
 		it("未認証ユーザーでエラーを返す", async () => {
@@ -471,7 +513,9 @@ describe("Profile Server Actions", () => {
 			const result = await deleteProfile(validConfirmData);
 
 			expect(result.success).toBe(false);
-			expect(result.error?.message || result.error?.code).toMatch(/認証が必要です|AUTHENTICATION_ERROR/);
+			expect(result.error?.message || result.error?.code).toMatch(
+				/認証が必要です|AUTHENTICATION_ERROR/,
+			);
 		});
 
 		it("confirmTextフィールドが存在しない場合エラーを返す", async () => {
@@ -480,7 +524,9 @@ describe("Profile Server Actions", () => {
 			const result = await deleteProfile(invalidData);
 
 			expect(result.success).toBe(false);
-			expect(result.error?.message || result.error?.code).toMatch(/入力データが無効です|VALIDATION_ERROR/);
+			expect(result.error?.message || result.error?.code).toMatch(
+				/入力データが無効です|VALIDATION_ERROR/,
+			);
 		});
 
 		it("前後の空白文字を含む正しい確認テキストで正常に処理される", async () => {
@@ -510,45 +556,66 @@ describe("Profile Server Actions", () => {
 				name: "uploadProfileImage",
 				fn: () => {
 					const formData = new FormData();
-					formData.append("image", new File(["test"], "test.jpg", { type: "image/jpeg" }));
+					formData.append(
+						"image",
+						new File(["test"], "test.jpg", { type: "image/jpeg" }),
+					);
 					return uploadProfileImage(formData);
 				},
 			},
-			{ name: "requestEmailChange", fn: () => requestEmailChange("new@example.com") },
+			{
+				name: "requestEmailChange",
+				fn: () => requestEmailChange("new@example.com"),
+			},
 			{
 				name: "deleteProfile",
 				fn: () => deleteProfile({ confirmText: "プロフィールを削除します" }),
 			},
 		];
 
-		it.each(actions)("$name: セッションがnullの場合認証エラー", async ({ fn }) => {
-			(auth as ReturnType<typeof vi.fn>).mockResolvedValue(null);
+		it.each(actions)(
+			"$name: セッションがnullの場合認証エラー",
+			async ({ fn }) => {
+				(auth as ReturnType<typeof vi.fn>).mockResolvedValue(null);
 
-			const result = await fn();
+				const result = await fn();
 
-			expect(result.success).toBe(false);
-			expect(result.error?.message || result.error?.code).toMatch(/認証が必要です|AUTHENTICATION_ERROR/);
-		});
+				expect(result.success).toBe(false);
+				expect(result.error?.message || result.error?.code).toMatch(
+					/認証が必要です|AUTHENTICATION_ERROR/,
+				);
+			},
+		);
 
-		it.each(actions)("$name: ユーザー情報がnullの場合認証エラー", async ({ fn }) => {
-			(auth as ReturnType<typeof vi.fn>).mockResolvedValue({ user: null });
+		it.each(actions)(
+			"$name: ユーザー情報がnullの場合認証エラー",
+			async ({ fn }) => {
+				(auth as ReturnType<typeof vi.fn>).mockResolvedValue({ user: null });
 
-			const result = await fn();
+				const result = await fn();
 
-			expect(result.success).toBe(false);
-			expect(result.error?.message || result.error?.code).toMatch(/認証が必要です|AUTHENTICATION_ERROR/);
-		});
+				expect(result.success).toBe(false);
+				expect(result.error?.message || result.error?.code).toMatch(
+					/認証が必要です|AUTHENTICATION_ERROR/,
+				);
+			},
+		);
 
-		it.each(actions)("$name: ユーザーIDがない場合認証エラー", async ({ fn }) => {
-			(auth as ReturnType<typeof vi.fn>).mockResolvedValue({
-				user: { name: "Test", email: "test@example.com" },
-			});
+		it.each(actions)(
+			"$name: ユーザーIDがない場合認証エラー",
+			async ({ fn }) => {
+				(auth as ReturnType<typeof vi.fn>).mockResolvedValue({
+					user: { name: "Test", email: "test@example.com" },
+				});
 
-			const result = await fn();
+				const result = await fn();
 
-			expect(result.success).toBe(false);
-			expect(result.error?.message || result.error?.code).toMatch(/認証が必要です|AUTHENTICATION_ERROR/);
-		});
+				expect(result.success).toBe(false);
+				expect(result.error?.message || result.error?.code).toMatch(
+					/認証が必要です|AUTHENTICATION_ERROR/,
+				);
+			},
+		);
 	});
 
 	describe("統合テスト", () => {

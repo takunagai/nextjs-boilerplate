@@ -1,6 +1,6 @@
 /**
  * プロフィールバリデーションスキーマのテスト
- * 
+ *
  * テスト対象:
  * - profileUpdateSchema: プロフィール更新データのバリデーション
  * - profileDeleteConfirmSchema: プロフィール削除確認のバリデーション
@@ -38,7 +38,7 @@ describe("Profile Validation Schemas", () => {
 			it("必須フィールドのため空文字でエラー", () => {
 				const data = { ...validData, name: "" };
 				const result = profileUpdateSchema.safeParse(data);
-				
+
 				expect(result.success).toBe(false);
 				if (!result.success) {
 					expect(result.error.errors[0].message).toBe("名前は必須です");
@@ -54,20 +54,27 @@ describe("Profile Validation Schemas", () => {
 			it("51文字以上でエラー", () => {
 				const data = { ...validData, name: "a".repeat(51) };
 				const result = profileUpdateSchema.safeParse(data);
-				
+
 				expect(result.success).toBe(false);
 				if (!result.success) {
-					expect(result.error.errors[0].message).toBe("名前は50文字以内で入力してください");
+					expect(result.error.errors[0].message).toBe(
+						"名前は50文字以内で入力してください",
+					);
 				}
 			});
 
 			it("HTMLタグを含む場合エラー", () => {
-				const data = { ...validData, name: "Test <script>alert('xss')</script>" };
+				const data = {
+					...validData,
+					name: "Test <script>alert('xss')</script>",
+				};
 				const result = profileUpdateSchema.safeParse(data);
-				
+
 				expect(result.success).toBe(false);
 				if (!result.success) {
-					expect(result.error.errors[0].message).toBe("HTMLタグを含めることはできません");
+					expect(result.error.errors[0].message).toBe(
+						"HTMLタグを含めることはできません",
+					);
 				}
 			});
 
@@ -91,10 +98,12 @@ describe("Profile Validation Schemas", () => {
 			it("不完全なHTMLタグでもエラー", () => {
 				const data = { ...validData, name: "Test <incomplete" };
 				const result = profileUpdateSchema.safeParse(data);
-				
+
 				expect(result.success).toBe(false);
 				if (!result.success) {
-					expect(result.error.errors[0].message).toBe("HTMLタグを含めることはできません");
+					expect(result.error.errors[0].message).toBe(
+						"HTMLタグを含めることはできません",
+					);
 				}
 			});
 		});
@@ -126,20 +135,24 @@ describe("Profile Validation Schemas", () => {
 			it("51文字以上でエラー", () => {
 				const data = { ...validData, displayName: "a".repeat(51) };
 				const result = profileUpdateSchema.safeParse(data);
-				
+
 				expect(result.success).toBe(false);
 				if (!result.success) {
-					expect(result.error.errors[0].message).toBe("表示名は50文字以内で入力してください");
+					expect(result.error.errors[0].message).toBe(
+						"表示名は50文字以内で入力してください",
+					);
 				}
 			});
 
 			it("HTMLタグを含む場合エラー", () => {
 				const data = { ...validData, displayName: "Display <b>bold</b>" };
 				const result = profileUpdateSchema.safeParse(data);
-				
+
 				expect(result.success).toBe(false);
 				if (!result.success) {
-					expect(result.error.errors[0].message).toBe("HTMLタグを含めることはできません");
+					expect(result.error.errors[0].message).toBe(
+						"HTMLタグを含めることはできません",
+					);
 				}
 			});
 		});
@@ -171,15 +184,20 @@ describe("Profile Validation Schemas", () => {
 			it("501文字以上でエラー", () => {
 				const data = { ...validData, bio: "a".repeat(501) };
 				const result = profileUpdateSchema.safeParse(data);
-				
+
 				expect(result.success).toBe(false);
 				if (!result.success) {
-					expect(result.error.errors[0].message).toBe("自己紹介は500文字以内で入力してください");
+					expect(result.error.errors[0].message).toBe(
+						"自己紹介は500文字以内で入力してください",
+					);
 				}
 			});
 
 			it("改行文字を含む長文で成功する", () => {
-				const longBioWithNewlines = "This is a bio.\n\nIt contains multiple lines.\n\nAnd it's still valid.".repeat(5);
+				const longBioWithNewlines =
+					"This is a bio.\n\nIt contains multiple lines.\n\nAnd it's still valid.".repeat(
+						5,
+					);
 				if (longBioWithNewlines.length <= 500) {
 					const data = { ...validData, bio: longBioWithNewlines };
 					const result = profileUpdateSchema.safeParse(data);
@@ -190,10 +208,12 @@ describe("Profile Validation Schemas", () => {
 			it("HTMLタグを含む場合エラー", () => {
 				const data = { ...validData, bio: "Bio with <p>paragraph</p> tags" };
 				const result = profileUpdateSchema.safeParse(data);
-				
+
 				expect(result.success).toBe(false);
 				if (!result.success) {
-					expect(result.error.errors[0].message).toBe("HTMLタグを含めることはできません");
+					expect(result.error.errors[0].message).toBe(
+						"HTMLタグを含めることはできません",
+					);
 				}
 			});
 		});
@@ -225,10 +245,12 @@ describe("Profile Validation Schemas", () => {
 			it("101文字以上でエラー", () => {
 				const data = { ...validData, location: "a".repeat(101) };
 				const result = profileUpdateSchema.safeParse(data);
-				
+
 				expect(result.success).toBe(false);
 				if (!result.success) {
-					expect(result.error.errors[0].message).toBe("所在地は100文字以内で入力してください");
+					expect(result.error.errors[0].message).toBe(
+						"所在地は100文字以内で入力してください",
+					);
 				}
 			});
 
@@ -241,10 +263,12 @@ describe("Profile Validation Schemas", () => {
 			it("HTMLタグを含む場合エラー", () => {
 				const data = { ...validData, location: "Tokyo <span>Japan</span>" };
 				const result = profileUpdateSchema.safeParse(data);
-				
+
 				expect(result.success).toBe(false);
 				if (!result.success) {
-					expect(result.error.errors[0].message).toBe("HTMLタグを含めることはできません");
+					expect(result.error.errors[0].message).toBe(
+						"HTMLタグを含めることはできません",
+					);
 				}
 			});
 		});
@@ -316,17 +340,23 @@ describe("Profile Validation Schemas", () => {
 				const longUrl = "https://" + "a".repeat(2040) + ".com";
 				const data = { ...validData, website: longUrl };
 				const result = profileUpdateSchema.safeParse(data);
-				
+
 				expect(result.success).toBe(false);
 				if (!result.success) {
-					expect(result.error.errors[0].message).toBe("URLは2048文字以内で入力してください");
+					expect(result.error.errors[0].message).toBe(
+						"URLは2048文字以内で入力してください",
+					);
 				}
 			});
 		});
 
 		describe("emailVisible と profileVisible フィールド", () => {
 			it("boolean値で成功する", () => {
-				const data = { ...validData, emailVisible: true, profileVisible: false };
+				const data = {
+					...validData,
+					emailVisible: true,
+					profileVisible: false,
+				};
 				const result = profileUpdateSchema.safeParse(data);
 				expect(result.success).toBe(true);
 			});
@@ -417,11 +447,11 @@ describe("Profile Validation Schemas", () => {
 		it("間違った確認テキストでエラー", () => {
 			const data = { confirmText: "間違ったテキスト" };
 			const result = profileDeleteConfirmSchema.safeParse(data);
-			
+
 			expect(result.success).toBe(false);
 			if (!result.success) {
 				expect(result.error.errors[0].message).toBe(
-					"正確な確認テキストを入力してください: 'プロフィールを削除します'"
+					"正確な確認テキストを入力してください: 'プロフィールを削除します'",
 				);
 			}
 		});
@@ -429,11 +459,11 @@ describe("Profile Validation Schemas", () => {
 		it("空文字でエラー", () => {
 			const data = { confirmText: "" };
 			const result = profileDeleteConfirmSchema.safeParse(data);
-			
+
 			expect(result.success).toBe(false);
 			if (!result.success) {
 				expect(result.error.errors[0].message).toBe(
-					"正確な確認テキストを入力してください: 'プロフィールを削除します'"
+					"正確な確認テキストを入力してください: 'プロフィールを削除します'",
 				);
 			}
 		});
@@ -441,21 +471,21 @@ describe("Profile Validation Schemas", () => {
 		it("大文字小文字が違う場合エラー", () => {
 			const data = { confirmText: "プロフィールを削除します。" }; // 句点が追加
 			const result = profileDeleteConfirmSchema.safeParse(data);
-			
+
 			expect(result.success).toBe(false);
 		});
 
 		it("前後の空白文字があってもエラー", () => {
 			const data = { confirmText: " プロフィールを削除します " };
 			const result = profileDeleteConfirmSchema.safeParse(data);
-			
+
 			expect(result.success).toBe(false);
 		});
 
 		it("フィールドが存在しない場合エラー", () => {
 			const data = {};
 			const result = profileDeleteConfirmSchema.safeParse(data);
-			
+
 			expect(result.success).toBe(false);
 			if (!result.success) {
 				expect(result.error.errors[0].code).toBe("invalid_type");

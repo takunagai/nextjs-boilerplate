@@ -1,6 +1,6 @@
 /**
  * プロフィール管理機能 E2Eテスト
- * 
+ *
  * テスト対象:
  * - プロフィール編集機能の包括的なテスト
  * - 画像アップロード機能
@@ -76,7 +76,7 @@ class ProfilePage {
 	}
 
 	getImageUploadInput() {
-		return this.page.locator('#profile-image-upload');
+		return this.page.locator("#profile-image-upload");
 	}
 
 	// フォーム送信
@@ -128,13 +128,17 @@ class ProfilePage {
 
 	// 成功メッセージの確認
 	async hasSuccessMessage() {
-		const successElement = this.page.locator('.text-success, .bg-success, .border-success');
+		const successElement = this.page.locator(
+			".text-success, .bg-success, .border-success",
+		);
 		return (await successElement.count()) > 0;
 	}
 
 	// エラーメッセージの確認
 	async hasErrorMessage() {
-		const errorElement = this.page.locator('.text-destructive, .bg-destructive, [role="alert"]');
+		const errorElement = this.page.locator(
+			'.text-destructive, .bg-destructive, [role="alert"]',
+		);
 		return (await errorElement.count()) > 0;
 	}
 
@@ -147,9 +151,11 @@ class ProfilePage {
 	// フィールドエラーの確認
 	async hasFieldError(fieldName: string) {
 		const field = this.page.getByLabel(fieldName);
-		const fieldId = await field.getAttribute('id');
+		const fieldId = await field.getAttribute("id");
 		if (fieldId) {
-			const errorElement = this.page.locator(`[id="${fieldId}-error"], [aria-describedby*="${fieldId}"] ~ .text-destructive`);
+			const errorElement = this.page.locator(
+				`[id="${fieldId}-error"], [aria-describedby*="${fieldId}"] ~ .text-destructive`,
+			);
 			return (await errorElement.count()) > 0;
 		}
 		return false;
@@ -170,7 +176,9 @@ class ProfilePage {
 
 	// 危険操作セクションのヘルパー
 	async openEmailChangeDialog() {
-		await this.page.getByRole("button", { name: /メールアドレスを変更/ }).click();
+		await this.page
+			.getByRole("button", { name: /メールアドレスを変更/ })
+			.click();
 		await this.page.waitForTimeout(500);
 	}
 
@@ -204,7 +212,9 @@ test.describe("プロフィール管理機能", () => {
 	test.describe("ページアクセスと初期表示", () => {
 		test("プロフィールページが正常に表示される", async ({ page }) => {
 			await expect(page).toHaveTitle(/プロフィール編集/);
-			await expect(page.getByRole("heading", { name: /プロフィール編集/ })).toBeVisible();
+			await expect(
+				page.getByRole("heading", { name: /プロフィール編集/ }),
+			).toBeVisible();
 		});
 
 		test("フォーム要素がすべて表示される", async ({ page }) => {
@@ -330,7 +340,9 @@ test.describe("プロフィール管理機能", () => {
 			});
 			await profilePage.submitForm();
 
-			const hasError = await profilePage.hasSpecificError("HTMLタグを含めることはできません");
+			const hasError = await profilePage.hasSpecificError(
+				"HTMLタグを含めることはできません",
+			);
 			expect(hasError).toBeTruthy();
 		});
 
@@ -361,16 +373,23 @@ test.describe("プロフィール管理機能", () => {
 			expect(hasImage).toBeTruthy();
 		});
 
-		test("画像アップロードボタンが適切にラベル付けされている", async ({ page }) => {
+		test("画像アップロードボタンが適切にラベル付けされている", async ({
+			page,
+		}) => {
 			const uploadLabel = page.getByText("画像を選択");
 			await expect(uploadLabel).toBeVisible();
 
 			const fileInput = profilePage.getImageUploadInput();
-			await expect(fileInput).toHaveAttribute("accept", "image/jpeg,image/png,image/webp");
+			await expect(fileInput).toHaveAttribute(
+				"accept",
+				"image/jpeg,image/png,image/webp",
+			);
 		});
 
 		test("画像ファイル形式の説明が表示される", async ({ page }) => {
-			await expect(page.getByText("JPEG、PNG、WebP形式、5MB以下")).toBeVisible();
+			await expect(
+				page.getByText("JPEG、PNG、WebP形式、5MB以下"),
+			).toBeVisible();
 		});
 	});
 
@@ -386,7 +405,9 @@ test.describe("プロフィール管理機能", () => {
 			expect(labelId).toBeTruthy();
 		});
 
-		test("エラーメッセージがARIA属性で適切に関連付けられている", async ({ page }) => {
+		test("エラーメッセージがARIA属性で適切に関連付けられている", async ({
+			page,
+		}) => {
 			await profilePage.updateProfile({ name: "" });
 			await profilePage.submitForm();
 
@@ -409,7 +430,9 @@ test.describe("プロフィール管理機能", () => {
 		});
 
 		test("フィールドセットが適切に構造化されている", async ({ page }) => {
-			const privacyFieldset = page.locator('fieldset:has(legend:has-text("プライバシー設定"))');
+			const privacyFieldset = page.locator(
+				'fieldset:has(legend:has-text("プライバシー設定"))',
+			);
 			await expect(privacyFieldset).toBeVisible();
 
 			const legend = privacyFieldset.locator("legend");
@@ -475,10 +498,14 @@ test.describe("プロフィール管理機能", () => {
 	});
 
 	test.describe("レスポンシブデザイン", () => {
-		test("モバイル画面でプロフィールページが適切に表示される", async ({ page }) => {
+		test("モバイル画面でプロフィールページが適切に表示される", async ({
+			page,
+		}) => {
 			await page.setViewportSize({ width: 375, height: 667 }); // iPhone SE サイズ
 
-			await expect(page.getByRole("heading", { name: /プロフィール編集/ })).toBeVisible();
+			await expect(
+				page.getByRole("heading", { name: /プロフィール編集/ }),
+			).toBeVisible();
 			await expect(profilePage.getNameInput()).toBeVisible();
 			await expect(profilePage.getUpdateButton()).toBeVisible();
 		});
@@ -486,7 +513,9 @@ test.describe("プロフィール管理機能", () => {
 		test("タブレット画面でレイアウトが適切に調整される", async ({ page }) => {
 			await page.setViewportSize({ width: 768, height: 1024 }); // iPad サイズ
 
-			await expect(page.getByRole("heading", { name: /プロフィール編集/ })).toBeVisible();
+			await expect(
+				page.getByRole("heading", { name: /プロフィール編集/ }),
+			).toBeVisible();
 			await expect(profilePage.getNameInput()).toBeVisible();
 		});
 	});
@@ -504,7 +533,9 @@ test.describe("プロフィール管理機能", () => {
 				await profilePage.updateProfile({ name: payload });
 				await profilePage.submitForm();
 
-				const hasError = await profilePage.hasSpecificError("HTMLタグを含めることはできません");
+				const hasError = await profilePage.hasSpecificError(
+					"HTMLタグを含めることはできません",
+				);
 				expect(hasError).toBeTruthy();
 
 				// フォームをリセット

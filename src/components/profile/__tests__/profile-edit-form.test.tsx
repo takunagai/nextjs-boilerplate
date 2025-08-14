@@ -1,6 +1,6 @@
 /**
  * ProfileEditForm コンポーネントのテスト
- * 
+ *
  * テスト対象:
  * - フォームの初期表示
  * - 入力値の変更
@@ -27,11 +27,11 @@ vi.mock("@/app/actions/profile", () => ({
 // Next.js Imageコンポーネントのモック
 vi.mock("next/image", () => ({
 	default: ({ src, alt, width, height, className }: any) => (
-		<img 
-			src={src} 
-			alt={alt} 
-			width={width} 
-			height={height} 
+		<img
+			src={src}
+			alt={alt}
+			width={width}
+			height={height}
 			className={className}
 			data-testid="next-image"
 		/>
@@ -60,7 +60,7 @@ describe("ProfileEditForm", () => {
 	beforeEach(() => {
 		vi.clearAllMocks();
 		user = userEvent.setup();
-		
+
 		// デフォルトで成功レスポンスをモック
 		(updateProfile as ReturnType<typeof vi.fn>).mockResolvedValue({
 			success: true,
@@ -87,7 +87,9 @@ describe("ProfileEditForm", () => {
 			expect(screen.getByDisplayValue("Test Display")).toBeInTheDocument();
 			expect(screen.getByDisplayValue("Test bio content")).toBeInTheDocument();
 			expect(screen.getByDisplayValue("Tokyo, Japan")).toBeInTheDocument();
-			expect(screen.getByDisplayValue("https://test-website.com")).toBeInTheDocument();
+			expect(
+				screen.getByDisplayValue("https://test-website.com"),
+			).toBeInTheDocument();
 		});
 
 		it("プロフィール画像が表示される", () => {
@@ -95,8 +97,14 @@ describe("ProfileEditForm", () => {
 
 			const profileImage = screen.getByTestId("next-image");
 			expect(profileImage).toBeInTheDocument();
-			expect(profileImage).toHaveAttribute("src", "https://example.com/avatar.jpg");
-			expect(profileImage).toHaveAttribute("alt", "Test Userのプロフィール画像");
+			expect(profileImage).toHaveAttribute(
+				"src",
+				"https://example.com/avatar.jpg",
+			);
+			expect(profileImage).toHaveAttribute(
+				"alt",
+				"Test Userのプロフィール画像",
+			);
 		});
 
 		it("プロフィール画像がない場合イニシャルを表示", () => {
@@ -109,8 +117,12 @@ describe("ProfileEditForm", () => {
 		it("プライバシー設定の初期値が正しく設定される", () => {
 			render(<ProfileEditForm initialProfile={mockProfile} />);
 
-			const emailVisibleCheckbox = screen.getByRole("checkbox", { name: /メールアドレスを公開/ });
-			const profileVisibleCheckbox = screen.getByRole("checkbox", { name: /プロフィールを公開/ });
+			const emailVisibleCheckbox = screen.getByRole("checkbox", {
+				name: /メールアドレスを公開/,
+			});
+			const profileVisibleCheckbox = screen.getByRole("checkbox", {
+				name: /プロフィールを公開/,
+			});
 
 			expect(emailVisibleCheckbox).not.toBeChecked();
 			expect(profileVisibleCheckbox).toBeChecked();
@@ -124,8 +136,12 @@ describe("ProfileEditForm", () => {
 			expect(screen.getByLabelText(/自己紹介/)).toBeInTheDocument();
 			expect(screen.getByLabelText(/所在地/)).toBeInTheDocument();
 			expect(screen.getByLabelText(/ウェブサイト/)).toBeInTheDocument();
-			expect(screen.getByRole("button", { name: /プロフィールを更新/ })).toBeInTheDocument();
-			expect(screen.getByRole("button", { name: /リセット/ })).toBeInTheDocument();
+			expect(
+				screen.getByRole("button", { name: /プロフィールを更新/ }),
+			).toBeInTheDocument();
+			expect(
+				screen.getByRole("button", { name: /リセット/ }),
+			).toBeInTheDocument();
 		});
 	});
 
@@ -183,8 +199,12 @@ describe("ProfileEditForm", () => {
 		it("プライバシー設定のチェックボックスが正しく動作する", async () => {
 			render(<ProfileEditForm initialProfile={mockProfile} />);
 
-			const emailVisibleCheckbox = screen.getByRole("checkbox", { name: /メールアドレスを公開/ });
-			const profileVisibleCheckbox = screen.getByRole("checkbox", { name: /プロフィールを公開/ });
+			const emailVisibleCheckbox = screen.getByRole("checkbox", {
+				name: /メールアドレスを公開/,
+			});
+			const profileVisibleCheckbox = screen.getByRole("checkbox", {
+				name: /プロフィールを公開/,
+			});
 
 			await user.click(emailVisibleCheckbox);
 			await user.click(profileVisibleCheckbox);
@@ -199,7 +219,9 @@ describe("ProfileEditForm", () => {
 			render(<ProfileEditForm initialProfile={mockProfile} />);
 
 			const nameInput = screen.getByLabelText(/名前/);
-			const submitButton = screen.getByRole("button", { name: /プロフィールを更新/ });
+			const submitButton = screen.getByRole("button", {
+				name: /プロフィールを更新/,
+			});
 
 			await user.clear(nameInput);
 			await user.click(submitButton);
@@ -213,14 +235,18 @@ describe("ProfileEditForm", () => {
 			render(<ProfileEditForm initialProfile={mockProfile} />);
 
 			const nameInput = screen.getByLabelText(/名前/);
-			const submitButton = screen.getByRole("button", { name: /プロフィールを更新/ });
+			const submitButton = screen.getByRole("button", {
+				name: /プロフィールを更新/,
+			});
 
 			await user.clear(nameInput);
 			await user.type(nameInput, "a".repeat(51));
 			await user.click(submitButton);
 
 			await waitFor(() => {
-				expect(screen.getByText("名前は50文字以内で入力してください")).toBeInTheDocument();
+				expect(
+					screen.getByText("名前は50文字以内で入力してください"),
+				).toBeInTheDocument();
 			});
 		});
 
@@ -228,7 +254,9 @@ describe("ProfileEditForm", () => {
 			render(<ProfileEditForm initialProfile={mockProfile} />);
 
 			const websiteInput = screen.getByLabelText(/ウェブサイト/);
-			const submitButton = screen.getByRole("button", { name: /プロフィールを更新/ });
+			const submitButton = screen.getByRole("button", {
+				name: /プロフィールを更新/,
+			});
 
 			await user.clear(websiteInput);
 			await user.type(websiteInput, "invalid-url");
@@ -243,14 +271,18 @@ describe("ProfileEditForm", () => {
 			render(<ProfileEditForm initialProfile={mockProfile} />);
 
 			const nameInput = screen.getByLabelText(/名前/);
-			const submitButton = screen.getByRole("button", { name: /プロフィールを更新/ });
+			const submitButton = screen.getByRole("button", {
+				name: /プロフィールを更新/,
+			});
 
 			await user.clear(nameInput);
 			await user.type(nameInput, "Test <script>alert('xss')</script>");
 			await user.click(submitButton);
 
 			await waitFor(() => {
-				expect(screen.getByText("HTMLタグを含めることはできません")).toBeInTheDocument();
+				expect(
+					screen.getByText("HTMLタグを含めることはできません"),
+				).toBeInTheDocument();
 			});
 		});
 	});
@@ -260,7 +292,9 @@ describe("ProfileEditForm", () => {
 			render(<ProfileEditForm initialProfile={mockProfile} />);
 
 			const nameInput = screen.getByLabelText(/名前/);
-			const submitButton = screen.getByRole("button", { name: /プロフィールを更新/ });
+			const submitButton = screen.getByRole("button", {
+				name: /プロフィールを更新/,
+			});
 
 			await user.clear(nameInput);
 			await user.type(nameInput, "Updated Name");
@@ -282,21 +316,32 @@ describe("ProfileEditForm", () => {
 		it("送信中はボタンが無効になる", async () => {
 			// 送信時間を延長するモック
 			(updateProfile as ReturnType<typeof vi.fn>).mockImplementation(
-				() => new Promise((resolve) => setTimeout(() => resolve({
-					success: true,
-					data: { message: "Success", profile: mockProfile }
-				}), 100))
+				() =>
+					new Promise((resolve) =>
+						setTimeout(
+							() =>
+								resolve({
+									success: true,
+									data: { message: "Success", profile: mockProfile },
+								}),
+							100,
+						),
+					),
 			);
 
 			render(<ProfileEditForm initialProfile={mockProfile} />);
 
-			const submitButton = screen.getByRole("button", { name: /プロフィールを更新/ });
+			const submitButton = screen.getByRole("button", {
+				name: /プロフィールを更新/,
+			});
 			await user.click(submitButton);
 
 			expect(screen.getByRole("button", { name: /更新中/ })).toBeDisabled();
 
 			await waitFor(() => {
-				expect(screen.getByRole("button", { name: /プロフィールを更新/ })).not.toBeDisabled();
+				expect(
+					screen.getByRole("button", { name: /プロフィールを更新/ }),
+				).not.toBeDisabled();
 			});
 		});
 
@@ -308,7 +353,9 @@ describe("ProfileEditForm", () => {
 
 			render(<ProfileEditForm initialProfile={mockProfile} />);
 
-			const submitButton = screen.getByRole("button", { name: /プロフィールを更新/ });
+			const submitButton = screen.getByRole("button", {
+				name: /プロフィールを更新/,
+			});
 			await user.click(submitButton);
 
 			await waitFor(() => {
@@ -321,7 +368,9 @@ describe("ProfileEditForm", () => {
 		it("有効な画像ファイルを選択してアップロードできる", async () => {
 			render(<ProfileEditForm initialProfile={mockProfile} />);
 
-			const file = new File(["test content"], "test.jpg", { type: "image/jpeg" });
+			const file = new File(["test content"], "test.jpg", {
+				type: "image/jpeg",
+			});
 			const fileInput = screen.getByLabelText(/画像を選択/);
 
 			await user.upload(fileInput, file);
@@ -334,15 +383,27 @@ describe("ProfileEditForm", () => {
 		it("アップロード中は表示が更新される", async () => {
 			// アップロード時間を延長するモック
 			(uploadProfileImage as ReturnType<typeof vi.fn>).mockImplementation(
-				() => new Promise((resolve) => setTimeout(() => resolve({
-					success: true,
-					data: { message: "Success", imageUrl: "https://example.com/new.jpg" }
-				}), 100))
+				() =>
+					new Promise((resolve) =>
+						setTimeout(
+							() =>
+								resolve({
+									success: true,
+									data: {
+										message: "Success",
+										imageUrl: "https://example.com/new.jpg",
+									},
+								}),
+							100,
+						),
+					),
 			);
 
 			render(<ProfileEditForm initialProfile={mockProfile} />);
 
-			const file = new File(["test content"], "test.jpg", { type: "image/jpeg" });
+			const file = new File(["test content"], "test.jpg", {
+				type: "image/jpeg",
+			});
 			const fileInput = screen.getByLabelText(/画像を選択/);
 
 			await user.upload(fileInput, file);
@@ -357,30 +418,44 @@ describe("ProfileEditForm", () => {
 		it("画像アップロード成功時にプレビューが更新される", async () => {
 			render(<ProfileEditForm initialProfile={mockProfile} />);
 
-			const file = new File(["test content"], "test.jpg", { type: "image/jpeg" });
+			const file = new File(["test content"], "test.jpg", {
+				type: "image/jpeg",
+			});
 			const fileInput = screen.getByLabelText(/画像を選択/);
 
 			await user.upload(fileInput, file);
 
 			await waitFor(() => {
 				const profileImage = screen.getByTestId("next-image");
-				expect(profileImage).toHaveAttribute("src", "https://example.com/new-avatar.jpg");
+				expect(profileImage).toHaveAttribute(
+					"src",
+					"https://example.com/new-avatar.jpg",
+				);
 			});
 		});
 
 		it("画像アップロードエラー時にコンソールエラーが出力される", async () => {
-			const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
-			(uploadProfileImage as ReturnType<typeof vi.fn>).mockRejectedValue(new Error("Upload failed"));
+			const consoleSpy = vi
+				.spyOn(console, "error")
+				.mockImplementation(() => {});
+			(uploadProfileImage as ReturnType<typeof vi.fn>).mockRejectedValue(
+				new Error("Upload failed"),
+			);
 
 			render(<ProfileEditForm initialProfile={mockProfile} />);
 
-			const file = new File(["test content"], "test.jpg", { type: "image/jpeg" });
+			const file = new File(["test content"], "test.jpg", {
+				type: "image/jpeg",
+			});
 			const fileInput = screen.getByLabelText(/画像を選択/);
 
 			await user.upload(fileInput, file);
 
 			await waitFor(() => {
-				expect(consoleSpy).toHaveBeenCalledWith("画像アップロードエラー:", expect.any(Error));
+				expect(consoleSpy).toHaveBeenCalledWith(
+					"画像アップロードエラー:",
+					expect.any(Error),
+				);
 			});
 
 			consoleSpy.mockRestore();
@@ -406,15 +481,24 @@ describe("ProfileEditForm", () => {
 
 		it("送信中はリセットボタンが無効になる", async () => {
 			(updateProfile as ReturnType<typeof vi.fn>).mockImplementation(
-				() => new Promise((resolve) => setTimeout(() => resolve({
-					success: true,
-					data: { message: "Success", profile: mockProfile }
-				}), 100))
+				() =>
+					new Promise((resolve) =>
+						setTimeout(
+							() =>
+								resolve({
+									success: true,
+									data: { message: "Success", profile: mockProfile },
+								}),
+							100,
+						),
+					),
 			);
 
 			render(<ProfileEditForm initialProfile={mockProfile} />);
 
-			const submitButton = screen.getByRole("button", { name: /プロフィールを更新/ });
+			const submitButton = screen.getByRole("button", {
+				name: /プロフィールを更新/,
+			});
 			const resetButton = screen.getByRole("button", { name: /リセット/ });
 
 			await user.click(submitButton);
@@ -445,7 +529,9 @@ describe("ProfileEditForm", () => {
 
 			render(<ProfileEditForm initialProfile={mockProfile} />);
 
-			const submitButton = screen.getByRole("button", { name: /プロフィールを更新/ });
+			const submitButton = screen.getByRole("button", {
+				name: /プロフィールを更新/,
+			});
 			await user.click(submitButton);
 
 			await waitFor(() => {
@@ -465,19 +551,33 @@ describe("ProfileEditForm", () => {
 
 		it("送信状態がスクリーンリーダーに通知される", async () => {
 			(updateProfile as ReturnType<typeof vi.fn>).mockImplementation(
-				() => new Promise((resolve) => setTimeout(() => resolve({
-					success: true,
-					data: { message: "Success", profile: mockProfile }
-				}), 100))
+				() =>
+					new Promise((resolve) =>
+						setTimeout(
+							() =>
+								resolve({
+									success: true,
+									data: { message: "Success", profile: mockProfile },
+								}),
+							100,
+						),
+					),
 			);
 
 			render(<ProfileEditForm initialProfile={mockProfile} />);
 
-			const submitButton = screen.getByRole("button", { name: /プロフィールを更新/ });
+			const submitButton = screen.getByRole("button", {
+				name: /プロフィールを更新/,
+			});
 			await user.click(submitButton);
 
-			expect(screen.getByText("プロフィールを更新しています")).toBeInTheDocument();
-			expect(screen.getByText("プロフィールを更新しています")).toHaveAttribute("aria-live", "polite");
+			expect(
+				screen.getByText("プロフィールを更新しています"),
+			).toBeInTheDocument();
+			expect(screen.getByText("プロフィールを更新しています")).toHaveAttribute(
+				"aria-live",
+				"polite",
+			);
 		});
 
 		it("フィールドセットが適切に構造化されている", () => {
@@ -491,8 +591,13 @@ describe("ProfileEditForm", () => {
 			render(<ProfileEditForm initialProfile={mockProfile} />);
 
 			const fileInput = screen.getByLabelText(/画像を選択/);
-			expect(fileInput).toHaveAttribute("aria-describedby", "profile-image-description");
-			expect(screen.getByText("JPEG、PNG、WebP形式、5MB以下")).toBeInTheDocument();
+			expect(fileInput).toHaveAttribute(
+				"aria-describedby",
+				"profile-image-description",
+			);
+			expect(
+				screen.getByText("JPEG、PNG、WebP形式、5MB以下"),
+			).toBeInTheDocument();
 		});
 	});
 
@@ -523,7 +628,9 @@ describe("ProfileEditForm", () => {
 
 			render(<ProfileEditForm initialProfile={profileWithFalseVisible} />);
 
-			const profileVisibleCheckbox = screen.getByRole("checkbox", { name: /プロフィールを公開/ });
+			const profileVisibleCheckbox = screen.getByRole("checkbox", {
+				name: /プロフィールを公開/,
+			});
 			expect(profileVisibleCheckbox).not.toBeChecked();
 		});
 

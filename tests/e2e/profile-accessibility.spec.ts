@@ -1,7 +1,7 @@
 /**
  * プロフィール機能アクセシビリティテスト
  * WCAG 2.1 AA準拠の検証
- * 
+ *
  * 検証項目:
  * - キーボードナビゲーション
  * - スクリーンリーダー対応
@@ -31,7 +31,9 @@ test.describe("プロフィール機能のアクセシビリティ", () => {
 	});
 
 	test.describe("WCAG 2.1 AA 基準チェック", () => {
-		test("プロフィールページが WCAG 2.1 AA に準拠している", async ({ page }) => {
+		test("プロフィールページが WCAG 2.1 AA に準拠している", async ({
+			page,
+		}) => {
 			await page.goto("/profile");
 			await page.waitForLoadState("domcontentloaded");
 
@@ -52,7 +54,7 @@ test.describe("プロフィール機能のアクセシビリティ", () => {
 			if (contrastResults.violations.length > 0) {
 				console.warn(
 					`プロフィールページでカラーコントラスト問題が${contrastResults.violations.length}件検出されました`,
-					contrastResults.violations
+					contrastResults.violations,
 				);
 			}
 		});
@@ -74,8 +76,12 @@ test.describe("プロフィール機能のアクセシビリティ", () => {
 			await expect(websiteInput).toBeVisible();
 
 			// チェックボックスもラベル付きであることを確認
-			const emailVisibleCheckbox = page.getByRole("checkbox", { name: /メールアドレスを公開/ });
-			const profileVisibleCheckbox = page.getByRole("checkbox", { name: /プロフィールを公開/ });
+			const emailVisibleCheckbox = page.getByRole("checkbox", {
+				name: /メールアドレスを公開/,
+			});
+			const profileVisibleCheckbox = page.getByRole("checkbox", {
+				name: /プロフィールを公開/,
+			});
 
 			await expect(emailVisibleCheckbox).toBeVisible();
 			await expect(profileVisibleCheckbox).toBeVisible();
@@ -89,9 +95,11 @@ test.describe("プロフィール機能のアクセシビリティ", () => {
 			await expect(nameField).toBeVisible();
 
 			// 必須マークの存在確認（★、*、required などの表示）
-			const requiredIndicators = page.locator('abbr[title*="必須"], .required, *:has-text("*"):near(label:has-text("名前"))');
-			const hasRequiredIndicator = await requiredIndicators.count() > 0;
-			
+			const requiredIndicators = page.locator(
+				'abbr[title*="必須"], .required, *:has-text("*"):near(label:has-text("名前"))',
+			);
+			const hasRequiredIndicator = (await requiredIndicators.count()) > 0;
+
 			if (!hasRequiredIndicator) {
 				console.warn("名前フィールドに視覚的な必須マークが見つかりません");
 			}
@@ -113,7 +121,10 @@ test.describe("プロフィール機能のアクセシビリティ", () => {
 			expect(errorCount).toBeGreaterThan(0);
 
 			// エラーメッセージの内容確認
-			const errorText = await page.locator('.text-destructive, .error, [role="alert"]').first().textContent();
+			const errorText = await page
+				.locator('.text-destructive, .error, [role="alert"]')
+				.first()
+				.textContent();
 			expect(errorText).toBeTruthy();
 		});
 	});
@@ -125,19 +136,21 @@ test.describe("プロフィール機能のアクセシビリティ", () => {
 			// 名前フィールドにフォーカス
 			await page.keyboard.press("Tab");
 			let focusedElement = page.locator(":focus");
-			let tagName = await focusedElement.evaluate(el => el.tagName.toLowerCase());
+			let tagName = await focusedElement.evaluate((el) =>
+				el.tagName.toLowerCase(),
+			);
 			expect(tagName).toBe("input");
 
 			// 表示名フィールドにフォーカス
 			await page.keyboard.press("Tab");
 			focusedElement = page.locator(":focus");
-			tagName = await focusedElement.evaluate(el => el.tagName.toLowerCase());
+			tagName = await focusedElement.evaluate((el) => el.tagName.toLowerCase());
 			expect(tagName).toBe("input");
 
 			// 自己紹介フィールド（textarea）にフォーカス
 			await page.keyboard.press("Tab");
 			focusedElement = page.locator(":focus");
-			tagName = await focusedElement.evaluate(el => el.tagName.toLowerCase());
+			tagName = await focusedElement.evaluate((el) => el.tagName.toLowerCase());
 			expect(tagName).toBe("textarea");
 		});
 
@@ -162,18 +175,20 @@ test.describe("プロフィール機能のアクセシビリティ", () => {
 		test("チェックボックスがスペースキーで操作可能", async ({ page }) => {
 			await page.goto("/profile");
 
-			const emailVisibleCheckbox = page.getByRole("checkbox", { name: /メールアドレスを公開/ });
-			
+			const emailVisibleCheckbox = page.getByRole("checkbox", {
+				name: /メールアドレスを公開/,
+			});
+
 			// チェックボックスにフォーカス
 			await emailVisibleCheckbox.focus();
-			
+
 			// 初期状態を確認
 			const initialChecked = await emailVisibleCheckbox.isChecked();
-			
+
 			// スペースキーで切り替え
 			await page.keyboard.press("Space");
 			await page.waitForTimeout(100);
-			
+
 			// 状態が変更されたことを確認
 			const afterSpaceChecked = await emailVisibleCheckbox.isChecked();
 			expect(afterSpaceChecked).toBe(!initialChecked);
@@ -184,7 +199,7 @@ test.describe("プロフィール機能のアクセシビリティ", () => {
 
 			const nameInput = page.getByLabel(/名前/);
 			await nameInput.focus();
-			
+
 			// フィールド内でエンターキーを押下
 			await nameInput.fill("Test Name");
 			await nameInput.press("Enter");
@@ -201,14 +216,16 @@ test.describe("プロフィール機能のアクセシビリティ", () => {
 			// 名前フィールドの説明文確認
 			const nameInput = page.getByLabel(/名前/);
 			const describedBy = await nameInput.getAttribute("aria-describedby");
-			
+
 			if (describedBy) {
 				const descriptionElement = page.locator(`#${describedBy}`);
 				await expect(descriptionElement).toBeVisible();
 			} else {
 				// 説明が近くにあることを確認
-				const nearbyDescription = page.locator('p, span, div').filter({ hasText: /他のユーザーに表示される/ });
-				const hasNearbyDescription = await nearbyDescription.count() > 0;
+				const nearbyDescription = page
+					.locator("p, span, div")
+					.filter({ hasText: /他のユーザーに表示される/ });
+				const hasNearbyDescription = (await nearbyDescription.count()) > 0;
 				expect(hasNearbyDescription).toBeTruthy();
 			}
 		});
@@ -224,12 +241,14 @@ test.describe("プロフィール機能のアクセシビリティ", () => {
 			// legend 要素の存在確認
 			const legend = privacyFieldset.locator("legend").first();
 			await expect(legend).toBeVisible();
-			
+
 			const legendText = await legend.textContent();
 			expect(legendText).toMatch(/プライバシー設定|設定/);
 		});
 
-		test("ファイルアップロードフィールドが適切に説明されている", async ({ page }) => {
+		test("ファイルアップロードフィールドが適切に説明されている", async ({
+			page,
+		}) => {
 			await page.goto("/profile");
 
 			// ファイル入力フィールドの確認
@@ -237,7 +256,7 @@ test.describe("プロフィール機能のアクセシビリティ", () => {
 			await expect(fileInput).toBeVisible();
 
 			// ファイル形式・サイズの説明確認
-			const fileDescription = page.locator('text=/JPEG.*PNG.*WebP.*5MB/');
+			const fileDescription = page.locator("text=/JPEG.*PNG.*WebP.*5MB/");
 			await expect(fileDescription).toBeVisible();
 
 			// aria-describedby の関連付け確認
@@ -252,19 +271,25 @@ test.describe("プロフィール機能のアクセシビリティ", () => {
 			await page.goto("/profile");
 
 			// フォーム送信
-			const submitButton = page.getByRole("button", { name: /プロフィールを更新/ });
+			const submitButton = page.getByRole("button", {
+				name: /プロフィールを更新/,
+			});
 			await submitButton.click();
 
 			// aria-live要素の確認
-			const liveRegions = page.locator('[aria-live="polite"], [aria-live="assertive"]');
+			const liveRegions = page.locator(
+				'[aria-live="polite"], [aria-live="assertive"]',
+			);
 			const liveRegionCount = await liveRegions.count();
 			expect(liveRegionCount).toBeGreaterThan(0);
 
 			// ステータスメッセージの確認
 			await page.waitForTimeout(500);
-			const statusMessage = page.locator('[aria-live] *').filter({ hasText: /更新|送信|処理/ });
-			const hasStatusMessage = await statusMessage.count() > 0;
-			
+			const statusMessage = page
+				.locator("[aria-live] *")
+				.filter({ hasText: /更新|送信|処理/ });
+			const hasStatusMessage = (await statusMessage.count()) > 0;
+
 			if (hasStatusMessage) {
 				const statusText = await statusMessage.first().textContent();
 				expect(statusText).toBeTruthy();
@@ -276,9 +301,11 @@ test.describe("プロフィール機能のアクセシビリティ", () => {
 		test("フォーカス順序が論理的である", async ({ page }) => {
 			await page.goto("/profile");
 
-			const focusableElements = await page.locator(
-				'input:not([type="hidden"]):not([disabled]), textarea:not([disabled]), button:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"]):not([disabled])'
-			).all();
+			const focusableElements = await page
+				.locator(
+					'input:not([type="hidden"]):not([disabled]), textarea:not([disabled]), button:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"]):not([disabled])',
+				)
+				.all();
 
 			expect(focusableElements.length).toBeGreaterThan(5);
 
@@ -308,7 +335,7 @@ test.describe("プロフィール機能のアクセシビリティ", () => {
 			});
 
 			// 何らかのフォーカス表示があることを確認
-			const hasFocusStyle = 
+			const hasFocusStyle =
 				focusStyles.outline !== "none" ||
 				focusStyles.boxShadow !== "none" ||
 				focusStyles.outlineColor !== "rgba(0, 0, 0, 0)" ||
@@ -331,7 +358,9 @@ test.describe("プロフィール機能のアクセシビリティ", () => {
 			// エラー後のフォーカス位置確認
 			const focusedElement = page.locator(":focus");
 			const isInputFocused = await focusedElement.evaluate(
-				el => el.tagName.toLowerCase() === "input" || el.tagName.toLowerCase() === "button"
+				(el) =>
+					el.tagName.toLowerCase() === "input" ||
+					el.tagName.toLowerCase() === "button",
 			);
 
 			expect(isInputFocused).toBeTruthy();
@@ -349,7 +378,9 @@ test.describe("プロフィール機能のアクセシビリティ", () => {
 			await page.waitForTimeout(1000);
 
 			// エラーメッセージの確認
-			const errorElement = page.locator('.text-destructive, .error, [role="alert"]').first();
+			const errorElement = page
+				.locator('.text-destructive, .error, [role="alert"]')
+				.first();
 			await expect(errorElement).toBeVisible();
 
 			// テキストの内容確認（色以外の情報提供）
@@ -362,19 +393,20 @@ test.describe("プロフィール機能のアクセシビリティ", () => {
 			await page.goto("/profile");
 
 			// 必須フィールドのマーク確認（アスタリスクなど）
-			const nameLabel = page.locator('label', { hasText: /名前/ });
+			const nameLabel = page.locator("label", { hasText: /名前/ });
 			await expect(nameLabel).toBeVisible();
 
 			// 必須マーク（*、required、abbr等）の確認
 			const requiredMarkers = page.locator('abbr, .required, *:has-text("*")');
-			const hasRequiredMarker = await requiredMarkers.count() > 0;
-			
+			const hasRequiredMarker = (await requiredMarkers.count()) > 0;
+
 			// 少なくとも視覚的な必須マーカーまたはaria属性があることを確認
 			const nameInput = page.getByLabel(/名前/);
 			const isRequired = await nameInput.getAttribute("required");
 			const ariaRequired = await nameInput.getAttribute("aria-required");
-			
-			const hasRequiredIndication = hasRequiredMarker || isRequired !== null || ariaRequired === "true";
+
+			const hasRequiredIndication =
+				hasRequiredMarker || isRequired !== null || ariaRequired === "true";
 			expect(hasRequiredIndication).toBeTruthy();
 		});
 
@@ -396,8 +428,9 @@ test.describe("プロフィール機能のアクセシビリティ", () => {
 			});
 
 			// フォーカス表示があることを確認
-			const hasVisibleFocus = 
-				(focusStyles.outline !== "none" && focusStyles.outlineWidth !== "0px") ||
+			const hasVisibleFocus =
+				(focusStyles.outline !== "none" &&
+					focusStyles.outlineWidth !== "0px") ||
 				focusStyles.boxShadow !== "none";
 
 			expect(hasVisibleFocus).toBeTruthy();
@@ -410,21 +443,26 @@ test.describe("プロフィール機能のアクセシビリティ", () => {
 			await page.goto("/profile");
 
 			// ボタンのサイズ確認（44px以上推奨）
-			const submitButton = page.getByRole("button", { name: /プロフィールを更新/ });
+			const submitButton = page.getByRole("button", {
+				name: /プロフィールを更新/,
+			});
 			const buttonBox = await submitButton.boundingBox();
-			
+
 			if (buttonBox) {
 				expect(buttonBox.height).toBeGreaterThanOrEqual(44);
 				expect(buttonBox.width).toBeGreaterThanOrEqual(44);
 			}
 
 			// チェックボックスのタッチターゲット確認
-			const checkbox = page.getByRole("checkbox", { name: /メールアドレスを公開/ });
+			const checkbox = page.getByRole("checkbox", {
+				name: /メールアドレスを公開/,
+			});
 			const checkboxBox = await checkbox.boundingBox();
-			
+
 			if (checkboxBox) {
 				// チェックボックス自体またはその親要素が適切なサイズを持つ
-				const isAccessibleSize = checkboxBox.height >= 44 || checkboxBox.width >= 44;
+				const isAccessibleSize =
+					checkboxBox.height >= 44 || checkboxBox.width >= 44;
 				expect(isAccessibleSize).toBeTruthy();
 			}
 		});
@@ -447,20 +485,25 @@ test.describe("プロフィール機能のアクセシビリティ", () => {
 	});
 
 	test.describe("パフォーマンス・ユーザビリティ", () => {
-		test("長いフォーム送信中にユーザーフィードバックがある", async ({ page }) => {
+		test("長いフォーム送信中にユーザーフィードバックがある", async ({
+			page,
+		}) => {
 			await page.goto("/profile");
 
-			const submitButton = page.getByRole("button", { name: /プロフィールを更新/ });
+			const submitButton = page.getByRole("button", {
+				name: /プロフィールを更新/,
+			});
 			await submitButton.click();
 
 			// 送信中の表示確認
 			await page.waitForTimeout(100);
-			
+
 			// ボタンのテキスト変更またはローディング表示の確認
 			const buttonText = await submitButton.textContent();
-			const isLoadingState = buttonText?.includes("更新中") || 
-								  buttonText?.includes("送信中") ||
-								  buttonText?.includes("処理中");
+			const isLoadingState =
+				buttonText?.includes("更新中") ||
+				buttonText?.includes("送信中") ||
+				buttonText?.includes("処理中");
 
 			// または無効化状態の確認
 			const isDisabled = await submitButton.isDisabled();
@@ -480,7 +523,9 @@ test.describe("プロフィール機能のアクセシビリティ", () => {
 			await page.waitForTimeout(1000);
 
 			// エラーメッセージの存在確認
-			const errorElement = page.locator('[role="alert"], .text-destructive, .error');
+			const errorElement = page.locator(
+				'[role="alert"], .text-destructive, .error',
+			);
 			await expect(errorElement.first()).toBeVisible();
 
 			// エラーを修正
@@ -491,7 +536,9 @@ test.describe("プロフィール機能のアクセシビリティ", () => {
 			await page.waitForTimeout(1000);
 
 			// 送信が実行されることを確認
-			const submitButton = page.getByRole("button", { name: /プロフィールを更新/ });
+			const submitButton = page.getByRole("button", {
+				name: /プロフィールを更新/,
+			});
 			expect(await submitButton.isVisible()).toBeTruthy();
 		});
 	});
