@@ -89,8 +89,12 @@ export function RegisterForm() {
 				toast.error(result.error?.message || "アカウント登録に失敗しました");
 			}
 		} catch (error) {
-			console.error("登録エラー:", error);
-			toast.error("登録処理中にエラーが発生しました");
+			console.error("Registration error:", error);
+			const errorMessage =
+				error instanceof Error
+					? `登録処理中にエラーが発生しました: ${error.message}`
+					: "登録処理中にエラーが発生しました";
+			toast.error(errorMessage);
 		} finally {
 			setIsLoading(false);
 		}

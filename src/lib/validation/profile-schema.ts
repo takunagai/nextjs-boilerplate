@@ -1,0 +1,151 @@
+import { z } from "zod";
+
+/**
+ * プロフィール編集フォームのバリデーションスキーマ
+ *
+ * セキュリティ考慮事項：
+ * - XSS防止のための文字制限
+ * - URL形式の厳密な検証
+ * - 入力文字数の適切な制限
+ * - HTMLタグの無害化
+ */
+
+// 共通バリデーションヘルパー関数
+const validateNoHtmlTags = (value: string | undefined) => {
+	if (!value || value.trim() === "") return true;
+	// HTMLタグや不完全なHTMLタグを検出する（<文字を含む場合すべて拒否）
+	return !value.includes("<");
+};
+
+// 再利用可能なスキーマファクトリー
+const createSafeTextSchema = (
+	fieldName: string,
+	minLength: number = 0,
+	maxLength: number = 100,
+	required: boolean = false,
+) => {
+	let schema = required
+		? z.string().min(1, { message: getRequiredMessage(fieldName) })
+		: z.string().optional();
+
+	// 文字数制限を追加
+	if (required) {
+		schema = schema.max(maxLength, {
+			message: `${fieldName}は${maxLength}文字以内で入力してください`,
+		});
+	} else {
+		schema = schema.refine(
+			(value) => {
+				if (!value || value.trim() === "") return true;
+				return value.length <= maxLength;
+			},
+			{
+				message: `${fieldName}は${maxLength}文字以内で入力してください`,
+			},
+		);
+	}
+
+	// HTMLタグ検証を追加
+	return schema.refine((value) => validateNoHtmlTags(value), {
+		message: "HTMLタグを含めることはできません",
+	});
+};
+
+// フィールドごとの必須メッセージ
+const getRequiredMessage = (fieldName: string) => {
+	switch (fieldName) {
+		case "名前":
+			return "名前は必須です";
+		default:
+			return `${fieldName}を入力してください`;
+	}
+};
+
+// URL検証のためのカスタムスキーマ
+const urlSchema = z
+	.string()
+	.optional()
+	.refine(
+		(url) => {
+			if (!url || url.trim() === "") return true;
+			return url.length <= 2048;
+		},
+		{
+			message: "URLは2048文字以内で入力してください",
+		},
+	)
+	.refine(
+		(url) => {
+			if (!url || url.trim() === "") return true;
+			try {
+				const parsed = new URL(url);
+				// HTTPSまたはHTTPのみ許可
+				return parsed.protocol === "https:" || parsed.protocol === "http:";
+			} catch {
+				return false;
+			}
+		},
+		{
+			message: "有効なURL（http://またはhttps://で始まる）を入力してください",
+		},
+	);
+
+// ファクトリー関数を使用したスキーマ定義
+const displayNameSchema = createSafeTextSchema("表示名", 0, 50);
+const bioSchema = createSafeTextSchema("自己紹介", 0, 500);
+const locationSchema = createSafeTextSchema("所在地", 0, 100);
+
+// メインのプロフィール編集スキーマ
+export const profileEditSchema = z.object({
+	// 基本情報
+	name: createSafeTextSchema("名前", 1, 50, true),
+
+	email: z
+		.string()
+		.email({ message: "有効なメールアドレスを入力してください" }),
+
+	displayName: displayNameSchema,
+
+	bio: bioSchema,
+
+	location: locationSchema,
+
+	website: urlSchema,
+
+	// プライバシー設定
+	emailVisible: z.boolean().default(false),
+	profileVisible: z.boolean().default(true),
+});
+
+// プロフィール更新用スキーマ（必須項目を部分的に変更）
+export const profileUpdateSchema = z.object({
+	// 基本情報（nameとemail以外はオプショナル）
+	name: createSafeTextSchema("名前", 1, 50, true),
+
+	displayName: displayNameSchema,
+	bio: bioSchema,
+	location: locationSchema,
+	website: urlSchema,
+
+	// プライバシー設定
+	emailVisible: z.boolean().default(false),
+	profileVisible: z.boolean().default(true),
+});
+
+// 型の生成
+export type ProfileEditFormValues = z.infer<typeof profileEditSchema>;
+export type ProfileUpdateFormValues = z.infer<typeof profileUpdateSchema>;
+
+// プロフィール削除確認用のスキーマ
+export const profileDeleteConfirmSchema = z.object({
+	confirmText: z
+		.string()
+		.min(1, { message: "確認テキストを入力してください" })
+		.refine((text) => text === "プロフィールを削除します", {
+			message: "正確な確認テキストを入力してください: 'プロフィールを削除します'",
+		}),
+});
+
+export type ProfileDeleteConfirmValues = z.infer<
+	typeof profileDeleteConfirmSchema
+>;

@@ -19,7 +19,7 @@ const MessageSchema = z.object({
 	message: z.string().optional(),
 });
 
-type MessageInput = z.infer<typeof MessageSchema>;
+type _MessageInput = z.infer<typeof MessageSchema>;
 
 /**
  * GET リクエストハンドラ

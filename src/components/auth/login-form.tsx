@@ -78,10 +78,19 @@ export function LoginForm() {
 							placeholder="your@email.com"
 							autoComplete="email"
 							disabled={isLoading}
+							aria-describedby={errors.email ? "email-error" : undefined}
+							aria-invalid={!!errors.email}
 							{...register("email")}
 						/>
 						{errors.email && (
-							<p className="text-sm text-destructive">{errors.email.message}</p>
+							<p
+								className="text-sm text-destructive"
+								role="alert"
+								aria-live="polite"
+								id="email-error"
+							>
+								{errors.email.message}
+							</p>
 						)}
 					</div>
 
@@ -91,7 +100,8 @@ export function LoginForm() {
 							<Label htmlFor="password">パスワード</Label>
 							<button
 								type="button"
-								className="text-xs text-muted-foreground hover:text-primary"
+								className="text-xs text-muted-foreground hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 rounded"
+								aria-label="パスワードをリセットする"
 								onClick={() => {
 									// TODO: パスワードリセットページへのリンク
 									alert("パスワードリセット機能は近日公開予定です");
@@ -105,10 +115,17 @@ export function LoginForm() {
 							type="password"
 							autoComplete="current-password"
 							disabled={isLoading}
+							aria-describedby={errors.password ? "password-error" : undefined}
+							aria-invalid={!!errors.password}
 							{...register("password")}
 						/>
 						{errors.password && (
-							<p className="text-sm text-destructive">
+							<p
+								className="text-sm text-destructive"
+								role="alert"
+								aria-live="polite"
+								id="password-error"
+							>
 								{errors.password.message}
 							</p>
 						)}
@@ -124,7 +141,8 @@ export function LoginForm() {
 						アカウントをお持ちでないですか？{" "}
 						<button
 							type="button"
-							className="text-primary hover:underline"
+							className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 rounded"
+							aria-label="新しいアカウントを作成する"
 							onClick={() => {
 								// TODO: 登録ページへのリンク
 								alert("アカウント登録機能は近日公開予定です");

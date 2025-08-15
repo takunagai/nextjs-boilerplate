@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
 			);
 		}
 
-		const { name, email, password } = validationResult.data;
+		const { name, email } = validationResult.data;
 
 		// メールアドレスの重複チェック（仮実装）
 		// 実際の実装ではデータベースで確認する

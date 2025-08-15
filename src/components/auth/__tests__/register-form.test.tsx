@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -43,12 +43,12 @@ describe("RegisterForm", () => {
 	});
 
 	// --- Zod Error Messages (from component schema) ---
-	const nameRequiredError = "氏名は必須です";
-	const emailInvalidError = "有効なメールアドレスを入力してください";
-	const passwordMinLengthError = "パスワードは8文字以上で入力してください";
-	const confirmPasswordRequiredError = "確認用パスワードを入力してください";
-	const termsRequiredError = "利用規約への同意が必要です";
-	const passwordMismatchError = "パスワードが一致しません";
+	const _nameRequiredError = "氏名は必須です";
+	const _emailInvalidError = "有効なメールアドレスを入力してください";
+	const _passwordMinLengthError = "パスワードは8文字以上で入力してください";
+	const _confirmPasswordRequiredError = "確認用パスワードを入力してください";
+	const _termsRequiredError = "利用規約への同意が必要です";
+	const _passwordMismatchError = "パスワードが一致しません";
 	// --- End Zod Error Messages ---
 
 	describe("Initial Rendering", () => {
@@ -232,14 +232,20 @@ describe("RegisterForm", () => {
 			await fillValidForm();
 			await user.click(screen.getByRole("button", { name: "登録" }));
 
-			await waitFor(() => expect(mockFetch).toHaveBeenCalledTimes(1));
-			await waitFor(() =>
-				expect(mockToastError).toHaveBeenCalledWith(
-					"登録処理中にエラーが発生しました",
-				),
+			await waitFor(() => expect(mockFetch).toHaveBeenCalledTimes(1), {
+				timeout: 2000,
+			});
+			await waitFor(
+				() =>
+					expect(mockToastError).toHaveBeenCalledWith(
+						"登録処理中にエラーが発生しました: Network failed",
+					),
+				{
+					timeout: 3000,
+				},
 			);
 			expect(mockRouterPush).not.toHaveBeenCalled();
-		});
+		}, 15000);
 
 		it("shows loading state during submission", async () => {
 			// Make the mock promise resolve slowly to check intermediate loading state

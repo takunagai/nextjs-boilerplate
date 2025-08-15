@@ -1,6 +1,5 @@
 "use client"; // Became a client component due to interactive sorting button
 
-import * as React from "react";
 import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa"; // Using react-icons
 import { Button } from "@/components/ui/button"; // Assuming a Button component is available
 import { cn } from "@/lib/utils";

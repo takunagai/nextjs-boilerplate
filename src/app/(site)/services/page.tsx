@@ -16,8 +16,15 @@ import { createBreadcrumbs } from "@/lib/utils";
 export const metadata: Metadata = generateMetadata({
 	title: "サービス",
 	description:
-		"ウェブ制作・アプリ開発・コンサルティングなど多彩なサービスを提供しています。",
-	keywords: ["サービス", "ウェブ制作", "アプリ開発", "コンサルティング"],
+		"AI × 人の感性で実現する、ウェブ制作・アプリ開発、プチコンサル&レクチャー、クリエイティブサービスを提供しています。",
+	keywords: [
+		"サービス",
+		"ウェブ制作",
+		"アプリ開発",
+		"コンサルティング",
+		"AI",
+		"クリエイティブ",
+	],
 	canonical: "/services",
 });
 
@@ -36,7 +43,7 @@ export default function ServicesPage() {
 		<>
 			<WebsiteJsonLd
 				name={`サービス | ${META.DEFAULT_TITLE}`}
-				description="ウェブ制作・アプリ開発・コンサルティングなど多彩なサービスを提供しています。"
+				description="AI × 人の感性で実現する、ウェブ制作・アプリ開発、プチコンサル&レクチャー、クリエイティブサービスを提供しています。"
 				url={`${META.SITE_URL}/services`}
 			/>
 			<BreadcrumbJsonLd items={jsonLdBreadcrumbs} />
@@ -46,52 +53,54 @@ export default function ServicesPage() {
 
 			<div className="text-center">
 				<PageHeader title="サービス" />
-				<p className="text-muted-foreground">弊社のサービスをご紹介します。</p>
+				<p className="text-muted-foreground">
+					AI × 人の感性で実現する、革新的なサービスをご紹介します。
+				</p>
 			</div>
 
 			<Container className="mt-8" width="lg">
 				<p className="text-2xl font-bold">
-					お客様のビジネスを成功に導く多彩なサービスを提供しています。
+					AI × 人の感性で、お客様のビジネスを次のレベルへ
 				</p>
 				<ul className="mt-6 list-disc list-inside space-y-2">
-					<li>最新技術を活用した高品質なウェブサイト・アプリ開発</li>
-					<li>UI/UX設計から運用・保守までワンストップ対応</li>
-					<li>ビジネス課題を解決するコンサルティングサービス</li>
+					<li>AI活用による高品質なのに驚きの低価格でのウェブ・アプリ開発</li>
+					<li>AI初心者から上級者まで対応する個別指導・コンサルティング</li>
+					<li>AIとクリエイティブの融合でプロ級コンテンツ制作</li>
 				</ul>
 
 				<div className="mt-8">
 					<ContentItems
 						items={[
 							{
-								title: "ウェブ制作",
+								title: "ウェブ制作・アプリ開発",
 								description:
-									"最新の技術とデザインを活かした高品質なウェブサイト制作サービスを提供します。コーポレートサイト、ECサイトなど様々なニーズに対応します。",
+									"AI活用で高品質なのに驚きの低価格を実現。ウェブサイト・アプリ開発から運用・保守まで、全工程をワンストップで提供します。コーポレートサイト、ECサイト、モバイルアプリまで幅広く対応。",
 								image: "/dummy-images/street-photo-01.jpg",
-								imageAlt: "ウェブ制作のイメージ",
+								imageAlt: "ウェブ制作・アプリ開発のイメージ",
 								link: {
 									href: "/services/web-development",
 									text: "詳細を見る →",
 								},
 							},
 							{
-								title: "アプリ開発",
+								title: "プチコンサル＆レクチャー",
 								description:
-									"iOS/Android対応のネイティブアプリから、クロスプラットフォームアプリまで、幅広いモバイルアプリケーション開発サービスを提供します。",
+									"AI初心者から上級者まで対応。あなたの疑問やビジネス課題をAIで解決するための個別指導・コンサルティングサービス。スポット相談から継続サポートまで、柔軟に対応します。",
 								image: "/dummy-images/street-photo-02.jpg",
-								imageAlt: "アプリ開発のイメージ",
+								imageAlt: "プチコンサル＆レクチャーのイメージ",
 								link: {
-									href: "/services/app-development",
+									href: "/services/consulting",
 									text: "詳細を見る →",
 								},
 							},
 							{
-								title: "コンサルティング",
+								title: "AIを活用したクリエイティブ",
 								description:
-									"ビジネス課題を解決するためのITコンサルティングサービスを提供します。デジタルトランスフォーメーションの推進をサポートします。",
+									"AIの創造力×人の感性で、ライティング・画像生成・動画制作・音声生成まで。プロ級のコンテンツを従来の半額以下の低価格で提供。テスター特別価格で先着10名様限定50%OFF。",
 								image: "/dummy-images/street-photo-03.jpg",
-								imageAlt: "コンサルティングのイメージ",
+								imageAlt: "AIクリエイティブのイメージ",
 								link: {
-									href: "/services/consulting",
+									href: "/services/creative",
 									text: "詳細を見る →",
 								},
 							},

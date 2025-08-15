@@ -11,18 +11,17 @@ test("ホームページが正しく表示される", async ({ page }) => {
 	await page.goto("/");
 
 	// ページタイトルが表示されていることを確認
-	await expect(page).toHaveTitle(/Next\.js Boilerplate/);
+	await expect(page).toHaveTitle(/ナガイ商店\.com/);
 
-	// ヘッダーが表示されていることを確認
-	const header = await page.locator("header");
-	await expect(header).toBeVisible();
+	// メインヘッダーが表示されていることを確認（複数headerがあるため特定）
+	const mainHeader = page
+		.locator("header")
+		.filter({ hasText: "ナガイ商店.com" });
+	await expect(mainHeader).toBeVisible();
 
 	// ヘッダー内のロゴテキストが表示されていることを確認
-	await expect(
-		page.locator("header").getByText("Next.js Boilerplate").first(),
-	).toBeVisible();
+	await expect(mainHeader.getByText("ナガイ商店.com")).toBeVisible();
 
 	// ナビゲーションメニューが表示されていることを確認
-	// 複数のnavが存在するため、ヘッダー内のnavを特定
-	await expect(page.locator("header nav")).toBeVisible();
+	await expect(mainHeader.locator("nav")).toBeVisible();
 });

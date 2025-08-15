@@ -6,7 +6,8 @@
  * サーバーサイドユーティリティを使用したサンプルフォーム処理の実装例です。
  */
 
-import { ActionError, type ActionResult, validateAction } from "@/lib/server";
+import { ActionError, validateAction } from "@/lib/server";
+import type { ActionResult } from "@/lib/types/actions";
 import {
 	type FormExampleValues,
 	formExampleSchema,

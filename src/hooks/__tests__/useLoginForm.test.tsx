@@ -208,7 +208,7 @@ describe("useLoginForm", () => {
 
 			// ログイン完了
 			await act(async () => {
-				resolveLogin!({ success: true });
+				resolveLogin?.({ success: true });
 				await loginPromiseResult!;
 			});
 

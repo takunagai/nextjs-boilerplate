@@ -1,7 +1,7 @@
-import NextAuth from "next-auth";
 import type { NextAuthConfig } from "next-auth";
+import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import type { CommonUserAttributes, DBUser } from "./types";
+import type { CommonUserAttributes, UserRole } from "./types";
 
 // NextAuth型拡張
 declare module "next-auth" {
@@ -30,6 +30,8 @@ export const authConfig: NextAuthConfig = {
 	pages: {
 		signIn: "/login",
 	},
+	// 開発環境での信頼するホスト設定
+	trustHost: true,
 	// 認証プロバイダー設定
 	providers: [
 		// メールとパスワードによる認証
@@ -92,23 +94,39 @@ export const authConfig: NextAuthConfig = {
 		session: async ({ session, token }) => {
 			if (token && session.user) {
 				session.user.id = token.id as string;
-				session.user.role = token.role as string;
+				session.user.role = token.role as UserRole;
 			}
 			return session;
 		},
 		// 認可チェック（特定のルートへのアクセス制御）
 		authorized: ({ auth, request }) => {
-			// 現時点ではシンプルな認可チェックのみ実装
-			// 後でmiddlewareで詳細な制御を行う
 			const isLoggedIn = !!auth?.user;
-			// 認証関連のパス（ルートグループを使わないため URL に直接現れる）
-			const PUBLIC_AUTH_PATHS = ["/login", "/register"] as const;
-			const isOnAuthPage = PUBLIC_AUTH_PATHS.some((p) =>
-				request.nextUrl.pathname.startsWith(p),
+			const { pathname } = request.nextUrl;
+
+			// 公開ページ（認証不要）
+			const PUBLIC_PATHS = [
+				"/",
+				"/login", 
+				"/register",
+				"/about",
+				"/services",
+				"/contact",
+				"/api/auth"
+			];
+
+			const isPublicPath = PUBLIC_PATHS.some(path => 
+				pathname === path || pathname.startsWith(path)
 			);
 
-			if (!isLoggedIn && !isOnAuthPage) {
-				return false; // 非認証ユーザーは認証ページ以外アクセス不可
+			// 保護されたページ（認証必要）
+			const PROTECTED_PATHS = ["/profile", "/dashboard"];
+			const isProtectedPath = PROTECTED_PATHS.some(path =>
+				pathname.startsWith(path)
+			);
+
+			// 保護されたパスで未認証の場合はリダイレクト
+			if (isProtectedPath && !isLoggedIn) {
+				return false;
 			}
 
 			return true;

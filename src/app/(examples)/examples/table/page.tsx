@@ -1025,7 +1025,7 @@ export default function TableExamplePage() {
 								</Table.tr>
 							</Table.thead>
 							<Table.tbody>
-								{salesData.map((item, index) => (
+								{salesData.map((item, _index) => (
 									<Table.tr key={`sales-row-${item.quarter}`}>
 										<Table.th scope="row">{item.quarter}</Table.th>
 										<Table.td>{item.tokyo.toLocaleString()}</Table.td>
@@ -1281,7 +1281,7 @@ export default function TableExamplePage() {
 								</Table.tr>
 							</Table.thead>
 							<Table.tbody>
-								{salesData.map((item, index) => (
+								{salesData.map((item, _index) => (
 									<Table.tr key={`sales-row-${item.quarter}`}>
 										<Table.th scope="row">{item.quarter}</Table.th>
 										<Table.td>{item.tokyo.toLocaleString()}</Table.td>

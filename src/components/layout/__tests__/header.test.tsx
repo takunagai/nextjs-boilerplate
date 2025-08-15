@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { usePathname } from "next/navigation";
 import { useIsClient, useLocalStorage, useMediaQuery } from "usehooks-ts";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -76,8 +76,8 @@ describe("Header", () => {
 
 			render(<Header items={mockItems} />);
 
-			expect(screen.getByAltText("Next.js Boilerplate")).toBeInTheDocument();
-			expect(screen.getByText("Next.js Boilerplate")).toBeInTheDocument();
+			expect(screen.getByAltText("ナガイ商店.com")).toBeInTheDocument();
+			expect(screen.getByText("ナガイ商店.com")).toBeInTheDocument();
 		});
 
 		it("カスタムロゴが表示される", () => {

@@ -3,6 +3,7 @@
 import { motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { useIsClient } from "usehooks-ts";
+import { useWindowResize } from "@/hooks/use-window-resize";
 
 // 泡の型定義
 interface Bubble {
@@ -34,21 +35,18 @@ export function WhalesAnimation() {
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	// 画面サイズを取得
-	useEffect(() => {
-		if (!isClient) return;
+	useWindowResize(
+		() => {
+			if (!isClient) return;
 
-		const updateDimensions = () => {
 			const { clientWidth, clientHeight } = document.documentElement;
 			setDimensions({
 				width: clientWidth,
 				height: clientHeight,
 			});
-		};
-
-		updateDimensions();
-		window.addEventListener("resize", updateDimensions);
-		return () => window.removeEventListener("resize", updateDimensions);
-	}, [isClient]);
+		},
+		{ deps: [isClient] },
+	);
 
 	// 泡を生成
 	useEffect(() => {

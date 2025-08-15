@@ -1,0 +1,118 @@
+/**
+ * アクセシビリティ対応のセレクトボックスコンポーネント
+ */
+"use client";
+
+import { forwardRef, useId } from "react";
+
+import { cn } from "@/lib/utils";
+import { AccessibilityDescription, ValidationError } from "../screen-reader";
+
+/**
+ * アクセシビリティ対応のセレクトボックス
+ */
+export interface AccessibleSelectProps
+	extends React.SelectHTMLAttributes<HTMLSelectElement> {
+	label: string;
+	error?: string;
+	description?: string;
+	showLabel?: boolean;
+	labelClassName?: string;
+	containerClassName?: string;
+	required?: boolean;
+	options: Array<{ value: string; label: string; disabled?: boolean }>;
+	placeholder?: string;
+}
+
+export const AccessibleSelect = forwardRef<
+	HTMLSelectElement,
+	AccessibleSelectProps
+>(
+	(
+		{
+			label,
+			error,
+			description,
+			showLabel = true,
+			labelClassName,
+			containerClassName,
+			className,
+			id,
+			required,
+			options,
+			placeholder,
+			...props
+		},
+		ref,
+	) => {
+		const generatedId = useId();
+		const selectId = id || `select-${generatedId}`;
+		const errorId = error ? `${selectId}-error` : undefined;
+		const descriptionId = description ? `${selectId}-description` : undefined;
+
+		return (
+			<div className={cn("space-y-2", containerClassName)}>
+				<label
+					htmlFor={selectId}
+					className={cn(
+						"block text-sm font-medium",
+						showLabel ? "" : "sr-only",
+						labelClassName,
+					)}
+				>
+					{label}
+					{required && (
+						<abbr className="text-destructive ml-1 no-underline" title="必須">
+							*
+						</abbr>
+					)}
+				</label>
+
+				<select
+					ref={ref}
+					id={selectId}
+					aria-describedby={
+						[descriptionId, errorId].filter(Boolean).join(" ") || undefined
+					}
+					aria-invalid={error ? "true" : undefined}
+					aria-required={required}
+					className={cn(
+						"flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm",
+						"focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
+						"disabled:cursor-not-allowed disabled:opacity-50",
+						error && "border-destructive focus-visible:ring-destructive",
+						className,
+					)}
+					{...props}
+				>
+					{placeholder && (
+						<option value="" disabled>
+							{placeholder}
+						</option>
+					)}
+					{options.map((option) => (
+						<option
+							key={option.value}
+							value={option.value}
+							disabled={option.disabled}
+						>
+							{option.label}
+						</option>
+					))}
+				</select>
+
+				{description && descriptionId && (
+					<AccessibilityDescription id={descriptionId} visible>
+						{description}
+					</AccessibilityDescription>
+				)}
+
+				{error && (
+					<ValidationError fieldName={label} error={error} id={errorId} />
+				)}
+			</div>
+		);
+	},
+);
+
+AccessibleSelect.displayName = "AccessibleSelect";

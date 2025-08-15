@@ -2,7 +2,6 @@
 // For now, it only maps props, so it might not be strictly necessary
 // unless TableHead becomes interactive in a way that requires client context.
 
-import * as React from "react";
 import { cn } from "@/lib/utils";
 // TableRow requires row data, so we'll use primitive tr for header
 import { TableHead } from "./TableHead"; // The actual header cell component

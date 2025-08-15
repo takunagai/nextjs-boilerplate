@@ -70,7 +70,7 @@ export function ContentItems({
 		<div className={`grid ${getGridCols()} gap-6 ${className}`}>
 			{items.map((item, index) => (
 				<div
-					key={index}
+					key={`${item.title}-${index}`}
 					className="border rounded-md overflow-hidden hover:shadow-md transition-shadow bg-card"
 				>
 					{item.image && (

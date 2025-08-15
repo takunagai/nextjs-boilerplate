@@ -2,7 +2,6 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { submitContactForm } from "@/app/actions/contact-form";
-import type { ActionError } from "@/lib/server";
 import { ContactEmailForm } from "../contact-mailform";
 
 vi.mock("@/app/actions/contact-form", () => ({
@@ -68,9 +67,9 @@ describe("ContactEmailForm", () => {
 	});
 
 	describe("Input Validation", () => {
-		const nameRequiredError = "お名前を入力してください";
-		const emailInvalidError = "有効なメールアドレスを入力してください";
-		const messageMinLengthError =
+		const _nameRequiredError = "お名前を入力してください";
+		const _emailInvalidError = "有効なメールアドレスを入力してください";
+		const _messageMinLengthError =
 			"お問い合わせ内容は10文字以上で入力してください";
 
 		it("validates required fields", async () => {

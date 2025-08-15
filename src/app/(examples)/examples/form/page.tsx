@@ -19,7 +19,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { PageHeader } from "@/components/ui/page-header";
 import { Textarea } from "@/components/ui/textarea";
-import { isActionError, isActionSuccess } from "@/lib/server";
+import { isActionError, isActionSuccess } from "@/lib/types/actions";
 import {
 	type FormExampleValues,
 	formExampleSchema,
@@ -76,7 +76,7 @@ export default function FormExamplePage() {
 					}
 				}
 			}
-		} catch (error) {
+		} catch (_error) {
 			setSubmitResult({
 				success: false,
 				message: "送信中にエラーが発生しました。",

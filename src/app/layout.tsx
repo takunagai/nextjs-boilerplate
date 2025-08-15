@@ -33,11 +33,13 @@ export const metadata: Metadata = {
 	},
 	description: META.DEFAULT_DESCRIPTION,
 	keywords: [
-		"Next.js",
-		"React",
-		"TypeScript",
-		"Tailwind CSS",
-		"ボイラープレート",
+		"AI活用",
+		"ウェブ制作",
+		"アプリ開発",
+		"コンサルティング",
+		"クリエイティブ",
+		"永井拓也",
+		"ナガイ商店",
 	],
 	authors: [{ name: APP.NAME }],
 	creator: APP.NAME,
@@ -83,8 +85,9 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
 	width: "device-width",
 	initialScale: 1,
-	maximumScale: 1,
-	userScalable: false,
+	// WCAG 2.1 AA準拠: ユーザーがズームできるようにする
+	// maximumScale: 1, を削除
+	// userScalable: false, を削除
 	themeColor: [
 		{ media: "(prefers-color-scheme: light)", color: "#ffffff" },
 		{ media: "(prefers-color-scheme: dark)", color: "#09090b" },

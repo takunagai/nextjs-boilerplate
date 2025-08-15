@@ -56,13 +56,14 @@ export function UserAuthMenu() {
 	}
 
 	// ユーザー名の頭文字を取得（アバターのフォールバック用）
-	const getInitials = () => {
+	const getInitials = (): string => {
 		if (!user?.name) return "U";
 		return user.name
 			.split(" ")
 			.map((part) => part.charAt(0))
 			.join("")
-			.toUpperCase();
+			.toUpperCase()
+			.slice(0, 2); // 最大2文字まで
 	};
 
 	// 管理者かどうかを確認

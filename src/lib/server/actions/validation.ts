@@ -94,7 +94,7 @@ export function createFormSchema<T extends z.ZodType>(schema: T): T {
  * @returns 型安全なデフォルト値
  */
 export function formDefaults<T extends z.ZodType>(
-	schema: T,
+	_schema: T,
 	defaultValues: Partial<z.infer<T>>,
 ): Partial<z.infer<T>> {
 	return defaultValues;

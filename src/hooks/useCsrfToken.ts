@@ -68,7 +68,7 @@ export function useCsrfToken(): UseCsrfTokenReturn {
 	// 初回マウント時にCSRFトークンを取得
 	useEffect(() => {
 		fetchCsrfToken();
-	}, []);
+	}, [fetchCsrfToken]);
 
 	return {
 		csrfToken,

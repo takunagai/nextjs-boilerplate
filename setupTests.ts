@@ -1,8 +1,7 @@
 import "@testing-library/jest-dom";
 import { configure } from "@testing-library/react";
-// React Testing Library utilities
-import { act } from "react";
 import { vi } from "vitest";
+import { ZodError } from "zod";
 
 // Mock ResizeObserver
 class ResizeObserver {
@@ -42,14 +41,16 @@ configure({
 	asyncUtilTimeout: 15000,
 });
 
+// 型ガード関数
+function isZodError(error: unknown): error is ZodError {
+	return error instanceof ZodError;
+}
+
 // Zod v4 エラーのunhandled promise rejectionをキャッチ
 if (typeof global.process !== "undefined") {
-	global.process.on("unhandledRejection", (reason: any) => {
+	global.process.on("unhandledRejection", (reason: unknown) => {
 		// ZodErrorの場合は無視
-		if (
-			reason &&
-			(reason._tag === "Symbol({{zod.error}})" || reason.name === "ZodError")
-		) {
+		if (isZodError(reason)) {
 			return;
 		}
 		// その他のエラーは通常通り処理

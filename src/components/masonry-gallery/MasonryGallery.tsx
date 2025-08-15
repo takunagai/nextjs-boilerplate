@@ -1,6 +1,5 @@
 import { clsx } from "clsx";
 import Image from "next/image";
-import React from "react"; // Add React import
 
 import type {
 	ColumnsDef,

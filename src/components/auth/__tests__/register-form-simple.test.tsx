@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { RegisterForm } from "../register-form";
@@ -20,11 +20,11 @@ vi.mock("sonner", () => ({
 global.fetch = vi.fn();
 
 describe("RegisterForm Simple Validation Tests", () => {
-	let user: ReturnType<typeof userEvent.setup>;
+	let _user: ReturnType<typeof userEvent.setup>;
 
 	beforeEach(() => {
 		vi.resetAllMocks();
-		user = userEvent.setup();
+		_user = userEvent.setup();
 	});
 
 	it("shows validation error on empty form submission", async () => {

@@ -24,9 +24,9 @@ export const HEADER_NAVIGATION: HeaderLink[] = [
 		href: "/services",
 		submenu: [
 			{ label: "サービス一覧", href: "/services" },
-			{ label: "ウェブ制作", href: "/services/web-development" },
-			{ label: "アプリ開発", href: "/services/app-development" },
-			{ label: "コンサルティング", href: "/services/consulting" },
+			{ label: "ウェブ制作・アプリ開発", href: "/services/web-development" },
+			{ label: "プチコンサル＆レクチャー", href: "/services/consulting" },
+			{ label: "クリエイティブ", href: "/services/creative" },
 		],
 	},
 	{

@@ -8,7 +8,7 @@ import {
 /**
  * CSRFトークンを生成して返すエンドポイント
  */
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
 	try {
 		// 新しいCSRFトークンを生成
 		const tokenData = generateCsrfToken();
