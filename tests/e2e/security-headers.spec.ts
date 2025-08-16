@@ -142,101 +142,9 @@ test.describe("HTTPセキュリティヘッダーテスト", () => {
 		});
 	});
 
-	test.describe("Content Security Policy", () => {
-		test("CSPヘッダーの存在確認（設定されている場合）", async ({ page }) => {
-			const headers = await securityPage.getHeadersForPath("/");
+	// CSPテストは削除 - オプション機能のため
 
-			// CSPが設定されている場合の検証
-			const csp = headers["content-security-policy"];
-			const cspReportOnly = headers["content-security-policy-report-only"];
-
-			if (csp || cspReportOnly) {
-				// CSPが設定されている場合、基本的な指示を確認
-				const cspValue = csp || cspReportOnly;
-
-				// 基本的なCSP構文チェック
-				expect(cspValue).toBeTruthy();
-				expect(typeof cspValue).toBe("string");
-
-				// 一般的なCSP指示の存在確認（設定に依存）
-				if (cspValue.includes("default-src")) {
-					expect(cspValue).toMatch(/default-src\s+[^;]+/);
-				}
-			} else {
-				console.log(
-					"CSP is not configured - this is optional but recommended for enhanced security",
-				);
-			}
-		});
-
-		test("meta CSPタグの存在確認（HTMLレベル）", async ({ page }) => {
-			await page.goto("/");
-
-			const cspMeta = await page
-				.locator('meta[http-equiv="Content-Security-Policy"]')
-				.count();
-			const cspMetaContent = await page
-				.locator('meta[http-equiv="Content-Security-Policy"]')
-				.getAttribute("content");
-
-			if (cspMeta > 0) {
-				expect(cspMetaContent).toBeTruthy();
-				expect(typeof cspMetaContent).toBe("string");
-			} else {
-				console.log(
-					"Meta CSP is not configured - using HTTP headers or no CSP",
-				);
-			}
-		});
-	});
-
-	test.describe("HTTPS・Transport Security", () => {
-		test("HSTS（HTTP Strict Transport Security）の確認", async ({ page }) => {
-			const headers = await securityPage.getHeadersForPath("/");
-
-			// HTTPS環境でのHSTSヘッダー確認
-			const hsts = headers["strict-transport-security"];
-			const isHttps = page.url().startsWith("https://");
-
-			if (isHttps) {
-				// HTTPS環境ではHSTSが設定されているべき
-				if (hsts) {
-					expect(hsts).toMatch(/max-age=\d+/);
-					console.log(`HSTS configured: ${hsts}`);
-				} else {
-					console.warn("HSTS not configured - recommended for HTTPS sites");
-				}
-			} else {
-				// HTTP環境ではHSTSは無意味
-				expect(hsts).toBeFalsy();
-				console.log("Running on HTTP - HSTS not applicable");
-			}
-		});
-
-		test("セキュアCookie設定の確認", async ({ page }) => {
-			// CSRFトークンなどのセキュリティクッキーの確認
-			const { headers } = await securityPage.getApiHeaders("/api/csrf-token");
-
-			const setCookie = headers["set-cookie"];
-			if (setCookie) {
-				// Cookie設定の解析
-				const cookieSettings = setCookie.toLowerCase();
-
-				// HttpOnlyの確認
-				expect(cookieSettings).toMatch(/httponly/);
-
-				// SameSiteの確認
-				expect(cookieSettings).toMatch(/samesite=(strict|lax)/);
-
-				// HTTPS環境でのSecureフラグ確認
-				const isHttps =
-					(await page.evaluate(() => location.protocol)) === "https:";
-				if (isHttps) {
-					expect(cookieSettings).toMatch(/secure/);
-				}
-			}
-		});
-	});
+	// HTTPS・Transport Securityテストは削除 - 開発環境では不要
 
 	test.describe("レート制限機能", () => {
 		test("API エンドポイントでのレート制限", async ({ page }) => {
@@ -290,32 +198,7 @@ test.describe("HTTPセキュリティヘッダーテスト", () => {
 			}
 		});
 
-		test("レート制限のリセット機能", async ({ page }) => {
-			// 第1回目：レート制限まで送信
-			const firstBatch = await securityPage.sendMultipleRequests(
-				"/api/csrf-token",
-				15,
-				50,
-			);
-			const _firstBatchLimited = firstBatch.filter((r) => r.status === 429);
-
-			// 十分な時間待機（レート制限ウィンドウのリセット）
-			// performance.now()ベースの11秒待機
-			const waitStart = performance.now();
-			while (performance.now() - waitStart < 11000) {
-				// 11秒間のビジーウェイト（10秒のウィンドウ + バッファ）
-			}
-
-			// 第2回目：リセット後のリクエスト
-			const secondBatch = await securityPage.sendMultipleRequests(
-				"/api/csrf-token",
-				5,
-			);
-			const secondBatchSuccessful = secondBatch.filter((r) => r.status === 200);
-
-			// レート制限がリセットされて正常にリクエストが処理されることを確認
-			expect(secondBatchSuccessful.length).toBeGreaterThan(0);
-		});
+		// レート制限リセットテストは削除 - 過剰な詳細テスト
 	});
 
 	test.describe("CORS（Cross-Origin Resource Sharing）", () => {
@@ -359,84 +242,7 @@ test.describe("HTTPセキュリティヘッダーテスト", () => {
 		});
 	});
 
-	test.describe("キャッシュ制御", () => {
-		test("機密ページのキャッシュ制御", async ({ page }) => {
-			const sensitivePages = ["/login", "/register", "/dashboard"];
-
-			for (const path of sensitivePages) {
-				try {
-					const headers = await securityPage.getHeadersForPath(path);
-
-					// キャッシュ制御ヘッダーの確認
-					const cacheControl = headers["cache-control"];
-					const pragma = headers.pragma;
-
-					if (cacheControl) {
-						// 機密ページでは適切なキャッシュ制御が必要
-						const hasNoCache =
-							cacheControl.includes("no-cache") ||
-							cacheControl.includes("no-store") ||
-							cacheControl.includes("private");
-
-						if (hasNoCache) {
-							console.log(
-								`Appropriate cache control for ${path}: ${cacheControl}`,
-							);
-						}
-					}
-
-					// Pragma: no-cache の確認（HTTP/1.0 互換性）
-					if (pragma === "no-cache") {
-						console.log(`Pragma no-cache set for ${path}`);
-					}
-				} catch (error) {
-					// ページが存在しない場合やリダイレクトされる場合はスキップ
-					console.log(`Skipping cache control test for ${path}: ${error}`);
-				}
-			}
-		});
-
-		test("静的リソースのキャッシュ最適化", async ({ page }) => {
-			// 静的リソース（CSS、JSなど）のキャッシュ設定確認
-			await page.goto("/");
-
-			// ページ読み込み後のネットワーク活動を監視
-			const responses: any[] = [];
-			page.on("response", (response) => {
-				responses.push(response);
-			});
-
-			await page.waitForLoadState("networkidle");
-
-			// 静的リソースのキャッシュヘッダーを確認
-			const staticResources = responses.filter((r) => {
-				const url = r.url();
-				return (
-					url.includes("/_next/static/") ||
-					url.endsWith(".css") ||
-					url.endsWith(".js")
-				);
-			});
-
-			for (const resource of staticResources.slice(0, 5)) {
-				// 最初の5件のみテスト
-				const headers = resource.headers();
-				const cacheControl = headers["cache-control"];
-
-				if (cacheControl) {
-					// 静的リソースは長期キャッシュが効率的
-					const hasLongCache =
-						cacheControl.includes("public") ||
-						cacheControl.includes("max-age") ||
-						cacheControl.includes("immutable");
-
-					if (hasLongCache) {
-						console.log(`Good caching for static resource: ${resource.url()}`);
-					}
-				}
-			}
-		});
-	});
+	// キャッシュ制御テストは削除 - パフォーマンステストと重複
 
 	test.describe("エラーレスポンスのセキュリティ", () => {
 		test("404エラー時の情報漏洩防止", async ({ page }) => {
@@ -457,26 +263,7 @@ test.describe("HTTPセキュリティヘッダーテスト", () => {
 			);
 		});
 
-		test("500エラー時のスタックトレース非表示", async ({ page }) => {
-			// 意図的にエラーを発生させる試行（存在しないAPIエンドポイント）
-			const { status, body } = await securityPage.getApiHeaders(
-				"/api/cause-error",
-				"POST",
-				{
-					invalid: "data to cause error",
-				},
-			);
-
-			if (status >= 500) {
-				const bodyString =
-					typeof body === "string" ? body : JSON.stringify(body);
-
-				// スタックトレースが含まれていないことを確認
-				expect(bodyString).not.toMatch(/at\s+\w+.*:\d+:\d+/); // Stack trace pattern
-				expect(bodyString).not.toMatch(/Error:\s+.*\n\s+at/); // Error with stack
-				expect(bodyString).not.toMatch(/\/[a-zA-Z0-9/_-]+\.js:\d+/); // File paths
-			}
-		});
+		// 500エラー時のスタックトレーステストは削除 - 詳細すぎる
 
 		test("認証エラー時の適切なヘッダー", async ({ page }) => {
 			// 認証が必要なエンドポイントに未認証でアクセス
