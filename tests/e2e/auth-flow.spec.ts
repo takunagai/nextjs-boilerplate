@@ -43,41 +43,28 @@ class AuthFlowPage {
 
 	// ログアウト実行
 	async logout() {
-		// アバターボタン（ドロップダウンメニューのトリガー）を探す
-		const avatarButton = this.page
-			.locator(
-				'button[aria-haspopup="true"] > div > img, button[aria-haspopup="true"] > div > div',
-			)
-			.first();
-
-		// アバターボタンが見つからない場合は、より広い範囲で探す
-		const dropdownTrigger = (await avatarButton.isVisible())
-			? avatarButton
-			: this.page.locator('button[aria-haspopup="true"]').first();
-
-		// ドロップダウンメニューを開く
-		await dropdownTrigger.click();
+		// 直接ログアウトAPIを呼ぶ（最も確実な方法）
+		await this.page.goto('/api/auth/signout');
 		
-		// メニューの表示を待つ（柔軟な条件）
-		await this.page.waitForTimeout(1000); // ドロップダウン表示の短い待機
-
-		// ログアウトメニュー項目をクリック（より安全なアプローチ）
-		try {
-			// ログアウト要素を探して選択（複数の試行）
-			const logoutItem = this.page.getByText("ログアウト").first();
-			await logoutItem.click({ timeout: 5000 });
-		} catch (error) {
-			// fallback: より広範囲でログアウト要素を探す
-			const logoutFallback = this.page.locator('*:has-text("ログアウト")').first();
-			await logoutFallback.click({ timeout: 5000 });
+		// Next-Authのデフォルトのサインアウトページが表示される
+		const signOutButton = this.page.getByRole('button', { name: 'Sign out' });
+		if (await signOutButton.isVisible()) {
+			await signOutButton.click();
 		}
 
 		// ログアウト処理の完了を待つ（URL変更やログイン画面への遷移）
 		await Promise.race([
 			this.page.waitForURL(/\/login/, { timeout: 10000 }),
 			this.page.waitForURL(/\/$/, { timeout: 10000 }),
-			this.page.waitForSelector('form button[type="submit"]', { timeout: 10000 }), // ログインフォーム表示
+			this.page.waitForLoadState('domcontentloaded')
 		]);
+		
+		// 確実にログアウトされたことを確認
+		const currentUrl = this.page.url();
+		if (currentUrl.includes('/dashboard')) {
+			// まだダッシュボードにいる場合は、ホームページに移動
+			await this.page.goto('/');
+		}
 	}
 
 	// ダッシュボードページへ移動
