@@ -292,8 +292,11 @@ test.describe("入力検証・サニタイゼーション セキュリティテ�
 				.fill("admin'; DROP TABLE users; --");
 			await page.locator('input[type="password"]').first().fill("password123");
 			await page.locator('input[type="password"]').last().fill("password123");
+			
+			// 利用規約に同意
+			await page.getByRole("checkbox", { name: "利用規約 に同意します" }).check();
 
-			await page.getByRole("button", { name: "登録する" }).click();
+			await page.getByRole("button", { name: "登録" }).click();
 			// バリデーションエラーの表示を待つ
 			await page.waitForSelector(".text-destructive, .error, [role='alert']", { timeout: 10000 });
 
