@@ -7,41 +7,37 @@ import { expect, test } from "@playwright/test";
  */
 
 test.describe("アクセシビリティ基準", () => {
-	test("ホームページ: WCAG準拠確認", async ({ page }) => {
-		await page.goto("/");
+	test("主要ページ: WCAG準拠確認", async ({ page }) => {
+		const pages = [
+			{ path: "/", name: "ホームページ" },
+			{ path: "/login", name: "ログイン画面" },
+			{ path: "/contact", name: "お問い合わせ画面" }
+		];
 
-		const accessibilityScanResults = await new AxeBuilder({ page })
-			.withTags(["wcag2a", "wcag2aa", "wcag21aa"])
-			// 装飾的要素のカラーコントラスト問題を一時的に除外
-			.disableRules(["color-contrast", "meta-viewport"])
-			.analyze();
+		for (const testPage of pages) {
+			await page.goto(testPage.path);
 
-		// 重要なアクセシビリティルールのみチェック
-		expect(accessibilityScanResults.violations).toEqual([]);
+			const accessibilityScanResults = await new AxeBuilder({ page })
+				.withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+				.disableRules(["color-contrast", "meta-viewport"])
+				.analyze();
 
-		// カラーコントラスト問題は個別に警告として記録
-		const contrastResults = await new AxeBuilder({ page })
-			.include("main, nav, form") // 重要な要素のみ
-			.withRules(["color-contrast"])
-			.analyze();
+			expect(accessibilityScanResults.violations).toEqual([]);
 
-		if (contrastResults.violations.length > 0) {
-			console.warn(
-				`カラーコントラスト問題が${contrastResults.violations.length}件検出されました`,
-			);
+			// ホームページでのみカラーコントラスト詳細確認
+			if (testPage.path === "/") {
+				const contrastResults = await new AxeBuilder({ page })
+					.include("main, nav, form")
+					.withRules(["color-contrast"])
+					.analyze();
+
+				if (contrastResults.violations.length > 0) {
+					console.warn(
+						`カラーコントラスト問題が${contrastResults.violations.length}件検出されました`,
+					);
+				}
+			}
 		}
-	});
-
-	test("ログイン画面: WCAG準拠確認", async ({ page }) => {
-		await page.goto("/login");
-
-		const accessibilityScanResults = await new AxeBuilder({ page })
-			.withTags(["wcag2a", "wcag2aa", "wcag21aa"])
-			// 実装準備ができていない問題を一時的に除外
-			.disableRules(["color-contrast", "meta-viewport"])
-			.analyze();
-
-		expect(accessibilityScanResults.violations).toEqual([]);
 	});
 
 	test("登録画面: WCAG準拠確認", async ({ page }) => {
@@ -49,19 +45,6 @@ test.describe("アクセシビリティ基準", () => {
 
 		const accessibilityScanResults = await new AxeBuilder({ page })
 			.withTags(["wcag2a", "wcag2aa", "wcag21aa"])
-			// 実装準備ができていない問題を一時的に除外
-			.disableRules(["color-contrast", "meta-viewport"])
-			.analyze();
-
-		expect(accessibilityScanResults.violations).toEqual([]);
-	});
-
-	test("お問い合わせ画面: WCAG準拠確認", async ({ page }) => {
-		await page.goto("/contact");
-
-		const accessibilityScanResults = await new AxeBuilder({ page })
-			.withTags(["wcag2a", "wcag2aa", "wcag21aa"])
-			// 実装準備ができていない問題を一時的に除外
 			.disableRules(["color-contrast", "meta-viewport"])
 			.analyze();
 

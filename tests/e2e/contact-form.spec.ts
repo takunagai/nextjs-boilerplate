@@ -81,12 +81,12 @@ test.describe("お問い合わせフォーム", () => {
 	});
 
 	test.describe("バリデーション", () => {
-		test("空のフォームでエラーが表示される", async () => {
+		test("基本項目のバリデーション確認", async ({ page }) => {
+			// 1. 空のフォーム送信でエラー確認
 			await contactForm.submit();
 			await contactForm.expectValidationErrors();
-		});
 
-		test("無効なメールアドレスでエラーが表示される", async ({ page }) => {
+			// 2. 無効なメールアドレスでエラー確認
 			await contactForm.fillBasicForm({
 				name: "テスト 太郎",
 				email: "invalid-email",
@@ -94,7 +94,6 @@ test.describe("お問い合わせフォーム", () => {
 			});
 			await contactForm.submit();
 
-			// メールアドレス フィールドのバリデーション状態を確認
 			const emailInput = page.getByLabel("メールアドレス");
 			const isInvalid = await emailInput.evaluate((el) => {
 				const input = el as HTMLInputElement;
@@ -103,9 +102,8 @@ test.describe("お問い合わせフォーム", () => {
 			expect(isInvalid).toBeTruthy();
 		});
 
-		test("電話連絡可で電話番号未入力時にエラーが表示される", async ({
-			page,
-		}) => {
+		test("電話番号項目のバリデーション確認", async ({ page }) => {
+			// 1. 電話連絡可で電話番号未入力時の確認
 			await contactForm.fillBasicForm({
 				name: "テスト 太郎",
 				email: "test@example.com",
@@ -114,24 +112,16 @@ test.describe("お問い合わせフォーム", () => {
 			});
 			await contactForm.submit();
 
-			// 電話番号フィールドが表示されることを確認
 			await expect(page.getByLabel("電話番号")).toBeVisible();
-			
-			// バリデーションエラーが表示されることを確認（必須チェックより実際のエラー表示をテスト）
 			const errorElements = page.locator('[role="alert"], .error, .text-destructive');
 			const errorCount = await errorElements.count();
-			
-			// エラーメッセージが表示されるかどうかをチェック（条件付きバリデーションの場合）
+
 			if (errorCount > 0) {
 				const errorText = await errorElements.first().textContent();
-				console.log("バリデーションエラー:", errorText);
 				expect(errorText).toBeTruthy();
-			} else {
-				console.log("電話番号フィールドは条件付きバリデーション（エラーなし）");
 			}
-		});
 
-		test("無効な電話番号形式でエラーが表示される", async ({ page }) => {
+			// 2. 無効な電話番号形式でエラー確認
 			await contactForm.fillBasicForm({
 				name: "テスト 太郎",
 				email: "test@example.com",
@@ -149,20 +139,21 @@ test.describe("お問い合わせフォーム", () => {
 	});
 
 	test.describe("UI状態", () => {
-		test("電話連絡不可の場合は電話番号欄が非表示", async ({ page }) => {
+		test("電話番号欄の表示切り替え確認", async ({ page }) => {
+			// 1. 初期状態：電話連絡不可で電話番号欄が非表示
 			const radioNotAllowed = page.getByRole("radio", { name: "不可" });
 			await expect(radioNotAllowed).toBeChecked();
 			await expect(page.getByLabel("電話番号")).not.toBeVisible();
-		});
 
-		test("電話連絡可の場合は電話番号欄が表示", async ({ page }) => {
+			// 2. 電話連絡可にすると電話番号欄が表示
 			await page.locator("#phone-yes").click();
 			await expect(page.getByLabel("電話番号")).toBeVisible();
 		});
 	});
 
 	test.describe("正常送信", () => {
-		test("基本情報のみで送信成功", async () => {
+		test("フォーム送信の包括的確認", async () => {
+			// 1. 基本情報のみで送信成功
 			await contactForm.fillBasicForm({
 				name: "テスト 太郎",
 				email: "test@example.com",
@@ -170,9 +161,8 @@ test.describe("お問い合わせフォーム", () => {
 			});
 			await contactForm.submit();
 			await contactForm.expectSuccessMessage();
-		});
 
-		test("電話番号ありで送信成功", async () => {
+			// 2. 電話番号ありで送信成功
 			await contactForm.fillBasicForm({
 				name: "テスト 太郎",
 				email: "test@example.com",

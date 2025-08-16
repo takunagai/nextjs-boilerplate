@@ -170,40 +170,26 @@ test.describe("認証フロー", () => {
 	});
 
 	test.describe("エラー系フロー", () => {
-		test("間違ったメールアドレスでログイン失敗", async ({ page }) => {
+		test("ログイン失敗パターンの包括的確認", async ({ page }) => {
 			await authFlow.gotoLogin();
-			await authFlow.login("wrong@example.com", TEST_USER.password);
 
-			// エラーメッセージが表示されることを確認
-			const hasError = await authFlow.hasLoginError();
-			expect(hasError).toBeTruthy();
-
-			// ログインページに留まることを確認
-			await expect(page).toHaveURL(/\/login/);
-		});
-
-		test("間違ったパスワードでログイン失敗", async ({ page }) => {
-			await authFlow.gotoLogin();
-			await authFlow.login(TEST_USER.email, "wrongpassword");
-
-			// エラーメッセージが表示されることを確認
-			const hasError = await authFlow.hasLoginError();
-			expect(hasError).toBeTruthy();
-
-			// ログインページに留まることを確認
-			await expect(page).toHaveURL(/\/login/);
-		});
-
-		test("空のフォームでログイン失敗", async ({ page }) => {
-			await authFlow.gotoLogin();
+			// 1. 空のフォームでの失敗
 			await page.locator('form button[type="submit"]').click();
-
-			// バリデーションエラーが表示されることを確認
 			await page.waitForSelector(".text-destructive, .error, [role='alert']", { timeout: 5000 });
-			const errorElements = await page
-				.locator(".text-destructive, .error")
-				.count();
+			let errorElements = await page.locator(".text-destructive, .error").count();
 			expect(errorElements).toBeGreaterThan(0);
+
+			// 2. 間違ったメールアドレスでの失敗
+			await authFlow.login("wrong@example.com", TEST_USER.password);
+			const hasEmailError = await authFlow.hasLoginError();
+			expect(hasEmailError).toBeTruthy();
+			await expect(page).toHaveURL(/\/login/);
+
+			// 3. 間違ったパスワードでの失敗
+			await authFlow.login(TEST_USER.email, "wrongpassword");
+			const hasPasswordError = await authFlow.hasLoginError();
+			expect(hasPasswordError).toBeTruthy();
+			await expect(page).toHaveURL(/\/login/);
 		});
 
 		test("未認証状態でダッシュボードアクセス→ログインページリダイレクト", async ({
@@ -218,58 +204,32 @@ test.describe("認証フロー", () => {
 	});
 
 	test.describe("セッション状態確認", () => {
-		test("ログイン後のページリロードでセッション維持", async ({ page }) => {
+		test("セッション維持の包括的確認", async ({ page, context }) => {
 			// ログイン
 			await authFlow.gotoLogin();
 			await authFlow.login(TEST_USER.email, TEST_USER.password);
 			await expect(page).toHaveURL(/\/dashboard/);
 
-			// ページリロード
+			// 1. ページリロードでセッション維持
 			await page.reload();
 			await page.waitForLoadState("domcontentloaded");
-
-			// セッションが維持されていることを確認
-			const hasDashboard = await authFlow.hasDashboardContent();
+			let hasDashboard = await authFlow.hasDashboardContent();
 			expect(hasDashboard).toBeTruthy();
 			expect(page.url().includes("/dashboard")).toBeTruthy();
-		});
 
-		test("ログイン後のブラウザバック・フォワードでセッション維持", async ({
-			page,
-		}) => {
-			// ログイン
-			await authFlow.gotoLogin();
-			await authFlow.login(TEST_USER.email, TEST_USER.password);
-			await expect(page).toHaveURL(/\/dashboard/);
-
-			// ホームページに移動
+			// 2. ブラウザバック・フォワードでセッション維持
 			await page.goto("/");
 			await expect(page).toHaveURL("/");
-
-			// ダッシュボードに戻る
 			await authFlow.gotoDashboard();
-
-			// セッションが維持されていることを確認
-			const hasDashboard = await authFlow.hasDashboardContent();
+			hasDashboard = await authFlow.hasDashboardContent();
 			expect(hasDashboard).toBeTruthy();
-		});
 
-		test("新しいタブでセッション共有確認", async ({ page, context }) => {
-			// メインタブでログイン
-			await authFlow.gotoLogin();
-			await authFlow.login(TEST_USER.email, TEST_USER.password);
-			await expect(page).toHaveURL(/\/dashboard/);
-
-			// 新しいタブを開く
+			// 3. 新しいタブでセッション共有確認
 			const newTab = await context.newPage();
 			const newAuthFlow = new AuthFlowPage(newTab);
-
-			// 新しいタブでダッシュボードにアクセス
 			await newAuthFlow.gotoDashboard();
-
-			// セッションが共有されていることを確認
-			const hasDashboard = await newAuthFlow.hasDashboardContent();
-			expect(hasDashboard).toBeTruthy();
+			const hasSharedSession = await newAuthFlow.hasDashboardContent();
+			expect(hasSharedSession).toBeTruthy();
 
 			await newTab.close();
 		});
