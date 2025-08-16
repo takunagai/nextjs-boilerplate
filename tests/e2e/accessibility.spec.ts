@@ -116,7 +116,7 @@ test.describe("スクリーンリーダー対応", () => {
 		await page.goto("/login");
 
 		// 空のフォームで送信してエラーを発生させる
-		await page.getByRole("button", { name: "ログイン" }).click();
+		await page.locator("form").getByRole("button", { name: "ログイン" }).click();
 
 		// エラーメッセージが視覚的に表示されることを確認
 		const errorElements = page.locator(
