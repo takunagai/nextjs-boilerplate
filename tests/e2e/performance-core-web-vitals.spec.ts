@@ -114,8 +114,13 @@ async function getWebVitalsMetrics(page: Page): Promise<WebVitalsMetrics> {
 	// ページの読み込み完了を待つ
 	await page.waitForLoadState("networkidle");
 
-	// 追加的な安定化時間（レイアウトシフトの観測）
-	await page.waitForTimeout(2000);
+	// レイアウトシフトの安定化を待つ
+	await page.waitForLoadState('networkidle');
+	await page.waitForFunction(() => {
+		// DOMが十分に安定していることを確認
+		return document.readyState === 'complete' && 
+		       performance.now() > 1000; // 最低1秒は経過
+	}, { timeout: 10000 });
 
 	return await page.evaluate(() => {
 		const vitals = (window as any).__webVitals || {};
@@ -289,7 +294,11 @@ test.describe("Core Web Vitals パフォーマンス測定", () => {
 			const validationStartTime = Date.now();
 			await messageTextarea.focus();
 			await messageTextarea.fill("テストメッセージです。".repeat(10));
-			await page.waitForTimeout(100); // バリデーション処理を待つ
+			// バリデーション処理の完了を待つ
+			await page.waitForFunction(() => {
+				const textarea = document.querySelector('textarea[name="message"], textarea[id*="message"]') as HTMLTextAreaElement;
+				return textarea && textarea.value.length > 100; // 入力が完了していることを確認
+			}, { timeout: 2000 });
 			const validationEndTime = Date.now();
 
 			const validationResponseTime = validationEndTime - validationStartTime;

@@ -337,7 +337,11 @@ test.describe("Server Actions パフォーマンス", () => {
 				);
 			} catch {
 				// 成功メッセージが見つからない場合は、別の成功指標を探す
-				await page.waitForTimeout(1500); // フォーム処理完了待機
+				// フォーム処理完了またはリダイレクトを待機
+				await Promise.race([
+					page.waitForURL(url => url !== page.url(), { timeout: 2000 }),
+					page.waitForLoadState('networkidle', { timeout: 2000 })
+				]).catch(() => {});
 			}
 
 			const endTime = performance.now();
@@ -386,8 +390,14 @@ test.describe("Server Actions パフォーマンス", () => {
 			// フォーカスを別の要素に移してバリデーションをトリガー
 			await page.getByLabel("パスワード").focus();
 
-			// バリデーション結果の表示を待つ
-			await page.waitForTimeout(800); // Email check API の遅延 + 処理時間
+			// バリデーション結果の表示を待つ（エラーまたは成功サイン）
+			await Promise.race([
+				page.waitForSelector('.text-destructive, .error, .text-green-600, .success', { timeout: 1000 }),
+				page.waitForFunction(() => {
+					const now = performance.now();
+					return now - window.validationStartTime > 800; // 800msのタイムアウト
+				}, { timeout: 1000 })
+			]).catch(() => {});
 
 			const endTime = performance.now();
 			const responseTime = endTime - startTime;

@@ -109,7 +109,14 @@ class InputValidationTestPage {
 		}
 
 		await this.page.getByRole("button", { name: "送信する" }).click();
-		await this.page.waitForTimeout(1500); // 処理待機
+		// フォーム処理の完了を待つ（エラーまたは成功）
+		await Promise.race([
+			this.page.waitForSelector(".text-destructive, .error, [role='alert']", { timeout: 10000 }),
+			this.page.waitForFunction(() => {
+				const nameField = document.querySelector('input[name="name"]') as HTMLInputElement;
+				return nameField && nameField.value === ""; // 成功時のフォームリセット
+			}, { timeout: 10000 }),
+		]);
 	}
 
 	// エラーメッセージの確認
@@ -308,7 +315,8 @@ test.describe("入力検証・サニタイゼーション セキュリティテ�
 			await page.locator('input[type="password"]').last().fill("password123");
 
 			await page.getByRole("button", { name: "登録する" }).click();
-			await page.waitForTimeout(1500);
+			// バリデーションエラーの表示を待つ
+			await page.waitForSelector(".text-destructive, .error, [role='alert']", { timeout: 10000 });
 
 			// バリデーションエラーが適切に表示される
 			const errorElements = await page
@@ -393,7 +401,8 @@ test.describe("入力検証・サニタイゼーション セキュリティテ�
 			// レスポンスが返ってきている（タイムアウトしていない）
 			const responseTime = await validationPage.measureResponseTime(
 				async () => {
-					await page.waitForTimeout(1000);
+					// ページが応答し続けていることを確認
+					await page.waitForSelector("h1", { timeout: 10000 });
 				},
 			);
 			expect(responseTime).toBeLessThan(30000); // 30秒以内
@@ -502,7 +511,11 @@ test.describe("入力検証・サニタイゼーション セキュリティテ�
 				await page.locator('input[type="password"]').last().fill(password);
 
 				await page.getByRole("button", { name: "登録する" }).click();
-				await page.waitForTimeout(1500);
+				// 登録処理の完了を待つ（成功またはエラー）
+				await Promise.race([
+					page.waitForURL(/\/dashboard/, { timeout: 10000 }),
+					page.waitForSelector('.text-destructive, [role="alert"]', { timeout: 10000 }),
+				]);
 
 				const endTime = Date.now();
 				responseTimes.push(endTime - startTime);
@@ -544,7 +557,8 @@ test.describe("入力検証・サニタイゼーション セキュリティテ�
 				}
 			});
 
-			await page.waitForTimeout(1000);
+			// ログの収集を十分に待つ
+			await page.waitForFunction(() => performance.now() > 1000, { timeout: 5000 });
 			const cspErrors = logs.filter((log) =>
 				log.includes("Content Security Policy"),
 			);

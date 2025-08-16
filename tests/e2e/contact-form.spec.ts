@@ -35,7 +35,14 @@ class ContactFormPage {
 
 	async submit() {
 		await this.page.getByRole("button", { name: "送信する" }).click();
-		await this.page.waitForTimeout(1000); // エラー表示を待つ
+		// フォーム送信の結果（成功またはエラー）を待つ
+		await Promise.race([
+			this.page.waitForFunction(() => {
+				const nameField = document.querySelector('input[name="name"]') as HTMLInputElement;
+				return nameField && nameField.value === ""; // フォームリセット成功
+			}, { timeout: 10000 }),
+			this.page.waitForSelector('.text-destructive, [role="alert"]', { timeout: 10000 }),
+		]);
 	}
 
 	async expectFormReset() {
@@ -50,8 +57,7 @@ class ContactFormPage {
 	}
 
 	async expectSuccessMessage() {
-		// 成功の指標：フォームのリセット + 待機時間短縮
-		await this.page.waitForTimeout(2000);
+		// 成功の指標：フォームのリセット（submitで既に待機済み）
 		await this.expectFormReset();
 	}
 }

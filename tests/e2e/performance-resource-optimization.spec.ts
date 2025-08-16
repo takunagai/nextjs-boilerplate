@@ -43,7 +43,7 @@ interface ImageOptimizationMetrics {
 async function getResourceMetrics(page: Page): Promise<ResourceMetrics> {
 	// ページの読み込み完了とネットワーク安定化を待つ
 	await page.waitForLoadState("networkidle");
-	await page.waitForTimeout(1000);
+	await page.waitForLoadState("domcontentloaded");
 
 	return await page.evaluate(() => {
 		const resources = performance.getEntriesByType(

@@ -136,10 +136,10 @@ test.describe("スクリーンリーダー対応", () => {
 		await page.getByRole("button", { name: "ログイン" }).click();
 
 		// エラーメッセージが視覚的に表示されることを確認
-		await page.waitForTimeout(1000);
 		const errorElements = page.locator(
 			'.text-destructive, .text-red-500, [role="alert"], .error',
 		);
+		await expect(errorElements.first()).toBeVisible({ timeout: 5000 });
 		const count = await errorElements.count();
 		expect(count).toBeGreaterThan(0);
 	});
@@ -161,7 +161,8 @@ test.describe("スクリーンリーダー対応", () => {
 
 		// メールフィールドが入力可能であることを確認（ブラウザ固有の違いに対応）
 		await emailInput.fill("test@example.com");
-		await page.waitForTimeout(100); // 入力の反映を待つ
+		// 入力の反映を待つ
+		await expect(emailInput).toHaveValue("test@example.com", { timeout: 2000 });
 		const emailValue = await emailInput.inputValue();
 
 		// 空文字の場合はフィールドが存在することだけ確認

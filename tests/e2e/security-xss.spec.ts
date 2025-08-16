@@ -70,7 +70,12 @@ class SecurityTestPage {
 			await loginSubmit.click();
 		}
 
-		await this.page.waitForTimeout(1500); // 処理完了待機
+		// フォーム送信後の処理完了を待機（エラーまたはリダイレクト）
+		await Promise.race([
+			this.page.waitForSelector('.text-destructive, [role="alert"], .error', { timeout: 3000 }),
+			this.page.waitForURL(url => url !== this.page.url(), { timeout: 3000 }),
+			this.page.waitForLoadState('networkidle', { timeout: 3000 })
+		]).catch(() => {});
 	}
 
 	// スクリプトが実行されていないことを確認
@@ -212,8 +217,8 @@ test.describe("XSS脆弱性テスト", () => {
 				
 				await securityPage.visitWithXSSParam("/login", "callbackUrl", callback);
 
-				// 少し待ってからURLを確認（リダイレクトがある場合の処理完了を待つ）
-				await page.waitForTimeout(1000);
+				// リダイレクトまたはページ読み込みの完了を待機
+				await page.waitForLoadState('domcontentloaded', { timeout: 3000 }).catch(() => {});
 
 				// 悪意のあるリダイレクトが発生していないことを確認
 				const currentUrl = page.url();
@@ -286,7 +291,9 @@ test.describe("XSS脆弱性テスト", () => {
 			await securityPage.submitForm();
 
 			// エラー表示後にDOMが安全であることを確認
-			await page.waitForTimeout(1000);
+			await expect(
+				page.locator('.text-destructive, .error').first()
+			).toBeVisible({ timeout: 3000 }).catch(() => {});
 
 			// innerHTML の代わりに textContent が使用されていることを期待
 			const errorElements = page.locator(".text-destructive, .error");
@@ -298,7 +305,8 @@ test.describe("XSS脆弱性テスト", () => {
 				const initialScriptCount = scriptTags;
 
 				// 新しいスクリプトタグが動的に追加されていないことを確認
-				await page.waitForTimeout(500);
+				// DOMの安定化を待つ
+				await page.waitForLoadState('domcontentloaded');
 				const finalScriptCount = await page.locator("script").count();
 				expect(finalScriptCount).toBe(initialScriptCount);
 			}

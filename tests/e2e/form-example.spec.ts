@@ -35,7 +35,14 @@ class FormExamplePage {
 
 	async submit() {
 		await this.page.getByRole("button", { name: "送信する" }).click();
-		await this.page.waitForTimeout(1000);
+		// フォーム送信後の変化を待機（エラー、成功、またはリセット）
+		await Promise.race([
+			this.page.waitForSelector('.text-destructive, [role="alert"], .text-red-500', { timeout: 3000 }),
+			this.page.waitForFunction(() => {
+				return document.querySelector('input[value=""]') !== null; // フォームリセットの確認
+			}, { timeout: 3000 }),
+			this.page.waitForLoadState('networkidle', { timeout: 3000 })
+		]).catch(() => {});
 	}
 
 	async expectValidationErrors() {
@@ -47,8 +54,8 @@ class FormExamplePage {
 
 	async expectFormReset() {
 		// 簡略化した成功確認：フォームリセット状態をチェック
-		await this.page.waitForTimeout(2000);
-		await expect(this.page.getByLabel("お名前")).toHaveValue("");
+		// フォームがリセットされるまで待機
+		await expect(this.page.getByLabel("お名前")).toHaveValue("", { timeout: 5000 });
 		await expect(this.page.getByLabel("メールアドレス")).toHaveValue("");
 		await expect(this.page.getByLabel("メッセージ")).toHaveValue("");
 	}

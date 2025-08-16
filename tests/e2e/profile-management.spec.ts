@@ -29,7 +29,7 @@ class ProfilePage {
 		await this.page.getByLabel("メールアドレス").fill(TEST_USER.email);
 		await this.page.locator('input[type="password"]').fill(TEST_USER.password);
 		await this.page.locator('form button[type="submit"]').click();
-		await this.page.waitForTimeout(1500);
+		await this.page.waitForURL(/\/dashboard/, { timeout: 10000 });
 	}
 
 	// プロフィールページへ移動
@@ -82,7 +82,11 @@ class ProfilePage {
 	// フォーム送信
 	async submitForm() {
 		await this.getUpdateButton().click();
-		await this.page.waitForTimeout(1500);
+		// 成功またはエラーメッセージの表示を待つ
+		await Promise.race([
+			this.page.waitForSelector('.text-success, .bg-success, .border-success', { timeout: 10000 }),
+			this.page.waitForSelector('.text-destructive, .bg-destructive, [role="alert"]', { timeout: 10000 }),
+		]);
 	}
 
 	// プロフィール情報の更新
@@ -165,7 +169,15 @@ class ProfilePage {
 	async uploadImage(filename: string) {
 		const filePath = path.resolve(__dirname, `../fixtures/${filename}`);
 		await this.getImageUploadInput().setInputFiles(filePath);
-		await this.page.waitForTimeout(2500); // アップロード処理待機
+		// アップロード完了の表示を待つ（プレビュー表示やステータス変更）
+		await Promise.race([
+			this.page.waitForSelector('img[alt*="プロフィール画像"]', { timeout: 15000 }),
+			this.page.waitForSelector('.upload-complete, .upload-success', { timeout: 15000 }),
+			this.page.waitForFunction(() => {
+				const input = document.querySelector('#profile-image-upload') as HTMLInputElement;
+				return input && input.files && input.files.length > 0;
+			}, { timeout: 15000 }),
+		]);
 	}
 
 	// プロフィール画像の確認
@@ -179,24 +191,32 @@ class ProfilePage {
 		await this.page
 			.getByRole("button", { name: /メールアドレスを変更/ })
 			.click();
-		await this.page.waitForTimeout(500);
+		await this.page.waitForSelector('[role="dialog"], .modal, .dialog', { timeout: 5000 });
 	}
 
 	async openDeleteProfileDialog() {
 		await this.page.getByRole("button", { name: /アカウントを削除/ }).click();
-		await this.page.waitForTimeout(500);
+		await this.page.waitForSelector('[role="dialog"], .modal, .dialog', { timeout: 5000 });
 	}
 
 	async fillEmailChangeForm(newEmail: string) {
 		await this.page.getByLabel("新しいメールアドレス").fill(newEmail);
 		await this.page.getByRole("button", { name: /確認メールを送信/ }).click();
-		await this.page.waitForTimeout(1500);
+		// 処理完了やメッセージ表示を待つ
+		await Promise.race([
+			this.page.waitForSelector('.text-success, .confirmation-message', { timeout: 10000 }),
+			this.page.waitForSelector('.text-destructive, [role="alert"]', { timeout: 10000 }),
+		]);
 	}
 
 	async fillDeleteConfirmForm(confirmText: string) {
 		await this.page.getByLabel(/確認テキスト/).fill(confirmText);
 		await this.page.getByRole("button", { name: /削除を実行/ }).click();
-		await this.page.waitForTimeout(1500);
+		// 削除処理完了やエラー表示を待つ
+		await Promise.race([
+			this.page.waitForURL(/\//, { timeout: 10000 }), // ホームページへのリダイレクト
+			this.page.waitForSelector('.text-destructive, [role="alert"]', { timeout: 10000 }),
+		]);
 	}
 }
 
@@ -252,8 +272,8 @@ test.describe("プロフィール管理機能", () => {
 
 			await profilePage.submitForm();
 
-			// 更新成功を確認（シミュレーションのため、コンソールログを確認）
-			await page.waitForTimeout(1000);
+			// 更新成功を確認（フォーム値の保持やメッセージ表示）
+			await expect(profilePage.getNameInput()).toHaveValue("Updated Test User");
 			// 実際の実装では成功メッセージやページ更新を確認
 		});
 
@@ -461,8 +481,7 @@ test.describe("プロフィール管理機能", () => {
 			await profilePage.openEmailChangeDialog();
 			await profilePage.fillEmailChangeForm("new@example.com");
 
-			// 成功メッセージまたは確認画面の表示
-			await page.waitForTimeout(1000);
+			// 成功メッセージまたは確認画面の表示は既にfillEmailChangeFormで待機済み
 		});
 
 		test("無効なメールアドレスでエラーが表示される", async ({ page }) => {
@@ -484,8 +503,7 @@ test.describe("プロフィール管理機能", () => {
 			await profilePage.openDeleteProfileDialog();
 			await profilePage.fillDeleteConfirmForm("プロフィールを削除します");
 
-			// 削除処理の実行（実際の実装では適切な確認）
-			await page.waitForTimeout(1000);
+			// 削除処理の実行（実際の実装では適切な確認）は既にfillDeleteConfirmFormで待機済み
 		});
 
 		test("間違った確認テキストでエラーが表示される", async ({ page }) => {
@@ -555,7 +573,8 @@ test.describe("プロフィール管理機能", () => {
 				await profilePage.submitForm();
 
 				// エラーが発生しないか、適切に処理されることを確認
-				await page.waitForTimeout(1000);
+				const hasError = await profilePage.hasErrorMessage();
+				// エラー処理の確認後、フォームをリセット
 				await profilePage.getResetButton().click();
 			}
 		});
@@ -608,7 +627,8 @@ test.describe("プロフィール管理機能", () => {
 			await profilePage.submitForm();
 
 			// エラーメッセージまたは適切な処理が行われることを確認
-			await page.waitForTimeout(2000);
+			const hasError = await profilePage.hasErrorMessage();
+			expect(hasError).toBeTruthy(); // オフライン時はエラーが表示されるべき
 
 			// ネットワークを復旧
 			await page.context().setOffline(false);
@@ -619,7 +639,7 @@ test.describe("プロフィール管理機能", () => {
 			await profilePage.updateProfile({ name: "Server Error Test" });
 			await profilePage.submitForm();
 
-			await page.waitForTimeout(1000);
+			// エラーハンドリングの確認は既にsubmitFormで実行済み
 		});
 	});
 });

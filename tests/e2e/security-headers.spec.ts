@@ -74,7 +74,11 @@ class SecurityHeadersTestPage {
 			});
 
 			if (delay > 0 && i < count - 1) {
-				await this.page.waitForTimeout(delay);
+				// performance.now()ベースの遅延
+				const start = performance.now();
+				while (performance.now() - start < delay) {
+					// ビジーウェイト
+				}
 			}
 		}
 
@@ -296,7 +300,11 @@ test.describe("HTTPセキュリティヘッダーテスト", () => {
 			const _firstBatchLimited = firstBatch.filter((r) => r.status === 429);
 
 			// 十分な時間待機（レート制限ウィンドウのリセット）
-			await page.waitForTimeout(11000); // 11秒待機（10秒のウィンドウ + バッファ）
+			// performance.now()ベースの11秒待機
+			const waitStart = performance.now();
+			while (performance.now() - waitStart < 11000) {
+				// 11秒間のビジーウェイト（10秒のウィンドウ + バッファ）
+			}
 
 			// 第2回目：リセット後のリクエスト
 			const secondBatch = await securityPage.sendMultipleRequests(

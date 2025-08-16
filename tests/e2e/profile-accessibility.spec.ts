@@ -52,8 +52,11 @@ test.describe("プロフィール機能のアクセシビリティ", () => {
 		await page.locator('input[type="password"]').fill(TEST_USER.password);
 		await page.locator('form button[type="submit"]').click();
 		
-		// ログイン処理の完了を待機
-		await page.waitForTimeout(3000);
+		// ログイン処理の完了を待機（リダイレクトまたはエラーまで待機）
+		await Promise.race([
+			page.waitForURL(url => !url.includes('/login'), { timeout: 5000 }),
+			page.waitForSelector('.text-destructive, [role="alert"], .error', { timeout: 5000 })
+		]).catch(() => console.log('ログイン処理の確認がタイムアウトしました'));
 		
 		// ログイン結果の確認（エラーメッセージの有無をチェック）
 		const hasErrors = await page.locator('.text-destructive, [role="alert"], .error').count();
@@ -66,7 +69,7 @@ test.describe("プロフィール機能のアクセシビリティ", () => {
 		const currentUrl = page.url();
 		if (currentUrl.includes("/login")) {
 			// まだログインページにいる場合、追加の確認時間を設ける
-			await page.waitForTimeout(2000);
+			await page.waitForLoadState('networkidle', { timeout: 3000 }).catch(() => {});
 			const finalUrl = page.url();
 			if (finalUrl.includes("/login")) {
 				// それでもログインページの場合、スキップまたは代替方法を検討
@@ -173,7 +176,10 @@ test.describe("プロフィール機能のアクセシビリティ", () => {
 			await nameInput.clear();
 			await page.getByRole("button", { name: /プロフィールを更新/ }).click();
 
-			await page.waitForTimeout(1000);
+			// エラーメッセージの表示を待機
+			await expect(
+				page.locator('[role="alert"], .text-destructive, .error')
+			).toBeVisible({ timeout: 5000 });
 
 			// エラーメッセージがrole="alert"またはaria-live属性を持つことを確認
 			const errorElements = page.locator('[role="alert"], [aria-live]');
@@ -252,7 +258,9 @@ test.describe("プロフィール機能のアクセシビリティ", () => {
 
 			// スペースキーで切り替え
 			await page.keyboard.press("Space");
-			await page.waitForTimeout(100);
+			
+			// 状態の変更を待機
+			await expect(emailVisibleCheckbox).toHaveProperty('checked', !initialChecked, { timeout: 2000 });
 
 			// 状態が変更されたことを確認
 			const afterSpaceChecked = await emailVisibleCheckbox.isChecked();
@@ -270,8 +278,12 @@ test.describe("プロフィール機能のアクセシビリティ", () => {
 			await nameInput.fill("Test Name");
 			await nameInput.press("Enter");
 
-			// フォーム送信が実行されることを確認
-			await page.waitForTimeout(1000);
+			// フォーム送信後の変化を確認（成功メッセージまたはリダイレクト）
+			await Promise.race([
+				page.waitForSelector('.text-green-600, .success', { timeout: 3000 }),
+				page.waitForURL(url => url !== page.url(), { timeout: 3000 }),
+				page.waitForLoadState('networkidle', { timeout: 3000 })
+			]).catch(() => console.log('フォーム送信の確認がタイムアウトしました'));
 		});
 	});
 
@@ -354,10 +366,10 @@ test.describe("プロフィール機能のアクセシビリティ", () => {
 			expect(liveRegionCount).toBeGreaterThan(0);
 
 			// ステータスメッセージの確認
-			await page.waitForTimeout(500);
 			const statusMessage = page
 				.locator("[aria-live] *")
 				.filter({ hasText: /更新|送信|処理/ });
+			await expect(statusMessage.first()).toBeVisible({ timeout: 3000 }).catch(() => {});
 			const hasStatusMessage = (await statusMessage.count()) > 0;
 
 			if (hasStatusMessage) {
@@ -426,7 +438,11 @@ test.describe("プロフィール機能のアクセシビリティ", () => {
 			await nameInput.clear();
 			await page.getByRole("button", { name: /プロフィールを更新/ }).click();
 
-			await page.waitForTimeout(1000);
+			// エラーメッセージまたは処理完了を待機
+			await Promise.race([
+				page.waitForSelector('.text-destructive, [role="alert"], .error', { timeout: 3000 }),
+				page.waitForLoadState('networkidle', { timeout: 3000 })
+			]).catch(() => {});
 
 			// エラー後のフォーカス位置確認
 			const focusedElement = page.locator(":focus");
@@ -449,12 +465,11 @@ test.describe("プロフィール機能のアクセシビリティ", () => {
 			await page.getByLabel(/名前/).clear();
 			await page.getByRole("button", { name: /プロフィールを更新/ }).click();
 
-			await page.waitForTimeout(1000);
-
-			// エラーメッセージの確認
+			// エラーメッセージの表示を待機
 			const errorElement = page
 				.locator('.text-destructive, .error, [role="alert"]')
 				.first();
+			await expect(errorElement).toBeVisible({ timeout: 5000 });
 			await expect(errorElement).toBeVisible();
 
 			// テキストの内容確認（色以外の情報提供）
@@ -589,8 +604,10 @@ test.describe("プロフィール機能のアクセシビリティ", () => {
 			if (await submitButton.count() > 0) {
 				await submitButton.click();
 
-				// 送信中の表示確認
-				await page.waitForTimeout(100);
+				// 送信中の状態変化を確認
+				await page.waitForFunction(() => {
+					return document.querySelector('button:disabled, [aria-disabled="true"], *:has-text("処理中"), *:has-text("送信中"), *:has-text("更新中")');
+				}, { timeout: 2000 }).catch(() => {});
 
 				// ボタンのテキスト変更またはローディング表示の確認
 				const buttonText = await submitButton.textContent();
@@ -623,7 +640,10 @@ test.describe("プロフィール機能のアクセシビリティ", () => {
 			await nameInput.clear();
 			await page.getByRole("button", { name: /プロフィールを更新/ }).click();
 
-			await page.waitForTimeout(1000);
+			// エラーメッセージの表示を待機
+			await expect(
+				page.locator('[role="alert"], .text-destructive, .error')
+			).toBeVisible({ timeout: 5000 });
 
 			// エラーメッセージの存在確認
 			const errorElement = page.locator(
@@ -638,7 +658,8 @@ test.describe("プロフィール機能のアクセシビリティ", () => {
 			const retryButton = page.getByRole("button", { name: /プロフィールを更新|更新|保存/ }).first();
 			if (await retryButton.count() > 0) {
 				await retryButton.click();
-				await page.waitForTimeout(1000);
+				// フォーム送信後の処理完了を待機
+				await page.waitForLoadState('networkidle', { timeout: 3000 }).catch(() => {});
 
 				// 送信が実行されることを確認（ボタンが存在するか、何らかのフィードバックがあるか）
 				const stillVisible = await retryButton.isVisible();

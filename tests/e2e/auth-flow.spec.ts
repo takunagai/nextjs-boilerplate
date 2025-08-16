@@ -34,8 +34,11 @@ class AuthFlowPage {
 		// フォーム内の送信ボタンを指定
 		await this.page.locator('form button[type="submit"]').click();
 
-		// ログイン処理の完了を待つ（ページ遷移またはエラー表示）
-		await this.page.waitForTimeout(1500);
+		// ログイン処理の完了を待つ（URL変更またはエラー表示）
+		await Promise.race([
+			this.page.waitForURL(/\/dashboard/, { timeout: 10000 }),
+			this.page.waitForSelector('.text-destructive, .error, [role="alert"]', { timeout: 10000 }),
+		]);
 	}
 
 	// ログアウト実行
@@ -54,22 +57,27 @@ class AuthFlowPage {
 
 		// ドロップダウンメニューを開く
 		await dropdownTrigger.click();
-		await this.page.waitForTimeout(500);
+		
+		// メニューの表示を待つ（柔軟な条件）
+		await this.page.waitForTimeout(1000); // ドロップダウン表示の短い待機
 
-		// ログアウトメニュー項目をクリック（複数のセレクタで試行）
-		const logoutItem = this.page
-			.locator(
-				'[role="menuitem"]:has-text("ログアウト"), ' +
-					'div:has-text("ログアウト"):visible, ' +
-					'.text-destructive:has-text("ログアウト"), ' +
-					'*:has(svg) + span:has-text("ログアウト")',
-			)
-			.first();
+		// ログアウトメニュー項目をクリック（より安全なアプローチ）
+		try {
+			// ログアウト要素を探して選択（複数の試行）
+			const logoutItem = this.page.getByText("ログアウト").first();
+			await logoutItem.click({ timeout: 5000 });
+		} catch (error) {
+			// fallback: より広範囲でログアウト要素を探す
+			const logoutFallback = this.page.locator('*:has-text("ログアウト")').first();
+			await logoutFallback.click({ timeout: 5000 });
+		}
 
-		await logoutItem.click();
-
-		// ログアウト処理の完了を待つ
-		await this.page.waitForTimeout(1500);
+		// ログアウト処理の完了を待つ（URL変更やログイン画面への遷移）
+		await Promise.race([
+			this.page.waitForURL(/\/login/, { timeout: 10000 }),
+			this.page.waitForURL(/\/$/, { timeout: 10000 }),
+			this.page.waitForSelector('form button[type="submit"]', { timeout: 10000 }), // ログインフォーム表示
+		]);
 	}
 
 	// ダッシュボードページへ移動
@@ -80,12 +88,20 @@ class AuthFlowPage {
 
 	// 認証状態の確認
 	async isLoggedIn() {
-		// ダッシュボードページにアクセスできるかで判定
-		await this.gotoDashboard();
-		const currentUrl = this.page.url();
-
-		// ログイン画面にリダイレクトされていないかチェック
-		return !currentUrl.includes("/login");
+		try {
+			// ダッシュボードページにアクセスできるかで判定
+			await this.gotoDashboard();
+			// ページの読み込み完了を待つ
+			await this.page.waitForLoadState('domcontentloaded');
+			
+			const currentUrl = this.page.url();
+			
+			// ログイン画面にリダイレクトされていないかチェック
+			return !currentUrl.includes("/login");
+		} catch (error) {
+			// エラーが発生した場合は未認証と判定
+			return false;
+		}
 	}
 
 	// ログインエラーの存在確認
@@ -139,7 +155,7 @@ test.describe("認証フロー", () => {
 			await authFlow.logout();
 
 			// 5. ホームページまたはログインページにリダイレクトされることを確認
-			await page.waitForTimeout(1000);
+			await page.waitForFunction(() => !window.location.pathname.includes("/dashboard"), { timeout: 5000 });
 			const finalUrl = page.url();
 			expect(finalUrl.includes("/dashboard")).toBeFalsy();
 		});
@@ -148,9 +164,8 @@ test.describe("認証フロー", () => {
 			await authFlow.gotoLogin();
 			await authFlow.login(ADMIN_USER.email, ADMIN_USER.password);
 
-			// 管理者としてダッシュボードにアクセスできることを確認
-			const isLoggedIn = await authFlow.isLoggedIn();
-			expect(isLoggedIn).toBeTruthy();
+			// ダッシュボードにリダイレクトされることを確認（より直接的）
+			await expect(page).toHaveURL(/\/dashboard/, { timeout: 10000 });
 		});
 	});
 
@@ -184,7 +199,7 @@ test.describe("認証フロー", () => {
 			await page.locator('form button[type="submit"]').click();
 
 			// バリデーションエラーが表示されることを確認
-			await page.waitForTimeout(1000);
+			await page.waitForSelector(".text-destructive, .error, [role='alert']", { timeout: 5000 });
 			const errorElements = await page
 				.locator(".text-destructive, .error")
 				.count();
