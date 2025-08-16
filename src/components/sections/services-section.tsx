@@ -1,3 +1,6 @@
+"use client";
+
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import {
 	FaArrowRight,
@@ -5,11 +8,28 @@ import {
 	FaCode,
 	FaPaintbrush,
 } from "react-icons/fa6";
-import { FlowingComments } from "@/components/effects/flowing-comments";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
 import { Heading } from "@/components/ui/heading";
+import { usePerformanceCheck } from "@/hooks/use-webgl-support";
+
+// 動的インポート - エフェクトコンポーネント
+const FlowingComments = dynamic(
+	() => import("@/components/effects/flowing-comments").then(mod => ({ default: mod.FlowingComments })),
+	{
+		ssr: false,
+		loading: () => <div className="absolute inset-0 animate-pulse bg-gradient-to-r from-blue-50/20 to-purple-50/20" />
+	}
+);
+
+const LightweightBackground = dynamic(
+	() => import("@/components/background/lightweight-background").then(mod => ({ default: mod.LightweightBackground })),
+	{
+		ssr: false,
+		loading: () => <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-purple-50" />
+	}
+);
 
 const services = [
 	{
@@ -66,10 +86,18 @@ const services = [
 ];
 
 export function ServicesSection() {
+	const { shouldLoad3D, isMediumOrBetter, isLoading } = usePerformanceCheck();
+
 	return (
 		<section className="w-full py-16 md:py-24 bg-background relative overflow-hidden">
-			{/* 背景のコメント流しエフェクト */}
-			<FlowingComments maxComments={25} />
+			{/* パフォーマンス対応背景エフェクト */}
+			{!isLoading && (
+				shouldLoad3D ? (
+					<FlowingComments maxComments={isMediumOrBetter ? 25 : 15} />
+				) : (
+					<LightweightBackground variant="gradient" opacity={0.4} />
+				)
+			)}
 
 			<Container
 				width="2xl"
