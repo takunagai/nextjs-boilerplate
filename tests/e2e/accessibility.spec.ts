@@ -211,4 +211,7 @@ test.describe("色・コントラスト対応", () => {
 
 		expect(hasFocusIndicator).toBeTruthy();
 	});
+
+	// 注意: プロフィール機能テストは未実装のため削除済み
+	// TODO: プロフィール機能実装後に追加
 });

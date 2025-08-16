@@ -37,7 +37,7 @@ export default async function ProfilePage() {
 	// 認証チェック（サーバーサイド）
 	const session = await auth();
 	if (!session?.user) {
-		redirect("/auth/login");
+		redirect("/login");
 	}
 
 	// プロフィール情報を取得
