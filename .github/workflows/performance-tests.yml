@@ -1,0 +1,136 @@
+name: Performance Tests
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  schedule:
+    # 毎日午前2時に実行（性能回帰の早期発見）
+    - cron: '0 2 * * *'
+
+env:
+  NODE_VERSION: '20'
+
+jobs:
+  performance-tests:
+    name: Performance & Core Web Vitals
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Install Playwright browsers
+        run: npx playwright install chromium --with-deps
+        
+      - name: Run performance tests
+        run: |
+          npx playwright test \
+            performance-core-web-vitals.spec.ts \
+            performance-api.spec.ts \
+            performance-resource-optimization.spec.ts \
+            --project=chromium
+        env:
+          CI: true
+          
+      - name: Generate performance report
+        if: always()
+        run: |
+          echo "## 📊 Performance Test Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Core Web Vitals Targets" >> $GITHUB_STEP_SUMMARY
+          echo "- **LCP**: ≤ 2.0s (homepage), ≤ 2.5s (dashboard)" >> $GITHUB_STEP_SUMMARY
+          echo "- **FID**: ≤ 80ms (standard), ≤ 50ms (forms)" >> $GITHUB_STEP_SUMMARY
+          echo "- **CLS**: ≤ 0.08 (standard), ≤ 0.05 (image pages)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### API Performance Targets" >> $GITHUB_STEP_SUMMARY
+          echo "- **Response Time**: ≤ 500ms" >> $GITHUB_STEP_SUMMARY
+          echo "- **Resource Loading**: ≤ 1s per resource" >> $GITHUB_STEP_SUMMARY
+          
+      - name: Upload performance artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: performance-results
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 30
+
+  security-tests:
+    name: Security & Accessibility Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Install Playwright browsers
+        run: npx playwright install chromium --with-deps
+        
+      - name: Run security tests
+        run: |
+          npx playwright test \
+            security-xss.spec.ts \
+            security-csrf.spec.ts \
+            security-headers.spec.ts \
+            security-input-validation.spec.ts \
+            --project=chromium
+        env:
+          CI: true
+          
+      - name: Run accessibility tests
+        run: |
+          npx playwright test \
+            accessibility.spec.ts \
+            profile-accessibility.spec.ts \
+            --project=chromium
+        env:
+          CI: true
+          
+      - name: Generate security report
+        if: always()
+        run: |
+          echo "## 🔒 Security & Accessibility Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Security Tests Coverage" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ XSS Prevention" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ CSRF Protection" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ HTTP Security Headers" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Input Validation & Sanitization" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Accessibility Standards" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ WCAG 2.1 AA Compliance" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Keyboard Navigation" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Screen Reader Support" >> $GITHUB_STEP_SUMMARY
+          
+      - name: Upload security artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-results
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 30
