@@ -386,21 +386,40 @@ const {
 現在はメモリ上でのテスト実装のため、実際のデータベース統合が必要：
 
 ```typescript
-// 推奨: Prisma + PostgreSQL
-model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String
-  password  String   // ハッシュ化済み
-  role      Role     @default(USER)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
+// 推奨: Drizzle ORM + PostgreSQL
+import { pgTable, text, timestamp, pgEnum } from 'drizzle-orm/pg-core';
+import { createId } from '@paralleldrive/cuid2';
+
+// ロール定義
+export const roleEnum = pgEnum('role', ['user', 'admin']);
+
+// ユーザーテーブル定義
+export const users = pgTable('users', {
+  id: text('id').primaryKey().$defaultFn(() => createId()),
+  email: text('email').notNull().unique(),
+  name: text('name').notNull(),
+  password: text('password').notNull(), // ハッシュ化済み
+  role: roleEnum('role').default('user').notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});
+
+// TypeScript型の自動生成
+export type User = typeof users.$inferSelect;
+export type NewUser = typeof users.$inferInsert;
 ```
 
-#### **2. パスワード暗号化**
+#### **2. パスワード暗号化とDrizzle ORM操作**
 ```typescript
 import bcrypt from 'bcryptjs';
+import { drizzle } from 'drizzle-orm/postgres-js';
+import { eq } from 'drizzle-orm';
+import postgres from 'postgres';
+import { users, type NewUser } from './schema';
+
+// データベース接続
+const client = postgres(process.env.DATABASE_URL!);
+const db = drizzle(client);
 
 // パスワードハッシュ化
 const hashPassword = async (password: string) => {
@@ -410,6 +429,36 @@ const hashPassword = async (password: string) => {
 // パスワード検証
 const verifyPassword = async (password: string, hash: string) => {
   return bcrypt.compare(password, hash);
+};
+
+// ユーザー作成
+const createUser = async (userData: Omit<NewUser, 'id' | 'createdAt' | 'updatedAt'>) => {
+  const hashedPassword = await hashPassword(userData.password);
+  
+  const [newUser] = await db.insert(users).values({
+    ...userData,
+    password: hashedPassword,
+  }).returning();
+  
+  return newUser;
+};
+
+// ユーザー認証
+const authenticateUser = async (email: string, password: string) => {
+  const user = await db.select().from(users).where(eq(users.email, email)).limit(1);
+  
+  if (!user.length) {
+    return null;
+  }
+  
+  const isValid = await verifyPassword(password, user[0].password);
+  return isValid ? user[0] : null;
+};
+
+// メールでユーザー検索
+const getUserByEmail = async (email: string) => {
+  const [user] = await db.select().from(users).where(eq(users.email, email)).limit(1);
+  return user || null;
 };
 ```
 
@@ -443,10 +492,32 @@ providers: [
 ```
 
 #### **2. セッション永続化**
+
+**Drizzle アダプターを使用した永続化:**
 ```typescript
-// Redis を使用したセッション管理例
+// Drizzle を使用したセッション管理
+import { DrizzleAdapter } from "@auth/drizzle-adapter";
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
+
+const client = postgres(process.env.DATABASE_URL!);
+const db = drizzle(client);
+
+export const authConfig = {
+  adapter: DrizzleAdapter(db),
+  // その他の設定
+};
+```
+
+**Redis を使用したセッション管理例（代替案）:**
+```typescript
 import { RedisAdapter } from "@auth/redis-adapter";
 import { Redis } from "@upstash/redis";
+
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL!,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+});
 
 export const authConfig = {
   adapter: RedisAdapter(redis),
