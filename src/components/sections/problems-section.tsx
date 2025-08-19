@@ -52,8 +52,6 @@ export function ProblemsSection({
 					items={externalProblems}
 					intervalSeconds={intervalSeconds}
 					showIndicator={true}
-					indicatorPosition="top"
-					indicatorClassName="bg-background"
 					className="max-w-2xl mx-auto space-y-4 mb-12"
 				/>
 
