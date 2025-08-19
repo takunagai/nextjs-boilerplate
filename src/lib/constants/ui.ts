@@ -125,3 +125,29 @@ export const UI_FLOWING_COMMENTS = {
 	/** デスクトップ向け最大コメント数 */
 	DESKTOP_MAX_COMMENTS: 20,
 } as const;
+
+// AnimatedItemList関連
+export const UI_ANIMATED_LIST = {
+	/** デフォルト切り替え間隔（秒） */
+	DEFAULT_INTERVAL_SECONDS: 5,
+	/** デフォルトアニメーション継続時間（秒） */
+	DEFAULT_ANIMATION_DURATION: 1,
+	/** デフォルト時差遅延（秒） */
+	DEFAULT_STAGGER_DELAY: 0.1,
+	/** アニメーション時間を秒からミリ秒に変換する係数 */
+	SECONDS_TO_MILLISECONDS: 1000,
+	/** アニメーション切り替えタイミング（アニメーション時間の50%地点） */
+	ANIMATION_SWITCH_RATIO: 2,
+	/** インジゲーター表示最小アイテム数 */
+	MIN_ITEMS_FOR_INDICATOR: 1,
+	/** アニメーションキー増分値 */
+	ANIMATION_KEY_INCREMENT: 1,
+	/** インジゲーターボタンサイズ（Tailwind w-2 h-2に対応） */
+	INDICATOR_SIZE: 8,
+	/** アクティブインジゲーターのスケール */
+	ACTIVE_INDICATOR_SCALE: 110,
+	/** ホバー時インジゲーターのスケール */
+	HOVER_INDICATOR_SCALE: 105,
+	/** インジゲータートランジション時間（ms） */
+	INDICATOR_TRANSITION_DURATION: 300,
+} as const;

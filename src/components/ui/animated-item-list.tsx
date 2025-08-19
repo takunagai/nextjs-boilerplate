@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FaCheck } from "react-icons/fa6";
 
 import { useDebugLogger } from "@/hooks/use-debug-logger";
+import { UI_ANIMATED_LIST } from "@/lib/constants/ui";
 
 type AnimatedItem = string;
 type AnimatedItemSet = AnimatedItem[];
@@ -49,9 +50,9 @@ function isNestedArray(data: AnimatedItemData): data is AnimatedItemSet[] {
 
 export function AnimatedItemList({
 	items,
-	intervalSeconds = 5,
-	animationDuration = 1,
-	staggerDelay = 0.1,
+	intervalSeconds = UI_ANIMATED_LIST.DEFAULT_INTERVAL_SECONDS,
+	animationDuration = UI_ANIMATED_LIST.DEFAULT_ANIMATION_DURATION,
+	staggerDelay = UI_ANIMATED_LIST.DEFAULT_STAGGER_DELAY,
 	showIcon = true,
 	icon: IconComponent = FaCheck,
 	showIndicator = false,
@@ -77,7 +78,7 @@ export function AnimatedItemList({
 	const currentItems = isAnimated ? items[currentSetIndex] : items;
 
 	// インジゲーター表示判定
-	const shouldShowIndicator = isAnimated && showIndicator && items.length > 1;
+	const shouldShowIndicator = isAnimated && showIndicator && items.length > UI_ANIMATED_LIST.MIN_ITEMS_FOR_INDICATOR;
 
 	// 自動切り替えタイマー開始関数
 	const startAutoSwitching = useCallback(() => {
@@ -85,21 +86,21 @@ export function AnimatedItemList({
 
 		intervalRef.current = setInterval(() => {
 			setIsFlipping(true);
-			setAnimationKey((prev) => prev + 1);
+			setAnimationKey((prev) => prev + UI_ANIMATED_LIST.ANIMATION_KEY_INCREMENT);
 
 			setTimeout(
 				() => {
 					setCurrentSetIndex((prev) =>
-						prev >= items.length - 1 ? 0 : prev + 1,
+						prev >= items.length - UI_ANIMATED_LIST.ANIMATION_KEY_INCREMENT ? 0 : prev + UI_ANIMATED_LIST.ANIMATION_KEY_INCREMENT,
 					);
 				},
-				(animationDuration * 1000) / 2,
+				(animationDuration * UI_ANIMATED_LIST.SECONDS_TO_MILLISECONDS) / UI_ANIMATED_LIST.ANIMATION_SWITCH_RATIO,
 			);
 
 			setTimeout(() => {
 				setIsFlipping(false);
-			}, animationDuration * 1000);
-		}, intervalSeconds * 1000);
+			}, animationDuration * UI_ANIMATED_LIST.SECONDS_TO_MILLISECONDS);
+		}, intervalSeconds * UI_ANIMATED_LIST.SECONDS_TO_MILLISECONDS);
 	}, [isAnimated, items.length, intervalSeconds, animationDuration]);
 
 	// バリデーション関数
@@ -120,7 +121,7 @@ export function AnimatedItemList({
 	// 同一インデックス処理関数
 	const handleSameIndexFeedback = useCallback(() => {
 		log("🔄 Same index clicked, providing visual feedback");
-		setAnimationKey((prev) => prev + 1);
+		setAnimationKey((prev) => prev + UI_ANIMATED_LIST.ANIMATION_KEY_INCREMENT);
 	}, [log]);
 
 	// アニメーション実行関数
@@ -136,7 +137,7 @@ export function AnimatedItemList({
 
 			// アニメーション開始
 			setIsFlipping(true);
-			setAnimationKey((prev) => prev + 1);
+			setAnimationKey((prev) => prev + UI_ANIMATED_LIST.ANIMATION_KEY_INCREMENT);
 
 			// アニメーション時間の50%でセット切り替え
 			setTimeout(
@@ -145,7 +146,7 @@ export function AnimatedItemList({
 					onSetChange?.(targetIndex);
 					log("🔄 Set switched to:", targetIndex);
 				},
-				(animationDuration * 1000) / 2,
+				(animationDuration * UI_ANIMATED_LIST.SECONDS_TO_MILLISECONDS) / UI_ANIMATED_LIST.ANIMATION_SWITCH_RATIO,
 			);
 
 			// アニメーション完了後に状態リセット
@@ -153,7 +154,7 @@ export function AnimatedItemList({
 				setIsFlipping(false);
 				startAutoSwitching();
 				log("✅ Manual switch complete, auto-timer resumed");
-			}, animationDuration * 1000);
+			}, animationDuration * UI_ANIMATED_LIST.SECONDS_TO_MILLISECONDS);
 		},
 		[animationDuration, onSetChange, startAutoSwitching, log],
 	);
@@ -319,11 +320,11 @@ export function AnimatedItemList({
 							disabled={isDisabled}
 							role="tab"
 							aria-selected={isActive}
-							aria-label={`セット ${index + 1} / ${items.length}`}
+							aria-label={`セット ${index + UI_ANIMATED_LIST.ANIMATION_KEY_INCREMENT} / ${items.length}`}
 							title={
 								isActive
-									? `現在のセット: ${index + 1}`
-									: `セット ${index + 1} へ切り替え`
+									? `現在のセット: ${index + UI_ANIMATED_LIST.ANIMATION_KEY_INCREMENT}`
+									: `セット ${index + UI_ANIMATED_LIST.ANIMATION_KEY_INCREMENT} へ切り替え`
 							}
 						>
 							{/* アクティブ状態の内側ドット */}
