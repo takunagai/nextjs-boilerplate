@@ -16,19 +16,29 @@ import { usePerformanceCheck } from "@/hooks/use-webgl-support";
 
 // 動的インポート - エフェクトコンポーネント
 const FlowingComments = dynamic(
-	() => import("@/components/effects/flowing-comments").then(mod => ({ default: mod.FlowingComments })),
+	() =>
+		import("@/components/effects/flowing-comments").then((mod) => ({
+			default: mod.FlowingComments,
+		})),
 	{
 		ssr: false,
-		loading: () => <div className="absolute inset-0 animate-pulse bg-gradient-to-r from-blue-50/20 to-purple-50/20" />
-	}
+		loading: () => (
+			<div className="absolute inset-0 animate-pulse bg-gradient-to-r from-blue-50/20 to-purple-50/20" />
+		),
+	},
 );
 
 const LightweightBackground = dynamic(
-	() => import("@/components/background/lightweight-background").then(mod => ({ default: mod.LightweightBackground })),
+	() =>
+		import("@/components/background/lightweight-background").then((mod) => ({
+			default: mod.LightweightBackground,
+		})),
 	{
 		ssr: false,
-		loading: () => <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-purple-50" />
-	}
+		loading: () => (
+			<div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-purple-50" />
+		),
+	},
 );
 
 const services = [
@@ -85,19 +95,49 @@ const services = [
 	},
 ];
 
+// サービス関連のフローコメント
+const SERVICE_COMMENTS = [
+	"最新のAI技術を活用",
+	"驚きの低価格を実現",
+	"品質は妥協しません",
+	"Next.js + AI APIで最先端開発",
+	"WordPress × AI でパワーアップ",
+	"効率的な制作で50〜70% OFF",
+	"AIとデザイナーの二人三脚",
+	"ブログ記事作成もAIで効率化",
+	"オリジナル画像・ロゴ制作",
+	"動画・BGM制作もお手軽に",
+	"30分からのスポット相談",
+	"実践的なAI活用講座",
+	"マンツーマンサポート",
+	"初心者にも分かりやすく",
+	"プロフェッショナルな仕上がり",
+	"迅速な対応を心がけます",
+	"お客様のペースで進めます",
+	"AIの「？」を「！」に変える",
+	"時間とスキルの壁を突破",
+	"高品質なWeb制作",
+	"AI機能でサイトを強化",
+	"クリエイティブ作業も効率化",
+	"最新技術をお手軽に",
+	"お客様の課題を解決",
+];
+
 export function ServicesSection() {
 	const { shouldLoad3D, isMediumOrBetter, isLoading } = usePerformanceCheck();
 
 	return (
 		<section className="w-full py-16 md:py-24 bg-background relative overflow-hidden">
 			{/* パフォーマンス対応背景エフェクト */}
-			{!isLoading && (
-				shouldLoad3D ? (
-					<FlowingComments maxComments={isMediumOrBetter ? 25 : 15} />
+			{!isLoading &&
+				(shouldLoad3D ? (
+					<FlowingComments
+						maxComments={isMediumOrBetter ? 25 : 15}
+						comments={SERVICE_COMMENTS}
+					/>
 				) : (
 					<LightweightBackground variant="gradient" opacity={0.4} />
-				)
-			)}
+				))}
 
 			<Container
 				width="2xl"
