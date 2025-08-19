@@ -102,37 +102,31 @@ export function AnimatedItemList({
 		}, intervalSeconds * 1000);
 	}, [isAnimated, items.length, intervalSeconds, animationDuration]);
 
-	// 手動切り替え関数
-	const handleManualSwitch = useCallback(
+	// バリデーション関数
+	const validateManualSwitch = useCallback((): boolean => {
+		if (!enableManualSwitch) {
+			warn("⚠️ Manual switch is disabled");
+			return false;
+		}
+
+		if (isFlipping) {
+			warn("⚠️ Animation in progress, click ignored");
+			return false;
+		}
+
+		return true;
+	}, [enableManualSwitch, isFlipping, warn]);
+
+	// 同一インデックス処理関数
+	const handleSameIndexFeedback = useCallback(() => {
+		log("🔄 Same index clicked, providing visual feedback");
+		setAnimationKey((prev) => prev + 1);
+	}, [log]);
+
+	// アニメーション実行関数
+	const executeAnimation = useCallback(
 		(targetIndex: number) => {
-			// デバッグログ（開発環境のみ）
-			log("🎯 IndIcator clicked:", {
-				targetIndex,
-				currentIndex: currentSetIndex,
-				isFlipping,
-				enableManualSwitch,
-			});
-
-			// バリデーション
-			if (!enableManualSwitch) {
-				warn("⚠️ Manual switch is disabled");
-				return;
-			}
-
-			if (isFlipping) {
-				warn("⚠️ Animation in progress, click ignored");
-				return;
-			}
-
-			// 同一インデックスクリック時のフィードバック
-			if (targetIndex === currentSetIndex) {
-				log("🔄 Same index clicked, providing visual feedback");
-				// 短い視覚的フィードバックを提供
-				setAnimationKey((prev) => prev + 1);
-				return;
-			}
-
-			// 現在のタイマーをクリア
+			// タイマークリア
 			if (intervalRef.current) {
 				clearInterval(intervalRef.current);
 				intervalRef.current = null;
@@ -149,7 +143,6 @@ export function AnimatedItemList({
 				() => {
 					setCurrentSetIndex(targetIndex);
 					onSetChange?.(targetIndex);
-
 					log("🔄 Set switched to:", targetIndex);
 				},
 				(animationDuration * 1000) / 2,
@@ -158,21 +151,46 @@ export function AnimatedItemList({
 			// アニメーション完了後に状態リセット
 			setTimeout(() => {
 				setIsFlipping(false);
-				// 新しいタイマーを開始
 				startAutoSwitching();
-
 				log("✅ Manual switch complete, auto-timer resumed");
 			}, animationDuration * 1000);
 		},
+		[animationDuration, onSetChange, startAutoSwitching, log],
+	);
+
+	// 手動切り替え関数（リファクタリング済み）
+	const handleManualSwitch = useCallback(
+		(targetIndex: number) => {
+			// デバッグログ
+			log("🎯 IndIcator clicked:", {
+				targetIndex,
+				currentIndex: currentSetIndex,
+				isFlipping,
+				enableManualSwitch,
+			});
+
+			// バリデーション
+			if (!validateManualSwitch()) {
+				return;
+			}
+
+			// 同一インデックス処理
+			if (targetIndex === currentSetIndex) {
+				handleSameIndexFeedback();
+				return;
+			}
+
+			// アニメーション実行
+			executeAnimation(targetIndex);
+		},
 		[
-			enableManualSwitch,
-			isFlipping,
 			currentSetIndex,
-			animationDuration,
-			onSetChange,
-			startAutoSwitching,
+			isFlipping,
+			enableManualSwitch,
 			log,
-			warn,
+			validateManualSwitch,
+			handleSameIndexFeedback,
+			executeAnimation,
 		],
 	);
 
