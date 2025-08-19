@@ -66,8 +66,13 @@ class ProfilePage {
 		await this.getUpdateButton().click();
 		// 成功またはエラーメッセージの表示を待つ
 		await Promise.race([
-			this.page.waitForSelector('.text-success, .bg-success, .border-success', { timeout: 10000 }),
-			this.page.waitForSelector('.text-destructive, .bg-destructive, [role="alert"]', { timeout: 10000 }),
+			this.page.waitForSelector(".text-success, .bg-success, .border-success", {
+				timeout: 10000,
+			}),
+			this.page.waitForSelector(
+				'.text-destructive, .bg-destructive, [role="alert"]',
+				{ timeout: 10000 },
+			),
 		]);
 	}
 
@@ -119,7 +124,7 @@ test.describe.skip("プロフィール管理機能 (コア機能) - 未実装の
 		await expect(
 			page.getByRole("heading", { name: /プロフィール編集/ }),
 		).toBeVisible();
-		
+
 		// 基本フォーム要素の確認
 		await expect(profilePage.getNameInput()).toBeVisible();
 		await expect(profilePage.getUpdateButton()).toBeVisible();
@@ -162,7 +167,9 @@ test.describe.skip("プロフィール管理機能 (コア機能) - 未実装の
 
 	test("キーボードナビゲーションが正常に動作する", async ({ page }) => {
 		// フォーカス可能な要素の存在確認
-		const focusableElements = await page.locator('input, textarea, button, [tabindex]:not([tabindex="-1"])').count();
+		const focusableElements = await page
+			.locator('input, textarea, button, [tabindex]:not([tabindex="-1"])')
+			.count();
 		expect(focusableElements).toBeGreaterThan(3);
 
 		// 名前フィールドに直接フォーカス
@@ -192,7 +199,8 @@ test.describe.skip("プロフィール管理機能 (コア機能) - 未実装の
 		await profilePage.submitForm();
 
 		// エラーメッセージまたは適切な処理が行われることを確認
-		const hasError = await page.locator('.text-destructive, [role="alert"]').count() > 0;
+		const hasError =
+			(await page.locator('.text-destructive, [role="alert"]').count()) > 0;
 		expect(hasError).toBeTruthy(); // オフライン時はエラーが表示されるべき
 
 		// ネットワークを復旧

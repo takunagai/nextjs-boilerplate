@@ -106,22 +106,22 @@ export const authConfig: NextAuthConfig = {
 			// 公開ページ（認証不要）
 			const PUBLIC_PATHS = [
 				"/",
-				"/login", 
+				"/login",
 				"/register",
 				"/about",
 				"/services",
 				"/contact",
-				"/api/auth"
+				"/api/auth",
 			];
 
-			const isPublicPath = PUBLIC_PATHS.some(path => 
-				pathname === path || pathname.startsWith(path)
+			const _isPublicPath = PUBLIC_PATHS.some(
+				(path) => pathname === path || pathname.startsWith(path),
 			);
 
 			// 保護されたページ（認証必要）
 			const PROTECTED_PATHS = ["/profile", "/dashboard"];
-			const isProtectedPath = PROTECTED_PATHS.some(path =>
-				pathname.startsWith(path)
+			const isProtectedPath = PROTECTED_PATHS.some((path) =>
+				pathname.startsWith(path),
 			);
 
 			// 保護されたパスで未認証の場合はリダイレクト

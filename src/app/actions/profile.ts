@@ -18,6 +18,7 @@
 import { revalidatePath, revalidateTag } from "next/cache";
 import { z } from "zod";
 import { auth } from "@/lib/auth";
+import type { UserProfile } from "@/lib/auth/types";
 import {
 	ActionError,
 	createFormSchema,
@@ -25,11 +26,10 @@ import {
 	validateAction,
 } from "@/lib/server";
 import {
-	profileUpdateSchema,
-	profileDeleteConfirmSchema,
 	type ProfileUpdateFormValues,
+	profileDeleteConfirmSchema,
+	profileUpdateSchema,
 } from "@/lib/validation/profile-schema";
-import type { UserProfile } from "@/lib/auth/types";
 
 // キャッシュタグ定数
 const CACHE_TAGS = {

@@ -4,7 +4,7 @@ import { expect, test } from "@playwright/test";
 /**
  * 統合パフォーマンステスト
  * API性能、Core Web Vitals、リソース最適化を包括的に測定
- * 
+ *
  * 測定基準:
  * - API応答時間: ≤ 500ms
  * - Core Web Vitals: LCP ≤ 2500ms, FID ≤ 100ms
@@ -131,19 +131,23 @@ async function measureWebVitals(page: any): Promise<WebVitalsMetrics> {
 			}
 
 			// LCP は簡素化（PerformanceObserver は複雑すぎる）
-			const lcpEntries = performance.getEntriesByType("largest-contentful-paint");
+			const lcpEntries = performance.getEntriesByType(
+				"largest-contentful-paint",
+			);
 			if (lcpEntries.length > 0) {
 				metrics.lcp = lcpEntries[lcpEntries.length - 1].startTime;
 			} else {
 				// フォールバック: DOMContentLoaded時間を使用
-				metrics.lcp = navigation ? navigation.domContentLoadedEventEnd - navigation.navigationStart : 2000;
+				metrics.lcp = navigation
+					? navigation.domContentLoadedEventEnd - navigation.navigationStart
+					: 2000;
 			}
 		}
 
 		// デフォルト値設定（測定できない場合やNaNの場合）
-		if (isNaN(metrics.ttfb) || metrics.ttfb <= 0) metrics.ttfb = 500;
-		if (isNaN(metrics.fcp) || metrics.fcp <= 0) metrics.fcp = 1000;
-		if (isNaN(metrics.lcp) || metrics.lcp <= 0) metrics.lcp = 2000;
+		if (Number.isNaN(metrics.ttfb) || metrics.ttfb <= 0) metrics.ttfb = 500;
+		if (Number.isNaN(metrics.fcp) || metrics.fcp <= 0) metrics.fcp = 1000;
+		if (Number.isNaN(metrics.lcp) || metrics.lcp <= 0) metrics.lcp = 2000;
 
 		return metrics;
 	});
@@ -175,22 +179,28 @@ async function measureResourceMetrics(page: any): Promise<ResourceMetrics> {
 
 		const navigation = performance.getEntriesByType("navigation")[0] as any;
 		let loadTime = 0;
-		
-		if (navigation && navigation.loadEventEnd && navigation.navigationStart) {
+
+		if (navigation?.loadEventEnd && navigation.navigationStart) {
 			loadTime = navigation.loadEventEnd - navigation.navigationStart;
-		} else if (navigation && navigation.domContentLoadedEventEnd && navigation.navigationStart) {
+		} else if (
+			navigation?.domContentLoadedEventEnd &&
+			navigation.navigationStart
+		) {
 			// loadEventEndが無い場合はdomContentLoadedEventEndを使用
-			loadTime = navigation.domContentLoadedEventEnd - navigation.navigationStart;
+			loadTime =
+				navigation.domContentLoadedEventEnd - navigation.navigationStart;
 		} else {
 			// フォールバック: 最も遅いリソースの読み込み完了時間を使用
-			const maxResourceEnd = Math.max(...entries.map((entry: any) => entry.responseEnd || 0));
+			const maxResourceEnd = Math.max(
+				...entries.map((entry: any) => entry.responseEnd || 0),
+			);
 			if (maxResourceEnd > 0) {
 				loadTime = maxResourceEnd;
 			}
 		}
 
 		// NaNや負の値の場合は0にする
-		if (isNaN(loadTime) || loadTime < 0) {
+		if (Number.isNaN(loadTime) || loadTime < 0) {
 			loadTime = 0;
 		}
 
@@ -218,12 +228,17 @@ test.describe("統合パフォーマンステスト", () => {
 			const responseTimeThresholds = {
 				chromium: 700,
 				firefox: 800,
-				webkit: 1000   // Webkitは特に遅いため大きめに設定
+				webkit: 1000, // Webkitは特に遅いため大きめに設定
 			};
 
-			const expectedResponseTime = responseTimeThresholds[browserName as keyof typeof responseTimeThresholds] || 1000;
+			const expectedResponseTime =
+				responseTimeThresholds[
+					browserName as keyof typeof responseTimeThresholds
+				] || 1000;
 
-			console.log(`📊 CSRF Token結果 (${browserName}): 平均 ${metrics.avgResponseTime.toFixed(1)}ms, 期待値: ${expectedResponseTime}ms`);
+			console.log(
+				`📊 CSRF Token結果 (${browserName}): 平均 ${metrics.avgResponseTime.toFixed(1)}ms, 期待値: ${expectedResponseTime}ms`,
+			);
 
 			expect(metrics.successCount).toBeGreaterThan(0);
 			expect(metrics.avgResponseTime).toBeLessThan(expectedResponseTime);
@@ -236,13 +251,19 @@ test.describe("統合パフォーマンステスト", () => {
 				password: "password123",
 			};
 
-			const metrics = await measureApiPerformance(request, "/api/auth/register", {
-				method: "POST",
-				data: testData,
-				description: "ユーザー登録API",
-			});
+			const metrics = await measureApiPerformance(
+				request,
+				"/api/auth/register",
+				{
+					method: "POST",
+					data: testData,
+					description: "ユーザー登録API",
+				},
+			);
 
-			console.log(`📊 Registration結果: 平均 ${metrics.avgResponseTime.toFixed(1)}ms`);
+			console.log(
+				`📊 Registration結果: 平均 ${metrics.avgResponseTime.toFixed(1)}ms`,
+			);
 
 			expect(metrics.avgResponseTime).toBeLessThan(800);
 		});
@@ -255,16 +276,27 @@ test.describe("統合パフォーマンステスト", () => {
 
 			await page.getByLabel("お名前").fill("パフォーマンステスト");
 			await page.getByLabel("メールアドレス").fill("perf@example.com");
-			await page.getByLabel("お問い合わせ内容").fill("パフォーマンステスト用のメッセージです。適切な長さで入力しています。");
+			await page
+				.getByLabel("お問い合わせ内容")
+				.fill(
+					"パフォーマンステスト用のメッセージです。適切な長さで入力しています。",
+				);
 			await page.getByRole("button", { name: "送信する" }).click();
 
 			// フォーム処理完了を待つ
 			await Promise.race([
-				page.waitForFunction(() => {
-					const nameField = document.querySelector('input[name="name"]') as HTMLInputElement;
-					return nameField && nameField.value === "";
-				}, { timeout: 10000 }),
-				page.waitForSelector('.text-destructive, [role="alert"]', { timeout: 10000 }),
+				page.waitForFunction(
+					() => {
+						const nameField = document.querySelector(
+							'input[name="name"]',
+						) as HTMLInputElement;
+						return nameField && nameField.value === "";
+					},
+					{ timeout: 10000 },
+				),
+				page.waitForSelector('.text-destructive, [role="alert"]', {
+					timeout: 10000,
+				}),
 			]);
 
 			const endTime = performance.now();
@@ -278,19 +310,25 @@ test.describe("統合パフォーマンステスト", () => {
 			const concurrentRequests = 5;
 			const startTime = performance.now();
 
-			const promises = Array(concurrentRequests).fill(null).map(async () => {
-				return await request.get("/api/csrf-token");
-			});
+			const promises = Array(concurrentRequests)
+				.fill(null)
+				.map(async () => {
+					return await request.get("/api/csrf-token");
+				});
 
 			const responses = await Promise.all(promises);
 			const endTime = performance.now();
 			const totalTime = endTime - startTime;
 
-			const successfulResponses = responses.filter(r => r.ok()).length;
+			const successfulResponses = responses.filter((r) => r.ok()).length;
 
-			console.log(`📊 並列処理結果: ${concurrentRequests}件を${totalTime.toFixed(1)}msで処理`);
+			console.log(
+				`📊 並列処理結果: ${concurrentRequests}件を${totalTime.toFixed(1)}msで処理`,
+			);
 
-			expect(successfulResponses).toBeGreaterThanOrEqual(concurrentRequests * 0.8);
+			expect(successfulResponses).toBeGreaterThanOrEqual(
+				concurrentRequests * 0.8,
+			);
 			expect(totalTime).toBeLessThan(2000);
 		});
 	});
@@ -301,10 +339,10 @@ test.describe("統合パフォーマンステスト", () => {
 			await page.waitForLoadState("domcontentloaded");
 			const vitals = await measureWebVitals(page);
 
-			console.log(`📊 ホームページ Web Vitals:`, {
+			console.log("📊 ホームページ Web Vitals:", {
 				LCP: `${vitals.lcp.toFixed(1)}ms`,
 				FCP: `${vitals.fcp.toFixed(1)}ms`,
-				TTFB: `${vitals.ttfb.toFixed(1)}ms`
+				TTFB: `${vitals.ttfb.toFixed(1)}ms`,
 			});
 
 			// 開発環境を考慮した現実的な期待値（実測値11000ms超を考慮）
@@ -313,7 +351,10 @@ test.describe("統合パフォーマンステスト", () => {
 			expect(vitals.ttfb).toBeLessThan(2000); // 1500ms → 2000ms に調整
 		});
 
-		test("ログインページ - フォーム最適化確認", async ({ page, browserName }) => {
+		test("ログインページ - フォーム最適化確認", async ({
+			page,
+			browserName,
+		}) => {
 			await page.goto("/login");
 			const vitals = await measureWebVitals(page);
 
@@ -325,17 +366,18 @@ test.describe("統合パフォーマンステスト", () => {
 
 			// ブラウザ別LCP期待値（実測値6200ms+に基づく大幅調整）
 			const lcpThresholds = {
-				chromium: 7000,  // 実測6200ms+ → 7000ms
-				firefox: 7000,   // 実測6200ms+ → 7000ms
-				webkit: 7000     // 実測6200ms+ → 7000ms
+				chromium: 7000, // 実測6200ms+ → 7000ms
+				firefox: 7000, // 実測6200ms+ → 7000ms
+				webkit: 7000, // 実測6200ms+ → 7000ms
 			};
 
-			const expectedLcp = lcpThresholds[browserName as keyof typeof lcpThresholds] || 7000;
+			const expectedLcp =
+				lcpThresholds[browserName as keyof typeof lcpThresholds] || 7000;
 
 			console.log(`📊 ログインページ (${browserName}):`, {
 				LCP: `${vitals.lcp.toFixed(1)}ms`,
 				入力応答: `${inputResponseTime.toFixed(1)}ms`,
-				期待値: `${expectedLcp}ms`
+				期待値: `${expectedLcp}ms`,
 			});
 
 			expect(vitals.lcp).toBeLessThan(expectedLcp);
@@ -348,9 +390,9 @@ test.describe("統合パフォーマンステスト", () => {
 
 			// ページごとの期待値設定（実測値に基づいてさらに調整）
 			const ttfbThresholds = {
-				"/": 1800,        // ホームページ
-				"/login": 2500,   // 認証処理があるため大幅に余裕を持たせる
-				"/contact": 2500  // フォーム処理で最も重い
+				"/": 1800, // ホームページ
+				"/login": 2500, // 認証処理があるため大幅に余裕を持たせる
+				"/contact": 2500, // フォーム処理で最も重い
 			};
 
 			for (const path of pages) {
@@ -366,14 +408,15 @@ test.describe("統合パフォーマンステスト", () => {
 			}
 
 			for (const result of results) {
-				const expectedTtfb = ttfbThresholds[result.path as keyof typeof ttfbThresholds];
-				
+				const expectedTtfb =
+					ttfbThresholds[result.path as keyof typeof ttfbThresholds];
+
 				console.log(`📊 ${result.path} (${browserName}):`, {
 					FCP: `${result.vitals.fcp.toFixed(1)}ms`,
 					TTFB: `${result.vitals.ttfb.toFixed(1)}ms`,
-					期待値: `${expectedTtfb}ms`
+					期待値: `${expectedTtfb}ms`,
 				});
-				
+
 				expect(result.vitals.fcp).toBeLessThan(2500); // 1800ms → 2500ms に調整
 				expect(result.vitals.ttfb).toBeLessThan(expectedTtfb);
 			}
@@ -383,24 +426,26 @@ test.describe("統合パフォーマンステスト", () => {
 			await page.goto("/");
 			const resources = await measureResourceMetrics(page);
 
-			console.log(`📊 リソースメトリクス:`, {
+			console.log("📊 リソースメトリクス:", {
 				総サイズ: `${resources.totalSize}KB`,
 				JS: `${resources.jsSize}KB`,
 				CSS: `${resources.cssSize}KB`,
 				画像数: resources.imageCount,
 				読み込み時間: `${resources.loadTime}ms`,
-				ブラウザ: browserName
+				ブラウザ: browserName,
 			});
 
 			// ブラウザ別の期待値設定（実測値に基づいて調整）
 			const loadTimeThresholds = {
-				chromium: 6000,  // 実測5000ms → 6000msに調整
-				firefox: 5000,   // 実測3000ms → 5000msで十分
-				webkit: 6500     // 実測5799ms → 6500msに調整
+				chromium: 6000, // 実測5000ms → 6000msに調整
+				firefox: 5000, // 実測3000ms → 5000msで十分
+				webkit: 6500, // 実測5799ms → 6500msに調整
 			};
 
-			const expectedLoadTime = loadTimeThresholds[browserName as keyof typeof loadTimeThresholds] || 3000;
-			
+			const expectedLoadTime =
+				loadTimeThresholds[browserName as keyof typeof loadTimeThresholds] ||
+				3000;
+
 			expect(resources.loadTime).toBeLessThan(expectedLoadTime);
 			expect(resources.totalSize).toBeLessThan(2000); // 2MB
 		});
@@ -411,7 +456,9 @@ test.describe("統合パフォーマンステスト", () => {
 			await page.goto("/");
 			const resources = await measureResourceMetrics(page);
 
-			console.log(`📊 バンドルサイズ: JS ${resources.jsSize}KB, CSS ${resources.cssSize}KB`);
+			console.log(
+				`📊 バンドルサイズ: JS ${resources.jsSize}KB, CSS ${resources.cssSize}KB`,
+			);
 
 			expect(resources.jsSize).toBeLessThan(1700); // 1.7MB (Next.js 15 + React 19 + Compiler考慮)
 			expect(resources.cssSize).toBeLessThan(100); // 100KB
@@ -422,18 +469,23 @@ test.describe("統合パフォーマンステスト", () => {
 			await page.waitForLoadState("networkidle");
 
 			const imageStats = await page.evaluate(() => {
-				const images = Array.from(document.querySelectorAll('img'));
-				const nextImages = images.filter(img => img.src.includes('/_next/image'));
+				const images = Array.from(document.querySelectorAll("img"));
+				const nextImages = images.filter((img) =>
+					img.src.includes("/_next/image"),
+				);
 				const totalImages = images.length;
 
 				return {
 					totalImages,
 					nextImagesCount: nextImages.length,
-					optimizationRate: totalImages > 0 ? (nextImages.length / totalImages) * 100 : 0
+					optimizationRate:
+						totalImages > 0 ? (nextImages.length / totalImages) * 100 : 0,
 				};
 			});
 
-			console.log(`📊 画像最適化: ${imageStats.optimizationRate.toFixed(1)}% (${imageStats.nextImagesCount}/${imageStats.totalImages})`);
+			console.log(
+				`📊 画像最適化: ${imageStats.optimizationRate.toFixed(1)}% (${imageStats.nextImagesCount}/${imageStats.totalImages})`,
+			);
 
 			if (imageStats.totalImages > 0) {
 				expect(imageStats.optimizationRate).toBeGreaterThanOrEqual(20);
@@ -447,13 +499,19 @@ test.describe("統合パフォーマンステスト", () => {
 			const cacheStats = await page.evaluate(() => {
 				const resources = performance.getEntriesByType("resource");
 				const cachedResources = resources.filter((entry: any) => {
-					return entry.transferSize === 0 || entry.transferSize < entry.decodedBodySize;
+					return (
+						entry.transferSize === 0 ||
+						entry.transferSize < entry.decodedBodySize
+					);
 				});
 
 				return {
 					total: resources.length,
 					cached: cachedResources.length,
-					hitRate: resources.length > 0 ? (cachedResources.length / resources.length) * 100 : 0
+					hitRate:
+						resources.length > 0
+							? (cachedResources.length / resources.length) * 100
+							: 0,
 				};
 			});
 
@@ -471,19 +529,29 @@ test.describe("統合パフォーマンステスト", () => {
 
 			// パフォーマンススコア計算（より現実的な基準に調整）
 			const scores = {
-				loadTime: resources.loadTime > 0 && resources.loadTime < 2000 ? 100 : Math.max(0, 100 - (Math.max(resources.loadTime, 0) - 2000) / 20),
-				bundleSize: resources.totalSize > 0 && resources.totalSize < 1000 ? 100 : Math.max(0, 100 - (Math.max(resources.totalSize, 0) - 1000) / 15),
-				lcp: vitals.lcp > 0 && vitals.lcp < 3000 ? 100 : Math.max(0, 100 - (Math.max(vitals.lcp, 0) - 3000) / 30)
+				loadTime:
+					resources.loadTime > 0 && resources.loadTime < 2000
+						? 100
+						: Math.max(0, 100 - (Math.max(resources.loadTime, 0) - 2000) / 20),
+				bundleSize:
+					resources.totalSize > 0 && resources.totalSize < 1000
+						? 100
+						: Math.max(0, 100 - (Math.max(resources.totalSize, 0) - 1000) / 15),
+				lcp:
+					vitals.lcp > 0 && vitals.lcp < 3000
+						? 100
+						: Math.max(0, 100 - (Math.max(vitals.lcp, 0) - 3000) / 30),
 			};
 
 			// NaN対策: 各スコアが有効な数値でない場合はデフォルト値を使用
 			const validScores = {
-				loadTime: isNaN(scores.loadTime) ? 50 : scores.loadTime,
-				bundleSize: isNaN(scores.bundleSize) ? 50 : scores.bundleSize,
-				lcp: isNaN(scores.lcp) ? 50 : scores.lcp
+				loadTime: Number.isNaN(scores.loadTime) ? 50 : scores.loadTime,
+				bundleSize: Number.isNaN(scores.bundleSize) ? 50 : scores.bundleSize,
+				lcp: Number.isNaN(scores.lcp) ? 50 : scores.lcp,
 			};
 
-			const overallScore = (validScores.loadTime + validScores.bundleSize + validScores.lcp) / 3;
+			const overallScore =
+				(validScores.loadTime + validScores.bundleSize + validScores.lcp) / 3;
 
 			console.log(`📊 パフォーマンススコア: ${overallScore.toFixed(1)}/100`, {
 				読み込み: validScores.loadTime.toFixed(1),
@@ -492,8 +560,8 @@ test.describe("統合パフォーマンステスト", () => {
 				実測値: {
 					loadTime: `${resources.loadTime}ms`,
 					totalSize: `${resources.totalSize}KB`,
-					lcp: `${vitals.lcp}ms`
-				}
+					lcp: `${vitals.lcp}ms`,
+				},
 			});
 
 			// より現実的な期待値に調整（実測30.6を考慮）

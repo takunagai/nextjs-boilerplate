@@ -8,13 +8,12 @@
  * - XSS対策のHTMLタグ検証
  */
 
-import { describe, it, expect } from "vitest";
-import { z } from "zod";
+import { describe, expect, it } from "vitest";
 import {
-	profileUpdateSchema,
-	profileDeleteConfirmSchema,
-	type ProfileUpdateFormValues,
 	type ProfileDeleteConfirmValues,
+	type ProfileUpdateFormValues,
+	profileDeleteConfirmSchema,
+	profileUpdateSchema,
 } from "../profile-schema";
 
 describe("Profile Validation Schemas", () => {
@@ -337,7 +336,7 @@ describe("Profile Validation Schemas", () => {
 			});
 
 			it("URLが長すぎる場合エラー", () => {
-				const longUrl = "https://" + "a".repeat(2040) + ".com";
+				const longUrl = `https://${"a".repeat(2040)}.com`;
 				const data = { ...validData, website: longUrl };
 				const result = profileUpdateSchema.safeParse(data);
 
@@ -406,7 +405,7 @@ describe("Profile Validation Schemas", () => {
 				// 有効なURLでちょうど2048文字になるように構築
 				const pathPart = "a".repeat(2048 - "https://example.com/".length);
 				const validLongUrl = `https://example.com/${pathPart}`;
-				
+
 				const boundaryData = {
 					name: "a".repeat(50),
 					displayName: "a".repeat(50),

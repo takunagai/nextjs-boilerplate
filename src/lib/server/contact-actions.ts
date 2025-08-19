@@ -7,8 +7,8 @@
  * use-form-submissionとの並行運用をサポートします。
  */
 
-import type { ContactFormValues } from "@/lib/validation/contact-schema";
 import { generateId } from "@/lib/utils/id";
+import type { ContactFormValues } from "@/lib/validation/contact-schema";
 import { contactFormSchema } from "@/lib/validation/contact-schema";
 import { createSafeAction } from "./action-utils";
 

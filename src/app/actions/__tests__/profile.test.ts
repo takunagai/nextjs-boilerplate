@@ -9,16 +9,16 @@
  * - deleteProfile: プロフィール削除
  */
 
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { auth } from "@/lib/auth";
+import type { UserProfile } from "@/lib/auth/types";
 import {
+	deleteProfile,
 	getProfile,
+	requestEmailChange,
 	updateProfile,
 	uploadProfileImage,
-	requestEmailChange,
-	deleteProfile,
 } from "../profile";
-import type { UserProfile } from "@/lib/auth/types";
 
 // モック設定
 vi.mock("@/lib/auth", () => ({
@@ -285,8 +285,8 @@ describe("Profile Server Actions", () => {
 
 	describe("uploadProfileImage", () => {
 		const createMockFile = (
-			name: string = "test.jpg",
-			type: string = "image/jpeg",
+			name = "test.jpg",
+			type = "image/jpeg",
 			size: number = 1024 * 1024, // 1MB
 		) => {
 			const file = new File(["test content"], name, { type });

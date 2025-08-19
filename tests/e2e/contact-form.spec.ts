@@ -37,11 +37,18 @@ class ContactFormPage {
 		await this.page.getByRole("button", { name: "送信する" }).click();
 		// フォーム送信の結果（成功またはエラー）を待つ
 		await Promise.race([
-			this.page.waitForFunction(() => {
-				const nameField = document.querySelector('input[name="name"]') as HTMLInputElement;
-				return nameField && nameField.value === ""; // フォームリセット成功
-			}, { timeout: 10000 }),
-			this.page.waitForSelector('.text-destructive, [role="alert"]', { timeout: 10000 }),
+			this.page.waitForFunction(
+				() => {
+					const nameField = document.querySelector(
+						'input[name="name"]',
+					) as HTMLInputElement;
+					return nameField && nameField.value === ""; // フォームリセット成功
+				},
+				{ timeout: 10000 },
+			),
+			this.page.waitForSelector('.text-destructive, [role="alert"]', {
+				timeout: 10000,
+			}),
 		]);
 	}
 
@@ -113,7 +120,9 @@ test.describe("お問い合わせフォーム", () => {
 			await contactForm.submit();
 
 			await expect(page.getByLabel("電話番号")).toBeVisible();
-			const errorElements = page.locator('[role="alert"], .error, .text-destructive');
+			const errorElements = page.locator(
+				'[role="alert"], .error, .text-destructive',
+			);
 			const errorCount = await errorElements.count();
 
 			if (errorCount > 0) {

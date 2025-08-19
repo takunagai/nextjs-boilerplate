@@ -11,12 +11,12 @@
  * - アクセシビリティ
  */
 
-import { render, screen, waitFor, fireEvent } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { ProfileEditForm } from "../profile-edit-form";
 import { updateProfile, uploadProfileImage } from "@/app/actions/profile";
 import type { UserProfile } from "@/lib/auth/types";
+import { ProfileEditForm } from "../profile-edit-form";
 
 // モック設定
 vi.mock("@/app/actions/profile", () => ({
@@ -253,22 +253,26 @@ describe("ProfileEditForm", () => {
 		it.skip("無効なURLでエラーを表示する", async () => {
 			render(<ProfileEditForm initialProfile={mockProfile} />);
 
-			const websiteInput = screen.getByRole("textbox", { name: "ウェブサイト" });
+			const websiteInput = screen.getByRole("textbox", {
+				name: "ウェブサイト",
+			});
 			const submitButton = screen.getByRole("button", {
 				name: /プロフィールを更新/,
 			});
 
 			await user.clear(websiteInput);
 			await user.type(websiteInput, "invalid-url");
-			
+
 			// フィールドからフォーカスを外してバリデーションをトリガー
 			await user.tab();
-			
+
 			await user.click(submitButton);
 
 			await waitFor(() => {
 				expect(
-					screen.getByText("有効なURL（http://またはhttps://で始まる）を入力してください"),
+					screen.getByText(
+						"有効なURL（http://またはhttps://で始まる）を入力してください",
+					),
 				).toBeInTheDocument();
 			});
 		});

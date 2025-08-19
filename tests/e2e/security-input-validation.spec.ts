@@ -1,5 +1,4 @@
 import { expect, test } from "@playwright/test";
-import { generateId } from "../../src/lib/utils/id";
 
 /**
  * 入力検証・サニタイゼーション セキュリティテスト
@@ -7,7 +6,7 @@ import { generateId } from "../../src/lib/utils/id";
  */
 
 // 危険な入力パターン
-const DANGEROUS_INPUTS = {
+const _DANGEROUS_INPUTS = {
 	// HTMLインジェクション
 	html: [
 		"<script>alert('XSS')</script>",
@@ -111,11 +110,18 @@ class InputValidationTestPage {
 		await this.page.getByRole("button", { name: "送信する" }).click();
 		// フォーム処理の完了を待つ（エラーまたは成功）
 		await Promise.race([
-			this.page.waitForSelector(".text-destructive, .error, [role='alert']", { timeout: 10000 }),
-			this.page.waitForFunction(() => {
-				const nameField = document.querySelector('input[name="name"]') as HTMLInputElement;
-				return nameField && nameField.value === ""; // 成功時のフォームリセット
-			}, { timeout: 10000 }),
+			this.page.waitForSelector(".text-destructive, .error, [role='alert']", {
+				timeout: 10000,
+			}),
+			this.page.waitForFunction(
+				() => {
+					const nameField = document.querySelector(
+						'input[name="name"]',
+					) as HTMLInputElement;
+					return nameField && nameField.value === ""; // 成功時のフォームリセット
+				},
+				{ timeout: 10000 },
+			),
 		]);
 	}
 
@@ -292,13 +298,17 @@ test.describe("入力検証・サニタイゼーション セキュリティテ�
 				.fill("admin'; DROP TABLE users; --");
 			await page.locator('input[type="password"]').first().fill("password123");
 			await page.locator('input[type="password"]').last().fill("password123");
-			
+
 			// 利用規約に同意
-			await page.getByRole("checkbox", { name: "利用規約 に同意します" }).check();
+			await page
+				.getByRole("checkbox", { name: "利用規約 に同意します" })
+				.check();
 
 			await page.getByRole("button", { name: "登録" }).click();
 			// バリデーションエラーの表示を待つ
-			await page.waitForSelector(".text-destructive, .error, [role='alert']", { timeout: 10000 });
+			await page.waitForSelector(".text-destructive, .error, [role='alert']", {
+				timeout: 10000,
+			});
 
 			// バリデーションエラーが適切に表示される
 			const errorElements = await page

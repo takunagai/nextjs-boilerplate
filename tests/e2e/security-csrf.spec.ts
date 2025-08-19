@@ -228,7 +228,6 @@ test.describe("CSRF脆弱性テスト", () => {
 
 			expect(response.status()).toBe(403);
 		});
-
 	});
 
 	test.describe("HTTPメソッド別CSRF保護", () => {

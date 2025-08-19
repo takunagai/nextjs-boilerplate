@@ -37,17 +37,19 @@ class AuthFlowPage {
 		// ログイン処理の完了を待つ（URL変更またはエラー表示）
 		await Promise.race([
 			this.page.waitForURL(/\/dashboard/, { timeout: 10000 }),
-			this.page.waitForSelector('.text-destructive, .error, [role="alert"]', { timeout: 10000 }),
+			this.page.waitForSelector('.text-destructive, .error, [role="alert"]', {
+				timeout: 10000,
+			}),
 		]);
 	}
 
 	// ログアウト実行
 	async logout() {
 		// 直接ログアウトAPIを呼ぶ（最も確実な方法）
-		await this.page.goto('/api/auth/signout');
-		
+		await this.page.goto("/api/auth/signout");
+
 		// Next-Authのデフォルトのサインアウトページが表示される
-		const signOutButton = this.page.getByRole('button', { name: 'Sign out' });
+		const signOutButton = this.page.getByRole("button", { name: "Sign out" });
 		if (await signOutButton.isVisible()) {
 			await signOutButton.click();
 		}
@@ -56,14 +58,14 @@ class AuthFlowPage {
 		await Promise.race([
 			this.page.waitForURL(/\/login/, { timeout: 10000 }),
 			this.page.waitForURL(/\/$/, { timeout: 10000 }),
-			this.page.waitForLoadState('domcontentloaded')
+			this.page.waitForLoadState("domcontentloaded"),
 		]);
-		
+
 		// 確実にログアウトされたことを確認
 		const currentUrl = this.page.url();
-		if (currentUrl.includes('/dashboard')) {
+		if (currentUrl.includes("/dashboard")) {
 			// まだダッシュボードにいる場合は、ホームページに移動
-			await this.page.goto('/');
+			await this.page.goto("/");
 		}
 	}
 
@@ -79,13 +81,13 @@ class AuthFlowPage {
 			// ダッシュボードページにアクセスできるかで判定
 			await this.gotoDashboard();
 			// ページの読み込み完了を待つ
-			await this.page.waitForLoadState('domcontentloaded');
-			
+			await this.page.waitForLoadState("domcontentloaded");
+
 			const currentUrl = this.page.url();
-			
+
 			// ログイン画面にリダイレクトされていないかチェック
 			return !currentUrl.includes("/login");
-		} catch (error) {
+		} catch (_error) {
 			// エラーが発生した場合は未認証と判定
 			return false;
 		}
@@ -142,7 +144,10 @@ test.describe("認証フロー", () => {
 			await authFlow.logout();
 
 			// 5. ホームページまたはログインページにリダイレクトされることを確認
-			await page.waitForFunction(() => !window.location.pathname.includes("/dashboard"), { timeout: 5000 });
+			await page.waitForFunction(
+				() => !window.location.pathname.includes("/dashboard"),
+				{ timeout: 5000 },
+			);
 			const finalUrl = page.url();
 			expect(finalUrl.includes("/dashboard")).toBeFalsy();
 		});
@@ -162,8 +167,12 @@ test.describe("認証フロー", () => {
 
 			// 1. 空のフォームでの失敗
 			await page.locator('form button[type="submit"]').click();
-			await page.waitForSelector(".text-destructive, .error, [role='alert']", { timeout: 5000 });
-			let errorElements = await page.locator(".text-destructive, .error").count();
+			await page.waitForSelector(".text-destructive, .error, [role='alert']", {
+				timeout: 5000,
+			});
+			const errorElements = await page
+				.locator(".text-destructive, .error")
+				.count();
 			expect(errorElements).toBeGreaterThan(0);
 
 			// 2. 間違ったメールアドレスでの失敗

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import {
 	BreadcrumbJsonLd,
 	generateMetadata,
@@ -17,7 +18,6 @@ import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Container } from "@/components/ui/container";
 import { META } from "@/lib/constants";
 import { createBreadcrumbs } from "@/lib/utils";
-import type { Metadata } from "next";
 
 // ページ固有の定数を定義
 const PAGE_PATH = "/services/consulting";

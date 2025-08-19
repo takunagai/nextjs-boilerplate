@@ -10,11 +10,13 @@
 		"includes": [
 			"**",
 			"!src/components/seo/json-ld.tsx",
-			"!.next/**",
-			"!node_modules/**",
-			"!coverage/**",
-			"!.claude/**",
-			"!reference/**",
+			"!.next",
+			"!node_modules",
+			"!coverage",
+			"!.claude",
+			"!reference",
+			"!playwright-report",
+			"!test-results",
 			"!*.json",
 			"!*.md"
 		]

@@ -6,11 +6,14 @@
  */
 "use client";
 
-import { useState } from "react";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { deleteProfile, requestEmailChange } from "@/app/actions/profile";
+import { AccessibleInput } from "@/components/accessibility/form/accessible-input";
+import { FormErrorDisplay } from "@/components/accessibility/screen-reader";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -28,13 +31,10 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
-import { AccessibleInput } from "@/components/accessibility/form/accessible-input";
-import { FormErrorDisplay } from "@/components/accessibility/screen-reader";
 import { useFormSubmission } from "@/hooks/use-form-submission";
-import { deleteProfile, requestEmailChange } from "@/app/actions/profile";
 import {
-	profileDeleteConfirmSchema,
 	type ProfileDeleteConfirmValues,
+	profileDeleteConfirmSchema,
 } from "@/lib/validation/profile-schema";
 
 export interface ProfileDangerZoneProps {
@@ -49,7 +49,7 @@ export function ProfileDangerZone({ userEmail }: ProfileDangerZoneProps) {
 	const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 	const [isEmailChangeDialogOpen, setIsEmailChangeDialogOpen] = useState(false);
 	const [newEmail, setNewEmail] = useState("");
-	const router = useRouter();
+	const _router = useRouter();
 
 	// 削除確認フォーム
 	const deleteForm = useForm<ProfileDeleteConfirmValues>({

@@ -30,19 +30,23 @@ export function LightweightBackground({
 
 	const getAnimationDuration = () => {
 		switch (animationSpeed) {
-			case "fast": return "10s";
-			case "medium": return "20s";
-			case "slow": return "30s";
-			default: return "30s";
+			case "fast":
+				return "10s";
+			case "medium":
+				return "20s";
+			case "slow":
+				return "30s";
+			default:
+				return "30s";
 		}
 	};
 
 	if (variant === "static") {
 		return (
-			<div 
+			<div
 				className={`
 					fixed inset-0 -z-10 transition-opacity duration-1000
-					${isVisible ? 'opacity-100' : 'opacity-0'}
+					${isVisible ? "opacity-100" : "opacity-0"}
 				`}
 				style={{ opacity }}
 			>
@@ -53,16 +57,16 @@ export function LightweightBackground({
 
 	if (variant === "animated") {
 		return (
-			<div 
+			<div
 				className={`
 					fixed inset-0 -z-10 transition-opacity duration-1000
-					${isVisible ? 'opacity-100' : 'opacity-0'}
+					${isVisible ? "opacity-100" : "opacity-0"}
 				`}
 				style={{ opacity }}
 			>
 				{/* メインの背景グラデーション */}
 				<div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-slate-900 dark:via-blue-900 dark:to-indigo-900" />
-				
+
 				{/* アニメーション要素 */}
 				<div className="absolute inset-0 overflow-hidden">
 					{/* 浮遊する円形要素 */}
@@ -121,14 +125,14 @@ export function LightweightBackground({
 
 	// デフォルト: gradient
 	return (
-		<div 
+		<div
 			className={`
 				fixed inset-0 -z-10 transition-opacity duration-1000
-				${isVisible ? 'opacity-100' : 'opacity-0'}
+				${isVisible ? "opacity-100" : "opacity-0"}
 			`}
 			style={{ opacity }}
 		>
-			<div 
+			<div
 				className="h-full w-full bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-slate-900 dark:via-blue-900 dark:to-indigo-900"
 				style={{
 					background: `
@@ -154,21 +158,28 @@ export function LightweightBackground({
  * デバイス性能に基づいて最適な背景を選択
  */
 export function PerformanceAwareBackground() {
-	const [performanceLevel, setPerformanceLevel] = useState<"low" | "medium" | "high">("medium");
+	const [performanceLevel, setPerformanceLevel] = useState<
+		"low" | "medium" | "high"
+	>("medium");
 
 	useEffect(() => {
 		// 簡易パフォーマンス検出
 		const detectPerformance = () => {
 			const userAgent = navigator.userAgent.toLowerCase();
-			const isDesktop = !(/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent));
-			
+			const isDesktop =
+				!/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(
+					userAgent,
+				);
+
 			if (isDesktop) {
 				return "high";
-			} else if (/iphone.*os 1[6-9]|ipad.*os 1[6-9]|android.*chrome/i.test(userAgent)) {
-				return "medium";
-			} else {
-				return "low";
 			}
+			if (
+				/iphone.*os 1[6-9]|ipad.*os 1[6-9]|android.*chrome/i.test(userAgent)
+			) {
+				return "medium";
+			}
+			return "low";
 		};
 
 		setPerformanceLevel(detectPerformance());
@@ -177,9 +188,15 @@ export function PerformanceAwareBackground() {
 	// パフォーマンスレベルに基づいて背景を選択
 	if (performanceLevel === "low") {
 		return <LightweightBackground variant="static" opacity={0.4} />;
-	} else if (performanceLevel === "medium") {
-		return <LightweightBackground variant="gradient" opacity={0.6} />;
-	} else {
-		return <LightweightBackground variant="animated" opacity={0.7} animationSpeed="slow" />;
 	}
+	if (performanceLevel === "medium") {
+		return <LightweightBackground variant="gradient" opacity={0.6} />;
+	}
+	return (
+		<LightweightBackground
+			variant="animated"
+			opacity={0.7}
+			animationSpeed="slow"
+		/>
+	);
 }

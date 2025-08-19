@@ -1,3 +1,13 @@
+import type { Metadata } from "next";
+import Image from "next/image";
+import {
+	FaBriefcase,
+	FaCode,
+	FaEnvelope,
+	FaServer,
+	FaTwitter,
+	FaUser,
+} from "react-icons/fa6";
 import {
 	ArticleJsonLd,
 	BreadcrumbJsonLd,
@@ -15,16 +25,6 @@ import {
 import { Container } from "@/components/ui/container";
 import { META } from "@/lib/constants";
 import { createBreadcrumbs } from "@/lib/utils";
-import type { Metadata } from "next";
-import Image from "next/image";
-import {
-	FaBriefcase,
-	FaCode,
-	FaEnvelope,
-	FaServer,
-	FaTwitter,
-	FaUser,
-} from "react-icons/fa6";
 
 export const metadata: Metadata = generateMetadata({
 	title: "プロフィール",

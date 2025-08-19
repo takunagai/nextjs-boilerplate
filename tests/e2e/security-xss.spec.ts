@@ -72,9 +72,11 @@ class SecurityTestPage {
 
 		// フォーム送信後の処理完了を待機（エラーまたはリダイレクト）
 		await Promise.race([
-			this.page.waitForSelector('.text-destructive, [role="alert"], .error', { timeout: 3000 }),
-			this.page.waitForURL(url => url !== this.page.url(), { timeout: 3000 }),
-			this.page.waitForLoadState('networkidle', { timeout: 3000 })
+			this.page.waitForSelector('.text-destructive, [role="alert"], .error', {
+				timeout: 3000,
+			}),
+			this.page.waitForURL((url) => url !== this.page.url(), { timeout: 3000 }),
+			this.page.waitForLoadState("networkidle", { timeout: 3000 }),
 		]).catch(() => {});
 	}
 
@@ -207,28 +209,32 @@ test.describe("XSS脆弱性テスト", () => {
 			// 外部サイトへのリダイレクトを試行
 			const maliciousCallbacks = [
 				"http://evil.com",
-				"https://evil.com/steal-data", 
+				"https://evil.com/steal-data",
 				"javascript:alert('redirect')",
 				"//evil.com",
 			];
 
 			for (const callback of maliciousCallbacks) {
 				console.log(`Testing malicious callback: ${callback}`);
-				
+
 				await securityPage.visitWithXSSParam("/login", "callbackUrl", callback);
 
 				// リダイレクトまたはページ読み込みの完了を待機
-				await page.waitForLoadState('domcontentloaded', { timeout: 3000 }).catch(() => {});
+				await page
+					.waitForLoadState("domcontentloaded", { timeout: 3000 })
+					.catch(() => {});
 
 				// 悪意のあるリダイレクトが発生していないことを確認
 				const currentUrl = page.url();
-				console.log(`Current URL after visiting with malicious callback: ${currentUrl}`);
-				
+				console.log(
+					`Current URL after visiting with malicious callback: ${currentUrl}`,
+				);
+
 				// URLが元のドメイン（localhost:3000）内にあることを確認
 				expect(currentUrl).toMatch(/^https?:\/\/localhost:3000/);
-				
+
 				// 悪意のあるドメインが含まれていないことを確認
-				const urlWithoutQuery = currentUrl.split('?')[0]; // クエリパラメータを除外
+				const urlWithoutQuery = currentUrl.split("?")[0]; // クエリパラメータを除外
 				expect(urlWithoutQuery).not.toContain("evil.com");
 				expect(urlWithoutQuery).not.toContain("javascript:");
 
@@ -291,9 +297,9 @@ test.describe("XSS脆弱性テスト", () => {
 			await securityPage.submitForm();
 
 			// エラー表示後にDOMが安全であることを確認
-			await expect(
-				page.locator('.text-destructive, .error').first()
-			).toBeVisible({ timeout: 3000 }).catch(() => {});
+			await expect(page.locator(".text-destructive, .error").first())
+				.toBeVisible({ timeout: 3000 })
+				.catch(() => {});
 
 			// innerHTML の代わりに textContent が使用されていることを期待
 			const errorElements = page.locator(".text-destructive, .error");
@@ -306,7 +312,7 @@ test.describe("XSS脆弱性テスト", () => {
 
 				// 新しいスクリプトタグが動的に追加されていないことを確認
 				// DOMの安定化を待つ
-				await page.waitForLoadState('domcontentloaded');
+				await page.waitForLoadState("domcontentloaded");
 				const finalScriptCount = await page.locator("script").count();
 				expect(finalScriptCount).toBe(initialScriptCount);
 			}

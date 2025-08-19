@@ -11,10 +11,15 @@
  */
 "use client";
 
-import { useState } from "react";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { updateProfile, uploadProfileImage } from "@/app/actions/profile";
+import { AccessibleCheckbox } from "@/components/accessibility/form/accessible-checkbox";
+import { AccessibleInput } from "@/components/accessibility/form/accessible-input";
+import { AccessibleTextarea } from "@/components/accessibility/form/accessible-textarea";
+import { FormErrorDisplay } from "@/components/accessibility/screen-reader";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -24,17 +29,12 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { AccessibleInput } from "@/components/accessibility/form/accessible-input";
-import { AccessibleTextarea } from "@/components/accessibility/form/accessible-textarea";
-import { AccessibleCheckbox } from "@/components/accessibility/form/accessible-checkbox";
-import { FormErrorDisplay } from "@/components/accessibility/screen-reader";
 import { useFormSubmission } from "@/hooks/use-form-submission";
-import { updateProfile, uploadProfileImage } from "@/app/actions/profile";
-import {
-	profileUpdateSchema,
-	type ProfileUpdateFormValues,
-} from "@/lib/validation/profile-schema";
 import type { UserProfile } from "@/lib/auth/types";
+import {
+	type ProfileUpdateFormValues,
+	profileUpdateSchema,
+} from "@/lib/validation/profile-schema";
 
 export interface ProfileEditFormProps {
 	/** 現在のプロフィール情報 */
@@ -57,7 +57,7 @@ export function ProfileEditForm({ initialProfile }: ProfileEditFormProps) {
 
 	// フォーム管理
 	const form = useForm<ProfileUpdateFormValues>({
-		// @ts-ignore - 型の不一致は後で修正
+		// @ts-expect-error - 型の不一致は後で修正
 		resolver: zodResolver(profileUpdateSchema),
 		defaultValues: {
 			name: initialProfile.name || "",
@@ -76,7 +76,7 @@ export function ProfileEditForm({ initialProfile }: ProfileEditFormProps) {
 		isSubmitting: isLoading,
 		submitError: error,
 	} = useFormSubmission({
-		// @ts-ignore - 型の不一致は後で修正
+		// @ts-expect-error - 型の不一致は後で修正
 		form,
 		submitFn: async (data) => {
 			const result = await updateProfile(data);

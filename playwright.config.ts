@@ -20,10 +20,16 @@ export default defineConfig({
 	/* Reduced retries for faster CI execution */
 	retries: process.env.CI ? 1 : 0,
 	/* Optimized parallel workers for CI performance */
-	workers: process.env.CI ? Math.min(4, require('os').cpus().length) : undefined,
+	workers: process.env.CI
+		? Math.min(4, require("node:os").cpus().length)
+		: undefined,
 	/* Multiple reporters for better CI integration */
-	reporter: process.env.CI 
-		? [['html'], ['junit', { outputFile: 'test-results/junit.xml' }], ['github']]
+	reporter: process.env.CI
+		? [
+				["html"],
+				["junit", { outputFile: "test-results/junit.xml" }],
+				["github"],
+			]
 		: "html",
 	/* Global timeout settings */
 	timeout: process.env.CI ? 45000 : 30000,
@@ -37,13 +43,13 @@ export default defineConfig({
 
 		/* Enhanced trace collection for debugging */
 		trace: {
-			mode: 'retain-on-failure',
+			mode: "retain-on-failure",
 			snapshots: true,
 			screenshots: true,
 			sources: true,
 		},
-		video: 'retain-on-failure',
-		screenshot: 'only-on-failure',
+		video: "retain-on-failure",
+		screenshot: "only-on-failure",
 		/* Action timeout */
 		actionTimeout: 15000,
 	},
@@ -92,7 +98,7 @@ export default defineConfig({
 		url: "http://localhost:3000",
 		reuseExistingServer: !process.env.CI,
 		timeout: process.env.CI ? 60 * 1000 : 120 * 1000, // CI: 1分, Local: 2分
-		stdout: 'pipe',
-		stderr: 'pipe',
+		stdout: "pipe",
+		stderr: "pipe",
 	},
 });

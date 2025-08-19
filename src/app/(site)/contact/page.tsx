@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { ContactForm } from "@/components/contact/contact-form";
 import {
 	BreadcrumbJsonLd,
@@ -10,7 +11,6 @@ import { Container } from "@/components/ui/container";
 import { PageHeader } from "@/components/ui/page-header";
 import { META } from "@/lib/constants";
 import { createBreadcrumbs } from "@/lib/utils";
-import type { Metadata } from "next";
 
 export const metadata: Metadata = generateMetadata({
 	title: "お問い合わせ",

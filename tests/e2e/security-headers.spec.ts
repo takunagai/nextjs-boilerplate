@@ -172,7 +172,7 @@ test.describe("HTTPセキュリティヘッダーテスト", () => {
 				// Retry-Afterヘッダーの存在確認
 				expect(rateLimitHeaders["retry-after"]).toBeTruthy();
 				expect(
-					Number.parseInt(rateLimitHeaders["retry-after"]),
+					Number.parseInt(rateLimitHeaders["retry-after"], 10),
 				).toBeGreaterThan(0);
 			}
 		});

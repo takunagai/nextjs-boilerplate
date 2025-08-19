@@ -11,7 +11,7 @@ test.describe("アクセシビリティ基準", () => {
 		const pages = [
 			{ path: "/", name: "ホームページ" },
 			{ path: "/login", name: "ログイン画面" },
-			{ path: "/contact", name: "お問い合わせ画面" }
+			{ path: "/contact", name: "お問い合わせ画面" },
 		];
 
 		for (const testPage of pages) {
@@ -116,7 +116,10 @@ test.describe("スクリーンリーダー対応", () => {
 		await page.goto("/login");
 
 		// 空のフォームで送信してエラーを発生させる
-		await page.locator("form").getByRole("button", { name: "ログイン" }).click();
+		await page
+			.locator("form")
+			.getByRole("button", { name: "ログイン" })
+			.click();
 
 		// エラーメッセージが視覚的に表示されることを確認
 		const errorElements = page.locator(

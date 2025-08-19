@@ -7,12 +7,11 @@
  * - WCAG 2.1 AA準拠のアクセシビリティ
  */
 
-import { redirect } from "next/navigation";
 import Image from "next/image";
-import { auth } from "@/lib/auth";
+import { redirect } from "next/navigation";
 import { getProfile } from "@/app/actions/profile";
-import { ProfileEditForm } from "@/components/profile/profile-edit-form";
 import { ProfileDangerZone } from "@/components/profile/profile-danger-zone";
+import { ProfileEditForm } from "@/components/profile/profile-edit-form";
 import {
 	Card,
 	CardContent,
@@ -21,6 +20,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { auth } from "@/lib/auth";
 
 /**
  * プロフィール編集ページのメタデータ

@@ -1,3 +1,6 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { FaStar } from "react-icons/fa6";
 import {
 	BreadcrumbJsonLd,
 	generateMetadata,
@@ -5,15 +8,12 @@ import {
 	WebsiteJsonLd,
 } from "@/components/seo";
 import { ContentItems } from "@/components/services/content-items"; // 追加
+import { AnimatedItemList } from "@/components/ui/animated-item-list";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Container } from "@/components/ui/container";
 import { PageHeader } from "@/components/ui/page-header";
-import { AnimatedItemList } from "@/components/ui/animated-item-list";
 import { META } from "@/lib/constants";
 import { createBreadcrumbs } from "@/lib/utils";
-import type { Metadata } from "next";
-import Link from "next/link";
-import { FaArrowRight, FaStar, FaRocket } from "react-icons/fa6";
 
 export const metadata: Metadata = generateMetadata({
 	title: "サービス",
@@ -86,10 +86,10 @@ export default function ServicesPage() {
 				<p className="text-2xl font-bold text-center">
 					AI × 人の感性で、お客様のビジネスを次のレベルへ
 				</p>
-				
+
 				{/* AnimatedItemList使用例1: デフォルト設定 */}
 				<div className="mt-8">
-					<AnimatedItemList 
+					<AnimatedItemList
 						items={serviceFeatures}
 						intervalSeconds={4}
 						className="max-w-xl mx-auto space-y-3"
@@ -99,12 +99,12 @@ export default function ServicesPage() {
 				{/* AnimatedItemList使用例2: カスタムアイコンとスタイリング */}
 				<div className="mt-12 p-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg">
 					<h3 className="text-xl font-bold text-center mb-6">主な特徴</h3>
-					<AnimatedItemList 
+					<AnimatedItemList
 						items={[
 							"高品質×低価格を実現",
 							"豊富な経験と実績",
 							"柔軟なサポート体制",
-							"最新技術の活用"
+							"最新技術の活用",
 						]}
 						showIcon={true}
 						icon={FaStar}

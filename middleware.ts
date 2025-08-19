@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 
-export default auth((req) => {
+export default auth((_req) => {
 	// Auth.jsが自動的に認証・認可を処理
 	// authConfigのauthorizedコールバックで制御される
 	return NextResponse.next();

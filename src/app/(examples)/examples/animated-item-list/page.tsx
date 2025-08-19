@@ -1,15 +1,9 @@
 "use client";
 
+import { useState } from "react";
+import { FaLightbulb, FaRocket, FaStar, FaTrophy } from "react-icons/fa6";
 import { AnimatedItemList } from "@/components/ui/animated-item-list";
 import { Container } from "@/components/ui/container";
-import { useState } from "react";
-import {
-	FaCircleCheck,
-	FaLightbulb,
-	FaRocket,
-	FaStar,
-	FaTrophy,
-} from "react-icons/fa6";
 
 /**
  * サンプルデータ
@@ -438,10 +432,7 @@ export default function AnimatedItemListExamplesPage() {
 						<div className="mb-4 p-4 bg-muted rounded-lg">
 							<p className="text-sm">
 								現在のセット:{" "}
-								<span className="font-bold">
-									{currentSetIndex + 1}
-								</span>{" "}
-								/ 3
+								<span className="font-bold">{currentSetIndex + 1}</span> / 3
 							</p>
 						</div>
 						<AnimatedItemList

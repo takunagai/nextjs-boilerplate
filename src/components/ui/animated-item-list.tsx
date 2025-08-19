@@ -78,7 +78,10 @@ export function AnimatedItemList({
 	const currentItems = isAnimated ? items[currentSetIndex] : items;
 
 	// インジゲーター表示判定
-	const shouldShowIndicator = isAnimated && showIndicator && items.length > UI_ANIMATED_LIST.MIN_ITEMS_FOR_INDICATOR;
+	const shouldShowIndicator =
+		isAnimated &&
+		showIndicator &&
+		items.length > UI_ANIMATED_LIST.MIN_ITEMS_FOR_INDICATOR;
 
 	// 自動切り替えタイマー開始関数
 	const startAutoSwitching = useCallback(() => {
@@ -86,15 +89,20 @@ export function AnimatedItemList({
 
 		intervalRef.current = setInterval(() => {
 			setIsFlipping(true);
-			setAnimationKey((prev) => prev + UI_ANIMATED_LIST.ANIMATION_KEY_INCREMENT);
+			setAnimationKey(
+				(prev) => prev + UI_ANIMATED_LIST.ANIMATION_KEY_INCREMENT,
+			);
 
 			setTimeout(
 				() => {
 					setCurrentSetIndex((prev) =>
-						prev >= items.length - UI_ANIMATED_LIST.ANIMATION_KEY_INCREMENT ? 0 : prev + UI_ANIMATED_LIST.ANIMATION_KEY_INCREMENT,
+						prev >= items.length - UI_ANIMATED_LIST.ANIMATION_KEY_INCREMENT
+							? 0
+							: prev + UI_ANIMATED_LIST.ANIMATION_KEY_INCREMENT,
 					);
 				},
-				(animationDuration * UI_ANIMATED_LIST.SECONDS_TO_MILLISECONDS) / UI_ANIMATED_LIST.ANIMATION_SWITCH_RATIO,
+				(animationDuration * UI_ANIMATED_LIST.SECONDS_TO_MILLISECONDS) /
+					UI_ANIMATED_LIST.ANIMATION_SWITCH_RATIO,
 			);
 
 			setTimeout(() => {
@@ -137,7 +145,9 @@ export function AnimatedItemList({
 
 			// アニメーション開始
 			setIsFlipping(true);
-			setAnimationKey((prev) => prev + UI_ANIMATED_LIST.ANIMATION_KEY_INCREMENT);
+			setAnimationKey(
+				(prev) => prev + UI_ANIMATED_LIST.ANIMATION_KEY_INCREMENT,
+			);
 
 			// アニメーション時間の50%でセット切り替え
 			setTimeout(
@@ -146,7 +156,8 @@ export function AnimatedItemList({
 					onSetChange?.(targetIndex);
 					log("🔄 Set switched to:", targetIndex);
 				},
-				(animationDuration * UI_ANIMATED_LIST.SECONDS_TO_MILLISECONDS) / UI_ANIMATED_LIST.ANIMATION_SWITCH_RATIO,
+				(animationDuration * UI_ANIMATED_LIST.SECONDS_TO_MILLISECONDS) /
+					UI_ANIMATED_LIST.ANIMATION_SWITCH_RATIO,
 			);
 
 			// アニメーション完了後に状態リセット

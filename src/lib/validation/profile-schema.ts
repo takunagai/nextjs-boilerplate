@@ -20,23 +20,23 @@ const validateNoHtmlTags = (value: string | undefined) => {
 // 再利用可能なスキーマファクトリー
 const createSafeTextSchema = (
 	fieldName: string,
-	minLength: number = 0,
-	maxLength: number = 100,
-	required: boolean = false,
+	_minLength = 0,
+	maxLength = 100,
+	required = false,
 ) => {
-	// @ts-ignore - Zodの型の複雑さを回避
+	// @ts-expect-error - Zodの型の複雑さを回避
 	let schema = required
 		? z.string().min(1, { message: getRequiredMessage(fieldName) })
 		: z.string().optional();
 
 	// 文字数制限を追加
 	if (required) {
-		// @ts-ignore - Zodの型の複雑さを回避
+		// @ts-expect-error - Zodの型の複雑さを回避
 		schema = schema.max(maxLength, {
 			message: `${fieldName}は${maxLength}文字以内で入力してください`,
 		});
 	} else {
-		// @ts-ignore - Zodの型の複雑さを回避
+		// @ts-expect-error - Zodの型の複雑さを回避
 		schema = schema.refine(
 			(value: string | undefined) => {
 				if (!value || value.trim() === "") return true;
@@ -49,10 +49,13 @@ const createSafeTextSchema = (
 	}
 
 	// HTMLタグ検証を追加
-	// @ts-ignore - Zodの型の複雑さを回避
-	return schema.refine((value: string | undefined) => validateNoHtmlTags(value), {
-		message: "HTMLタグを含めることはできません",
-	});
+	// @ts-expect-error - Zodの型の複雑さを回避
+	return schema.refine(
+		(value: string | undefined) => validateNoHtmlTags(value),
+		{
+			message: "HTMLタグを含めることはできません",
+		},
+	);
 };
 
 // フィールドごとの必須メッセージ
@@ -146,7 +149,8 @@ export const profileDeleteConfirmSchema = z.object({
 		.string()
 		.min(1, { message: "確認テキストを入力してください" })
 		.refine((text) => text === "プロフィールを削除します", {
-			message: "正確な確認テキストを入力してください: 'プロフィールを削除します'",
+			message:
+				"正確な確認テキストを入力してください: 'プロフィールを削除します'",
 		}),
 });
 

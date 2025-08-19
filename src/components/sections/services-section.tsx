@@ -1,11 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Container } from "@/components/ui/container";
-import { type FeatureItem, FeatureItems } from "@/components/ui/feature-items";
-import { Heading } from "@/components/ui/heading";
-import { usePerformanceCheck } from "@/hooks/use-webgl-support";
-import { portfolioCategories } from "@/lib/data/portfolio-data";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import {
@@ -14,6 +8,12 @@ import {
 	FaCode,
 	FaPaintbrush,
 } from "react-icons/fa6";
+import { Button } from "@/components/ui/button";
+import { Container } from "@/components/ui/container";
+import { type FeatureItem, FeatureItems } from "@/components/ui/feature-items";
+import { Heading } from "@/components/ui/heading";
+import { usePerformanceCheck } from "@/hooks/use-webgl-support";
+import { portfolioCategories } from "@/lib/data/portfolio-data";
 
 // 動的インポート - エフェクトコンポーネント
 const FlowingComments = dynamic(

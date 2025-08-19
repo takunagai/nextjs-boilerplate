@@ -17,7 +17,7 @@ export function useWebGLSupport() {
 	useEffect(() => {
 		// サーバーサイドでは実行しない
 		if (typeof window === "undefined") {
-			setWebglSupport(prev => ({ ...prev, isLoading: false }));
+			setWebglSupport((prev) => ({ ...prev, isLoading: false }));
 			return;
 		}
 
@@ -25,8 +25,12 @@ export function useWebGLSupport() {
 			try {
 				// WebGLサポート確認
 				const canvas = document.createElement("canvas");
-				const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl") as WebGLRenderingContext | null;
-				
+				const gl =
+					canvas.getContext("webgl") ||
+					(canvas.getContext(
+						"experimental-webgl",
+					) as WebGLRenderingContext | null);
+
 				if (!gl) {
 					return {
 						isSupported: false,
@@ -37,38 +41,44 @@ export function useWebGLSupport() {
 
 				// パフォーマンスレベル判定
 				let performanceLevel: "low" | "medium" | "high" = "medium";
-				
+
 				// GPU情報を取得
 				const debugInfo = gl.getExtension("WEBGL_debug_renderer_info");
-				const renderer = debugInfo 
-					? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) 
+				const renderer = debugInfo
+					? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)
 					: "";
 
 				// デバイス・ブラウザ別パフォーマンス判定
 				const userAgent = navigator.userAgent.toLowerCase();
-				const isDesktop = !(/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent));
-				const isHighEndMobile = /iphone.*os 1[6-9]|ipad.*os 1[6-9]|android.*chrome/i.test(userAgent);
+				const isDesktop =
+					!/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(
+						userAgent,
+					);
+				const isHighEndMobile =
+					/iphone.*os 1[6-9]|ipad.*os 1[6-9]|android.*chrome/i.test(userAgent);
 
 				// デスクトップの場合
 				if (isDesktop) {
 					// 統合GPU vs 専用GPU判定
-					const isIntegratedGPU = /intel|amd.*integrated|apple m[0-9]/i.test(renderer);
+					const isIntegratedGPU = /intel|amd.*integrated|apple m[0-9]/i.test(
+						renderer,
+					);
 					performanceLevel = isIntegratedGPU ? "medium" : "high";
-				} 
+				}
 				// 高性能モバイルの場合
 				else if (isHighEndMobile) {
 					performanceLevel = "medium";
-				} 
+				}
 				// その他モバイル
 				else {
 					performanceLevel = "low";
 				}
 
 				// メモリ使用量チェック（可能な場合）
-				if ('memory' in performance) {
+				if ("memory" in performance) {
 					const memInfo = (performance as any).memory;
 					const availableMemory = memInfo.jsHeapSizeLimit / (1024 * 1024); // MB
-					
+
 					if (availableMemory < 500) {
 						performanceLevel = "low";
 					}
@@ -82,7 +92,6 @@ export function useWebGLSupport() {
 					performanceLevel,
 					shouldLoad3D,
 				};
-
 			} catch (error) {
 				console.warn("WebGL detection failed:", error);
 				return {
@@ -95,12 +104,11 @@ export function useWebGLSupport() {
 
 		// 検出実行
 		const result = detectWebGLSupport();
-		
+
 		setWebglSupport({
 			...result,
 			isLoading: false,
 		});
-
 	}, []);
 
 	return webglSupport;
@@ -112,7 +120,7 @@ export function useWebGLSupport() {
  */
 export function usePerformanceCheck() {
 	const { shouldLoad3D, performanceLevel, isLoading } = useWebGLSupport();
-	
+
 	return {
 		/** 3D効果をロードするかどうか */
 		shouldLoad3D,
