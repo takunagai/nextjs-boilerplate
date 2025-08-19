@@ -2,7 +2,7 @@
 
 import { Container } from "@/components/ui/container";
 import { Heading } from "@/components/ui/heading";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { FaCheck } from "react-icons/fa6";
 
 // 通常の配列の例
@@ -64,6 +64,27 @@ export function ProblemsSection({
 		? externalProblems[currentSetIndex]
 		: externalProblems;
 
+	// 最大項目数を計算（高さ固定のため）
+	const maxItemCount = useMemo(() => {
+		if (isAnimated) {
+			return Math.max(...externalProblems.map(problemSet => problemSet.length));
+		}
+		return externalProblems.length;
+	}, [externalProblems, isAnimated]);
+
+	// 高さ固定のため、不足分をプレースホルダーで埋める
+	const displayProblems = useMemo(() => {
+		const problems = [...currentProblems];
+		const shortage = maxItemCount - problems.length;
+		
+		// 不足分を透明なプレースホルダーで埋める
+		for (let i = 0; i < shortage; i++) {
+			problems.push(`__placeholder_${i}`);
+		}
+		
+		return problems;
+	}, [currentProblems, maxItemCount]);
+
 	useEffect(() => {
 		if (!isAnimated || externalProblems.length <= 1) return;
 
@@ -71,13 +92,17 @@ export function ProblemsSection({
 			setIsFlipping(true);
 			setAnimationKey(prev => prev + 1);
 
-			// フリップアニメーション完了後にデータ更新
+			// 300ms後: テキスト切り替え（opacity=0の瞬間でチラつき防止）
 			setTimeout(() => {
 				setCurrentSetIndex(prev => 
 					prev >= externalProblems.length - 1 ? 0 : prev + 1
 				);
+			}, 300);
+
+			// 600ms後: アニメーション状態リセット
+			setTimeout(() => {
 				setIsFlipping(false);
-			}, 600); // フリップアニメーション時間（0.6s）
+			}, 600);
 		}, intervalSeconds * 1000);
 
 		return () => clearInterval(interval);
@@ -93,23 +118,36 @@ export function ProblemsSection({
 				</div>
 
 				<div className="max-w-2xl mx-auto space-y-4 mb-12">
-					{currentProblems.map((problem, index) => (
-						<div
-							key={isAnimated ? `${animationKey}-${index}` : index}
-							className={`flex items-start gap-3 p-4 bg-background rounded-lg shadow-sm hover:shadow-md transition-shadow ${
-								isAnimated ? 'flip-item' : ''
-							}`}
-							style={isAnimated ? {
-								'--delay': `${index * 0.1}s`,
-								animation: isFlipping ? 'flipVertical 0.6s ease-in-out' : 'none'
-							} as React.CSSProperties : undefined}
-						>
-							<div className="flex-shrink-0 w-6 h-6 bg-primary/10 rounded-full flex items-center justify-center mt-0.5">
-								<FaCheck className="w-3 h-3 text-primary" />
+					{displayProblems.map((problem, index) => {
+						const isPlaceholder = problem.startsWith('__placeholder_');
+						return (
+							<div
+								key={isAnimated ? `${animationKey}-${index}` : index}
+								className={`flex items-start gap-3 p-4 rounded-lg transition-shadow ${
+									isPlaceholder 
+										? 'invisible' // プレースホルダーは透明
+										: 'bg-background shadow-sm hover:shadow-md'
+								} ${
+									isAnimated ? 'flip-item' : ''
+								}`}
+								style={isAnimated ? {
+									'--delay': `${index * 0.1}s`,
+									animation: isFlipping ? 'flipVertical 0.6s ease-in-out' : 'none'
+								} as React.CSSProperties : undefined}
+							>
+								<div className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center mt-0.5 ${
+									isPlaceholder ? 'bg-transparent' : 'bg-primary/10'
+								}`}>
+									{!isPlaceholder && <FaCheck className="w-3 h-3 text-primary" />}
+								</div>
+								<p className={`flex-1 ${
+									isPlaceholder ? 'text-transparent' : 'text-muted-foreground'
+								}`}>
+									{isPlaceholder ? 'placeholder' : problem}
+								</p>
 							</div>
-							<p className="text-muted-foreground flex-1">{problem}</p>
-						</div>
-					))}
+						);
+					})}
 				</div>
 
 				<div className="text-center">
