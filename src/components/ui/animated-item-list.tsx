@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FaCheck } from "react-icons/fa6";
 
+import { useDebugLogger } from "@/hooks/use-debug-logger";
+
 type AnimatedItem = string;
 type AnimatedItemSet = AnimatedItem[];
 type AnimatedItemData = AnimatedItem[] | AnimatedItemSet[];
@@ -68,6 +70,9 @@ export function AnimatedItemList({
 	const [animationKey, setAnimationKey] = useState(0);
 	const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
+	// デバッグログフック
+	const { log, warn } = useDebugLogger("AnimatedItemList");
+
 	const isAnimated = isNestedArray(items);
 	const currentItems = isAnimated ? items[currentSetIndex] : items;
 
@@ -101,35 +106,27 @@ export function AnimatedItemList({
 	const handleManualSwitch = useCallback(
 		(targetIndex: number) => {
 			// デバッグログ（開発環境のみ）
-			if (process.env.NODE_ENV === "development") {
-				console.log("🎯 IndIcator clicked:", {
-					targetIndex,
-					currentIndex: currentSetIndex,
-					isFlipping,
-					enableManualSwitch,
-				});
-			}
+			log("🎯 IndIcator clicked:", {
+				targetIndex,
+				currentIndex: currentSetIndex,
+				isFlipping,
+				enableManualSwitch,
+			});
 
 			// バリデーション
 			if (!enableManualSwitch) {
-				if (process.env.NODE_ENV === "development") {
-					console.warn("⚠️ Manual switch is disabled");
-				}
+				warn("⚠️ Manual switch is disabled");
 				return;
 			}
 
 			if (isFlipping) {
-				if (process.env.NODE_ENV === "development") {
-					console.warn("⚠️ Animation in progress, click ignored");
-				}
+				warn("⚠️ Animation in progress, click ignored");
 				return;
 			}
 
 			// 同一インデックスクリック時のフィードバック
 			if (targetIndex === currentSetIndex) {
-				if (process.env.NODE_ENV === "development") {
-					console.log("🔄 Same index clicked, providing visual feedback");
-				}
+				log("🔄 Same index clicked, providing visual feedback");
 				// 短い視覚的フィードバックを提供
 				setAnimationKey((prev) => prev + 1);
 				return;
@@ -141,9 +138,7 @@ export function AnimatedItemList({
 				intervalRef.current = null;
 			}
 
-			if (process.env.NODE_ENV === "development") {
-				console.log("✨ Starting manual switch animation to:", targetIndex);
-			}
+			log("✨ Starting manual switch animation to:", targetIndex);
 
 			// アニメーション開始
 			setIsFlipping(true);
@@ -155,9 +150,7 @@ export function AnimatedItemList({
 					setCurrentSetIndex(targetIndex);
 					onSetChange?.(targetIndex);
 
-					if (process.env.NODE_ENV === "development") {
-						console.log("🔄 Set switched to:", targetIndex);
-					}
+					log("🔄 Set switched to:", targetIndex);
 				},
 				(animationDuration * 1000) / 2,
 			);
@@ -168,9 +161,7 @@ export function AnimatedItemList({
 				// 新しいタイマーを開始
 				startAutoSwitching();
 
-				if (process.env.NODE_ENV === "development") {
-					console.log("✅ Manual switch complete, auto-timer resumed");
-				}
+				log("✅ Manual switch complete, auto-timer resumed");
 			}, animationDuration * 1000);
 		},
 		[
@@ -180,6 +171,8 @@ export function AnimatedItemList({
 			animationDuration,
 			onSetChange,
 			startAutoSwitching,
+			log,
+			warn,
 		],
 	);
 
