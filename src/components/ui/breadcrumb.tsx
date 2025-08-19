@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 export type BreadcrumbItem = {
 	label: string;
@@ -19,8 +19,8 @@ export function Breadcrumb({ items, className }: BreadcrumbProps) {
 	}
 
 	return (
-		<nav aria-label="パンくずリスト" className={cn("py-4", className)}>
-			<ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-balance">
+		<nav aria-label="パンくずリスト" className={cn("py-2", className)}>
+			<ol className="flex flex-wrap items-center gap-y-1 text-xs text-balance">
 				{items.map((item, i) => {
 					const isFirst = i === 0;
 					const isLast = i === items.length - 1;
@@ -41,7 +41,7 @@ export function Breadcrumb({ items, className }: BreadcrumbProps) {
 								<>
 									<Link
 										href={item.href}
-										className="text-muted-foreground hover:text-foreground transition-colors"
+										className="mx-0 text-muted-foreground hover:text-foreground transition-colors"
 									>
 										<span
 											className={cn(
@@ -84,16 +84,10 @@ export function Breadcrumb({ items, className }: BreadcrumbProps) {
 
 				{/* モバイルでのみ表示する省略記号（中間項目が3つ以上ある場合） */}
 				{items.length > 3 && (
-					<li className="flex sm:hidden items-center">
-						<span className="text-muted-foreground mx-2" aria-hidden="true">
-							/
-						</span>
-						<span className="text-muted-foreground" aria-label="省略された項目">
-							...
-						</span>
-						<span className="mx-2 text-muted-foreground" aria-hidden="true">
-							/
-						</span>
+					<li className="flex sm:hidden items-center" aria-hidden="true">
+						<span className="text-muted-foreground mx-2">/</span>
+						<span className="text-muted-foreground">...</span>
+						<span className="mx-2 text-muted-foreground">/</span>
 					</li>
 				)}
 			</ol>
