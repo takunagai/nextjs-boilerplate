@@ -8,10 +8,12 @@ import { ContentItems } from "@/components/services/content-items"; // 追加
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Container } from "@/components/ui/container";
 import { PageHeader } from "@/components/ui/page-header";
+import { AnimatedItemList } from "@/components/ui/animated-item-list";
 import { META } from "@/lib/constants";
 import { createBreadcrumbs } from "@/lib/utils";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { FaArrowRight, FaStar, FaRocket } from "react-icons/fa6";
 
 export const metadata: Metadata = generateMetadata({
 	title: "サービス",
@@ -29,6 +31,28 @@ export const metadata: Metadata = generateMetadata({
 });
 
 export const viewport = generateViewport();
+
+// サービス特徴のアニメーションデータ
+const serviceFeatures = [
+	[
+		"AI × 人の感性で高品質・低価格を実現",
+		"豊富な実績と信頼できるサポート体制",
+		"初心者から上級者まで対応可能",
+		"スポット相談から継続サポートまで柔軟対応",
+	],
+	[
+		"最新のAI技術を活用した効率的な開発",
+		"コーポレートサイトからアプリまで幅広く対応",
+		"運用・保守まで一貫したサポート",
+		"テスター特別価格で50%OFF実施中",
+	],
+	[
+		"ライティングから動画制作まで総合的に対応",
+		"プロ級のクオリティを従来の半額以下で提供",
+		"AIと人の創造性を融合したオリジナルコンテンツ",
+		"短期間での高速納品を実現",
+	],
+];
 
 export default function ServicesPage() {
 	// パンくずリストのデータを定義
@@ -59,14 +83,38 @@ export default function ServicesPage() {
 			</div>
 
 			<Container className="mt-8" width="lg">
-				<p className="text-2xl font-bold">
+				<p className="text-2xl font-bold text-center">
 					AI × 人の感性で、お客様のビジネスを次のレベルへ
 				</p>
-				<ul className="mt-6 list-disc list-inside space-y-2">
-					<li>AI活用による高品質なのに驚きの低価格でのウェブ・アプリ開発</li>
-					<li>AI初心者から上級者まで対応する個別指導・コンサルティング</li>
-					<li>AIとクリエイティブの融合でプロ級コンテンツ制作</li>
-				</ul>
+				
+				{/* AnimatedItemList使用例1: デフォルト設定 */}
+				<div className="mt-8">
+					<AnimatedItemList 
+						items={serviceFeatures}
+						intervalSeconds={4}
+						className="max-w-xl mx-auto space-y-3"
+					/>
+				</div>
+
+				{/* AnimatedItemList使用例2: カスタムアイコンとスタイリング */}
+				<div className="mt-12 p-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg">
+					<h3 className="text-xl font-bold text-center mb-6">主な特徴</h3>
+					<AnimatedItemList 
+						items={[
+							"高品質×低価格を実現",
+							"豊富な経験と実績",
+							"柔軟なサポート体制",
+							"最新技術の活用"
+						]}
+						showIcon={true}
+						icon={FaStar}
+						intervalSeconds={0} // 静的表示
+						iconClassName="text-yellow-500"
+						textClassName="text-gray-700 font-medium"
+						itemClassName="flex items-center gap-3 p-3 bg-white/70 rounded-md"
+						className="max-w-md mx-auto space-y-2"
+					/>
+				</div>
 
 				<div className="mt-8">
 					<ContentItems
