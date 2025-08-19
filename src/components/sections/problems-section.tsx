@@ -1,6 +1,6 @@
+import { AnimatedItemList } from "@/components/ui/animated-item-list";
 import { Container } from "@/components/ui/container";
 import { Heading } from "@/components/ui/heading";
-import { AnimatedItemList } from "@/components/ui/animated-item-list";
 
 // 二次元配列の例（フリップアニメーション用）
 const problems = [
@@ -35,9 +35,9 @@ interface ProblemsSectionProps {
 	intervalSeconds?: number;
 }
 
-export function ProblemsSection({ 
-	problems: externalProblems = problems, 
-	intervalSeconds = 5 
+export function ProblemsSection({
+	problems: externalProblems = problems,
+	intervalSeconds = 5,
 }: ProblemsSectionProps = {}) {
 	return (
 		<section className="w-full py-16 md:py-24 bg-muted/30">
@@ -48,9 +48,12 @@ export function ProblemsSection({
 					</Heading>
 				</div>
 
-				<AnimatedItemList 
+				<AnimatedItemList
 					items={externalProblems}
 					intervalSeconds={intervalSeconds}
+					showIndicator={true}
+					indicatorPosition="top"
+					indicatorClassName="bg-background"
 					className="max-w-2xl mx-auto space-y-4 mb-12"
 				/>
 
