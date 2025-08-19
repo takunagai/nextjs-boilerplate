@@ -5,6 +5,7 @@ import { Container } from "@/components/ui/container";
 import { type FeatureItem, FeatureItems } from "@/components/ui/feature-items";
 import { Heading } from "@/components/ui/heading";
 import { usePerformanceCheck } from "@/hooks/use-webgl-support";
+import { portfolioCategories } from "@/lib/data/portfolio-data";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import {
@@ -274,6 +275,21 @@ export function ServicesSection() {
 						</div>
 					)}
 				/>
+
+				{/* カテゴリー紹介 */}
+				<div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+					{portfolioCategories.map((category) => (
+						<div
+							key={category.id}
+							className="p-4 border rounded-md bg-card hover:bg-accent/50 transition-colors"
+						>
+							<h2 className="text-lg font-semibold">{category.name}</h2>
+							<p className="text-sm text-muted-foreground mt-1">
+								{category.description}
+							</p>
+						</div>
+					))}
+				</div>
 			</Container>
 		</section>
 	);
