@@ -13,7 +13,7 @@ interface AnimatedItemListProps {
 
 	// アニメーション制御
 	intervalSeconds?: number; // 切り替え間隔（デフォルト: 5）
-	animationDuration?: number; // フリップ時間（デフォルト: 0.6）
+	animationDuration?: number; // フリップ時間（デフォルト: 1）
 	staggerDelay?: number; // 時差間隔（デフォルト: 0.1）
 
 	// 表示設定
@@ -22,7 +22,7 @@ interface AnimatedItemListProps {
 
 	// インジゲーター制御
 	showIndicator?: boolean; // インジゲーター表示（デフォルト: false）
-	indicatorPosition?: "top" | "bottom"; // 配置位置（デフォルト: 'bottom'）
+	indicatorPosition?: "top" | "bottom"; // 配置位置（デフォルト: 'top'）
 	indicatorClassName?: string; // インジゲータースタイル
 	enableManualSwitch?: boolean; // 手動切り替え（デフォルト: true）
 	onSetChange?: (index: number) => void; // 切り替えコールバック
@@ -48,12 +48,12 @@ function isNestedArray(data: AnimatedItemData): data is AnimatedItemSet[] {
 export function AnimatedItemList({
 	items,
 	intervalSeconds = 5,
-	animationDuration = 0.6,
+	animationDuration = 1,
 	staggerDelay = 0.1,
 	showIcon = true,
 	icon: IconComponent = FaCheck,
 	showIndicator = false,
-	indicatorPosition = "bottom",
+	indicatorPosition = "top",
 	indicatorClassName = "",
 	enableManualSwitch = true,
 	onSetChange,
@@ -100,13 +100,49 @@ export function AnimatedItemList({
 	// 手動切り替え関数
 	const handleManualSwitch = useCallback(
 		(targetIndex: number) => {
-			if (!enableManualSwitch || isFlipping || targetIndex === currentSetIndex)
+			// デバッグログ（開発環境のみ）
+			if (process.env.NODE_ENV === "development") {
+				console.log("🎯 IndIcator clicked:", {
+					targetIndex,
+					currentIndex: currentSetIndex,
+					isFlipping,
+					enableManualSwitch,
+				});
+			}
+
+			// バリデーション
+			if (!enableManualSwitch) {
+				if (process.env.NODE_ENV === "development") {
+					console.warn("⚠️ Manual switch is disabled");
+				}
 				return;
+			}
+
+			if (isFlipping) {
+				if (process.env.NODE_ENV === "development") {
+					console.warn("⚠️ Animation in progress, click ignored");
+				}
+				return;
+			}
+
+			// 同一インデックスクリック時のフィードバック
+			if (targetIndex === currentSetIndex) {
+				if (process.env.NODE_ENV === "development") {
+					console.log("🔄 Same index clicked, providing visual feedback");
+				}
+				// 短い視覚的フィードバックを提供
+				setAnimationKey((prev) => prev + 1);
+				return;
+			}
 
 			// 現在のタイマーをクリア
 			if (intervalRef.current) {
 				clearInterval(intervalRef.current);
 				intervalRef.current = null;
+			}
+
+			if (process.env.NODE_ENV === "development") {
+				console.log("✨ Starting manual switch animation to:", targetIndex);
 			}
 
 			// アニメーション開始
@@ -118,6 +154,10 @@ export function AnimatedItemList({
 				() => {
 					setCurrentSetIndex(targetIndex);
 					onSetChange?.(targetIndex);
+
+					if (process.env.NODE_ENV === "development") {
+						console.log("🔄 Set switched to:", targetIndex);
+					}
 				},
 				(animationDuration * 1000) / 2,
 			);
@@ -127,6 +167,10 @@ export function AnimatedItemList({
 				setIsFlipping(false);
 				// 新しいタイマーを開始
 				startAutoSwitching();
+
+				if (process.env.NODE_ENV === "development") {
+					console.log("✅ Manual switch complete, auto-timer resumed");
+				}
 			}, animationDuration * 1000);
 		},
 		[
@@ -236,22 +280,48 @@ export function AnimatedItemList({
 				role="tablist"
 				aria-label="コンテンツセット選択"
 			>
-				{items.map((_, index) => (
-					<button
-						key={`indicator-${items.length}-${index}`}
-						type="button"
-						className={`w-2 h-2 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ${
-							index === currentSetIndex
-								? "bg-primary scale-110"
-								: "bg-muted-foreground/30 hover:bg-muted-foreground/60"
-						}`}
-						onClick={() => handleManualSwitch(index)}
-						disabled={isFlipping || !enableManualSwitch}
-						role="tab"
-						aria-selected={index === currentSetIndex}
-						aria-label={`セット ${index + 1} / ${items.length}`}
-					/>
-				))}
+				{items.map((_, index) => {
+					const isActive = index === currentSetIndex;
+					const isDisabled = isFlipping || !enableManualSwitch;
+
+					return (
+						<button
+							key={`indicator-${items.length}-${index}`}
+							type="button"
+							className={`
+								relative w-2 h-2 rounded-full transition-all duration-300 ease-out
+								focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2
+								${!isDisabled ? "cursor-pointer" : "cursor-not-allowed"}
+								${
+									isActive
+										? "bg-primary scale-110 shadow-md shadow-primary/25"
+										: `
+										bg-muted-foreground/30 
+										${!isDisabled ? "hover:bg-muted-foreground/60 hover:scale-105" : ""}
+									`
+								}
+								${isFlipping && isActive ? "animate-pulse" : ""}
+								${isDisabled ? "opacity-50" : "opacity-100"}
+								active:scale-95
+							`}
+							onClick={() => handleManualSwitch(index)}
+							disabled={isDisabled}
+							role="tab"
+							aria-selected={isActive}
+							aria-label={`セット ${index + 1} / ${items.length}`}
+							title={
+								isActive
+									? `現在のセット: ${index + 1}`
+									: `セット ${index + 1} へ切り替え`
+							}
+						>
+							{/* アクティブ状態の内側ドット */}
+							{isActive && (
+								<div className="absolute inset-0 rounded-full bg-white/20 animate-ping" />
+							)}
+						</button>
+					);
+				})}
 			</div>
 		);
 	};
