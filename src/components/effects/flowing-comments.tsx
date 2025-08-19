@@ -65,13 +65,15 @@ interface Comment {
 interface FlowingCommentsProps {
 	maxComments?: number;
 	className?: string;
+	comments?: string[];
 }
 
 export function FlowingComments({
 	maxComments = UI_FLOWING_COMMENTS.DEFAULT_MAX_COMMENTS,
 	className = "",
+	comments = COMMENTS,
 }: FlowingCommentsProps) {
-	const [comments, setComments] = useState<Comment[]>([]);
+	const [commentList, setCommentList] = useState<Comment[]>([]);
 	const [isVisible, setIsVisible] = useState(false);
 
 	// 画面リサイズ時にコメントサイズを再計算
@@ -87,7 +89,7 @@ export function FlowingComments({
 				? UI_FLOWING_COMMENTS.DESKTOP_SIZE_RANGE
 				: UI_FLOWING_COMMENTS.MOBILE_SIZE_RANGE;
 
-			setComments((prev) =>
+			setCommentList((prev) =>
 				prev.map((comment) => ({
 					...comment,
 					size: Math.random() * sizeRange + baseSize,
@@ -122,7 +124,7 @@ export function FlowingComments({
 		for (let i = 0; i < maxComments; i++) {
 			initialComments.push({
 				id: generateId(),
-				text: COMMENTS[Math.floor(Math.random() * COMMENTS.length)],
+				text: comments[Math.floor(Math.random() * comments.length)],
 				top:
 					Math.random() *
 						(UI_FLOWING_COMMENTS.BOTTOM_LIMIT - UI_FLOWING_COMMENTS.TOP_LIMIT) +
@@ -136,12 +138,12 @@ export function FlowingComments({
 				size: Math.random() * sizeRange + baseSize,
 			});
 		}
-		setComments(initialComments);
+		setCommentList(initialComments);
 		setIsVisible(true);
 
 		// 定期的にコメントを更新
 		const interval = setInterval(() => {
-			setComments((prev) =>
+			setCommentList((prev) =>
 				prev.map((comment) => {
 					// 更新時も画面サイズに応じたサイズ設定
 					const { baseSize, sizeRange } = getSizeParams();
@@ -149,7 +151,7 @@ export function FlowingComments({
 					return {
 						...comment,
 						// React key は保持（再生成しない）
-						text: COMMENTS[Math.floor(Math.random() * COMMENTS.length)],
+						text: comments[Math.floor(Math.random() * comments.length)],
 						top:
 							Math.random() *
 								(UI_FLOWING_COMMENTS.BOTTOM_LIMIT -
@@ -170,7 +172,7 @@ export function FlowingComments({
 		return () => {
 			clearInterval(interval);
 		};
-	}, [maxComments]);
+	}, [maxComments, comments]);
 
 	if (!isVisible) return null;
 
@@ -190,7 +192,7 @@ export function FlowingComments({
 				} as React.CSSProperties & { [key: string]: string }
 			}
 		>
-			{comments.map((comment) => (
+			{commentList.map((comment) => (
 				<div
 					key={comment.id}
 					className="absolute whitespace-nowrap text-muted-foreground/20 font-medium select-none motion-safe:animate-flow-right motion-reduce:animate-none"
@@ -217,13 +219,16 @@ export function FlowingComments({
  */
 export function FlowingCommentsMobile({
 	className = "",
+	comments,
 }: {
 	className?: string;
+	comments?: string[];
 }) {
 	return (
 		<FlowingComments
 			maxComments={UI_FLOWING_COMMENTS.MOBILE_MAX_COMMENTS}
 			className={["hidden sm:block", className].filter(Boolean).join(" ")}
+			comments={comments}
 		/>
 	);
 }
@@ -233,13 +238,16 @@ export function FlowingCommentsMobile({
  */
 export function FlowingCommentsDesktop({
 	className = "",
+	comments,
 }: {
 	className?: string;
+	comments?: string[];
 }) {
 	return (
 		<FlowingComments
 			maxComments={UI_FLOWING_COMMENTS.DESKTOP_MAX_COMMENTS}
 			className={["hidden md:block", className].filter(Boolean).join(" ")}
+			comments={comments}
 		/>
 	);
 }
