@@ -1,5 +1,10 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import { Container } from "@/components/ui/container";
+import { type FeatureItem, FeatureItems } from "@/components/ui/feature-items";
+import { Heading } from "@/components/ui/heading";
+import { usePerformanceCheck } from "@/hooks/use-webgl-support";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import {
@@ -8,11 +13,6 @@ import {
 	FaCode,
 	FaPaintbrush,
 } from "react-icons/fa6";
-import { Button } from "@/components/ui/button";
-import { Container } from "@/components/ui/container";
-import { FeatureItems, type FeatureItem } from "@/components/ui/feature-items";
-import { Heading } from "@/components/ui/heading";
-import { usePerformanceCheck } from "@/hooks/use-webgl-support";
 
 // 動的インポート - エフェクトコンポーネント
 const FlowingComments = dynamic(
@@ -185,14 +185,13 @@ export function ServicesSection() {
 					renderItem={(item, index) => (
 						<div key={item.id} className="relative overflow-hidden">
 							{/* 各サービスエリアの背景エフェクト */}
-							{!isLoading &&
-								shouldLoad3D && (
-									<FlowingComments
-										maxComments={isMediumOrBetter ? 15 : 10}
-										comments={getCommentsForService(item.id)}
-									/>
-								)}
-							
+							{!isLoading && shouldLoad3D && (
+								<FlowingComments
+									maxComments={isMediumOrBetter ? 15 : 10}
+									comments={getCommentsForService(item.id)}
+								/>
+							)}
+
 							{/* ライトウェイト背景（3Dエフェクトが無効な場合） */}
 							{!shouldLoad3D && !isLoading && (
 								<LightweightBackground variant="gradient" opacity={0.3} />
@@ -208,9 +207,7 @@ export function ServicesSection() {
 								<div className="flex flex-col gap-6 max-w-xl [direction:ltr] relative z-20 order-2 md:order-none">
 									<div className="flex items-center gap-3">
 										{item.icon && (
-											<div className="flex-shrink-0">
-												{item.icon}
-											</div>
+											<div className="flex-shrink-0">{item.icon}</div>
 										)}
 										<h3 className="text-2xl md:text-3xl font-bold">
 											{item.title}
@@ -235,9 +232,9 @@ export function ServicesSection() {
 											{(item.features as string[]).map((feature: string) => (
 												<li
 													key={feature}
-													className="text-sm text-muted-foreground flex items-start gap-3"
+													className="text-sm text-muted-foreground flex items-start gap-2"
 												>
-													<span className="text-primary text-base mt-1">•</span>
+													<span className="text-primary">•</span>
 													{feature}
 												</li>
 											))}
