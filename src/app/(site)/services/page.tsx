@@ -1,5 +1,3 @@
-import type { Metadata } from "next";
-import Link from "next/link";
 import {
 	BreadcrumbJsonLd,
 	generateMetadata,
@@ -12,6 +10,8 @@ import { Container } from "@/components/ui/container";
 import { PageHeader } from "@/components/ui/page-header";
 import { META } from "@/lib/constants";
 import { createBreadcrumbs } from "@/lib/utils";
+import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = generateMetadata({
 	title: "サービス",
@@ -47,7 +47,7 @@ export default function ServicesPage() {
 				url={`${META.SITE_URL}/services`}
 			/>
 			<BreadcrumbJsonLd items={jsonLdBreadcrumbs} />
-			<Container className="mt-8">
+			<Container paddingY={"none"}>
 				<Breadcrumb items={uiBreadcrumbs} />
 			</Container>
 

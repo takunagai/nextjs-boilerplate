@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import {
 	BreadcrumbJsonLd,
 	generateMetadata,
@@ -11,6 +10,7 @@ import { Container } from "@/components/ui/container";
 import { PageHeader } from "@/components/ui/page-header";
 import { META } from "@/lib/constants";
 import { createBreadcrumbs } from "@/lib/utils";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = generateMetadata({
 	title: "プライバシーポリシー",
@@ -44,7 +44,7 @@ export default function PrivacyPolicyPage() {
 				url={`${META.SITE_URL}/privacy`}
 			/>
 			<BreadcrumbJsonLd items={jsonLdBreadcrumbs} />
-			<Container className="mt-8">
+			<Container paddingY={"none"}>
 				<Breadcrumb items={uiBreadcrumbs} />
 			</Container>
 			<Container className="mt-8" paddingY="lg" paddingX="2xl">

@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import {
 	BreadcrumbJsonLd,
 	generateMetadata,
@@ -18,6 +17,7 @@ import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Container } from "@/components/ui/container";
 import { META } from "@/lib/constants";
 import { createBreadcrumbs } from "@/lib/utils";
+import type { Metadata } from "next";
 
 // ページ固有の定数を定義
 const PAGE_PATH = "/services/consulting";
@@ -62,7 +62,7 @@ export default function ConsultingPage() {
 				url={`${META.SITE_URL}${PAGE_PATH}`}
 			/>
 			<BreadcrumbJsonLd items={jsonLdBreadcrumbs} />
-			<Container className="mt-8">
+			<Container paddingY={"none"}>
 				<Breadcrumb items={uiBreadcrumbs} />
 			</Container>
 

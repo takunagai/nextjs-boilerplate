@@ -1,5 +1,3 @@
-import type { Metadata } from "next";
-import Link from "next/link";
 import {
 	BreadcrumbJsonLd,
 	generateMetadata,
@@ -12,12 +10,10 @@ import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Container } from "@/components/ui/container";
 import { PageHeader } from "@/components/ui/page-header";
 import { META } from "@/lib/constants";
-import {
-	getAllServiceTags,
-	portfolioCategories,
-	portfolioItems,
-} from "@/lib/data/portfolio-data";
+import { getAllServiceTags, portfolioItems } from "@/lib/data/portfolio-data";
 import { createBreadcrumbs } from "@/lib/utils";
+import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = generateMetadata({
 	title: "ポートフォリオ",
@@ -56,41 +52,24 @@ export default function PortfolioPage() {
 				url={`${META.SITE_URL}/portfolio`}
 			/>
 			<BreadcrumbJsonLd items={jsonLdBreadcrumbs} />
-			<Container className="mt-8">
+			<Container paddingY={"none"}>
 				<Breadcrumb items={uiBreadcrumbs} />
 			</Container>
 
-			<PageHeader title="ポートフォリオ" />
+			<PageHeader
+				title="ポートフォリオ"
+				className="my-8"
+				description="これまでに制作したウェブサイト、ロゴデザイン、ECサイトなどの実績をご紹介します。"
+			/>
 			<Container className="mt-8" width="lg">
-				<p className="text-2xl font-bold">
-					お客様に合わせた最適なソリューションをご提供しています
-				</p>
-
-				{/* カテゴリー紹介 */}
-				<div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-					{portfolioCategories.map((category) => (
-						<div
-							key={category.id}
-							className="p-4 border rounded-md bg-card hover:bg-accent/50 transition-colors"
-						>
-							<h2 className="text-lg font-semibold">{category.name}</h2>
-							<p className="text-sm text-muted-foreground mt-1">
-								{category.description}
-							</p>
-						</div>
-					))}
-				</div>
-
 				{/* サービスタグフィルター */}
-				<div className="mt-10">
-					<h2 className="text-lg font-semibold mb-3">提供サービス:</h2>
-					<div className="flex flex-wrap gap-2">
-						{serviceTags.map((tag) => (
-							<Badge key={tag} variant="outline" className="px-3 py-1">
-								{tag}
-							</Badge>
-						))}
-					</div>
+
+				<div className="flex flex-wrap justify-center gap-2">
+					{serviceTags.map((tag) => (
+						<Badge key={tag} variant="outline" className="px-3 py-1">
+							{tag}
+						</Badge>
+					))}
 				</div>
 
 				{/* ポートフォリオアイテム */}
