@@ -62,6 +62,11 @@ export default function ExamplesPage() {
 			href: "/examples/carousel",
 		},
 		{
+			title: "フリップアニメーションリスト",
+			description: "縦フリップアニメーション付きのアイテムリスト。インジゲーター表示と手動切り替えに対応。",
+			href: "/examples/animated-item-list",
+		},
+		{
 			title: "フォーム",
 			description: "react-hook-formとzodを使用した入力フォームのサンプルです。",
 			href: "/examples/form",
