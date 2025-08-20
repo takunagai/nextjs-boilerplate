@@ -4,6 +4,8 @@ import {
 	FaBriefcase,
 	FaCode,
 	FaEnvelope,
+	FaLightbulb,
+	FaRocket,
 	FaServer,
 	FaTwitter,
 	FaUser,
@@ -23,6 +25,15 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
+import {
+	Timeline,
+	TimelineContent,
+	TimelineDate,
+	TimelineDescription,
+	TimelineIcon,
+	TimelineItem,
+	TimelineTitle,
+} from "@/components/ui/timeline";
 import { META } from "@/lib/constants";
 import { createBreadcrumbs } from "@/lib/utils";
 
@@ -245,84 +256,74 @@ export default function AboutPage() {
 						</h2>
 					</div>
 
-					<div className="relative border-l-2 border-primary/20 ml-3 pl-8 mt-6">
+					<Timeline className="mt-6">
 						{/* ウェブ制作経験 */}
-						<div className="mb-10 relative">
-							<div className="absolute -left-[42px] bg-primary text-primary-foreground p-2 rounded-full border-4 border-background">
+						<TimelineItem variant="primary">
+							<TimelineIcon variant="primary">
 								<FaCode className="h-4 w-4" />
-							</div>
-
-							<div className="bg-muted/30 rounded-lg p-5">
+							</TimelineIcon>
+							<TimelineContent variant="card">
 								<div className="flex flex-col sm:flex-row justify-between sm:items-center mb-2 gap-2">
-									<h3 className="text-lg font-semibold">
-										15年以上のウェブ制作経験
-									</h3>
-									<span className="bg-primary/10 text-primary text-xs px-2 py-1 rounded whitespace-nowrap">
-										2009年 - 現在
-									</span>
+									<TimelineTitle>15年以上のウェブ制作経験</TimelineTitle>
+									<TimelineDate>2009年 - 現在</TimelineDate>
 								</div>
-								<ul className="text-sm text-muted-foreground space-y-1">
-									<li>• 企画・デザイン・コーディング・運用まで一貫して対応</li>
-									<li>
-										• 中小企業から個人事業主まで、幅広いクライアントをサポート
-									</li>
-									<li>
-										• ユーザー目線を大切にした、使いやすいサイト作りが得意
-									</li>
-								</ul>
-							</div>
-						</div>
+								<div className="text-gray-700 dark:text-gray-300">
+									<ul className="space-y-1">
+										<li>• 企画・デザイン・コーディング・運用まで一貫して対応</li>
+										<li>
+											• 中小企業から個人事業主まで、幅広いクライアントをサポート
+										</li>
+										<li>
+											• ユーザー目線を大切にした、使いやすいサイト作りが得意
+										</li>
+									</ul>
+								</div>
+							</TimelineContent>
+						</TimelineItem>
 
 						{/* AI との出会い */}
-						<div className="mb-10 relative">
-							<div className="absolute -left-[42px] bg-primary text-primary-foreground p-2 rounded-full border-4 border-background">
-								<FaUser className="h-4 w-4" />
-							</div>
-
-							<div className="bg-muted/30 rounded-lg p-5">
+						<TimelineItem variant="primary">
+							<TimelineIcon variant="primary">
+								<FaLightbulb className="h-4 w-4" />
+							</TimelineIcon>
+							<TimelineContent variant="card">
 								<div className="flex flex-col sm:flex-row justify-between sm:items-center mb-2 gap-2">
-									<h3 className="text-lg font-semibold">AI との出会い</h3>
-									<span className="bg-primary/10 text-primary text-xs px-2 py-1 rounded whitespace-nowrap">
-										2023年初頭 -
-									</span>
+									<TimelineTitle>AI との出会い</TimelineTitle>
+									<TimelineDate>2023年初頭</TimelineDate>
 								</div>
-								<ul className="text-sm text-muted-foreground space-y-1">
-									<li>• ChatGPT 登場初期から AI の可能性に注目</li>
-									<li>• 日々進化する AI ツールを研究・実践</li>
-									<li>• AI を「道具」として使いこなす方法を追求</li>
-								</ul>
-							</div>
-						</div>
+								<div className="text-gray-700 dark:text-gray-300">
+									<ul className="space-y-1">
+										<li>• ChatGPT 登場初期から AI の可能性に注目</li>
+										<li>• 日々進化する AI ツールを研究・実践</li>
+										<li>• AI を「道具」として使いこなす方法を追求</li>
+									</ul>
+								</div>
+							</TimelineContent>
+						</TimelineItem>
 
 						{/* きっかけ */}
-						<div className="mb-10 relative">
-							<div className="absolute -left-[42px] bg-primary text-primary-foreground p-2 rounded-full border-4 border-background">
-								<FaCode className="h-4 w-4" />
-							</div>
-
-							<div className="bg-muted/30 rounded-lg p-5">
-								<h3 className="text-lg font-semibold mb-2">
-									きっかけ：長年の課題
-								</h3>
-								<p className="text-sm text-muted-foreground">
+						<TimelineItem variant="secondary">
+							<TimelineIcon variant="secondary">
+								<FaBriefcase className="h-4 w-4" />
+							</TimelineIcon>
+							<TimelineContent variant="card">
+								<TimelineTitle>きっかけ：長年の課題</TimelineTitle>
+								<TimelineDescription className="mt-2">
 									「もっと早く、もっと安く、でも品質は落とさずにサービスを提供できないか」
 									<br />
 									そんな時に出会ったのが AI でした。
-								</p>
-							</div>
-						</div>
+								</TimelineDescription>
+							</TimelineContent>
+						</TimelineItem>
 
 						{/* 発見 */}
-						<div className="mb-10 relative">
-							<div className="absolute -left-[42px] bg-primary text-primary-foreground p-2 rounded-full border-4 border-background">
-								<FaCode className="h-4 w-4" />
-							</div>
-
-							<div className="bg-muted/30 rounded-lg p-5">
-								<h3 className="text-lg font-semibold mb-2">
-									発見：AI の可能性と限界
-								</h3>
-								<div className="text-sm text-muted-foreground space-y-2">
+						<TimelineItem variant="warning">
+							<TimelineIcon variant="warning">
+								<FaRocket className="h-4 w-4" />
+							</TimelineIcon>
+							<TimelineContent variant="card">
+								<TimelineTitle>発見：AI の可能性と限界</TimelineTitle>
+								<div className="text-gray-700 dark:text-gray-300 mt-2 space-y-2">
 									<p>最初は半信半疑でした。でも使ってみて驚きました。</p>
 									<ul className="space-y-1">
 										<li>• リサーチが数時間→数分に</li>
@@ -334,20 +335,17 @@ export default function AboutPage() {
 										にも「苦手なこと」があることに。
 									</p>
 								</div>
-							</div>
-						</div>
+							</TimelineContent>
+						</TimelineItem>
 
 						{/* 確信 */}
-						<div className="relative">
-							<div className="absolute -left-[42px] bg-primary text-primary-foreground p-2 rounded-full border-4 border-background">
+						<TimelineItem variant="success">
+							<TimelineIcon variant="success">
 								<FaUser className="h-4 w-4" />
-							</div>
-
-							<div className="bg-muted/50 rounded-lg p-5 border-2 border-primary/20">
-								<h3 className="text-lg font-semibold mb-2">
-									確信：AI と人の最強コンビ
-								</h3>
-								<div className="text-sm text-muted-foreground space-y-2">
+							</TimelineIcon>
+							<TimelineContent className="bg-primary/5 rounded-lg p-5 border-2 border-primary/20">
+								<TimelineTitle>確信：AI と人の最強コンビ</TimelineTitle>
+								<div className="text-gray-700 dark:text-gray-300 mt-2 space-y-2">
 									<p>
 										AI
 										が作った「ちょっと変な部分」を、私の経験で調整する。この組み合わせなら、今までにない価値を提供できる。
@@ -361,9 +359,9 @@ export default function AboutPage() {
 									</div>
 									<p>この方程式を確信して、AI サービス事業を立ち上げました。</p>
 								</div>
-							</div>
-						</div>
-					</div>
+							</TimelineContent>
+						</TimelineItem>
+					</Timeline>
 				</section>
 
 				{/* 大切にしていることセクション */}
