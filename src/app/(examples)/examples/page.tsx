@@ -89,6 +89,12 @@ export default function ExamplesPage() {
 			href: "/examples/ui-components",
 		},
 		{
+			title: "ExpandableContent（折りたたみコンテンツ）",
+			description:
+				"長いコンテンツを折りたたみ可能にするコンポーネント。SEO・アクセシビリティ・パフォーマンスを考慮した設計。",
+			href: "/examples/expandable-content",
+		},
+		{
 			title: "スピナー（Spinner）",
 			description: "読み込み状態を表示するためのスピナーコンポーネントです。",
 			href: "/examples/spinner",
