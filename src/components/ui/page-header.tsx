@@ -3,7 +3,7 @@ import { Heading, type HeadingRootProps } from "@/components/ui/heading";
 /**
  * ページ用ヘッダーコンポーネント
  *
- * デフォルト: h1, 3xl, center, mb-8
+ * デフォルト: h1, 3xl, center, mb-4
  * title/description以外はHeadingの全propsに透過対応
  */
 type PageHeaderProps = {
@@ -19,7 +19,7 @@ export function PageHeader({
 	as = "h1",
 	size = "3xl",
 	align = "center",
-	className = "mb-8",
+	className = "mb-4",
 	...rest
 }: PageHeaderProps) {
 	return (

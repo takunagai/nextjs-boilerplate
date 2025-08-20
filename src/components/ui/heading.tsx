@@ -133,7 +133,6 @@ function HeadingRoot({
 	return (
 		<div
 			className={clsx(
-				"mb-6",
 				containerBorderStyles,
 				align === "center" && "text-center",
 				className,
