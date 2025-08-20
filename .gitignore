@@ -99,6 +99,11 @@ next-env.d.ts
 .turbo
 .contentlayer
 
+# reports & analysis
+*_report.txt
+lint_*.txt
+performance_*.txt
+
 # local files
 *.local
 local/
