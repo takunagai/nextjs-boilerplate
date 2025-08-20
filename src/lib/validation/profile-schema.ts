@@ -24,38 +24,41 @@ const createSafeTextSchema = (
 	maxLength = 100,
 	required = false,
 ) => {
-	// @ts-expect-error - Zodの型の複雑さを回避
-	let schema = required
-		? z.string().min(1, { message: getRequiredMessage(fieldName) })
-		: z.string().optional();
-
-	// 文字数制限を追加
 	if (required) {
-		// @ts-expect-error - Zodの型の複雑さを回避
-		schema = schema.max(maxLength, {
-			message: `${fieldName}は${maxLength}文字以内で入力してください`,
-		});
-	} else {
-		// @ts-expect-error - Zodの型の複雑さを回避
-		schema = schema.refine(
-			(value: string | undefined) => {
-				if (!value || value.trim() === "") return true;
-				return value.length <= maxLength;
-			},
-			{
+		// 必須の場合
+		return z
+			.string()
+			.min(1, { message: getRequiredMessage(fieldName) })
+			.max(maxLength, {
 				message: `${fieldName}は${maxLength}文字以内で入力してください`,
-			},
-		);
+			})
+			.refine(
+				(value: string) => validateNoHtmlTags(value),
+				{
+					message: "HTMLタグを含めることはできません",
+				},
+			);
+	} else {
+		// オプショナルの場合
+		return z
+			.string()
+			.optional()
+			.refine(
+				(value: string | undefined) => {
+					if (!value || value.trim() === "") return true;
+					return value.length <= maxLength;
+				},
+				{
+					message: `${fieldName}は${maxLength}文字以内で入力してください`,
+				},
+			)
+			.refine(
+				(value: string | undefined) => validateNoHtmlTags(value),
+				{
+					message: "HTMLタグを含めることはできません",
+				},
+			);
 	}
-
-	// HTMLタグ検証を追加
-	// @ts-expect-error - Zodの型の複雑さを回避
-	return schema.refine(
-		(value: string | undefined) => validateNoHtmlTags(value),
-		{
-			message: "HTMLタグを含めることはできません",
-		},
-	);
 };
 
 // フィールドごとの必須メッセージ
