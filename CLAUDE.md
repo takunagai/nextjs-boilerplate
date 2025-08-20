@@ -22,6 +22,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Directory Structure
 
+- `/docs/` - Unified documentation (industry standard compliant):
+  - `development/` - Development process (plans, reports, tasks, archive)
+  - `guides/` - Implementation guides (authentication, deployment, components, hooks, migration, tips)
+  - `operations/` - Operations & DevOps (performance management)
+  - `examples/` - Sample code (components, forms, testing)
+  - `reference/` - Technical specifications & reference (specifications, features, business)
+
 - `/src/app/` - Next.js App Router pages with parallel route groups:
   - `(site)` - Public pages (home, about, services, etc.)
   - `(auth)` - Authentication pages (login, register)
@@ -308,6 +315,10 @@ export async function updateProfile(data: ProfileFormValues) {
 
 ## Development Notes
 
+- **Documentation**: All docs unified in `/docs/` following industry standards (Single Source of Truth)
+  - Implementation guides in `guides/` (authentication, deployment, components, etc.)
+  - Development process in `development/` (plans, reports, tasks)
+  - Sample code in `examples/` for learning and reference
 - Test users are defined in `src/lib/auth/test-data.ts` (remove in production)
   - User: `user@example.com` / `password123`
   - Admin: `admin@example.com` / `password123`

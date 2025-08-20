@@ -155,15 +155,17 @@
 
 ```
 nextjs-boilerplate/
+├── docs/                    # 統合ドキュメント（業界標準準拠）
+│   ├── development/         # 開発プロセス（plans, reports, tasks, archive）
+│   ├── guides/              # 実装ガイド（authentication, deployment, components, etc.）
+│   ├── operations/          # 運用・DevOps（performance）
+│   ├── examples/            # サンプルコード（components, forms, testing）
+│   └── reference/           # 技術仕様・リファレンス（specifications, features, business）
 ├── public/                  # 静的アセット
 │   ├── dummy-images/        # ダミー画像
 │   ├── {fonts}/             # フォントファイル（追加予定）
 │   ├── images/              # 画像ファイル
 │   └── site.webmanifest     # サイトマニフェスト
-├── reference/
-│   ├── code/                # コード
-│   ├── docs/                # ドキュメント
-│   └── samples/             # サンプルコード
 ├── src/
 │   ├── app/                 # Next.jsのページルーティング
 │   │   ├── 各ページのディレクトリ/
