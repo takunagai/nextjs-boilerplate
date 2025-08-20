@@ -1,16 +1,15 @@
-import { format } from "date-fns";
-import type { Metadata } from "next";
-import Link from "next/link";
-import { notFound } from "next/navigation";
-import { FaArrowLeft } from "react-icons/fa6";
 import { NewsJsonLd } from "@/components/seo/news-jsonld";
 import { Badge } from "@/components/ui/badge";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { PageHeader } from "@/components/ui/page-header";
-import { Separator } from "@/components/ui/separator";
 import { getAllNews, getNewsById } from "@/lib/data/news";
+import { format } from "date-fns";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { FaArrowLeft } from "react-icons/fa6";
 
 // 動的メタデータの生成（SEO対策）
 export async function generateMetadata({
@@ -86,23 +85,17 @@ export default async function NewsDetailPage({
 				url={url}
 			/>
 
-			<Container width="md">
-				{/* パンくずリスト */}
-				<Breadcrumb items={breadcrumbItems} className="pt-4 pb-0" />
+			<Container paddingY={"none"}>
+				<Breadcrumb items={breadcrumbItems} />
+			</Container>
 
-				<div className="py-8 md:py-12">
-					{/* 戻るボタン */}
-					<div className="mb-8">
-						<Link href="/news">
-							<Button variant="ghost" size="sm" className="gap-2">
-								<FaArrowLeft size={12} />
-								<span>お知らせ一覧に戻る</span>
-							</Button>
-						</Link>
-					</div>
+			<Container width="md">
+				<div className="flex flex-col gap-8 py-8 md:py-12">
+					{/* タイトル */}
+					<PageHeader title={news.title} size="2xl" className="mb-0" />
 
 					{/* メタ情報 */}
-					<div className="flex flex-wrap gap-3 items-center mb-4">
+					<div className="flex flex-wrap gap-3 items-center justify-center -mt-4">
 						<time
 							dateTime={news.date.toISOString()}
 							className="text-slate-500 font-medium"
@@ -112,28 +105,34 @@ export default async function NewsDetailPage({
 						<Badge variant="outline">{news.category}</Badge>
 					</div>
 
-					{/* タイトル */}
-					<PageHeader title={news.title} />
-
-					<Separator className="mb-8" />
-
 					{/* 本文 */}
-					<div className="prose prose-slate dark:prose-invert max-w-none">
-						{news.content ? (
-							<div dangerouslySetInnerHTML={{ __html: news.content }} />
-						) : (
-							<>
-								<p>
-									このページは「{news.title}」の詳細ページです。
-									実際のプロジェクトでは、ここにマークダウンやリッチテキストコンテンツが入ります。
-								</p>
-								<p>
-									現在表示されているのはダミーコンテンツです。実際のプロジェクトでは、
-									データベースから取得した内容を表示するように実装してください。
-								</p>
-							</>
-						)}
-					</div>
+
+					{news.content ? (
+						<div
+							className="prose prose-slate dark:prose-invert max-w-none"
+							dangerouslySetInnerHTML={{ __html: news.content }}
+						/>
+					) : (
+						<div className="prose prose-slate dark:prose-invert max-w-none">
+							<p>
+								このページは「{news.title}」の詳細ページです。
+								実際のプロジェクトでは、ここにマークダウンやリッチテキストコンテンツが入ります。
+							</p>
+							<p>
+								現在表示されているのはダミーコンテンツです。実際のプロジェクトでは、
+								データベースから取得した内容を表示するように実装してください。
+							</p>
+						</div>
+					)}
+				</div>
+				{/* 戻るボタン */}
+				<div className="text-center">
+					<Link href="/news">
+						<Button variant="ghost" size="sm" className="gap-2">
+							<FaArrowLeft size={12} />
+							<span>お知らせ一覧に戻る</span>
+						</Button>
+					</Link>
 				</div>
 			</Container>
 		</main>
