@@ -1,9 +1,0 @@
-
-> nextjs-boilerplate@0.1.0 lint
-> biome check .
-
-The number of diagnostics exceeds the limit allowed. Use --max-diagnostics to increase it.
-Diagnostics not shown: 242.
-Checked 360 files in 75ms. No fixes applied.
-Found 103 errors.
-Found 159 warnings.

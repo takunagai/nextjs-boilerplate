@@ -1,7 +1,0 @@
-
-> nextjs-boilerplate@0.1.0 lint
-> biome check . --max-diagnostics=500
-
-Checked 360 files in 76ms. No fixes applied.
-Found 102 errors.
-Found 153 warnings.
