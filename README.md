@@ -268,12 +268,14 @@ AnnouncementBar は一度閉じると localStorage に状態が保存され、�
 開発中に再度表示させたい場合は、以下の方法でリセットできます：
 
 **方法1: 開発環境専用のリセット関数（推奨）**
+
 ```javascript
 // ブラウザのコンソールで実行
 window.resetAnnouncementBar()
 ```
 
 **方法2: localStorage を手動でクリア**
+
 ```javascript
 // ブラウザのコンソールで実行
 localStorage.removeItem('announcement-bar-closed')
@@ -281,6 +283,7 @@ location.reload()
 ```
 
 **方法3: 開発者ツール GUI から削除**
+
 1. F12 キーで開発者ツールを開く
 2. Application/Storage タブを選択
 3. Local Storage → サイトのドメインをクリック
@@ -376,66 +379,136 @@ export default function MyPage() {
 nextjs-boilerplate/
 ├── public/                  # 静的アセット
 │   ├── dummy-images/        # ダミー画像
-│   ├── {fonts}/             # フォントファイル（追加予定）
+│   │   ├── features/        # 機能説明用画像
+│   │   ├── tech/            # 技術スタックロゴ
+│   │   └── ...              # その他のダミー画像
 │   ├── images/              # 画像ファイル
+│   │   ├── portfolio/       # ポートフォリオ画像
+│   │   ├── hero.jpg         # ヒーロー画像
+│   │   └── logo.png         # ロゴ画像
 │   └── site.webmanifest     # サイトマニフェスト
-├── reference/
-│   ├── code/                # コード
-│   ├── docs/                # ドキュメント
-│   └── samples/             # サンプルコード
+├── docs/                    # 統一ドキュメント（業界標準準拠）
+│   ├── development/         # 開発プロセス
+│   │   ├── archive/         # アーカイブ
+│   │   ├── plans/           # 計画書
+│   │   ├── reports/         # レポート
+│   │   └── tasks/           # タスク管理
+│   ├── examples/            # サンプルコード
+│   │   ├── components/      # コンポーネント例
+│   │   ├── forms/           # フォーム例
+│   │   └── testing/         # テスト例
+│   ├── guides/              # 実装ガイド
+│   │   ├── authentication/  # 認証
+│   │   ├── components/      # コンポーネント
+│   │   ├── deployment/      # デプロイ
+│   │   ├── hooks/           # フック
+│   │   ├── migration/       # 移行ガイド
+│   │   └── tips/            # Tips
+│   ├── operations/          # 運用・DevOps
+│   │   └── performance/     # パフォーマンス管理
+│   └── reference/           # 技術仕様・リファレンス
+│       ├── business/        # ビジネス関連
+│       ├── features/        # 機能仕様
+│       └── specifications/  # 技術仕様
 ├── src/
-│   ├── app/                 # Next.jsのページルーティング
-│   │   ├── 各ページのディレクトリ/
-│   │   ├── news/            # お知らせ
-│   │   │   ├── [id]/
-│   │   │   │   └── page.tsx # 個別ページ
-│   │   │   └── page.tsx     # 一覧
-│   │   ├── (examples)/      # サンプル例ページ
-│   │   ├── api/             # APIエンドポイント
-│   │   │   ├── auth/        # 認証関連
-│   │   │   │   ├── login/   # ログインページ
-│   │   │   │   └── register/ # 登録ページ
-│   │   │   └── example/     # サンプル例ページ
-│   │   ├── auth/            # 認証関連ページ
+│   ├── app/                 # Next.js App Router
+│   │   ├── (app)/           # 保護されたアプリケーションエリア
+│   │   │   ├── dashboard/   # ダッシュボード
+│   │   │   ├── profile/     # プロフィール
+│   │   │   └── layout.tsx   # 認証済みレイアウト
+│   │   ├── (auth)/          # 認証ページグループ
 │   │   │   ├── login/       # ログインページ
-│   │   │   └── register/    # 登録ページ
-│   │   ├── dashboard/       # ダッシュボード関連ページ
-│   │   └── globals.css      # グローバルスタイル
+│   │   │   ├── register/    # 登録ページ
+│   │   │   └── layout.tsx   # 認証レイアウト
+│   │   ├── (examples)/      # 開発サンプルページ（環境変数で制御）
+│   │   │   ├── examples/    # 各種コンポーネントサンプル
+│   │   │   └── layout.tsx   # サンプルレイアウト
+│   │   ├── (site)/          # 公開ページグループ
+│   │   │   ├── about/       # About
+│   │   │   ├── contact/     # お問い合わせ
+│   │   │   ├── news/        # お知らせ
+│   │   │   ├── portfolio/   # ポートフォリオ
+│   │   │   ├── privacy/     # プライバシーポリシー
+│   │   │   ├── services/    # サービス
+│   │   │   └── page.tsx     # ホームページ
+│   │   ├── actions/         # Server Actions
+│   │   │   ├── contact-form.ts  # お問い合わせフォーム
+│   │   │   ├── contact.ts       # コンタクトアクション
+│   │   │   ├── form-example.ts  # フォーム例
+│   │   │   └── profile.ts       # プロフィール更新
+│   │   ├── api/             # APIルート
+│   │   │   ├── auth/        # 認証API
+│   │   │   ├── csrf-token/  # CSRFトークン
+│   │   │   └── example/     # サンプルAPI
+│   │   ├── favicon.ico      # ファビコン
+│   │   ├── globals.css      # グローバルスタイル
+│   │   ├── layout.tsx       # ルートレイアウト
+│   │   ├── not-found.tsx    # 404ページ
+│   │   ├── robots.ts        # robots.txt生成
+│   │   └── sitemap.ts       # サイトマップ生成
 │   ├── components/          # 再利用可能なコンポーネント
+│   │   ├── accessibility/   # アクセシビリティコンポーネント
 │   │   ├── auth/            # 認証関連コンポーネント
+│   │   ├── background/      # 背景エフェクトコンポーネント
+│   │   │   ├── constellation/  # 3D星座エフェクト（モジュール化）
+│   │   │   └── ...            # その他の背景エフェクト
 │   │   ├── contact/         # コンタクトコンポーネント
-│   │   ├── home/            # ホームコンポーネント
-│   │   ├── layout/          # レイアウトコンポーネント(ヘッダー、フッター etc.)
+│   │   ├── dashboard/       # ダッシュボードコンポーネント
+│   │   ├── effects/         # アニメーション・視覚効果
+│   │   ├── home/            # ホームページコンポーネント
+│   │   ├── layout/          # レイアウトコンポーネント
+│   │   ├── map/             # 地図コンポーネント
+│   │   ├── masonry-gallery/ # マソンリーギャラリー
 │   │   ├── news/            # お知らせコンポーネント
-│   │   ├── sections/        # セクションコンポーネント
-│   │   ├── seo/             # SEO関連コンポーネント
-│   │   ├── theme/           # テーマ(モード)コンポーネント
-│   │   └── ui/              # UIコンポーネント(shadcn/uiもここに保存)
-│   ├── hooks/               # カスタムフック
-│   ├── lib/                 # ユーティリティ関数
-│   │   ├── auth/            # 認証関連
-│   │   ├── constants/       # 定数
-│   │   ├── data/            # データ (お知らせの仮データなど)
-│   │   ├── server/          # サーバーサイド
-│   │   │   ├── actions/     # サーバーアクション
-│   │   │   ├── api/         # APIルート
-│   │   │   └── utils/       # サーバーサイドユーティリティ
-│   │   ├── validation/      # バリデーションスキーマ
-│   │   ├── {api}/           # API関連（追加予定）
-│   │   ├── {db}/            # データベース関連（追加予定）
-│   │   └── utils.ts         # 汚用ユーティリティ
-│   └── middleware.ts        # ミドルウェア
-├── tests-results/           # テスト結果
+│   │   ├── profile/         # プロフィールコンポーネント
+│   │   ├── sections/        # ページセクションコンポーネント
+│   │   ├── seo/             # SEO最適化コンポーネント
+│   │   ├── services/        # サービスページコンポーネント
+│   │   ├── theme/           # ダークモードテーマシステム
+│   │   └── ui/              # 基本UIコンポーネント（shadcn/ui）
+│   ├── constants/           # アプリケーション全体の定数
+│   │   ├── constellation.ts # 3Dエフェクト設定
+│   │   ├── particle.ts      # パーティクル設定
+│   │   └── ui.ts            # UIマジックナンバー
+│   ├── hooks/               # カスタムReactフック
+│   │   ├── __tests__/       # フックのテスト
+│   │   ├── use-constellation-*.ts  # 3Dエフェクト用フック
+│   │   ├── use-form-submission.ts  # フォーム送信統合
+│   │   ├── use-header-*.ts        # ヘッダー管理
+│   │   ├── use-hero-height.ts     # ヒーロー高さ計算
+│   │   └── utils/           # フックユーティリティ
+│   ├── lib/                 # ユーティリティとコンフィグ
+│   │   ├── accessibility/   # アクセシビリティユーティリティ
+│   │   ├── auth/            # Auth.js (NextAuth v5) 設定
+│   │   ├── constants/       # アプリケーション定数
+│   │   ├── data/            # 静的データ（お知らせ等）
+│   │   ├── hooks/           # サーバー側フック
+│   │   ├── particle/        # パーティクルユーティリティ
+│   │   ├── security/        # セキュリティユーティリティ
+│   │   ├── server/          # サーバーサイドユーティリティ
+│   │   │   ├── actions/     # Server Actions ユーティリティ
+│   │   │   └── api/         # APIレスポンスユーティリティ
+│   │   ├── types/           # 型定義
+│   │   ├── utils/           # 汎用ユーティリティ
+│   │   ├── validation/      # Zodスキーマ定義
+│   │   └── utils.ts         # 共通ユーティリティ
+│   ├── test-utils/          # テストユーティリティ
+│   ├── types/               # TypeScript型定義
+│   └── middleware.ts        # Next.jsミドルウェア
 ├── tests/                   # テストファイル
-│   ├── components/          # コンポーネントテスト
 │   ├── e2e/                 # Playwright E2Eテスト
 │   └── unit/                # Vitestユニットテスト
+├── test-results/            # テスト実行結果
+├── coverage/                # テストカバレッジレポート
+├── playwright-report/       # Playwrightレポート
 ├── .env.example             # 環境変数の例
 ├── .gitignore               # Gitの除外設定
+├── CLAUDE.md                # Claude Code用プロジェクト設定
 ├── biome.json               # Biome設定
 ├── components.json          # shadcn/uiコンポーネント設定
+├── extensions.json          # VSCode推奨拡張機能
 ├── next-env.d.ts            # Next.js環境設定
-├── next.config.js           # Next.js設定
+├── next.config.ts           # Next.js設定
 ├── package.json             # 依存関係と設定
 ├── playwright.config.ts     # Playwright設定
 ├── postcss.config.mjs       # PostCSS設定
