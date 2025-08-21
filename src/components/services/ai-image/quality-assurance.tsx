@@ -101,11 +101,11 @@ export function QualityAssurance() {
 				</div>
 
 				{/* できること・できないこと */}
-				<div className="mt-16 grid gap-8 lg:grid-cols-2">
+				<div className="mt-12 sm:mt-16 grid gap-6 sm:gap-8 lg:grid-cols-2">
 					{/* できること */}
-					<div className="rounded-2xl bg-green-50 p-8 dark:bg-green-900/20">
-						<h3 className="mb-6 flex items-center text-xl font-bold text-green-900 dark:text-green-100">
-							<FaCheck className="mr-3 h-6 w-6 text-green-600" />
+					<div className="rounded-2xl bg-green-50 p-6 sm:p-8 dark:bg-green-900/20">
+						<h3 className="mb-4 sm:mb-6 flex items-center text-lg sm:text-xl font-bold text-green-900 dark:text-green-100">
+							<FaCheck className="mr-2 sm:mr-3 h-5 sm:h-6 w-5 sm:w-6 text-green-600" />
 							できること・得意分野
 						</h3>
 						<ul className="space-y-3">
@@ -121,9 +121,9 @@ export function QualityAssurance() {
 					</div>
 
 					{/* 制限事項 */}
-					<div className="rounded-2xl bg-red-50 p-8 dark:bg-red-900/20">
-						<h3 className="mb-6 flex items-center text-xl font-bold text-red-900 dark:text-red-100">
-							<FaTriangleExclamation className="mr-3 h-6 w-6 text-red-600" />
+					<div className="rounded-2xl bg-red-50 p-6 sm:p-8 dark:bg-red-900/20">
+						<h3 className="mb-4 sm:mb-6 flex items-center text-lg sm:text-xl font-bold text-red-900 dark:text-red-100">
+							<FaTriangleExclamation className="mr-2 sm:mr-3 h-5 sm:h-6 w-5 sm:w-6 text-red-600" />
 							制限事項・苦手分野
 						</h3>
 						<ul className="space-y-3">
@@ -140,23 +140,23 @@ export function QualityAssurance() {
 				</div>
 
 				{/* 品質保証 */}
-				<div className="mt-16">
-					<h3 className="mb-8 text-center text-2xl font-bold text-gray-900 dark:text-white">
+				<div className="mt-12 sm:mt-16">
+					<h3 className="mb-6 sm:mb-8 text-center text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
 						品質保証体制
 					</h3>
-					<div className="grid gap-8 md:grid-cols-3">
+					<div className="grid gap-6 sm:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
 						{qualityStandards.map((standard, index) => (
 							<div
 								key={index}
-								className="rounded-xl bg-white p-6 shadow-md dark:bg-gray-800"
+								className="rounded-xl bg-white p-4 sm:p-6 shadow-md dark:bg-gray-800"
 							>
-								<div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-purple-100 to-blue-100 text-purple-600 dark:from-purple-900/30 dark:to-blue-900/30 dark:text-purple-400">
-									<FaShieldHeart className="h-6 w-6" />
+								<div className="mb-3 sm:mb-4 inline-flex h-10 sm:h-12 w-10 sm:w-12 items-center justify-center rounded-lg bg-gradient-to-br from-purple-100 to-blue-100 text-purple-600 dark:from-purple-900/30 dark:to-blue-900/30 dark:text-purple-400">
+									<FaShieldHeart className="h-5 sm:h-6 w-5 sm:w-6" />
 								</div>
-								<h4 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
+								<h4 className="mb-2 text-base sm:text-lg font-semibold text-gray-900 dark:text-white">
 									{standard.title}
 								</h4>
-								<p className="mb-4 text-sm text-gray-600 dark:text-gray-400">
+								<p className="mb-3 sm:mb-4 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
 									{standard.description}
 								</p>
 								<ul className="space-y-1">

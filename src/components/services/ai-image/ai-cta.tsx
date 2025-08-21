@@ -87,30 +87,32 @@ export function AICta() {
 					</p>
 
 					{/* 特典情報 */}
-					<div className="mb-12 rounded-2xl bg-white/10 p-6 backdrop-blur-sm">
-						<h3 className="mb-4 text-lg font-bold text-white">
+					<div className="mb-12 rounded-2xl bg-white/10 p-4 sm:p-6 backdrop-blur-sm">
+						<h3 className="mb-4 text-center text-lg font-bold text-white">
 							🎉 今だけの特別キャンペーン
 						</h3>
-						<div className="grid gap-4 md:grid-cols-3">
-							<div className="text-center">
-								<div className="mb-2 text-2xl font-bold text-yellow-400">
+						<div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-3">
+							<div className="text-center p-3 rounded-lg bg-white/5">
+								<div className="mb-2 text-xl sm:text-2xl font-bold text-yellow-400">
 									30%OFF
 								</div>
-								<div className="text-sm text-gray-300">初回制作限定</div>
+								<div className="text-xs sm:text-sm text-gray-300">
+									初回制作限定
+								</div>
 							</div>
-							<div className="text-center">
-								<div className="mb-2 text-2xl font-bold text-green-400">
+							<div className="text-center p-3 rounded-lg bg-white/5">
+								<div className="mb-2 text-xl sm:text-2xl font-bold text-green-400">
 									無料
 								</div>
-								<div className="text-sm text-gray-300">
+								<div className="text-xs sm:text-sm text-gray-300">
 									お見積もり・相談
 								</div>
 							</div>
-							<div className="text-center">
-								<div className="mb-2 text-2xl font-bold text-blue-400">
+							<div className="text-center p-3 rounded-lg bg-white/5">
+								<div className="mb-2 text-xl sm:text-2xl font-bold text-blue-400">
 									即日
 								</div>
-								<div className="text-sm text-gray-300">対応可能</div>
+								<div className="text-xs sm:text-sm text-gray-300">対応可能</div>
 							</div>
 						</div>
 						<p className="mt-4 text-center text-xs text-gray-400">
@@ -120,16 +122,16 @@ export function AICta() {
 				</div>
 
 				{/* コンタクト方法 */}
-				<div className="mb-16">
-					<h3 className="mb-8 text-center text-2xl font-bold text-white">
+				<div className="mb-12 sm:mb-16">
+					<h3 className="mb-6 sm:mb-8 text-center text-xl sm:text-2xl font-bold text-white">
 						お気軽にお問い合わせください
 					</h3>
 
-					<div className="grid gap-6 md:grid-cols-3">
+					<div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
 						{contactMethods.map((method, index) => (
 							<div
 								key={index}
-								className={`rounded-2xl p-6 text-center transition-all hover:scale-105 ${
+								className={`rounded-2xl p-4 sm:p-6 text-center transition-all hover:scale-105 ${
 									method.primary
 										? "bg-gradient-to-br from-purple-600 to-blue-600 shadow-xl"
 										: "bg-white/10 backdrop-blur-sm"
@@ -212,13 +214,13 @@ export function AICta() {
 						</p>
 					</div>
 
-					<div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-						<button className="group inline-flex items-center rounded-lg bg-gradient-to-r from-yellow-500 to-orange-500 px-8 py-4 text-lg font-bold text-white shadow-xl transition-all hover:from-yellow-600 hover:to-orange-600 hover:shadow-2xl">
-							<FaPaperPlane className="mr-3 h-5 w-5 transition-transform group-hover:translate-x-1" />
+					<div className="flex flex-col items-center justify-center gap-3 sm:gap-4 sm:flex-row">
+						<button className="group w-full sm:w-auto inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-yellow-500 to-orange-500 px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-bold text-white shadow-xl transition-all hover:from-yellow-600 hover:to-orange-600 hover:shadow-2xl">
+							<FaPaperPlane className="mr-2 sm:mr-3 h-4 sm:h-5 w-4 sm:w-5 transition-transform group-hover:translate-x-1" />
 							今すぐ無料相談を申し込む
 						</button>
 
-						<button className="inline-flex items-center rounded-lg border-2 border-white/30 bg-white/10 px-8 py-4 text-lg font-medium text-white backdrop-blur-sm transition-all hover:bg-white/20">
+						<button className="w-full sm:w-auto inline-flex items-center justify-center rounded-lg border-2 border-white/30 bg-white/10 px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-medium text-white backdrop-blur-sm transition-all hover:bg-white/20">
 							制作事例を見る
 						</button>
 					</div>
@@ -235,35 +237,43 @@ export function AICta() {
 					</p>
 
 					{/* 実績数値 */}
-					<div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-						<div>
-							<div className="mb-2 text-3xl font-bold text-white">500+</div>
-							<div className="text-sm text-gray-400">制作実績</div>
+					<div className="grid grid-cols-2 gap-4 sm:gap-8 md:grid-cols-4">
+						<div className="text-center">
+							<div className="mb-1 sm:mb-2 text-2xl sm:text-3xl font-bold text-white">
+								500+
+							</div>
+							<div className="text-xs sm:text-sm text-gray-400">制作実績</div>
 						</div>
-						<div>
-							<div className="mb-2 text-3xl font-bold text-white">98%</div>
-							<div className="text-sm text-gray-400">満足度</div>
+						<div className="text-center">
+							<div className="mb-1 sm:mb-2 text-2xl sm:text-3xl font-bold text-white">
+								98%
+							</div>
+							<div className="text-xs sm:text-sm text-gray-400">満足度</div>
 						</div>
-						<div>
-							<div className="mb-2 text-3xl font-bold text-white">24h</div>
-							<div className="text-sm text-gray-400">平均納期</div>
+						<div className="text-center">
+							<div className="mb-1 sm:mb-2 text-2xl sm:text-3xl font-bold text-white">
+								24h
+							</div>
+							<div className="text-xs sm:text-sm text-gray-400">平均納期</div>
 						</div>
-						<div>
-							<div className="mb-2 text-3xl font-bold text-white">100%</div>
-							<div className="text-sm text-gray-400">期限内納品</div>
+						<div className="text-center">
+							<div className="mb-1 sm:mb-2 text-2xl sm:text-3xl font-bold text-white">
+								100%
+							</div>
+							<div className="text-xs sm:text-sm text-gray-400">期限内納品</div>
 						</div>
 					</div>
 				</div>
 
 				{/* 最後の後押し */}
-				<div className="mt-12 rounded-2xl bg-gradient-to-r from-red-500/20 to-pink-500/20 border border-red-500/30 p-6 text-center backdrop-blur-sm">
-					<p className="mb-2 text-lg font-bold text-white">
+				<div className="mt-8 sm:mt-12 rounded-2xl bg-gradient-to-r from-red-500/20 to-pink-500/20 border border-red-500/30 p-4 sm:p-6 text-center backdrop-blur-sm">
+					<p className="mb-2 text-base sm:text-lg font-bold text-white">
 						⚡ 限定キャンペーン残り時間
 					</p>
-					<p className="mb-4 text-3xl font-bold text-yellow-400">
+					<p className="mb-3 sm:mb-4 text-2xl sm:text-3xl font-bold text-yellow-400">
 						あと48時間
 					</p>
-					<p className="text-sm text-gray-300">
+					<p className="text-xs sm:text-sm text-gray-300">
 						30%OFFは今月末まで！この機会をお見逃しなく
 					</p>
 				</div>

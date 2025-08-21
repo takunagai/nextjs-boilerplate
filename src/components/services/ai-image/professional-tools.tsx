@@ -89,24 +89,24 @@ export function ProfessionalTools() {
 				</div>
 
 				{/* ツールカテゴリ */}
-				<div className="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+				<div className="mt-12 sm:mt-16 grid gap-6 sm:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
 					{toolCategories.map((category, index) => (
 						<div
 							key={index}
-							className="group rounded-2xl bg-white p-6 shadow-lg transition-all hover:shadow-xl dark:bg-gray-800"
+							className="group rounded-2xl bg-white p-4 sm:p-6 shadow-lg transition-all hover:shadow-xl dark:bg-gray-800"
 						>
 							{/* アイコン */}
 							<div
-								className={`mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ${category.color} text-white shadow-md`}
+								className={`mb-3 sm:mb-4 inline-flex h-10 sm:h-12 w-10 sm:w-12 items-center justify-center rounded-xl bg-gradient-to-br ${category.color} text-white shadow-md`}
 							>
-								<category.icon className="h-6 w-6" />
+								<category.icon className="h-5 sm:h-6 w-5 sm:w-6" />
 							</div>
 
 							{/* タイトル・説明 */}
-							<h3 className="mb-2 text-lg font-bold text-gray-900 dark:text-white">
+							<h3 className="mb-2 text-base sm:text-lg font-bold text-gray-900 dark:text-white">
 								{category.title}
 							</h3>
-							<p className="mb-4 text-sm text-gray-600 dark:text-gray-400">
+							<p className="mb-3 sm:mb-4 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
 								{category.description}
 							</p>
 
@@ -126,23 +126,23 @@ export function ProfessionalTools() {
 				</div>
 
 				{/* ワークフロー */}
-				<div className="mt-20">
-					<h3 className="mb-12 text-center text-2xl font-bold text-gray-900 dark:text-white">
+				<div className="mt-16 sm:mt-20">
+					<h3 className="mb-8 sm:mb-12 text-center text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
 						技術統合ワークフロー
 					</h3>
-					<div className="grid gap-8 md:grid-cols-4">
+					<div className="grid gap-6 sm:gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
 						{workflow.map((step, index) => (
 							<div key={index} className="relative text-center">
 								{/* ステップ番号 */}
-								<div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-purple-500 to-blue-600 text-xl font-bold text-white shadow-lg">
+								<div className="mb-3 sm:mb-4 inline-flex h-12 sm:h-16 w-12 sm:w-16 items-center justify-center rounded-full bg-gradient-to-br from-purple-500 to-blue-600 text-lg sm:text-xl font-bold text-white shadow-lg">
 									{step.step}
 								</div>
 
 								{/* ステップ内容 */}
-								<h4 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
+								<h4 className="mb-2 text-base sm:text-lg font-semibold text-gray-900 dark:text-white">
 									{step.title}
 								</h4>
-								<p className="text-sm text-gray-600 dark:text-gray-400">
+								<p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
 									{step.description}
 								</p>
 
@@ -170,30 +170,38 @@ export function ProfessionalTools() {
 				</div>
 
 				{/* 技術的優位性 */}
-				<div className="mt-16 rounded-2xl bg-gradient-to-r from-purple-50 to-blue-50 p-8 dark:from-purple-900/20 dark:to-blue-900/20">
-					<div className="grid gap-8 md:grid-cols-3">
+				<div className="mt-12 sm:mt-16 rounded-2xl bg-gradient-to-r from-purple-50 to-blue-50 p-6 sm:p-8 dark:from-purple-900/20 dark:to-blue-900/20">
+					<div className="grid gap-6 sm:gap-8 grid-cols-2 md:grid-cols-4">
 						<div className="text-center">
-							<div className="mb-4 text-3xl font-bold text-purple-600 dark:text-purple-400">
+							<div className="mb-2 sm:mb-4 text-2xl sm:text-3xl font-bold text-purple-600 dark:text-purple-400">
 								10+
 							</div>
-							<div className="text-sm text-gray-700 dark:text-gray-300">
+							<div className="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
 								AI技術・ソフトウェア
 							</div>
 						</div>
 						<div className="text-center">
-							<div className="mb-4 text-3xl font-bold text-blue-600 dark:text-blue-400">
+							<div className="mb-2 sm:mb-4 text-2xl sm:text-3xl font-bold text-blue-600 dark:text-blue-400">
 								5年+
 							</div>
-							<div className="text-sm text-gray-700 dark:text-gray-300">
+							<div className="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
 								画像編集経験
 							</div>
 						</div>
 						<div className="text-center">
-							<div className="mb-4 text-3xl font-bold text-green-600 dark:text-green-400">
+							<div className="mb-2 sm:mb-4 text-2xl sm:text-3xl font-bold text-green-600 dark:text-green-400">
 								100%
 							</div>
-							<div className="text-sm text-gray-700 dark:text-gray-300">
+							<div className="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
 								最新技術対応
+							</div>
+						</div>
+						<div className="text-center col-span-2 md:col-span-1">
+							<div className="mb-2 sm:mb-4 text-2xl sm:text-3xl font-bold text-orange-600 dark:text-orange-400">
+								24/7
+							</div>
+							<div className="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+								サポート対応
 							</div>
 						</div>
 					</div>

@@ -184,10 +184,7 @@ export function AIWorkflow() {
 											<div className="absolute left-0 right-0 z-20 mt-2 rounded-lg bg-white p-4 shadow-xl dark:bg-gray-800 lg:left-1/2 lg:-translate-x-1/2">
 												<ul className="space-y-1 text-left text-sm">
 													{step.details.map((detail, detailIndex) => (
-														<li
-															key={detailIndex}
-															className="flex items-start"
-														>
+														<li key={detailIndex} className="flex items-start">
 															<span className="mr-2 text-gray-400">•</span>
 															<span className="text-gray-600 dark:text-gray-400">
 																{detail}
@@ -214,15 +211,11 @@ export function AIWorkflow() {
 					</div>
 					<div className="flex items-center">
 						<div className="mr-2 h-4 w-4 rounded-full bg-purple-500" />
-						<span className="text-gray-600 dark:text-gray-400">
-							当方の作業
-						</span>
+						<span className="text-gray-600 dark:text-gray-400">当方の作業</span>
 					</div>
 					<div className="flex items-center">
 						<div className="mr-2 h-4 w-4 rounded-full bg-green-500" />
-						<span className="text-gray-600 dark:text-gray-400">
-							両者で協力
-						</span>
+						<span className="text-gray-600 dark:text-gray-400">両者で協力</span>
 					</div>
 				</div>
 

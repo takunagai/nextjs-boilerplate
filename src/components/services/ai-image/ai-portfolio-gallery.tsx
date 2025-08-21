@@ -170,7 +170,15 @@ const portfolioImages = [
 	},
 ];
 
-const categories = ["すべて", "人物", "商品", "イラスト", "合成", "グラフィック", "その他"];
+const categories = [
+	"すべて",
+	"人物",
+	"商品",
+	"イラスト",
+	"合成",
+	"グラフィック",
+	"その他",
+];
 
 export function AIPortfolioGallery() {
 	const [selectedCategory, setSelectedCategory] = useState("すべて");
@@ -183,9 +191,13 @@ export function AIPortfolioGallery() {
 			? portfolioImages
 			: portfolioImages.filter((img) => {
 					if (selectedCategory === "その他") {
-						return !["人物", "商品", "イラスト", "合成", "グラフィック"].includes(
-							img.category,
-						);
+						return ![
+							"人物",
+							"商品",
+							"イラスト",
+							"合成",
+							"グラフィック",
+						].includes(img.category);
 					}
 					return img.category === selectedCategory;
 				});
@@ -259,7 +271,9 @@ export function AIPortfolioGallery() {
 							{/* オーバーレイ */}
 							<div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
 								<div className="absolute bottom-0 left-0 right-0 p-4">
-									<p className="text-sm font-medium text-white">{image.title}</p>
+									<p className="text-sm font-medium text-white">
+										{image.title}
+									</p>
 									<p className="text-xs text-white/80">{image.technique}</p>
 									<span className="mt-1 inline-block rounded bg-purple-500 px-2 py-1 text-xs text-white">
 										{image.category}
