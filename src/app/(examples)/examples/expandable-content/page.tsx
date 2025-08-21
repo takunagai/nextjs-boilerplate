@@ -232,6 +232,111 @@ export default function ExpandableContentPage() {
 								</ExpandableContent>
 							</div>
 						</div>
+
+						{/* グラデーション制御の新機能 */}
+						<div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
+							<h3 className="text-lg font-medium mb-4">
+								フェードアウトグラデーション制御 🆕
+							</h3>
+							<p className="text-gray-600 mb-6">
+								v2.0で追加された新機能：複雑な背景でもグラデーション効果を制御できます
+							</p>
+
+							<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+								<div>
+									<h4 className="font-medium mb-3">
+										デフォルト（グラデーションあり）
+									</h4>
+									<ExpandableContent 
+										maxHeight={120} 
+										gradientHeight={72}
+										className="bg-white dark:bg-gray-900"
+									>
+										<div className="p-4">
+											<p className="font-medium mb-2">
+												3行分（72px）のフェードアウト効果
+											</p>
+											<p>
+												デフォルトでは美しいフェードアウトグラデーションが適用されます。
+												テキストが自然に消えていく効果により、
+												ユーザーは「続きがある」ことを直感的に理解できます。
+											</p>
+											<p>
+												この効果は特に、シンプルな背景色の場合に最適に動作します。
+												ソリッドカラーの背景では完璧にブレンドします。
+											</p>
+										</div>
+									</ExpandableContent>
+								</div>
+
+								<div>
+									<h4 className="font-medium mb-3">
+										グラデーション無効（クリーンカット）
+									</h4>
+									<ExpandableContent 
+										maxHeight={120} 
+										showGradient={false}
+										className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900 dark:to-purple-900"
+									>
+										<div className="p-4">
+											<p className="font-medium mb-2">
+												複雑な背景での推奨設定
+											</p>
+											<p>
+												グラデーション背景や画像背景の場合は、
+												showGradient=false を使用してクリーンカットにすることを推奨します。
+											</p>
+											<p>
+												この設定により、背景パターンとの不要な干渉を避け、
+												コンテンツの境界を明確に保つことができます。
+											</p>
+										</div>
+									</ExpandableContent>
+								</div>
+
+								<div>
+									<h4 className="font-medium mb-3">
+										カスタム高さ（2行分）
+									</h4>
+									<ExpandableContent 
+										maxHeight={120} 
+										gradientHeight={48}
+									>
+										<div className="p-4">
+											<p className="font-medium mb-2">
+												より控えめなフェード効果
+											</p>
+											<p>
+												小さなコンテンツや UI スペースが限られている場合は、
+												gradientHeight を調整して適切な効果を得られます。
+											</p>
+											<p>
+												この例では48px（約2行分）のフェード効果を使用しており、
+												よりコンパクトでさりげない印象を与えます。
+											</p>
+										</div>
+									</ExpandableContent>
+								</div>
+
+								<div>
+									<h4 className="font-medium mb-3">
+										ベストプラクティス 💡
+									</h4>
+									<div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
+										<p className="font-medium mb-2 text-green-800 dark:text-green-200">
+											適切な使い分け
+										</p>
+										<ul className="text-sm space-y-1 text-green-700 dark:text-green-300">
+											<li>✅ ソリッドカラー背景 → デフォルト</li>
+											<li>✅ グラデーション背景 → showGradient={false}</li>
+											<li>✅ 画像背景 → showGradient={false}</li>
+											<li>✅ 小さなUI → gradientHeight={48}</li>
+											<li>✅ 大きなコンテンツ → gradientHeight={96}</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</TabsContent>
 
