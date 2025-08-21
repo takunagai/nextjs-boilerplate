@@ -57,6 +57,7 @@ export interface ExpandableContentProps
 	collapseText?: string;
 	disabled?: boolean;
 	gradientHeight?: number;
+	showGradient?: boolean;
 	buttonVariant?: VariantProps<typeof expandableButtonVariants>["variant"];
 	hideButton?: boolean;
 }
@@ -67,7 +68,8 @@ export function ExpandableContent({
 	expandText = "もっと見る",
 	collapseText = "折りたたむ",
 	disabled = false,
-	gradientHeight = 40,
+	gradientHeight = 72,
+	showGradient = true,
 	variant,
 	buttonVariant = "outline",
 	hideButton = false,
@@ -81,30 +83,33 @@ export function ExpandableContent({
 	const id = useId();
 	const contentId = `expandable-content-${id}`;
 
-	// コンテンツの実際の高さを測定
+	// コンテンツの実際の高さを測定と状態管理を最適化
 	useLayoutEffect(() => {
+		if (!contentRef.current) return;
+
+		const contentElement = contentRef.current;
+		const maxHeightPx =
+			typeof maxHeight === "string" ? parseInt(maxHeight, 10) : maxHeight;
+
 		const measureHeight = () => {
-			if (contentRef.current) {
-				const height = contentRef.current.scrollHeight;
-				setContentHeight(height);
+			const height = contentElement.scrollHeight;
+			setContentHeight(height);
 
-				const maxHeightPx =
-					typeof maxHeight === "string"
-						? parseInt(maxHeight, 10)
-						: maxHeight;
-
-				// コンテンツが指定高さを超える場合のみボタンを表示
-				setShowButton(height > maxHeightPx && !disabled && !hideButton);
-			}
+			// ボタン表示判定を早期に行う
+			const shouldShowButton = height > maxHeightPx && !disabled && !hideButton;
+			setShowButton(shouldShowButton);
 		};
 
+		// 初回測定（同期的に実行）
 		measureHeight();
 
 		// ResizeObserverでコンテンツサイズ変更を監視
-		const resizeObserver = new ResizeObserver(measureHeight);
-		if (contentRef.current) {
-			resizeObserver.observe(contentRef.current);
-		}
+		const resizeObserver = new ResizeObserver(() => {
+			// リサイズ時のみ再測定（パフォーマンス最適化）
+			requestAnimationFrame(measureHeight);
+		});
+
+		resizeObserver.observe(contentElement);
 
 		return () => {
 			resizeObserver.disconnect();
@@ -133,14 +138,27 @@ export function ExpandableContent({
 	return (
 		<div
 			className={cn(expandableContentVariants({ variant }), className)}
+			style={{
+				"--expandable-max-height": `${typeof maxHeight === "string" ? maxHeight : `${maxHeight}px`}`,
+			} as React.CSSProperties}
 			{...props}
 		>
 			{/* コンテンツ部分 */}
 			<div
-				className="transition-all duration-300 ease-in-out"
+				className={cn(
+					"transition-all duration-300 ease-in-out",
+					// CSS-first approach: 初期状態から高さ制限を適用
+					"max-h-[var(--expandable-max-height)] overflow-hidden",
+					// JavaScript読み込み後は動的制御に切り替え
+					showButton && isExpanded && "!max-h-none !overflow-visible",
+					showButton && !isExpanded && "!overflow-hidden",
+				)}
 				style={{
-					height: showButton ? `${containerHeight}px` : "auto",
-					overflow: showButton && !isExpanded ? "hidden" : "visible",
+					// JavaScript読み込み後は精密な高さ制御
+					...(showButton && {
+						height: isExpanded ? `${contentHeight}px` : `${containerHeight}px`,
+						maxHeight: "none", // CSS max-height を無効化
+					}),
 				}}
 			>
 				<div ref={contentRef} id={contentId}>
@@ -149,13 +167,18 @@ export function ExpandableContent({
 			</div>
 
 			{/* フェードアウトグラデーション */}
-			{showButton && !isExpanded && (
-				<div
-					className="pointer-events-none absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background to-transparent"
-					style={{ height: `${gradientHeight}px` }}
-					aria-hidden="true"
-				/>
-			)}
+			<div
+				className={cn(
+					"pointer-events-none absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background to-transparent transition-opacity duration-300",
+					// CSS-first approach: showGradientがtrueなら初期状態から表示
+					showGradient ? "opacity-100" : "opacity-0",
+					// JavaScript読み込み後は動的制御
+					showButton && isExpanded && "!opacity-0",
+					showButton && !isExpanded && showGradient && "!opacity-100",
+				)}
+				style={{ height: `${gradientHeight}px` }}
+				aria-hidden="true"
+			/>
 
 			{/* 展開/折りたたみボタン */}
 			{showButton && (
