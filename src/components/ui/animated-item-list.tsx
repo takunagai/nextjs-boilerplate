@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { FaCheck } from "react-icons/fa6";
+import { FaCheck, FaStar, FaHeart, FaThumbsUp, FaDiamond } from "react-icons/fa6";
 
 import { useDebugLogger } from "@/hooks/use-debug-logger";
 import { UI_ANIMATED_LIST } from "@/lib/constants/ui";
@@ -9,6 +9,17 @@ import { UI_ANIMATED_LIST } from "@/lib/constants/ui";
 type AnimatedItem = string;
 type AnimatedItemSet = AnimatedItem[];
 type AnimatedItemData = AnimatedItem[] | AnimatedItemSet[];
+
+// 利用可能なアイコンのマッピング
+const ICON_MAP = {
+	check: FaCheck,
+	star: FaStar,
+	heart: FaHeart,
+	thumbsUp: FaThumbsUp,
+	diamond: FaDiamond,
+} as const;
+
+type IconName = keyof typeof ICON_MAP;
 
 interface AnimatedItemListProps {
 	// 必須: 項目データ
@@ -21,7 +32,7 @@ interface AnimatedItemListProps {
 
 	// 表示設定
 	showIcon?: boolean; // アイコン表示（デフォルト: true）
-	icon?: React.ComponentType<{ className?: string }> | React.ReactElement;
+	icon?: IconName; // アイコン名（デフォルト: 'check'）
 
 	// インジゲーター制御
 	showIndicator?: boolean; // インジゲーター表示（デフォルト: false）
@@ -54,7 +65,7 @@ export function AnimatedItemList({
 	animationDuration = UI_ANIMATED_LIST.DEFAULT_ANIMATION_DURATION,
 	staggerDelay = UI_ANIMATED_LIST.DEFAULT_STAGGER_DELAY,
 	showIcon = true,
-	icon: IconComponent = FaCheck,
+	icon: iconName = "check",
 	showIndicator = false,
 	indicatorPosition = "top",
 	indicatorClassName = "",
@@ -251,8 +262,16 @@ export function AnimatedItemList({
 		index: number,
 		isPlaceholder: boolean,
 	) => {
-		const IconToRender =
-			typeof IconComponent === "function" ? IconComponent : () => IconComponent;
+		// アイコン名からアイコンコンポーネントを取得してレンダリング
+		const renderIcon = (): React.ReactNode => {
+			if (!showIcon || isPlaceholder) return null;
+
+			// アイコン名からコンポーネントを取得
+			const IconComponent = ICON_MAP[iconName];
+			if (!IconComponent) return null;
+
+			return <IconComponent className={iconClassName} />;
+		};
 
 		return (
 			<div
@@ -279,7 +298,7 @@ export function AnimatedItemList({
 							isPlaceholder ? "bg-transparent" : "bg-primary/10"
 						}`}
 					>
-						{!isPlaceholder && <IconToRender className={iconClassName} />}
+						{renderIcon()}
 					</div>
 				)}
 				<p

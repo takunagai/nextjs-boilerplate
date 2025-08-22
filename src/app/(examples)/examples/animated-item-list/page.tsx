@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { FaLightbulb, FaRocket, FaStar, FaTrophy } from "react-icons/fa6";
 import { AnimatedItemList } from "@/components/ui/animated-item-list";
 import { Container } from "@/components/ui/container";
 
@@ -183,7 +182,7 @@ export default function AnimatedItemListExamplesPage() {
 							<h4 className="text-base font-bold mb-3">スターアイコン</h4>
 							<AnimatedItemList
 								items={staticItems.slice(0, 3)}
-								icon={FaStar}
+								icon="star"
 								iconClassName="w-4 h-4 text-yellow-500"
 							/>
 						</div>
@@ -193,7 +192,7 @@ export default function AnimatedItemListExamplesPage() {
 							<h4 className="text-base font-bold mb-3">ロケットアイコン</h4>
 							<AnimatedItemList
 								items={staticItems.slice(0, 3)}
-								icon={FaRocket}
+								icon="thumbsUp"
 								iconClassName="w-4 h-4 text-blue-500"
 							/>
 						</div>
@@ -203,7 +202,7 @@ export default function AnimatedItemListExamplesPage() {
 							<h4 className="text-base font-bold mb-3">アイデアアイコン</h4>
 							<AnimatedItemList
 								items={staticItems.slice(0, 3)}
-								icon={FaLightbulb}
+								icon="diamond"
 								iconClassName="w-4 h-4 text-orange-500"
 							/>
 						</div>
@@ -250,7 +249,7 @@ export default function AnimatedItemListExamplesPage() {
 								items={achievements}
 								intervalSeconds={3}
 								showIndicator={true}
-								icon={FaTrophy}
+								icon="star"
 								className="space-y-3"
 								itemClassName="flex items-start gap-3 p-4 bg-white/80 backdrop-blur rounded-xl shadow-md hover:shadow-lg transition-shadow"
 								iconClassName="w-5 h-5 text-purple-600 mt-0.5"
