@@ -1,5 +1,10 @@
 import { Container } from "@/components/ui/container";
-import { FaCamera, FaLightbulb, FaCompactDisc, FaPalette } from "react-icons/fa6";
+import {
+	FaCamera,
+	FaLightbulb,
+	FaCompactDisc,
+	FaPalette,
+} from "react-icons/fa6";
 
 const equipment = [
 	{

@@ -269,7 +269,9 @@ export default function AboutPage() {
 								</div>
 								<div className="text-gray-700 dark:text-gray-300">
 									<ul className="space-y-1">
-										<li>• 企画・デザイン・コーディング・運用まで一貫して対応</li>
+										<li>
+											• 企画・デザイン・コーディング・運用まで一貫して対応
+										</li>
 										<li>
 											• 中小企業から個人事業主まで、幅広いクライアントをサポート
 										</li>

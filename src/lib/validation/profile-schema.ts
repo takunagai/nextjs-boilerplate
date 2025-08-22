@@ -32,12 +32,9 @@ const createSafeTextSchema = (
 			.max(maxLength, {
 				message: `${fieldName}は${maxLength}文字以内で入力してください`,
 			})
-			.refine(
-				(value: string) => validateNoHtmlTags(value),
-				{
-					message: "HTMLタグを含めることはできません",
-				},
-			);
+			.refine((value: string) => validateNoHtmlTags(value), {
+				message: "HTMLタグを含めることはできません",
+			});
 	} else {
 		// オプショナルの場合
 		return z
@@ -52,12 +49,9 @@ const createSafeTextSchema = (
 					message: `${fieldName}は${maxLength}文字以内で入力してください`,
 				},
 			)
-			.refine(
-				(value: string | undefined) => validateNoHtmlTags(value),
-				{
-					message: "HTMLタグを含めることはできません",
-				},
-			);
+			.refine((value: string | undefined) => validateNoHtmlTags(value), {
+				message: "HTMLタグを含めることはできません",
+			});
 	}
 };
 

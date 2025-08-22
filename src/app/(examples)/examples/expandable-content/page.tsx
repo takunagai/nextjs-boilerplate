@@ -50,7 +50,8 @@ export default function ExpandableContentPage() {
 								<p>
 									Next.js
 									の主な特徴には、サーバーサイドレンダリング（SSR）、静的サイト生成（SSG）、
-									API ルート、画像最適化、ファイルベースのルーティングなどがあります。
+									API
+									ルート、画像最適化、ファイルベースのルーティングなどがあります。
 									これらの機能により、高性能で SEO
 									に優れたWebアプリケーションを簡単に構築できます。
 								</p>
@@ -65,7 +66,8 @@ export default function ExpandableContentPage() {
 									パフォーマンスの面でも、Next.js
 									は自動的にコード分割、画像最適化、フォント最適化などを行い、
 									ユーザーエクスペリエンスの向上に努めています。
-									さらに、開発体験の向上にも注力しており、Fast Refresh、TypeScript
+									さらに、開発体験の向上にも注力しており、Fast
+									Refresh、TypeScript
 									サポート、ESLint統合などの機能を提供しています。
 								</p>
 							</div>
@@ -126,9 +128,7 @@ export default function ExpandableContentPage() {
 				<TabsContent value="variants">
 					<div className="border rounded-lg p-6 space-y-8">
 						<div>
-							<h2 className="text-xl font-semibold mb-2">
-								スタイルバリアント
-							</h2>
+							<h2 className="text-xl font-semibold mb-2">スタイルバリアント</h2>
 							<p className="text-gray-600 mb-4">
 								異なる見た目のバリアントとボタンスタイルの組み合わせ
 							</p>
@@ -163,9 +163,7 @@ export default function ExpandableContentPage() {
 									buttonVariant="ghost"
 								>
 									<div className="p-4">
-										<p className="font-medium mb-2">
-											控えめな背景色のスタイル
-										</p>
+										<p className="font-medium mb-2">控えめな背景色のスタイル</p>
 										<p>
 											サブトルバリアントは、控えめなミューテッドカラーの背景を使用します。
 											メインコンテンツを邪魔せず、さりげなく情報を提供したい場合に適しています。
@@ -247,8 +245,8 @@ export default function ExpandableContentPage() {
 									<h4 className="font-medium mb-3">
 										デフォルト（グラデーションあり）
 									</h4>
-									<ExpandableContent 
-										maxHeight={120} 
+									<ExpandableContent
+										maxHeight={120}
 										gradientHeight={72}
 										className="bg-white dark:bg-gray-900"
 									>
@@ -273,18 +271,17 @@ export default function ExpandableContentPage() {
 									<h4 className="font-medium mb-3">
 										グラデーション無効（クリーンカット）
 									</h4>
-									<ExpandableContent 
-										maxHeight={120} 
+									<ExpandableContent
+										maxHeight={120}
 										showGradient={false}
 										className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900 dark:to-purple-900"
 									>
 										<div className="p-4">
-											<p className="font-medium mb-2">
-												複雑な背景での推奨設定
-											</p>
+											<p className="font-medium mb-2">複雑な背景での推奨設定</p>
 											<p>
 												グラデーション背景や画像背景の場合は、
-												showGradient=false を使用してクリーンカットにすることを推奨します。
+												showGradient=false
+												を使用してクリーンカットにすることを推奨します。
 											</p>
 											<p>
 												この設定により、背景パターンとの不要な干渉を避け、
@@ -295,13 +292,8 @@ export default function ExpandableContentPage() {
 								</div>
 
 								<div>
-									<h4 className="font-medium mb-3">
-										カスタム高さ（2行分）
-									</h4>
-									<ExpandableContent 
-										maxHeight={120} 
-										gradientHeight={48}
-									>
+									<h4 className="font-medium mb-3">カスタム高さ（2行分）</h4>
+									<ExpandableContent maxHeight={120} gradientHeight={48}>
 										<div className="p-4">
 											<p className="font-medium mb-2">
 												より控えめなフェード効果
@@ -319,9 +311,7 @@ export default function ExpandableContentPage() {
 								</div>
 
 								<div>
-									<h4 className="font-medium mb-3">
-										ベストプラクティス 💡
-									</h4>
+									<h4 className="font-medium mb-3">ベストプラクティス 💡</h4>
 									<div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
 										<p className="font-medium mb-2 text-green-800 dark:text-green-200">
 											適切な使い分け
@@ -361,12 +351,8 @@ export default function ExpandableContentPage() {
 											React 開発のベストプラクティス
 										</h4>
 										<ul className="space-y-2 list-disc list-inside">
-											<li>
-												コンポーネントは単一責任の原則に従って設計する
-											</li>
-											<li>
-												Propsの型定義を明確にし、TypeScriptを活用する
-											</li>
+											<li>コンポーネントは単一責任の原則に従って設計する</li>
+											<li>Propsの型定義を明確にし、TypeScriptを活用する</li>
 											<li>
 												useEffect
 												の依存配列を適切に管理し、不要な再レンダリングを避ける
@@ -374,24 +360,16 @@ export default function ExpandableContentPage() {
 											<li>
 												カスタムフックを使用してロジックを再利用可能にする
 											</li>
-											<li>
-												パフォーマンス最適化は必要な場合のみ適用する
-											</li>
-											<li>
-												アクセシビリティを考慮したマークアップを心がける
-											</li>
+											<li>パフォーマンス最適化は必要な場合のみ適用する</li>
+											<li>アクセシビリティを考慮したマークアップを心がける</li>
 											<li>
 												テストを書いて品質を保証する（単体テスト、統合テスト）
 											</li>
 											<li>
 												コードレビューを通じてチーム全体のスキル向上を図る
 											</li>
-											<li>
-												最新のReactの機能やベストプラクティスを学び続ける
-											</li>
-											<li>
-												ドキュメント化を習慣とし、保守性を高める
-											</li>
+											<li>最新のReactの機能やベストプラクティスを学び続ける</li>
+											<li>ドキュメント化を習慣とし、保守性を高める</li>
 										</ul>
 									</div>
 								</ExpandableContent>
@@ -399,9 +377,7 @@ export default function ExpandableContentPage() {
 
 							{/* カードレイアウト */}
 							<div>
-								<h3 className="text-lg font-medium mb-3">
-									カードレイアウト
-								</h3>
+								<h3 className="text-lg font-medium mb-3">カードレイアウト</h3>
 								<ExpandableContent maxHeight={200} variant="minimal">
 									<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 										{Array.from({ length: 6 }, (_, i) => (
@@ -502,9 +478,7 @@ export default function ExpandableContentPage() {
 				<TabsContent value="responsive">
 					<div className="border rounded-lg p-6 space-y-8">
 						<div>
-							<h2 className="text-xl font-semibold mb-2">
-								レスポンシブ対応
-							</h2>
+							<h2 className="text-xl font-semibold mb-2">レスポンシブ対応</h2>
 							<p className="text-gray-600 mb-4">
 								画面サイズに応じて適切に動作するレスポンシブデザイン
 							</p>
@@ -512,9 +486,7 @@ export default function ExpandableContentPage() {
 
 						<div className="space-y-6">
 							<div>
-								<h3 className="text-lg font-medium mb-3">
-									デバイス別最適化
-								</h3>
+								<h3 className="text-lg font-medium mb-3">デバイス別最適化</h3>
 								<ExpandableContent
 									maxHeight="clamp(150px, 20vh, 300px)"
 									className="md:p-6 p-4"
@@ -605,9 +577,7 @@ export default function ExpandableContentPage() {
 				<h2 className="text-xl font-semibold mb-4">技術仕様</h2>
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 					<div>
-						<h3 className="font-medium mb-2 text-primary">
-							アクセシビリティ
-						</h3>
+						<h3 className="font-medium mb-2 text-primary">アクセシビリティ</h3>
 						<ul className="text-sm space-y-1 text-gray-600">
 							<li>• ARIA属性による状態通知</li>
 							<li>• キーボード操作対応</li>
@@ -625,9 +595,7 @@ export default function ExpandableContentPage() {
 						</ul>
 					</div>
 					<div>
-						<h3 className="font-medium mb-2 text-primary">
-							パフォーマンス
-						</h3>
+						<h3 className="font-medium mb-2 text-primary">パフォーマンス</h3>
 						<ul className="text-sm space-y-1 text-gray-600">
 							<li>• CSS transition アニメーション</li>
 							<li>• ResizeObserver による最適化</li>

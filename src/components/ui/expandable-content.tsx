@@ -138,9 +138,11 @@ export function ExpandableContent({
 	return (
 		<div
 			className={cn(expandableContentVariants({ variant }), className)}
-			style={{
-				"--expandable-max-height": `${typeof maxHeight === "string" ? maxHeight : `${maxHeight}px`}`,
-			} as React.CSSProperties}
+			style={
+				{
+					"--expandable-max-height": `${typeof maxHeight === "string" ? maxHeight : `${maxHeight}px`}`,
+				} as React.CSSProperties
+			}
 			{...props}
 		>
 			{/* コンテンツ部分 */}

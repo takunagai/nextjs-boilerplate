@@ -179,7 +179,10 @@ export function PhotographyGallery() {
 	};
 
 	return (
-		<section id="gallery" className="bg-gray-50 py-16 dark:bg-gray-900 sm:py-24">
+		<section
+			id="gallery"
+			className="bg-gray-50 py-16 dark:bg-gray-900 sm:py-24"
+		>
 			<Container as="section">
 				<div className="text-center">
 					<h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
