@@ -13,13 +13,26 @@ export type ContentItem = {
 	};
 };
 
+// アスペクト比マッピング（Tailwindで安全に使用できるクラス名）
+const ASPECT_RATIO_MAP = {
+	"1/1": "aspect-square",
+	"2/3": "aspect-[2/3]",
+	"3/2": "aspect-[3/2]", 
+	"3/4": "aspect-[3/4]",
+	"4/3": "aspect-[4/3]",
+	"16/9": "aspect-video",
+	"9/16": "aspect-[9/16]",
+} as const;
+
+type AspectRatioKey = keyof typeof ASPECT_RATIO_MAP;
+
 // コンポーネントのProps
 type ContentItemsProps = {
 	items: ContentItem[];
 	columns?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 	className?: string;
 	imageHeight?: number; // 後方互換性のため残す
-	aspectRatio?: string;
+	aspectRatio?: AspectRatioKey | string;
 };
 
 /**
@@ -32,8 +45,8 @@ export function ContentItems({
 	imageHeight, // 使用しないが後方互換性のため残す
 	aspectRatio = "2/3",
 }: ContentItemsProps) {
-	// アスペクト比をTailwind用の形式に変換
-	const aspectRatioClass = `aspect-[${aspectRatio}]`;
+	// アスペクト比をTailwind用の形式に変換（マッピングから取得、なければフォールバック）
+	const aspectRatioClass = ASPECT_RATIO_MAP[aspectRatio as AspectRatioKey] || `aspect-[${aspectRatio}]`;
 
 	const getGridCols = () => {
 		switch (columns) {

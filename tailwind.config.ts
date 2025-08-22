@@ -25,5 +25,20 @@ export default {
 			// gap-x- (for column-gap)
 			pattern: /^gap-x-(?:[1-9]|1[0-6])$/, // Covers gap-x-1 to gap-x-16, adjust if needed
 		},
+		{
+			// aspect-ratio patterns for ContentItems component
+			pattern: /^aspect-\[[\d]+\/[\d]+\]$/,
+		},
+	],
+	
+	// 明示的にアスペクト比クラスをsafelistに追加
+	safelist: [
+		'aspect-square',
+		'aspect-video',
+		'aspect-[2/3]',
+		'aspect-[3/2]',
+		'aspect-[3/4]',
+		'aspect-[4/3]',
+		'aspect-[9/16]',
 	],
 } satisfies Config;
