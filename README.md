@@ -1,18 +1,18 @@
 # Next.js ボイラープレート
 
-![Node.js](https://img.shields.io/badge/Node.js-23-5FA04E?style=flat-square&logo=node.js)
-![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript)
-![React](https://img.shields.io/badge/React-19.1-61DAFB?style=flat-square&logo=react)
-![Next.js](https://img.shields.io/badge/Next.js-15.3-black?style=flat-square&logo=next.js)
-![Auth.js](https://img.shields.io/badge/Auth.js-5.0(β)-blue?style=flat-square&logo=authjs)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1-06B6D4?style=flat-square&logo=tailwind-css)
-![Three.js](https://img.shields.io/badge/Three.js-0.179-000000?style=flat-square&logo=three.js)
-![shadcn/ui](https://img.shields.io/badge/shadcn/ui-2-black?style=flat-square&logo=shadcnui)
-![Motion](https://img.shields.io/badge/motion-12.19-6E9F18?style=flat-square&logo=motion)
-![Biome](https://img.shields.io/badge/Biome-2.0-60A5FA?style=flat-square&logo=biome)
-![Zod](https://img.shields.io/badge/zod-4.0-3E67B1?style=flat-square&logo=zod)
-![Vitest](https://img.shields.io/badge/Vitest-3.2-6E9F18?style=flat-square&logo=vitest)
-![Playwright](https://img.shields.io/badge/Playwright-1.53-45ba4b?style=flat-square&logo=playwright)
+![Node.js](https://img.shields.io/badge/Node.js-24-5FA04E?style=flat-square&logo=node.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?style=flat-square&logo=typescript)
+![React](https://img.shields.io/badge/React-19.1.0-61DAFB?style=flat-square&logo=react)
+![Next.js](https://img.shields.io/badge/Next.js-15.3.4-black?style=flat-square&logo=next.js)
+![Auth.js](https://img.shields.io/badge/Auth.js-5.0.0--beta.25-blue?style=flat-square&logo=authjs)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1.10-06B6D4?style=flat-square&logo=tailwind-css)
+![Three.js](https://img.shields.io/badge/Three.js-0.179.1-000000?style=flat-square&logo=three.js)
+![shadcn/ui](https://img.shields.io/badge/shadcn/ui-2.1-black?style=flat-square&logo=shadcnui)
+![Motion](https://img.shields.io/badge/motion-12.19.1-6E9F18?style=flat-square&logo=motion)
+![Biome](https://img.shields.io/badge/Biome-2.0.5-60A5FA?style=flat-square&logo=biome)
+![Zod](https://img.shields.io/badge/zod-4.0.15-3E67B1?style=flat-square&logo=zod)
+![Vitest](https://img.shields.io/badge/Vitest-3.2.4-6E9F18?style=flat-square&logo=vitest)
+![Playwright](https://img.shields.io/badge/Playwright-1.53.1-45ba4b?style=flat-square&logo=playwright)
 
 ## 概要
 
