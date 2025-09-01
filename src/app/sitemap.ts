@@ -42,6 +42,48 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 			changeFrequency: "daily" as const,
 			priority: 0.9,
 		},
+		{
+			url: `${baseUrl}/services`,
+			lastModified: new Date(),
+			changeFrequency: "monthly" as const,
+			priority: 0.9,
+		},
+		{
+			url: `${baseUrl}/services/web-development`,
+			lastModified: new Date(),
+			changeFrequency: "monthly" as const,
+			priority: 0.8,
+		},
+		{
+			url: `${baseUrl}/services/ai-image-generation`,
+			lastModified: new Date(),
+			changeFrequency: "monthly" as const,
+			priority: 0.8,
+		},
+		{
+			url: `${baseUrl}/services/creative`,
+			lastModified: new Date(),
+			changeFrequency: "monthly" as const,
+			priority: 0.8,
+		},
+		{
+			url: `${baseUrl}/services/photography`,
+			lastModified: new Date(),
+			changeFrequency: "monthly" as const,
+			priority: 0.8,
+		},
+		{
+			url: `${baseUrl}/services/consulting`,
+			lastModified: new Date(),
+			changeFrequency: "monthly" as const,
+			priority: 0.8,
+		},
+		{
+			url: `${baseUrl}/portfolio`,
+			lastModified: new Date(),
+			changeFrequency: "weekly" as const,
+			priority: 0.9,
+		},
 	];
 
 	// お知らせページの動的生成
