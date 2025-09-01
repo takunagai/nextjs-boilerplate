@@ -4,7 +4,13 @@ import { useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { FaCode as Code, FaHouse as Home, FaArrowsRotate as RefreshCcw, FaBug as Bug, FaFile as FileText } from "react-icons/fa6";
+import {
+	FaCode as Code,
+	FaHouse as Home,
+	FaArrowsRotate as RefreshCcw,
+	FaBug as Bug,
+	FaFile as FileText,
+} from "react-icons/fa6";
 
 interface ExamplesErrorPageProps {
 	error: Error & { digest?: string };
@@ -59,9 +65,7 @@ export default function ExamplesErrorPage({
 							</div>
 							{error.digest && (
 								<div>
-									<span className="font-medium text-foreground">
-										エラーID:
-									</span>
+									<span className="font-medium text-foreground">エラーID:</span>
 									<div className="mt-1 p-2 bg-muted border rounded font-mono text-xs">
 										{error.digest}
 									</div>
@@ -88,9 +92,13 @@ export default function ExamplesErrorPage({
 						</h4>
 						<ul className="text-sm text-blue-800 dark:text-blue-200 space-y-2">
 							<li>• サンプルコードのバグやReactの使用方法を確認してください</li>
-							<li>• ブラウザの開発者ツールでコンソールエラーを確認してください</li>
+							<li>
+								• ブラウザの開発者ツールでコンソールエラーを確認してください
+							</li>
 							<li>• TypeScriptの型エラーがないか確認してください</li>
-							<li>• 必要な依存関係がインストールされているか確認してください</li>
+							<li>
+								• 必要な依存関係がインストールされているか確認してください
+							</li>
 							<li>• Next.js のドキュメントを参照してください</li>
 						</ul>
 					</div>
@@ -162,8 +170,7 @@ export default function ExamplesErrorPage({
 					{/* デバッグのヒント */}
 					<div className="border-t border-border pt-4">
 						<p className="text-xs text-muted-foreground text-center">
-							💡{" "}
-							<strong>デバッグのコツ:</strong>{" "}
+							💡 <strong>デバッグのコツ:</strong>{" "}
 							このエラーはサンプルコードの学習に役立ちます。エラーメッセージを読んで、何が問題なのかを理解しましょう。
 						</p>
 					</div>

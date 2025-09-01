@@ -3,7 +3,11 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { FaCircleExclamation as AlertCircle, FaHouse as Home, FaArrowsRotate as RefreshCcw } from "react-icons/fa6";
+import {
+	FaCircleExclamation as AlertCircle,
+	FaHouse as Home,
+	FaArrowsRotate as RefreshCcw,
+} from "react-icons/fa6";
 
 interface ErrorPageProps {
 	error: Error & { digest?: string };
@@ -60,7 +64,9 @@ export default function ErrorPage({ error, reset }: ErrorPageProps) {
 						</h3>
 						<div className="space-y-2 text-sm">
 							<div>
-								<span className="font-medium text-foreground">メッセージ: </span>
+								<span className="font-medium text-foreground">
+									メッセージ:{" "}
+								</span>
 								<span className="text-muted-foreground font-mono">
 									{error.message}
 								</span>

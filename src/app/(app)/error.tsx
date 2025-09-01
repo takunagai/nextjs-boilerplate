@@ -4,7 +4,13 @@ import { useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { FaCircleExclamation as AlertCircle, FaHouse as Home, FaArrowsRotate as RefreshCcw, FaGear as Settings, FaRightFromBracket as LogOut } from "react-icons/fa6";
+import {
+	FaCircleExclamation as AlertCircle,
+	FaHouse as Home,
+	FaArrowsRotate as RefreshCcw,
+	FaGear as Settings,
+	FaRightFromBracket as LogOut,
+} from "react-icons/fa6";
 
 interface AppErrorPageProps {
 	error: Error & { digest?: string };
@@ -50,9 +56,7 @@ export default function AppErrorPage({ error, reset }: AppErrorPageProps) {
 					{/* エラー詳細（開発環境のみ） */}
 					{!isProduction && (
 						<div className="bg-muted/50 border border-border rounded-lg p-4 text-sm">
-							<h4 className="font-semibold text-foreground mb-2">
-								エラー詳細
-							</h4>
+							<h4 className="font-semibold text-foreground mb-2">エラー詳細</h4>
 							<div className="space-y-2 text-muted-foreground">
 								<div>
 									<span className="font-medium">メッセージ:</span>{" "}

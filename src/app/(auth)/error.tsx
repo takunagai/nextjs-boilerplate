@@ -4,7 +4,12 @@ import { useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { FaTriangleExclamation as AlertTriangle, FaHouse as Home, FaArrowsRotate as RefreshCcw, FaRightToBracket as LogIn } from "react-icons/fa6";
+import {
+	FaTriangleExclamation as AlertTriangle,
+	FaHouse as Home,
+	FaArrowsRotate as RefreshCcw,
+	FaRightToBracket as LogIn,
+} from "react-icons/fa6";
 
 interface AuthErrorPageProps {
 	error: Error & { digest?: string };

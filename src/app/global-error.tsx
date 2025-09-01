@@ -83,9 +83,22 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
 								fill="none"
 								style={{ color: "#dc2626" }}
 							>
-								<circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
-								<line x1="12" y1="8" x2="12" y2="12" stroke="currentColor" strokeWidth="2"/>
-								<circle cx="12" cy="16" r="1" fill="currentColor"/>
+								<circle
+									cx="12"
+									cy="12"
+									r="10"
+									stroke="currentColor"
+									strokeWidth="2"
+								/>
+								<line
+									x1="12"
+									y1="8"
+									x2="12"
+									y2="12"
+									stroke="currentColor"
+									strokeWidth="2"
+								/>
+								<circle cx="12" cy="16" r="1" fill="currentColor" />
 							</svg>
 						</div>
 

@@ -3,7 +3,13 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { FaTriangleExclamation as AlertTriangle, FaHouse as Home, FaArrowsRotate as RefreshCcw, FaEnvelope as Mail, FaPhone as Phone } from "react-icons/fa6";
+import {
+	FaTriangleExclamation as AlertTriangle,
+	FaHouse as Home,
+	FaArrowsRotate as RefreshCcw,
+	FaEnvelope as Mail,
+	FaPhone as Phone,
+} from "react-icons/fa6";
 
 interface SiteErrorPageProps {
 	error: Error & { digest?: string };
@@ -65,9 +71,7 @@ export default function SiteErrorPage({ error, reset }: SiteErrorPageProps) {
 							</div>
 							{error.digest && (
 								<div>
-									<span className="font-medium text-foreground">
-										エラーID:
-									</span>
+									<span className="font-medium text-foreground">エラーID:</span>
 									<br />
 									<code className="font-mono text-muted-foreground bg-muted px-2 py-1 rounded mt-1 inline-block">
 										{error.digest}
@@ -111,34 +115,19 @@ export default function SiteErrorPage({ error, reset }: SiteErrorPageProps) {
 						または、以下のページをご利用ください
 					</p>
 					<div className="flex flex-wrap justify-center gap-4 text-sm">
-						<Link
-							href="/about"
-							className="text-primary hover:underline"
-						>
+						<Link href="/about" className="text-primary hover:underline">
 							会社概要
 						</Link>
-						<Link
-							href="/services"
-							className="text-primary hover:underline"
-						>
+						<Link href="/services" className="text-primary hover:underline">
 							サービス
 						</Link>
-						<Link
-							href="/portfolio"
-							className="text-primary hover:underline"
-						>
+						<Link href="/portfolio" className="text-primary hover:underline">
 							実績
 						</Link>
-						<Link
-							href="/news"
-							className="text-primary hover:underline"
-						>
+						<Link href="/news" className="text-primary hover:underline">
 							ニュース
 						</Link>
-						<Link
-							href="/contact"
-							className="text-primary hover:underline"
-						>
+						<Link href="/contact" className="text-primary hover:underline">
 							お問い合わせ
 						</Link>
 					</div>
