@@ -16,7 +16,7 @@
 
 ## 概要
 
-このプロジェクトは、モダンなウェブアプリケーション/サイト開発のための Next.js ボイラープレートです。TypeScript、Tailwind CSS、shadcn/ui などの最新技術を組み合わせ、開発の効率化と品質向上を実現します。
+このプロジェクトは、モダンなウェブアプリケーション/サイト開発のための Next.js 15 ボイラープレートです。TypeScript、Tailwind CSS、shadcn/ui などの最新技術を組み合わせ、包括的なエラーハンドリング、セキュリティミドルウェア、最適化されたローディング状態により、開発の効率化と品質向上を実現します。
 
 ## 対応ブラウザ
 
@@ -60,6 +60,24 @@
   - パフォーマンス最適化済み（GPU加速、フレーム制御）
 - **アクセシビリティ対応** - WCAG 2.1 AA準拠
 - **UIコンポーネント** - shadcn/ui による再利用可能なコンポーネント
+
+### セキュリティとエラーハンドリング
+
+- **包括的セキュリティミドルウェア** - 統合されたセキュリティ保護
+  - Auth.js v5 との完全統合
+  - CSRF トークンによる状態変更保護
+  - API エンドポイントのレート制限
+  - セキュリティヘッダーの自動注入（CSP、HSTS等）
+  - リクエストの入力値検証と XSS 対策
+- **ルート別エラー境界システム** - 優雅なエラーハンドリング
+  - ユーザーフレンドリーなエラーページとリトライ機能
+  - ルートグループ別のエラー処理最適化
+  - 認証エラー、ダッシュボードエラー、公開サイトエラーの専門的処理
+  - 開発者向けデバッグ情報（examples ルート）
+- **最適化ローディング状態** - Suspense ベースの読み込み管理
+  - ブランド化されたローディング UI と進捗表示
+  - ルートグループ別の読み込み最適化
+  - 認証プロセス、ダッシュボード、公開ページの専用ローディング
 
 ### サーバーサイドユーティリティ
 
@@ -126,8 +144,25 @@
 - **メタデータ管理** - Next.js Metadata API による動的SEOメタタグ生成
 - **構造化データ** - JSON-LD形式のリッチスニペット対応
 - **パンくずリスト** - ユーザビリティ向上とSEO対応の階層ナビゲーション
-- **robots.txt** - クローラー制御とインデックス最適化
+- **強化された robots.txt** - 包括的なクローラー制御
+  - 公開コンテンツと非公開コンテンツの適切な分離
+  - サービスページとお知らせページの動的制御
+  - 開発用ページの本番環境での非表示化
+- **動的サイトマップ生成** - 自動更新されるサイト構造
+  - サービスページの自動追加
+  - お知らせページの動的生成
+  - 優先度と更新頻度の最適化
 - **正規URL設定** - 重複コンテンツ問題の防止
+
+### コンポーネントアーキテクチャ
+
+- **共有サービスコンポーネント** - DRY原則に基づくコード削減
+  - `ServiceHeroSection` - サービスページ共通ヒーローセクション
+  - `ServiceFinalCTA` - サービスページ共通CTAセクション
+  - 50-80%のコード重複削減を実現
+  - カスタマイゼーション可能な統一デザイン
+- **モジュラー3D背景エフェクト** - パフォーマンス最適化されたエフェクト
+- **アクセシビリティファーストUI** - WCAG 2.1 AA準拠のコンポーネント群
 
 ### 開発体験
 
@@ -415,14 +450,20 @@ nextjs-boilerplate/
 │   │   ├── (app)/           # 保護されたアプリケーションエリア
 │   │   │   ├── dashboard/   # ダッシュボード
 │   │   │   ├── profile/     # プロフィール
-│   │   │   └── layout.tsx   # 認証済みレイアウト
+│   │   │   ├── layout.tsx   # 認証済みレイアウト
+│   │   │   ├── error.tsx    # ダッシュボード専用エラー境界
+│   │   │   └── loading.tsx  # ダッシュボード専用ローディング
 │   │   ├── (auth)/          # 認証ページグループ
 │   │   │   ├── login/       # ログインページ
 │   │   │   ├── register/    # 登録ページ
-│   │   │   └── layout.tsx   # 認証レイアウト
+│   │   │   ├── layout.tsx   # 認証レイアウト
+│   │   │   ├── error.tsx    # 認証専用エラー境界
+│   │   │   └── loading.tsx  # 認証専用ローディング
 │   │   ├── (examples)/      # 開発サンプルページ（環境変数で制御）
 │   │   │   ├── examples/    # 各種コンポーネントサンプル
-│   │   │   └── layout.tsx   # サンプルレイアウト
+│   │   │   ├── layout.tsx   # サンプルレイアウト
+│   │   │   ├── error.tsx    # 開発者向けエラー境界
+│   │   │   └── loading.tsx  # 開発者向けローディング
 │   │   ├── (site)/          # 公開ページグループ
 │   │   │   ├── about/       # About
 │   │   │   ├── contact/     # お問い合わせ
@@ -430,7 +471,9 @@ nextjs-boilerplate/
 │   │   │   ├── portfolio/   # ポートフォリオ
 │   │   │   ├── privacy/     # プライバシーポリシー
 │   │   │   ├── services/    # サービス
-│   │   │   └── page.tsx     # ホームページ
+│   │   │   ├── page.tsx     # ホームページ
+│   │   │   ├── error.tsx    # 公開サイト専用エラー境界
+│   │   │   └── loading.tsx  # 公開サイト専用ローディング
 │   │   ├── actions/         # Server Actions
 │   │   │   ├── contact-form.ts  # お問い合わせフォーム
 │   │   │   ├── contact.ts       # コンタクトアクション
@@ -440,12 +483,15 @@ nextjs-boilerplate/
 │   │   │   ├── auth/        # 認証API
 │   │   │   ├── csrf-token/  # CSRFトークン
 │   │   │   └── example/     # サンプルAPI
+│   │   ├── error.tsx        # ルートエラー境界
+│   │   ├── global-error.tsx # グローバルエラー境界
+│   │   ├── loading.tsx      # ルートローディング
 │   │   ├── favicon.ico      # ファビコン
 │   │   ├── globals.css      # グローバルスタイル
 │   │   ├── layout.tsx       # ルートレイアウト
 │   │   ├── not-found.tsx    # 404ページ
-│   │   ├── robots.ts        # robots.txt生成
-│   │   └── sitemap.ts       # サイトマップ生成
+│   │   ├── robots.ts        # 強化されたrobots.txt生成
+│   │   └── sitemap.ts       # 動的サイトマップ生成
 │   ├── components/          # 再利用可能なコンポーネント
 │   │   ├── accessibility/   # アクセシビリティコンポーネント
 │   │   ├── auth/            # 認証関連コンポーネント
@@ -464,6 +510,10 @@ nextjs-boilerplate/
 │   │   ├── sections/        # ページセクションコンポーネント
 │   │   ├── seo/             # SEO最適化コンポーネント
 │   │   ├── services/        # サービスページコンポーネント
+│   │   │   ├── shared/      # 共有コンポーネント（ServiceHeroSection、ServiceFinalCTA）
+│   │   │   ├── web-development/  # Web開発サービス専用コンポーネント
+│   │   │   ├── creative/    # クリエイティブサービス専用コンポーネント
+│   │   │   └── consulting/  # コンサルティングサービス専用コンポーネント
 │   │   ├── theme/           # ダークモードテーマシステム
 │   │   └── ui/              # 基本UIコンポーネント（shadcn/ui）
 │   ├── constants/           # アプリケーション全体の定数
@@ -493,8 +543,7 @@ nextjs-boilerplate/
 │   │   ├── validation/      # Zodスキーマ定義
 │   │   └── utils.ts         # 共通ユーティリティ
 │   ├── test-utils/          # テストユーティリティ
-│   ├── types/               # TypeScript型定義
-│   └── middleware.ts        # Next.jsミドルウェア
+│   └── types/               # TypeScript型定義
 ├── tests/                   # テストファイル
 │   ├── e2e/                 # Playwright E2Eテスト
 │   └── unit/                # Vitestユニットテスト
@@ -507,6 +556,7 @@ nextjs-boilerplate/
 ├── biome.json               # Biome設定
 ├── components.json          # shadcn/uiコンポーネント設定
 ├── extensions.json          # VSCode推奨拡張機能
+├── middleware.ts            # 統合セキュリティミドルウェア（Auth.js v5対応）
 ├── next-env.d.ts            # Next.js環境設定
 ├── next.config.ts           # Next.js設定
 ├── package.json             # 依存関係と設定

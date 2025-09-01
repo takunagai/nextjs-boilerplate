@@ -20,6 +20,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Architecture Overview
 
+This project follows Next.js 15 App Router best practices with comprehensive error handling, security middleware, and optimized loading states.
+
 ### Directory Structure
 
 - `/docs/` - Unified documentation (industry standard compliant):
@@ -30,12 +32,17 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   - `reference/` - Technical specifications & reference (specifications, features, business)
 
 - `/src/app/` - Next.js App Router pages with parallel route groups:
-  - `(site)` - Public pages (home, about, services, etc.)
-  - `(auth)` - Authentication pages (login, register)
-  - `(app)` - Protected application area (dashboard)
-  - `(examples)` - Development sample pages (hidden in production via env var)
+  - `(site)` - Public pages (home, about, services, etc.) with site-specific error/loading
+  - `(auth)` - Authentication pages (login, register) with auth-specific error/loading
+  - `(app)` - Protected application area (dashboard) with app-specific error/loading
+  - `(examples)` - Development sample pages with dev-focused error/loading (hidden in production via env var)
   - `api/` - API routes including auth endpoints
   - `actions/` - Server Actions for forms and data mutations
+  - `error.tsx` - Root error boundary with user-friendly error handling
+  - `global-error.tsx` - Global error boundary for critical system errors
+  - `loading.tsx` - Root loading component with branded loading UI
+  - `robots.ts` - Enhanced SEO robots.txt with comprehensive crawling rules
+  - `sitemap.ts` - Dynamic sitemap generation with service pages and news
 
 - `/src/components/` - Reusable components organized by feature:
   - `ui/` - Base UI components (shadcn/ui based)
@@ -46,7 +53,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   - `accessibility/` - WCAG compliant accessibility components
   - `effects/` - Animation and visual effect components
   - `sections/` - Page section components
-  - `home/`, `services/`, `contact/` - Feature-specific components
+  - `home/`, `contact/` - Feature-specific components
+  - `services/` - Service page components with shared architecture:
+    - `shared/` - Shared components (`ServiceHeroSection`, `ServiceFinalCTA`)
+    - `web-development/`, `creative/`, `consulting/` - Service-specific implementations
   - `background/constellation/` - Modular 3D background effect components
 
 - `/src/hooks/` - Custom React hooks for shared logic:
@@ -76,8 +86,49 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 3. **Forms**: React Hook Form + Zod for type-safe validation
 4. **Testing**: Vitest for unit tests, Playwright for E2E tests
 5. **Performance**: React 19 Compiler enabled for automatic optimizations
-6. **Security**: Middleware-based CSRF protection and rate limiting
-7. **Accessibility**: WCAG 2.1 AA compliance as standard
+6. **Security**: Comprehensive middleware with Auth.js v5 integration:
+   - CSRF protection with token validation
+   - Rate limiting for API endpoints
+   - Security headers (CSP, HSTS, etc.)
+   - Request sanitization and validation
+7. **Error Handling**: Route-specific error boundaries with graceful degradation
+8. **Loading States**: Suspense-based loading with route-specific optimizations
+9. **SEO**: Enhanced robots.txt and dynamic sitemap generation
+10. **Component Architecture**: Shared component patterns for DRY principles
+11. **Accessibility**: WCAG 2.1 AA compliance as standard
+
+### Security Architecture
+
+The project implements a comprehensive security layer through consolidated middleware:
+
+- **Authentication Integration**: Auth.js v5 with Next.js 15 middleware
+- **CSRF Protection**: Token-based validation for all state-changing operations
+- **Rate Limiting**: Configurable limits for API endpoints and form submissions
+- **Security Headers**: Automatic injection of CSP, HSTS, X-Frame-Options, etc.
+- **Request Validation**: Input sanitization and XSS prevention
+
+### Error Handling System
+
+Route-specific error boundaries provide graceful error handling:
+
+- **Root Error Boundary** (`error.tsx`): User-friendly error pages with retry functionality
+- **Global Error Boundary** (`global-error.tsx`): Critical system errors with inline styles
+- **Route Group Errors**: Specialized error handling for:
+  - `(auth)/error.tsx`: Authentication-specific errors and recovery
+  - `(app)/error.tsx`: Dashboard and protected area errors
+  - `(site)/error.tsx`: Public site errors with navigation guidance
+  - `(examples)/error.tsx`: Developer-focused errors with debugging info
+
+### Loading State System
+
+Suspense-based loading states optimized for each route group:
+
+- **Root Loading** (`loading.tsx`): Branded loading UI with progress indicators
+- **Route Group Loading**: Specialized loading states for:
+  - `(auth)/loading.tsx`: Authentication process indicators
+  - `(app)/loading.tsx`: Dashboard data loading with progress
+  - `(site)/loading.tsx`: Public page loading with performance info
+  - `(examples)/loading.tsx`: Development-focused loading with technical details
 
 ## Code Style
 
@@ -219,6 +270,40 @@ return createError("Validation failed", 400, { fieldErrors });
 <DigitalConstellation nodeCount={150} />
 ```
 
+### Service Page Components
+
+Shared component architecture for service pages reduces code duplication:
+
+```typescript
+// Use shared hero component with customization options
+import { ServiceHeroSection } from "../shared";
+
+export function WebDevHeroSection() {
+  return (
+    <ServiceHeroSection
+      title={<>AI × 15年の制作経験で、<br />高品質なのに<span className="text-primary">お手頃価格</span>を実現</>}
+      description={<p>最新の AI 技術を駆使してリサーチ・コンテンツ作成・コーディングを効率化。</p>}
+      contactButtonText="無料相談を予約"
+      backgroundGradient="from-blue-600/10 via-blue-400/5 to-background"
+    />
+  );
+}
+
+// Use shared CTA component with variant support
+import { ServiceFinalCTA } from "../shared";
+
+export function CreativeFinalCTASection() {
+  return (
+    <ServiceFinalCTA
+      variant="complex"
+      title="AI × 人の力で、あなたのクリエイティブを加速させます"
+      features={<div>Custom feature grid...</div>}
+      statistics={<div>Performance stats...</div>}
+    />
+  );
+}
+```
+
 ### DRY Refactoring Patterns
 
 ```typescript
@@ -319,12 +404,26 @@ export async function updateProfile(data: ProfileFormValues) {
   - Implementation guides in `guides/` (authentication, deployment, components, etc.)
   - Development process in `development/` (plans, reports, tasks)
   - Sample code in `examples/` for learning and reference
+- **Security**: Consolidated middleware at project root with comprehensive protection
+  - CSRF tokens, rate limiting, security headers
+  - Auth.js v5 integration with Next.js 15 middleware
+- **Error Handling**: Route-specific error boundaries with graceful UX
+  - User-friendly error pages with retry functionality
+  - Developer-focused error details in examples route group
+- **Loading States**: Suspense-based loading optimized for each route group
+  - Branded loading UI with progress indicators
+  - Route-specific loading optimizations
+- **SEO**: Enhanced robots.txt and dynamic sitemap generation
+  - Comprehensive crawling rules for public/private content
+  - Dynamic news and service page inclusion
+- **Component Architecture**: Shared service components reduce code duplication
+  - `ServiceHeroSection` and `ServiceFinalCTA` shared components
+  - 50-80% code reduction in service-specific implementations
 - Test users are defined in `src/lib/auth/test-data.ts` (remove in production)
   - User: `user@example.com` / `password123`
   - Admin: `admin@example.com` / `password123`
 - Example pages can be hidden with `SHOW_EXAMPLES=false` in production
 - Server-side utilities provide standardized API responses and error handling
-- SEO components handle meta tags, JSON-LD, and breadcrumbs automatically
 - Theme system supports light/dark modes with localStorage persistence
 - Accessibility utilities provide WCAG compliance checking in development
 

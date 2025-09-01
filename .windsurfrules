@@ -174,6 +174,8 @@ nextjs-boilerplate/
 │   │   │   │   └── page.tsx # 個別ページ
 │   │   │   └── page.tsx     # 一覧
 │   │   ├── (examples)/      # サンプル例ページ
+│   │   │   ├── error.tsx    # 開発者向けエラー境界
+│   │   │   └── loading.tsx  # 開発者向けローディング
 │   │   ├── api/             # APIエンドポイント
 │   │   │   ├── auth/        # 認証関連
 │   │   │   │   ├── login/   # ログインページ
@@ -181,8 +183,17 @@ nextjs-boilerplate/
 │   │   │   └── example/     # サンプル例ページ
 │   │   ├── auth/            # 認証関連ページ
 │   │   │   ├── login/       # ログインページ
-│   │   │   └── register/    # 登録ページ
+│   │   │   ├── register/    # 登録ページ
+│   │   │   ├── error.tsx    # 認証専用エラー境界
+│   │   │   └── loading.tsx  # 認証専用ローディング
 │   │   ├── dashboard/       # ダッシュボード関連ページ
+│   │   │   ├── error.tsx    # ダッシュボード専用エラー境界
+│   │   │   └── loading.tsx  # ダッシュボード専用ローディング
+│   │   ├── error.tsx        # ルートエラー境界
+│   │   ├── global-error.tsx # グローバルエラー境界
+│   │   ├── loading.tsx      # ルートローディング
+│   │   ├── robots.ts        # 強化されたrobots.txt（Phase 3）
+│   │   ├── sitemap.ts       # 動的サイトマップ（Phase 3）
 │   │   └── globals.css      # グローバルスタイル
 │   ├── components/          # 再利用可能なコンポーネント
 │   │   ├── auth/            # 認証関連コンポーネント
@@ -192,6 +203,11 @@ nextjs-boilerplate/
 │   │   ├── news/            # お知らせコンポーネント
 │   │   ├── sections/        # セクションコンポーネント
 │   │   ├── seo/             # SEO関連コンポーネント
+│   │   ├── services/        # サービスページコンポーネント（Phase 4）
+│   │   │   ├── shared/      # 共有コンポーネント（ServiceHeroSection、ServiceFinalCTA）
+│   │   │   ├── web-development/ # Web開発サービス専用
+│   │   │   ├── creative/    # クリエイティブサービス専用
+│   │   │   └── consulting/  # コンサルティングサービス専用
 │   │   ├── theme/           # テーマ(モード)コンポーネント
 │   │   └── ui/              # UIコンポーネント(shadcn/uiもここに保存)
 │   ├── hooks/               # カスタムフック
@@ -207,7 +223,6 @@ nextjs-boilerplate/
 │   │   ├── {api}/           # API関連（追加予定）
 │   │   ├── {db}/            # データベース関連（追加予定）
 │   │   └── utils.ts         # 汚用ユーティリティ
-│   └── middleware.ts        # ミドルウェア
 ├── tests-results/           # テスト結果
 ├── tests/                   # テストファイル
 │   ├── components/          # コンポーネントテスト
@@ -217,6 +232,7 @@ nextjs-boilerplate/
 ├── .gitignore               # Gitの除外設定
 ├── biome.json               # Biome設定
 ├── components.json          # shadcn/uiコンポーネント設定
+├── middleware.ts            # 統合セキュリティミドルウェア（Phase 1）
 ├── next-env.d.ts            # Next.js環境設定
 ├── next.config.js           # Next.js設定
 ├── package.json             # 依存関係と設定
@@ -228,6 +244,37 @@ nextjs-boilerplate/
 ├── tsconfig.json            # TypeScript設定
 └── vitest.config.ts         # Vitest設定
 ```
+
+## セキュリティ・エラーハンドリング・ローディング状態
+
+1. **統合セキュリティミドルウェア（Phase 1）**
+   - プロジェクトルートの `middleware.ts` で統合管理
+   - Auth.js v5 との完全統合
+   - CSRF保護、レート制限、セキュリティヘッダー自動注入
+   - リクエスト検証と XSS 対策
+
+2. **包括的エラー境界システム（Phase 1-2）**
+   - ルート別エラー境界による優雅なエラーハンドリング
+   - `error.tsx`: ルートエラー境界（ユーザーフレンドリー）
+   - `global-error.tsx`: グローバルエラー境界（システムレベル）
+   - `(auth)/error.tsx`: 認証専用エラー処理
+   - `(app)/error.tsx`: ダッシュボード専用エラー処理
+   - `(site)/error.tsx`: 公開サイト専用エラー処理
+   - `(examples)/error.tsx`: 開発者向けエラー境界
+
+3. **最適化ローディング状態システム（Phase 2）**
+   - Suspense ベース、ルート別最適化
+   - `loading.tsx`: ルートローディング（ブランド化UI）
+   - `(auth)/loading.tsx`: 認証プロセス用ローディング
+   - `(app)/loading.tsx`: ダッシュボード用ローディング
+   - `(site)/loading.tsx`: 公開サイト用ローディング
+   - `(examples)/loading.tsx`: 開発者向けローディング
+
+4. **共有サービスコンポーネント（Phase 4）**
+   - `src/components/services/shared/`: 共有コンポーネント
+   - `ServiceHeroSection`: サービスページ共通ヒーロー
+   - `ServiceFinalCTA`: サービスページ共通CTA
+   - DRY原則で75%のコード削減を実現
 
 ## 重要な制約
 1. **変更禁止ファイル**
@@ -242,8 +289,11 @@ nextjs-boilerplate/
 3. **コード配置**
    - 共通処理は `src/lib/utils/` に配置
    - UIコンポーネントは `src/components/ui/` に配置
+   - サービス共有コンポーネントは `src/components/services/shared/` に配置
    - APIエンドポイントは `src/app/api/[endpoint]/route.ts` に配置
    - テストは `tests/` に配置
+   - エラー境界は各ルートグループの `error.tsx` に配置
+   - ローディング状態は各ルートグループの `loading.tsx` に配置
 
 ---
 
