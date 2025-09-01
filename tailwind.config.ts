@@ -30,15 +30,15 @@ export default {
 			pattern: /^aspect-\[[\d]+\/[\d]+\]$/,
 		},
 	],
-	
+
 	// 明示的にアスペクト比クラスをsafelistに追加
 	safelist: [
-		'aspect-square',
-		'aspect-video',
-		'aspect-[2/3]',
-		'aspect-[3/2]',
-		'aspect-[3/4]',
-		'aspect-[4/3]',
-		'aspect-[9/16]',
+		"aspect-square",
+		"aspect-video",
+		"aspect-[2/3]",
+		"aspect-[3/2]",
+		"aspect-[3/4]",
+		"aspect-[4/3]",
+		"aspect-[9/16]",
 	],
 } satisfies Config;

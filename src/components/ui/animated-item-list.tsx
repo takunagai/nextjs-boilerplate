@@ -1,7 +1,13 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { FaCheck, FaStar, FaHeart, FaThumbsUp, FaDiamond } from "react-icons/fa6";
+import {
+	FaCheck,
+	FaStar,
+	FaHeart,
+	FaThumbsUp,
+	FaDiamond,
+} from "react-icons/fa6";
 
 import { useDebugLogger } from "@/hooks/use-debug-logger";
 import { UI_ANIMATED_LIST } from "@/lib/constants/ui";

@@ -17,7 +17,7 @@ export type ContentItem = {
 const ASPECT_RATIO_MAP = {
 	"1/1": "aspect-square",
 	"2/3": "aspect-[2/3]",
-	"3/2": "aspect-[3/2]", 
+	"3/2": "aspect-[3/2]",
 	"3/4": "aspect-[3/4]",
 	"4/3": "aspect-[4/3]",
 	"16/9": "aspect-video",
@@ -46,7 +46,9 @@ export function ContentItems({
 	aspectRatio = "2/3",
 }: ContentItemsProps) {
 	// アスペクト比をTailwind用の形式に変換（マッピングから取得、なければフォールバック）
-	const aspectRatioClass = ASPECT_RATIO_MAP[aspectRatio as AspectRatioKey] || `aspect-[${aspectRatio}]`;
+	const aspectRatioClass =
+		ASPECT_RATIO_MAP[aspectRatio as AspectRatioKey] ||
+		`aspect-[${aspectRatio}]`;
 
 	const getGridCols = () => {
 		switch (columns) {
