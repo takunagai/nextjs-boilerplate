@@ -5,23 +5,23 @@ import {
 	generateViewport,
 	WebsiteJsonLd,
 } from "@/components/seo";
-import { ConsultingBenefitsSection } from "@/components/services/consulting/benefits-section";
-import { ConsultingFinalCTASection } from "@/components/services/consulting/final-cta-section";
-import { ConsultingHeroSection } from "@/components/services/consulting/hero-section";
-import { ConsultingPricingSection } from "@/components/services/consulting/pricing-section";
-import { ConsultingProblemsSection } from "@/components/services/consulting/problems-section";
-import { ConsultingRecommendedForSection } from "@/components/services/consulting/recommended-for-section";
-import { ConsultingServiceMenuSection } from "@/components/services/consulting/service-menu-section";
-import { ConsultingTransformationSection } from "@/components/services/consulting/transformation-section";
-import { ConsultingWhyAISection } from "@/components/services/consulting/why-ai-section";
+import { ConsultingBenefitsSection } from "@/components/services/ai-consulting-and-support/benefits-section";
+import { ConsultingFinalCTASection } from "@/components/services/ai-consulting-and-support/final-cta-section";
+import { ConsultingHeroSection } from "@/components/services/ai-consulting-and-support/hero-section";
+import { ConsultingPricingSection } from "@/components/services/ai-consulting-and-support/pricing-section";
+import { ConsultingProblemsSection } from "@/components/services/ai-consulting-and-support/problems-section";
+import { ConsultingRecommendedForSection } from "@/components/services/ai-consulting-and-support/recommended-for-section";
+import { ConsultingServiceMenuSection } from "@/components/services/ai-consulting-and-support/service-menu-section";
+import { ConsultingTransformationSection } from "@/components/services/ai-consulting-and-support/transformation-section";
+import { ConsultingWhyAISection } from "@/components/services/ai-consulting-and-support/why-ai-section";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Container } from "@/components/ui/container";
 import { META } from "@/lib/constants";
 import { createBreadcrumbs } from "@/lib/utils";
 
 // ページ固有の定数を定義
-const PAGE_PATH = "/services/consulting";
-const PAGE_TITLE = "プチコンサル＆レクチャー";
+const PAGE_PATH = "/services/ai-consulting-and-support";
+const PAGE_TITLE = "AIコンサル＆サポート";
 
 export const metadata: Metadata = generateMetadata({
 	title: PAGE_TITLE,

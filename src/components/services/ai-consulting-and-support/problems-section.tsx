@@ -54,9 +54,12 @@ export function ConsultingProblemsSection() {
 		<section className="w-full py-16 md:py-24 bg-muted/30">
 			<Container width="2xl" paddingY="lg" paddingX="lg">
 				<div className="text-center mb-12">
-					<Heading as="h2" align="center" className="mb-6">
-						こんなお悩み、ありませんか？
+					<Heading as="h2" align="center" className="mb-4">
+						AIの「？」を「！」に変える
 					</Heading>
+					<p className="text-lg text-muted-foreground">
+						こんなお悩み、ありませんか？
+					</p>
 				</div>
 
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-8">

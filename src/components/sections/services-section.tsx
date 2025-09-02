@@ -80,13 +80,13 @@ const services: FeatureItem[] = [
 	},
 	{
 		id: "consulting",
-		title: "プチコンサル＆レクチャー",
+		title: "AIコンサル＆サポート",
 		description:
 			"ご相談者様のレベルに合わせた解説を心がけます。\nAI の「？」を「！」に変えて、あなたのペースで実践的な AI 活用を。",
 		imageUrl: "/dummy-images/consulting.jpg",
 		icon: <FaChalkboardUser className="w-6 h-6 text-green-600" />,
 		buttonText: "詳しく見る",
-		buttonUrl: "/services/consulting",
+		buttonUrl: "/services/ai-consulting-and-support",
 		// 追加データ
 		subtitle: "AI の「？」を「！」に変える",
 		features: [

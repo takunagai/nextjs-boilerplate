@@ -10,7 +10,7 @@ const serviceLinks: ServiceMenuLink[] = [
 	{ href: "/services", label: "サービス一覧" },
 	{ href: "/services/web-development", label: "ウェブ制作" },
 	{ href: "/services/app-development", label: "アプリ開発" },
-	{ href: "/services/consulting", label: "コンサルティング" },
+	{ href: "/services/ai-consulting-and-support", label: "AIコンサル＆サポート" },
 ];
 
 interface ServiceSidebarProps {
