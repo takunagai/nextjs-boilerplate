@@ -16,7 +16,7 @@ import Link from "next/link";
 export const metadata: Metadata = generateMetadata({
 	title: "サービス",
 	description:
-		"AI × 人の感性で実現する、ウェブ制作・アプリ開発、プチコンサル&レクチャー、クリエイティブサービスを提供しています。",
+		"AI × 人の感性で実現する、ウェブ制作・アプリ開発、AIコンサル&サポート、クリエイティブサービスを提供しています。",
 	keywords: [
 		"サービス",
 		"ウェブ制作",
@@ -43,7 +43,7 @@ export default function ServicesPage() {
 		<>
 			<WebsiteJsonLd
 				name={`サービス | ${META.DEFAULT_TITLE}`}
-				description="AI × 人の感性で実現する、ウェブ制作・アプリ開発、プチコンサル&レクチャー、クリエイティブサービスを提供しています。"
+				description="AI × 人の感性で実現する、ウェブ制作・アプリ開発、AIコンサル&サポート、クリエイティブサービスを提供しています。"
 				url={`${META.SITE_URL}/services`}
 			/>
 			<BreadcrumbJsonLd items={jsonLdBreadcrumbs} />
@@ -74,13 +74,13 @@ export default function ServicesPage() {
 								},
 							},
 							{
-								title: "プチコンサル＆レクチャー",
+								title: "AIコンサル＆サポート",
 								description:
 									"AI初心者から上級者まで対応。あなたの疑問やビジネス課題をAIで解決するための個別指導・コンサルティングサービス。スポット相談から継続サポートまで、柔軟に対応します。",
 								image: "/dummy-images/street-photo-02.jpg",
-								imageAlt: "プチコンサル＆レクチャーのイメージ",
+								imageAlt: "AIコンサル＆サポートのイメージ",
 								link: {
-									href: "/services/consulting",
+									href: "/services/ai-consulting-and-support",
 									text: "詳細を見る →",
 								},
 							},
