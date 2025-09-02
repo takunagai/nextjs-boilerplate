@@ -74,7 +74,7 @@ export function HeroSection() {
 						style={{ transitionDelay: '1.5s' }}
 					>
 						ウェブ制作/開発、AI活用支援、クリエイティブ制作、
-						<br />
+						<br className="hidden md:block" />
 						15年の経験を活かして、柔軟かつ丁寧にサポートします。
 					</p>
 					<div className="flex flex-col sm:flex-row gap-4">
