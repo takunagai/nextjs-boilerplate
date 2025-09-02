@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { FaCaretDown } from "react-icons/fa6";
 import { useIsClient } from "usehooks-ts";
 import { ParticleBackground } from "@/components/background/particle-background";
+import { MinimalAnimation } from "@/components/home/minimal-animation";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { useHeroHeight } from "@/hooks/use-hero-height";
@@ -11,6 +13,16 @@ import { useHeroHeight } from "@/hooks/use-hero-height";
 export function HeroSection() {
 	const isClient = useIsClient();
 	const { heroStyle, getScrollHeight } = useHeroHeight();
+	const [animationStarted, setAnimationStarted] = useState(false);
+
+	// アニメーション開始
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			setAnimationStarted(true);
+		}, 100);
+
+		return () => clearTimeout(timer);
+	}, []);
 
 	// スムーズスクロール処理関数
 	const handleScroll = () => {
@@ -32,16 +44,38 @@ export function HeroSection() {
 			<ParticleBackground className="-z-10" />
 
 			<Container width="2xl" paddingY="xl" paddingX="lg" className="z-0">
-				<div className="flex flex-col items-center text-center max-w-3xl mx-auto">
-					<h1 className="text-4xl leading-[1.3] md:text-6xl font-bold tracking-tight mb-6 text-white">
-						<span className="text-primary">AI</span> で「できたらいいな」を
+				<div className="flex flex-col items-center text-center max-w-4xl mx-auto">
+					{/* 上部テキスト */}
+					<p 
+						className={`
+							text-lg md:text-xl text-white/80 mb-8 transition-all duration-800 ease-out
+							${animationStarted 
+								? 'opacity-100 translate-y-0' 
+								: 'opacity-0 translate-y-2'
+							}
+						`}
+						style={{ transitionDelay: '0.3s' }}
+					>
+						デジタルのお困りごと、ご相談ください。
+					</p>
+					
+					{/* メインアニメーション */}
+					<MinimalAnimation className="mb-8 text-white" />
+					
+					{/* サブテキスト */}
+					<p 
+						className={`
+							text-lg md:text-xl text-white/90 mb-8 max-w-3xl transition-all duration-800 ease-out
+							${animationStarted 
+								? 'opacity-100 translate-y-0' 
+								: 'opacity-0 translate-y-2'
+							}
+						`}
+						style={{ transitionDelay: '1.5s' }}
+					>
+						ウェブ制作/開発、AI活用支援、クリエイティブ制作、
 						<br />
-						「できた！」に
-					</h1>
-					<p className="text-xl text-white/90 mb-8 max-w-2xl">
-						最新の AI × 15年の制作経験
-						<br />
-						あなたの「できない」「面倒」「時間がない」を解決します
+						15年の経験を活かして、柔軟かつ丁寧にサポートします。
 					</p>
 					<div className="flex flex-col sm:flex-row gap-4">
 						<Button asChild size="lg">
