@@ -10,9 +10,9 @@ export function ConsultingHeroSection() {
 			}}
 			title={
 				<>
-					<span className="text-blue-600">AI</span> の「？」を「！」に変える、
+					<span className="text-blue-600">AI</span> で「できたらいいな」を
 					<br />
-					あなた専用の<span className="text-green-600">サポーター</span>
+					「できた！」に
 				</>
 			}
 			description={
