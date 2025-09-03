@@ -62,23 +62,6 @@ const services: FeatureItem[] = [
 		],
 	},
 	{
-		id: "creative",
-		title: "クリエイティブ",
-		description:
-			"文章も画像も動画も音楽も。\nAI x デザイナーで仕上げる二人三脚スタイルで、時間とスキルの壁を突破します。",
-		imageUrl: "/dummy-images/creative.jpg",
-		icon: <FaPaintbrush className="w-6 h-6 text-purple-600" />,
-		buttonText: "詳しく見る",
-		buttonUrl: "/services/creative",
-		// 追加データ
-		subtitle: "時間とスキルの壁を、AI で突破",
-		features: [
-			"質の高いブログ記事・SNS 投稿を効率的に作成",
-			"オリジナル画像・ロゴ制作",
-			"動画・BGM 制作もお手軽に",
-		],
-	},
-	{
 		id: "consulting",
 		title: "AIコンサル＆サポート",
 		description:
@@ -93,6 +76,23 @@ const services: FeatureItem[] = [
 			"30分からのスポット相談",
 			"実践的な AI 活用講座",
 			"マンツーマンの継続サポート",
+		],
+	},
+	{
+		id: "creative",
+		title: "クリエイティブ",
+		description:
+			"文章も画像も動画も音楽も。\nAI x デザイナーで仕上げる二人三脚スタイルで、時間とスキルの壁を突破します。",
+		imageUrl: "/dummy-images/creative.jpg",
+		icon: <FaPaintbrush className="w-6 h-6 text-purple-600" />,
+		buttonText: "詳しく見る",
+		buttonUrl: "/services/creative",
+		// 追加データ
+		subtitle: "時間とスキルの壁を、AI で突破",
+		features: [
+			"質の高いブログ記事・SNS 投稿を効率的に作成",
+			"オリジナル画像・ロゴ制作",
+			"動画・BGM 制作もお手軽に",
 		],
 	},
 ];
