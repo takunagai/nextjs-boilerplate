@@ -120,6 +120,11 @@ export default function ExamplesPage() {
 			description: "4種類のカードデザイン（グラスモーフィズム・ネオモーフィズム・スプリット・オーロラ）の比較とサンプル集。",
 			href: "/examples/card-designs",
 		},
+		{
+			title: "料金プランサンプル集",
+			description: "様々な業種・サービス向けの料金プラン設計例。制作物単価型・サブスクリプション型など、再利用可能なコンポーネントでの実装例。",
+			href: "/examples/pricing-plans",
+		},
 	];
 
 	return (
