@@ -45,7 +45,7 @@ export function ServiceHeroSection({
 		<HeroContainer {...heroProps}>
 			<Container width="2xl" paddingY="xl" paddingX="lg">
 				<div className="flex flex-col items-center text-center max-w-4xl mx-auto">
-					<h1 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-foreground">
+					<h1 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight mb-6 text-foreground">
 						{title}
 					</h1>
 

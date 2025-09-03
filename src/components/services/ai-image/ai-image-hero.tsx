@@ -28,13 +28,8 @@ export function AIImageHero() {
 
 			<HeroContainer className="relative z-10">
 				<div className="mx-auto max-w-4xl text-center">
-					{/* アイコン */}
-					<div className="mb-6 inline-flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-500 to-blue-600 text-white shadow-lg">
-						<FaRobot className="h-10 w-10" />
-					</div>
-
 					{/* キャッチコピー */}
-					<h1 className="mb-6 text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl md:text-6xl">
+					<h1 className="mb-6 text-4xl font-bold tracking-tight leading-tight text-gray-900 dark:text-white sm:text-5xl md:text-6xl">
 						想像を現実に変える、
 						<br />
 						<span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">

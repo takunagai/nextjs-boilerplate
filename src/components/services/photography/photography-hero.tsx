@@ -28,13 +28,8 @@ export function PhotographyHero() {
 
 			<HeroContainer className="relative z-10">
 				<div className="mx-auto max-w-4xl text-center">
-					{/* アイコン */}
-					<div className="mb-6 inline-flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 text-white shadow-lg">
-						<FaCamera className="h-10 w-10" />
-					</div>
-
 					{/* キャッチコピー */}
-					<h1 className="mb-6 text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl md:text-6xl">
+					<h1 className="mb-6 text-4xl font-bold tracking-tight leading-tight text-gray-900 dark:text-white sm:text-5xl md:text-6xl">
 						デザイナー目線で撮る、
 						<br />
 						<span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
