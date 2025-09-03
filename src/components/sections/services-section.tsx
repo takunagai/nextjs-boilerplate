@@ -49,16 +49,14 @@ const services: FeatureItem[] = [
 		id: "web-development",
 		title: "ウェブ制作・アプリ開発",
 		description:
-			"AI を活用した効率的な制作で、通常の 50〜70% OFF を実現。\n高品質なのに、驚きの低価格でお客様のニーズにお応えします。",
+			"AI を活用した効率的な制作で、高品質かつお手頃な価格を実現。\nお客様のニーズに合わせ、最適な構成を提案いたします。",
 		imageUrl: "/dummy-images/photo-05.jpg",
 		icon: <FaCode className="w-6 h-6 text-blue-600" />,
 		buttonText: "詳しく見る",
 		buttonUrl: "/services/web-development",
-		// 追加データ
-		subtitle: "高品質なのに、驚きの低価格",
 		features: [
-			"Next.js + AI API での最新 Web アプリ",
-			"WordPress サイトも AI 機能でパワーアップ",
+			"高パフォーマンスな Next.js ウェブサイト/アプリ",
+			"多彩な機能を活用できる WordPress サイト",
 			"既存サイトのリニューアルや単発の部分作業もお任せ",
 		],
 	},
@@ -66,34 +64,30 @@ const services: FeatureItem[] = [
 		id: "consulting",
 		title: "AIコンサル＆サポート",
 		description:
-			"ご相談者様のレベルに合わせた解説を心がけます。\nAI の「？」を「！」に変えて、あなたのペースで実践的な AI 活用を。",
+			"AI活用による省力化、高品質化、アイデア出しなどをアドバイス。\nご相談者様の状況に合わせ、柔軟なサポートを提供します。",
 		imageUrl: "/dummy-images/photo-06.jpg",
 		icon: <FaChalkboardUser className="w-6 h-6 text-green-600" />,
 		buttonText: "詳しく見る",
 		buttonUrl: "/services/ai-consulting-and-support",
-		// 追加データ
-		subtitle: "AI の「？」を「！」に変える",
 		features: [
-			"30分からのスポット相談",
-			"実践的な AI 活用講座",
-			"マンツーマンの継続サポート",
+			"単発のスポット相談・レクチャー",
+			"実践的な AI活用講座の講師",
+			"用途別のワークフローの構築",
 		],
 	},
 	{
 		id: "creative",
 		title: "クリエイティブ",
 		description:
-			"文章も画像も動画も音楽も。\nAI x デザイナーで仕上げる二人三脚スタイルで、時間とスキルの壁を突破します。",
+			"文章、写真、イラスト、図解、動画、音楽、3D…。\nAI x デザイナーで、短時間かつお手頃価格で高品質に仕上げます。",
 		imageUrl: "/dummy-images/photo-07.jpg",
 		icon: <FaPaintbrush className="w-6 h-6 text-purple-600" />,
 		buttonText: "詳しく見る",
 		buttonUrl: "/services/creative",
-		// 追加データ
-		subtitle: "時間とスキルの壁を、AI で突破",
 		features: [
-			"質の高いブログ記事・SNS 投稿を効率的に作成",
-			"オリジナル画像・ロゴ制作",
-			"動画・BGM 制作もお手軽に",
+			"質の高い販促用コピー、ブログ記事の作成",
+			"AI画像生成と編集技術で仕上げるオリジナル画像やロゴ制作",
+			"動画、歌・BGM、3D などもご相談ください",
 		],
 	},
 ];
@@ -216,12 +210,6 @@ export function ServicesSection() {
 										</h3>
 									</div>
 
-									{/* サブタイトル */}
-									{item.subtitle && (
-										<p className="text-lg font-semibold text-primary">
-											{item.subtitle}
-										</p>
-									)}
 
 									{/* 説明文 */}
 									<p className="text-foreground/80 leading-relaxed whitespace-pre-line">
