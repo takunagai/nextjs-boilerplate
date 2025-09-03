@@ -33,6 +33,8 @@ export const FOOTER_NAVIGATION: MaxFourNavGroups = [
 				href: "/services/ai-consulting-and-support",
 			},
 			{ label: "クリエイティブ", href: "/services/creative" },
+			{ label: "写真撮影", href: "/services/photography" },
+			{ label: "AI画像生成・画像補正", href: "/services/ai-image-generation" },
 		],
 	},
 	{
