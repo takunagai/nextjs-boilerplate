@@ -115,6 +115,11 @@ export default function ExamplesPage() {
 			description: "ユーザーへの通知を表示するトーストコンポーネントです。",
 			href: "/examples/toast",
 		},
+		{
+			title: "カードデザインコレクション",
+			description: "4種類のカードデザイン（グラスモーフィズム・ネオモーフィズム・スプリット・オーロラ）の比較とサンプル集。",
+			href: "/examples/card-designs",
+		},
 	];
 
 	return (
