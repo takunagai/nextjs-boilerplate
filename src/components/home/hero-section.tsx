@@ -46,32 +46,34 @@ export function HeroSection() {
 			<Container width="2xl" paddingY="xl" paddingX="lg" className="z-0">
 				<div className="flex flex-col items-center text-center max-w-4xl mx-auto">
 					{/* 上部テキスト */}
-					<p 
+					<p
 						className={`
 							text-lg md:text-xl text-white/80 mb-8 transition-all duration-800 ease-out
-							${animationStarted 
-								? 'opacity-100 translate-y-0' 
-								: 'opacity-0 translate-y-2'
+							${
+								animationStarted
+									? "opacity-100 translate-y-0"
+									: "opacity-0 translate-y-2"
 							}
 						`}
-						style={{ transitionDelay: '0.3s' }}
+						style={{ transitionDelay: "0.3s" }}
 					>
 						デジタルのお困りごと、ご相談ください。
 					</p>
-					
+
 					{/* メインアニメーション */}
 					<MinimalAnimation className="mb-8 text-white" />
-					
+
 					{/* サブテキスト */}
-					<p 
+					<p
 						className={`
 							text-lg md:text-xl text-white/90 mb-8 max-w-3xl transition-all duration-800 ease-out
-							${animationStarted 
-								? 'opacity-100 translate-y-0' 
-								: 'opacity-0 translate-y-2'
+							${
+								animationStarted
+									? "opacity-100 translate-y-0"
+									: "opacity-0 translate-y-2"
 							}
 						`}
-						style={{ transitionDelay: '1.5s' }}
+						style={{ transitionDelay: "1.5s" }}
 					>
 						ウェブ制作/開発、AI活用支援、クリエイティブ制作、
 						<br className="hidden md:block" />

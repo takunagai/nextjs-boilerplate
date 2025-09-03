@@ -22,50 +22,49 @@ export function MinimalAnimation({ className = "" }: MinimalAnimationProps) {
 		<div className={`relative ${className}`}>
 			<h1 className="text-6xl leading-[1.2] md:text-6xl lg:text-7xl font-bold tracking-tight">
 				{/* Web */}
-				<span 
+				<span
 					className={`
 						inline-block text-primary transition-all duration-600 ease-out
-						${animationStarted
-							? 'opacity-100 translate-y-0 animate-neon-glow'
-							: 'opacity-0 translate-y-8'
+						${
+							animationStarted
+								? "opacity-100 translate-y-0 animate-neon-glow"
+								: "opacity-0 translate-y-8"
 						}
 					`}
-					style={{ 
-						animationDelay: animationStarted ? '2s' : '0s',
-						transitionDelay: '0.5s'
+					style={{
+						animationDelay: animationStarted ? "2s" : "0s",
+						transitionDelay: "0.5s",
 					}}
 				>
 					Web
 				</span>
 
 				{/* First × */}
-				<span 
+				<span
 					className={`
 						inline-block mx-2 text-white transition-all duration-300 ease-out
-						${animationStarted
-							? 'opacity-100 scale-100'
-							: 'opacity-0 scale-0'
-						}
+						${animationStarted ? "opacity-100 scale-100" : "opacity-0 scale-0"}
 					`}
-					style={{ 
-						transitionDelay: '0.7s'
+					style={{
+						transitionDelay: "0.7s",
 					}}
 				>
 					×
 				</span>
 
 				{/* AI */}
-				<span 
+				<span
 					className={`
 						inline-block text-primary transition-all duration-600 ease-out
-						${animationStarted
-							? 'opacity-100 translate-y-0 animate-neon-glow'
-							: 'opacity-0 translate-y-8'
+						${
+							animationStarted
+								? "opacity-100 translate-y-0 animate-neon-glow"
+								: "opacity-0 translate-y-8"
 						}
 					`}
-					style={{ 
-						animationDelay: animationStarted ? '2.4s' : '0s',
-						transitionDelay: '0.8s'
+					style={{
+						animationDelay: animationStarted ? "2.4s" : "0s",
+						transitionDelay: "0.8s",
 					}}
 				>
 					AI
@@ -75,33 +74,31 @@ export function MinimalAnimation({ className = "" }: MinimalAnimationProps) {
 				<br className="md:hidden" />
 
 				{/* Second × */}
-				<span 
+				<span
 					className={`
 						inline-block mx-2 md:mx-2 text-white transition-all duration-300 ease-out
-						${animationStarted
-							? 'opacity-100 scale-100'
-							: 'opacity-0 scale-0'
-						}
+						${animationStarted ? "opacity-100 scale-100" : "opacity-0 scale-0"}
 					`}
-					style={{ 
-						transitionDelay: '1.0s'
+					style={{
+						transitionDelay: "1.0s",
 					}}
 				>
 					×
 				</span>
 
 				{/* Creative */}
-				<span 
+				<span
 					className={`
 						inline-block text-primary transition-all duration-600 ease-out
-						${animationStarted
-							? 'opacity-100 translate-y-0 animate-neon-glow'
-							: 'opacity-0 translate-y-8'
+						${
+							animationStarted
+								? "opacity-100 translate-y-0 animate-neon-glow"
+								: "opacity-0 translate-y-8"
 						}
 					`}
-					style={{ 
-						animationDelay: animationStarted ? '2.8s' : '0s',
-						transitionDelay: '1.1s'
+					style={{
+						animationDelay: animationStarted ? "2.8s" : "0s",
+						transitionDelay: "1.1s",
 					}}
 				>
 					Creative
@@ -109,15 +106,15 @@ export function MinimalAnimation({ className = "" }: MinimalAnimationProps) {
 			</h1>
 
 			{/* Subtle breathing effect after animation completes */}
-			<div 
+			<div
 				className={`
 					absolute inset-0 transition-opacity duration-1000 ease-out
-					${animationStarted ? 'opacity-100' : 'opacity-0'}
+					${animationStarted ? "opacity-100" : "opacity-0"}
 					animate-breathing
 				`}
-				style={{ 
-					transitionDelay: '2s',
-					animationDelay: '2s'
+				style={{
+					transitionDelay: "2s",
+					animationDelay: "2s",
 				}}
 			>
 				<div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-blue-500/5 rounded-lg blur-xl" />
