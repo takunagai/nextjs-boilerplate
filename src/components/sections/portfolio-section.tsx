@@ -12,7 +12,7 @@ const portfolioItems = [
 		project: "コーポレートサイト",
 		description: "WordPress + AI 記事生成システム導入",
 		testimonial: "更新が楽になって、アクセス数も 2倍に！",
-		image: "/dummy-images/portfolio-01.jpg",
+		image: "/dummy-images/photo-08.jpg",
 	},
 	{
 		id: "case-b",
@@ -20,7 +20,7 @@ const portfolioItems = [
 		project: "EC サイトリニューアル",
 		description: "商品説明を AI で一括生成",
 		testimonial: "作業時間 80% 削減できました",
-		image: "/dummy-images/portfolio-02.jpg",
+		image: "/dummy-images/photo-09.jpg",
 	},
 	{
 		id: "case-c",
@@ -28,7 +28,7 @@ const portfolioItems = [
 		project: "AI チャットボット開発",
 		description: "Next.js + ChatGPT API",
 		testimonial: "お問い合わせ対応が自動化できた",
-		image: "/dummy-images/portfolio-03.jpg",
+		image: "/dummy-images/photo-10.jpg",
 	},
 ];
 

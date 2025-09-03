@@ -18,9 +18,10 @@ export type PortfolioItem = {
 };
 
 export type PortfolioCategory = {
-	id: "web" | "design" | "photo" | "logo" | "shop" | "other";
+	id: "web" | "design" | "photo" | "logo" | "shop" | "other" | "ai-image";
 	name: string;
 	description: string;
+	serviceUrl?: string;
 };
 
 // ポートフォリオカテゴリのデータ
@@ -29,31 +30,43 @@ export const portfolioCategories: PortfolioCategory[] = [
 		id: "web",
 		name: "ウェブサイト制作",
 		description: "WordPress、Wixなどを活用したウェブサイト制作実績",
+		serviceUrl: "/services/web-development",
 	},
 	{
 		id: "design",
 		name: "デザイン",
 		description: "Webデザイン、ロゴデザインなどの制作実績",
+		serviceUrl: "/services/creative",
 	},
 	{
 		id: "photo",
 		name: "写真撮影",
 		description: "商品写真、サービス写真などの撮影実績",
+		serviceUrl: "/services/photography",
 	},
 	{
 		id: "logo",
 		name: "ロゴ制作",
 		description: "企業・サービスのロゴデザイン制作実績",
+		// serviceUrl削除: クリエイティブサービスの一部のため独立ページなし
 	},
 	{
 		id: "shop",
 		name: "ECサイト構築",
 		description: "オンラインショップの構築実績",
+		// serviceUrl削除: ウェブ制作サービスの一部のため独立ページなし
+	},
+	{
+		id: "ai-image",
+		name: "AI画像生成・画像補正",
+		description: "AI技術を活用した画像生成・編集サービス",
+		serviceUrl: "/services/ai-image-generation",
 	},
 	{
 		id: "other",
 		name: "その他",
 		description: "コピー作成、データ移行などの実績",
+		serviceUrl: "/services/ai-consulting-and-support",
 	},
 ];
 

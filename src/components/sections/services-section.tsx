@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import Image from "next/image";
 import Link from "next/link";
 import {
 	FaArrowRight,
@@ -49,7 +50,7 @@ const services: FeatureItem[] = [
 		title: "ウェブ制作・アプリ開発",
 		description:
 			"AI を活用した効率的な制作で、通常の 50〜70% OFF を実現。\n高品質なのに、驚きの低価格でお客様のニーズにお応えします。",
-		imageUrl: "/dummy-images/web-development.jpg",
+		imageUrl: "/dummy-images/photo-05.jpg",
 		icon: <FaCode className="w-6 h-6 text-blue-600" />,
 		buttonText: "詳しく見る",
 		buttonUrl: "/services/web-development",
@@ -66,7 +67,7 @@ const services: FeatureItem[] = [
 		title: "AIコンサル＆サポート",
 		description:
 			"ご相談者様のレベルに合わせた解説を心がけます。\nAI の「？」を「！」に変えて、あなたのペースで実践的な AI 活用を。",
-		imageUrl: "/dummy-images/consulting.jpg",
+		imageUrl: "/dummy-images/photo-06.jpg",
 		icon: <FaChalkboardUser className="w-6 h-6 text-green-600" />,
 		buttonText: "詳しく見る",
 		buttonUrl: "/services/ai-consulting-and-support",
@@ -83,7 +84,7 @@ const services: FeatureItem[] = [
 		title: "クリエイティブ",
 		description:
 			"文章も画像も動画も音楽も。\nAI x デザイナーで仕上げる二人三脚スタイルで、時間とスキルの壁を突破します。",
-		imageUrl: "/dummy-images/creative.jpg",
+		imageUrl: "/dummy-images/photo-07.jpg",
 		icon: <FaPaintbrush className="w-6 h-6 text-purple-600" />,
 		buttonText: "詳しく見る",
 		buttonUrl: "/services/creative",
@@ -259,15 +260,13 @@ export function ServicesSection() {
 								{item.imageUrl && (
 									<div className="relative w-full h-full overflow-hidden rounded-lg [direction:ltr] order-1 md:order-none">
 										<div className="aspect-[4/3] relative">
-											<div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-lg flex items-center justify-center">
-												<div className="text-center text-muted-foreground">
-													<div className="w-16 h-16 mx-auto mb-4 opacity-50">
-														{item.icon}
-													</div>
-													<p className="text-sm">画像準備中</p>
-													<p className="text-xs">{item.title}</p>
-												</div>
-											</div>
+											<Image
+												src={item.imageUrl}
+												alt={`${item.title}のイメージ画像`}
+												fill
+												className="object-cover rounded-lg"
+												sizes="(max-width: 768px) 100vw, 50vw"
+											/>
 										</div>
 									</div>
 								)}
@@ -277,18 +276,36 @@ export function ServicesSection() {
 				/>
 
 				{/* カテゴリー紹介 */}
-				<div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-					{portfolioCategories.map((category) => (
-						<div
-							key={category.id}
-							className="p-4 border rounded-md bg-card hover:bg-accent/50 transition-colors"
-						>
-							<h2 className="text-lg font-semibold">{category.name}</h2>
-							<p className="text-sm text-muted-foreground mt-1">
-								{category.description}
-							</p>
-						</div>
-					))}
+				<div className="mt-12">
+					<div className="text-center mb-8">
+						<h3 className="text-2xl font-bold mb-3">
+							あなたの「できたらいいな」に、全力でお応えします
+						</h3>
+						<p className="text-muted-foreground max-w-2xl mx-auto">
+							どんなご要望も、まずはお聞かせください。15年の経験とAIの力で、最適な解決策をご提案します。
+						</p>
+					</div>
+					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+						{portfolioCategories.map((category) => (
+							<div
+								key={category.id}
+								className="p-4 border rounded-md bg-card hover:bg-accent/50 transition-colors"
+							>
+								{category.serviceUrl ? (
+									<Link href={category.serviceUrl} className="inline-block">
+										<h2 className="text-lg font-semibold hover:underline cursor-pointer mb-2">
+											{category.name}
+										</h2>
+									</Link>
+								) : (
+									<h2 className="text-lg font-semibold mb-2">{category.name}</h2>
+								)}
+								<p className="text-sm text-muted-foreground">
+									{category.description}
+								</p>
+							</div>
+						))}
+					</div>
 				</div>
 			</Container>
 		</section>
