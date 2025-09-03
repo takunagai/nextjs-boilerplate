@@ -91,15 +91,23 @@ export function ReasonsSection() {
 	}, []);
 
 	return (
-		<section className="w-full py-16 md:py-24 relative overflow-hidden">
-			{/* 背景のグラデーション */}
-			<div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-purple-50/30 to-pink-50/50 dark:from-blue-950/20 dark:via-purple-950/10 dark:to-pink-950/20" />
-			
-			{/* アニメーション背景 */}
+		<section className="w-full py-16 md:py-24 relative overflow-hidden bg-gray-900 dark:bg-black">
+			{/* オーロラ背景 */}
 			<div className="absolute inset-0">
-				<div className="absolute top-0 -left-4 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob dark:bg-purple-600" />
-				<div className="absolute top-0 -right-4 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-2000 dark:bg-yellow-600" />
-				<div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-4000 dark:bg-pink-600" />
+				{/* アニメーションするグラデーションレイヤー */}
+				<div className="absolute inset-0 opacity-50">
+					<div className="aurora-1 absolute inset-0" />
+					<div className="aurora-2 absolute inset-0" />
+					<div className="aurora-3 absolute inset-0" />
+				</div>
+				
+				{/* ノイズテクスチャ風オーバーレイ */}
+				<div 
+					className="absolute inset-0 opacity-30"
+					style={{
+						backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.1'/%3E%3C/svg%3E")`,
+					}}
+				/>
 			</div>
 
 			<Container
@@ -109,10 +117,10 @@ export function ReasonsSection() {
 				className="relative z-10"
 			>
 				<div className="text-center mb-12">
-					<Heading as="h2" align="center" className="mb-4">
+					<Heading as="h2" align="center" className="mb-4 text-white dark:text-white">
 						選ばれる5つの理由
 					</Heading>
-					<p className="text-muted-foreground max-w-2xl mx-auto">
+					<p className="text-gray-300 dark:text-gray-400 max-w-2xl mx-auto">
 						なぜ多くのお客様に選ばれているのか、その理由をご紹介します
 					</p>
 				</div>
@@ -120,6 +128,8 @@ export function ReasonsSection() {
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 					{reasons.map((reason, index) => {
 						const IconComponent = reason.icon;
+						const animationDelay = index * 0.5;
+						
 						return (
 							<div
 								key={reason.id}
@@ -128,89 +138,129 @@ export function ReasonsSection() {
 								}}
 								className="group relative"
 							>
-								{/* グラスモーフィズムカード */}
-								<Card
+								{/* オーロラカード */}
+								<div
 									className={cn(
 										"h-full relative overflow-hidden",
-										"bg-white/60 dark:bg-gray-900/60",
-										"backdrop-blur-lg backdrop-saturate-150",
-										"border border-white/20 dark:border-white/10",
-										"shadow-xl",
-										"transition-all duration-500",
-										"hover:scale-[1.02] hover:shadow-2xl",
-										"before:absolute before:inset-0",
-										"before:bg-gradient-to-br before:opacity-0",
-										"before:transition-opacity before:duration-500",
-										"hover:before:opacity-100",
-										`before:${reason.lightGradient}`,
+										"rounded-2xl",
+										"bg-gray-800/30 dark:bg-gray-900/30",
+										"backdrop-blur-sm",
+										"border border-white/10",
+										"transition-all duration-700",
+										"hover:scale-[1.02]",
+										"hover:bg-gray-800/50 dark:hover:bg-gray-900/50",
 									)}
 								>
-									{/* 光のエフェクト（ホバー時） */}
+									{/* カード内部のオーロラエフェクト */}
 									<div 
-										className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+										className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
 										style={{
-											background: `radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.1), transparent 40%)`,
+											background: `
+												radial-gradient(
+													circle at 30% 20%,
+													rgba(120, 119, 198, 0.3),
+													transparent 50%
+												),
+												radial-gradient(
+													circle at 70% 80%,
+													rgba(255, 119, 198, 0.3),
+													transparent 50%
+												),
+												radial-gradient(
+													circle at 50% 50%,
+													rgba(119, 198, 255, 0.3),
+													transparent 70%
+												)
+											`,
+											animation: `aurora-shift ${10 + animationDelay}s ease-in-out infinite`,
 										}}
 									/>
 
-									{/* 数字ウォーターマーク */}
-									<div className={cn(
-										"absolute -top-8 -right-8 text-[120px] font-bold",
-										"bg-gradient-to-br text-transparent bg-clip-text",
-										"opacity-10 group-hover:opacity-20 transition-opacity",
-										reason.gradient,
-									)}>
+									{/* 数字（ソフトグロー付き） */}
+									<div 
+										className="absolute top-4 right-4 text-6xl font-bold text-white/5"
+										style={{
+											textShadow: `
+												0 0 20px rgba(255, 255, 255, 0.1),
+												0 0 40px rgba(120, 119, 198, 0.2),
+												0 0 60px rgba(255, 119, 198, 0.1)
+											`,
+										}}
+									>
 										{reason.number}
 									</div>
 
-									<CardHeader className="text-center pb-4 pt-8 relative z-10">
-										{/* アイコン（グロウエフェクト付き） */}
-										<div className="relative mx-auto mb-4">
-											<div className={cn(
-												"w-16 h-16 rounded-full flex items-center justify-center",
-												"bg-gradient-to-br shadow-lg",
-												"group-hover:shadow-xl group-hover:scale-110",
-												"transition-all duration-300",
-												reason.gradient,
-											)}>
-												<IconComponent className="w-8 h-8 text-white" />
+									<div className="relative p-8">
+										{/* アイコン（グロウエフェクト） */}
+										<div className="mb-6">
+											<div 
+												className={cn(
+													"w-16 h-16 rounded-full",
+													"bg-gradient-to-br from-purple-500/20 to-pink-500/20",
+													"backdrop-blur-sm",
+													"border border-white/20",
+													"flex items-center justify-center",
+													"group-hover:scale-110",
+													"transition-all duration-500",
+													"relative",
+												)}
+											>
+												<IconComponent 
+													className="w-8 h-8 text-white"
+													style={{
+														filter: "drop-shadow(0 0 10px rgba(255, 255, 255, 0.5))",
+													}}
+												/>
+												
+												{/* アイコンの後ろのグロウ */}
+												<div 
+													className="absolute inset-0 rounded-full opacity-50 group-hover:opacity-100 transition-opacity duration-500"
+													style={{
+														background: "radial-gradient(circle, rgba(120, 119, 198, 0.4), transparent 70%)",
+														filter: "blur(20px)",
+													}}
+												/>
 											</div>
-											{/* グロウエフェクト */}
-											<div className={cn(
-												"absolute inset-0 rounded-full",
-												"bg-gradient-to-br blur-xl opacity-50",
-												"group-hover:opacity-75 group-hover:blur-2xl",
-												"transition-all duration-300",
-												reason.gradient,
-											)} />
 										</div>
 
-										<CardTitle className="text-xl relative">
+										{/* テキスト */}
+										<h3 className="text-xl font-bold text-white mb-2">
 											{reason.title}
-										</CardTitle>
-										<p className={cn(
-											"text-sm font-bold mt-2",
-											"bg-gradient-to-r text-transparent bg-clip-text",
-											reason.gradient,
-										)}>
+										</h3>
+										
+										<p 
+											className="text-sm font-semibold mb-4"
+											style={{
+												background: "linear-gradient(135deg, #667eea 0%, #f093fb 100%)",
+												WebkitBackgroundClip: "text",
+												WebkitTextFillColor: "transparent",
+												backgroundClip: "text",
+											}}
+										>
 											{reason.subtitle}
 										</p>
-									</CardHeader>
 
-									<CardContent className="relative z-10">
-										<p className="text-muted-foreground text-sm leading-relaxed whitespace-pre-line text-center">
+										<p className="text-gray-300 dark:text-gray-400 text-sm leading-relaxed whitespace-pre-line">
 											{reason.description}
 										</p>
-									</CardContent>
+									</div>
 
-									{/* 下部のグラデーションライン */}
-									<div className={cn(
-										"absolute bottom-0 left-0 right-0 h-1",
-										"bg-gradient-to-r opacity-0 group-hover:opacity-100",
-										"transition-opacity duration-500",
-										reason.gradient,
-									)} />
-								</Card>
+									{/* 底部のオーロララインエフェクト */}
+									<div 
+										className="absolute bottom-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+										style={{
+											background: `linear-gradient(
+												90deg,
+												transparent,
+												rgba(120, 119, 198, 0.8) 20%,
+												rgba(255, 119, 198, 0.8) 50%,
+												rgba(119, 198, 255, 0.8) 80%,
+												transparent
+											)`,
+											animation: `aurora-line ${3 + animationDelay}s ease-in-out infinite`,
+										}}
+									/>
+								</div>
 							</div>
 						);
 					})}
@@ -218,28 +268,101 @@ export function ReasonsSection() {
 			</Container>
 
 			<style jsx>{`
-				@keyframes blob {
-					0% {
-						transform: translate(0px, 0px) scale(1);
+				@keyframes aurora-shift {
+					0%, 100% {
+						transform: translateY(0) rotate(0deg);
+						opacity: 0.5;
+					}
+					25% {
+						transform: translateY(-20px) rotate(1deg);
+						opacity: 0.8;
+					}
+					50% {
+						transform: translateY(10px) rotate(-1deg);
+						opacity: 0.6;
+					}
+					75% {
+						transform: translateY(-10px) rotate(2deg);
+						opacity: 0.9;
+					}
+				}
+
+				@keyframes aurora-line {
+					0%, 100% {
+						transform: translateX(-100%);
+					}
+					50% {
+						transform: translateX(100%);
+					}
+				}
+
+				.aurora-1 {
+					background: linear-gradient(135deg, 
+						rgba(120, 119, 198, 0.3) 0%, 
+						rgba(255, 119, 198, 0.2) 50%, 
+						rgba(119, 198, 255, 0.3) 100%);
+					animation: aurora-1-animation 15s ease-in-out infinite;
+				}
+
+				.aurora-2 {
+					background: linear-gradient(225deg, 
+						rgba(255, 119, 198, 0.3) 0%, 
+						rgba(119, 198, 255, 0.2) 50%, 
+						rgba(120, 119, 198, 0.3) 100%);
+					animation: aurora-2-animation 20s ease-in-out infinite;
+				}
+
+				.aurora-3 {
+					background: linear-gradient(45deg, 
+						rgba(119, 198, 255, 0.3) 0%, 
+						rgba(120, 119, 198, 0.2) 50%, 
+						rgba(255, 119, 198, 0.3) 100%);
+					animation: aurora-3-animation 25s ease-in-out infinite;
+				}
+
+				@keyframes aurora-1-animation {
+					0%, 100% {
+						transform: translateX(0) translateY(0) scale(1);
+						opacity: 0.3;
 					}
 					33% {
-						transform: translate(30px, -50px) scale(1.1);
+						transform: translateX(100px) translateY(-100px) scale(1.2);
+						opacity: 0.5;
 					}
 					66% {
-						transform: translate(-20px, 20px) scale(0.9);
-					}
-					100% {
-						transform: translate(0px, 0px) scale(1);
+						transform: translateX(-100px) translateY(50px) scale(0.9);
+						opacity: 0.2;
 					}
 				}
-				.animate-blob {
-					animation: blob 7s infinite;
+
+				@keyframes aurora-2-animation {
+					0%, 100% {
+						transform: translateX(0) translateY(0) rotate(0deg);
+						opacity: 0.3;
+					}
+					50% {
+						transform: translateX(-150px) translateY(100px) rotate(180deg);
+						opacity: 0.4;
+					}
 				}
-				.animation-delay-2000 {
-					animation-delay: 2s;
-				}
-				.animation-delay-4000 {
-					animation-delay: 4s;
+
+				@keyframes aurora-3-animation {
+					0%, 100% {
+						transform: translateX(0) translateY(0) scale(1) rotate(0deg);
+						opacity: 0.3;
+					}
+					25% {
+						transform: translateX(50px) translateY(100px) scale(1.1) rotate(90deg);
+						opacity: 0.4;
+					}
+					50% {
+						transform: translateX(-100px) translateY(-50px) scale(1.2) rotate(180deg);
+						opacity: 0.2;
+					}
+					75% {
+						transform: translateX(100px) translateY(-100px) scale(0.8) rotate(270deg);
+						opacity: 0.5;
+					}
 				}
 			`}</style>
 		</section>
