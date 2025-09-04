@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
 import { Heading } from "@/components/ui/heading";
+import { SocialLinks } from "@/components/ui/social-links";
 
 export function ProfileSection() {
 	return (
@@ -53,6 +54,9 @@ export function ProfileSection() {
 										技術的な話も、分かりやすくお伝えします。お気軽にご相談ください！
 									</p>
 								</div>
+
+								{/* SNS・サービスリンク */}
+								<SocialLinks className="pt-2" />
 
 								<div className="pt-4">
 									<Button asChild variant="outline">
