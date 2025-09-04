@@ -1,3 +1,5 @@
+"use client";
+
 import { cva, type VariantProps } from "class-variance-authority";
 import Image from "next/image";
 import type * as React from "react";
@@ -503,9 +505,9 @@ export function SpeechBubble({
 	// デフォルトのフォールバック要素
 	const defaultFallback = fallback || (
 		<SpeechBubbleSkeleton
-			direction={direction}
-			size={size}
-			spacing={spacing}
+			direction={direction || "left"}
+			size={size || "md"}
+			spacing={spacing || "normal"}
 		/>
 	);
 
@@ -534,7 +536,7 @@ export function SpeechBubble({
 				imageError={imageError}
 				handleImageLoad={handleImageLoad}
 				handleImageError={handleImageError}
-				size={size}
+				size={size || "md"}
 				avatarSrc={avatarSrc}
 			/>
 
