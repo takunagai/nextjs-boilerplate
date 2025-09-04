@@ -89,7 +89,10 @@ export function DesktopNavigation({
 												handleDropdownClose,
 											)}
 										>
-											{child.label}
+											<span className="flex items-center gap-2">
+												{child.icon && child.icon}
+												{child.label}
+											</span>
 										</Link>
 									))}
 								</div>

@@ -86,7 +86,10 @@ export function MobileNavigation({
 															: "text-muted-foreground",
 													)}
 												>
-													{child.label}
+													<span className="flex items-center gap-2">
+														{child.icon && child.icon}
+														{child.label}
+													</span>
 												</Link>
 											))}
 										</div>
