@@ -79,7 +79,7 @@ export function Footer({
 	variant,
 	size,
 	companyName = APP.COPYRIGHT_HOLDER,
-	description = "このボイラープレートは、Next.js で構築されたウェブアプリケーションの基盤を提供します。",
+	description = "変化の激しい時代だからこそ、柔軟に対応できる強みを活かします。",
 	logoText = APP.NAME,
 	navGroups = FOOTER_NAVIGATION,
 	showCurrentYear = true,

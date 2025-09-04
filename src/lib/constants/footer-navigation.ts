@@ -38,18 +38,17 @@ export const FOOTER_NAVIGATION: MaxFourNavGroups = [
 		],
 	},
 	{
-		title: "サポート",
+		title: "情報",
 		links: [
-			{ label: "ドキュメント", href: "/docs" },
-			{ label: "FAQ", href: "/faq" },
-			{ label: "開発者向け", href: "/developers" },
+			{ label: "ニュース", href: "/news" },
+			{ label: "ポートフォリオ", href: "/portfolio" },
+			{ label: "お問い合わせ", href: "/contact" },
 		],
 	},
 	{
 		title: "会社情報",
 		links: [
-			{ label: "About Us", href: "/about" },
-			{ label: "採用情報", href: "/careers" },
+			{ label: "プロフィール", href: "/about" },
 			{ label: "プライバシーポリシー", href: "/privacy" },
 		],
 	},
