@@ -7,7 +7,6 @@ import {
 	FaLightbulb,
 	FaRocket,
 	FaServer,
-	FaTwitter,
 	FaUser,
 } from "react-icons/fa6";
 import {
@@ -25,6 +24,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
+import { SocialLinks } from "@/components/ui/social-links";
 import {
 	Timeline,
 	TimelineContent,
@@ -425,54 +425,23 @@ export default function AboutPage() {
 						</CardDescription>
 					</div>
 					<CardContent className="pt-6">
-						<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-							<div className="space-y-4">
-								<div>
-									<h3 className="font-medium mb-2">📞 直接相談</h3>
-									<a
-										href="/contact"
-										className="inline-block bg-primary text-primary-foreground px-4 py-2 rounded hover:bg-primary/90 transition-colors"
-									>
-										無料相談を予約する
-									</a>
-								</div>
-								<div>
-									<h3 className="font-medium mb-2">📱 LINE</h3>
-									<a
-										href="https://line.me/ti/p/gwTCBKP8jY"
-										target="_blank"
-										rel="noopener noreferrer"
-										className="flex items-center gap-2 text-primary hover:underline"
-									>
-										<span className="text-lg">💬</span>
-										LINE でお気軽に相談
-									</a>
-								</div>
+						<div className="space-y-6">
+							{/* 直接相談セクション */}
+							<div className="text-center pb-4 border-b">
+								<h3 className="font-medium mb-3">📞 直接相談</h3>
+								<a
+									href="/contact"
+									className="inline-block bg-primary text-primary-foreground px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors font-medium"
+								>
+									無料相談を予約する
+								</a>
 							</div>
-							<div className="space-y-3">
-								<h3 className="font-medium">SNS フォロー</h3>
-								<div className="space-y-2">
-									<a
-										href="https://x.com/nagataku_ai"
-										target="_blank"
-										rel="noopener noreferrer"
-										className="flex items-center gap-2 text-primary hover:underline"
-									>
-										<FaTwitter className="h-5 w-5" />
-										@nagataku_ai（X）
-									</a>
-									<a
-										href="https://www.instagram.com/nagataku33/"
-										target="_blank"
-										rel="noopener noreferrer"
-										className="flex items-center gap-2 text-primary hover:underline"
-									>
-										<span className="text-lg">📷</span>
-										@nagataku33（Instagram）
-									</a>
-								</div>
-								<p className="text-xs text-muted-foreground mt-3">
-									最新のAI情報やお役立ち情報を発信中！
+							
+							{/* SNSリンクセクション */}
+							<div>
+								<SocialLinks className="pt-0" />
+								<p className="text-sm text-muted-foreground text-center mt-4">
+									最新のAI情報やお役立ち情報を発信中！お気軽にフォローしてください。
 								</p>
 							</div>
 						</div>
