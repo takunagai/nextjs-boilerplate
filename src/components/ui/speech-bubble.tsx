@@ -1,6 +1,7 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import Image from "next/image";
 import type * as React from "react";
+import { use } from "react";
 
 import { cn } from "@/lib/utils";
 import { 
@@ -229,6 +230,18 @@ export interface SpeechBubbleProps
 	 * @default false
 	 */
 	disableResponsive?: boolean;
+
+	/**
+	 * React 19の非同期コンテンツローディング用のPromise
+	 * @experimental React 19対応
+	 */
+	contentPromise?: Promise<React.ReactNode>;
+
+	/**
+	 * React 19のアクション機能（フォーム送信など）
+	 * @experimental React 19対応
+	 */
+	onAction?: (formData: FormData) => void;
 }
 
 /**
@@ -326,11 +339,29 @@ function BubbleContent({
 	contentId,
 	contentConfig,
 	children,
-}: BubbleContentProps) {
+	contentPromise,
+}: BubbleContentProps & { contentPromise?: Promise<React.ReactNode> }) {
+	// React 19の非同期コンテンツサポート
+	let resolvedContent = children;
+	
+	if (contentPromise) {
+		try {
+			// React 19のuse()でPromiseを解決
+			resolvedContent = use(contentPromise);
+		} catch (error) {
+			// Promiseが拒否された場合のエラーハンドリング
+			resolvedContent = (
+				<div className="text-red-500 dark:text-red-400" role="alert">
+					コンテンツの読み込みに失敗しました
+				</div>
+			);
+		}
+	}
+
 	return (
 		<div id={contentId} className="relative z-10">
-			{contentConfig.hasValidContent ? (
-				children
+			{contentConfig.hasValidContent || resolvedContent ? (
+				resolvedContent || children
 			) : (
 				<div className="text-gray-400 dark:text-gray-600 italic" role="alert">
 					コンテンツが提供されていません
@@ -365,6 +396,8 @@ export function SpeechBubble({
 	theme = "default",
 	disableResponsive = false,
 	className,
+	contentPromise,
+	onAction,
 	...props
 }: SpeechBubbleProps) {
 	// カスタムフックの統合
@@ -405,6 +438,11 @@ export function SpeechBubble({
 			)}
 			role="group"
 			aria-label={`${contentConfig.safeName}からのメッセージ`}
+			// React 19のアクション機能サポート
+			{...(onAction && {
+				action: onAction,
+				// React 19では自動的にform要素として扱われる
+			})}
 			{...props}
 		>
 			{/* アバター画像 */}
@@ -439,6 +477,7 @@ export function SpeechBubble({
 					contentId={contentId}
 					contentConfig={contentConfig}
 					children={children}
+					contentPromise={contentPromise}
 				/>
 			</div>
 		</div>
