@@ -1,7 +1,7 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import Image from "next/image";
 import type * as React from "react";
-import { useId } from "react";
+import { useId, useState } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -177,9 +177,32 @@ export function SpeechBubble({
 	...props
 }: SpeechBubbleProps) {
 	const contentId = useId();
+	const [imageError, setImageError] = useState(false);
+	const [imageLoading, setImageLoading] = useState(true);
+
+	// プロップス値の最適化とエラーハンドリング
 	const effectiveAvatarSrc = avatarSrc || DEFAULT_AVATAR.src;
-	const effectiveAvatarWidth = avatarWidth || DEFAULT_AVATAR.width;
-	const effectiveAvatarHeight = avatarHeight || DEFAULT_AVATAR.height;
+	const effectiveAvatarWidth = Math.max(avatarWidth || DEFAULT_AVATAR.width, 16);
+	const effectiveAvatarHeight = Math.max(avatarHeight || DEFAULT_AVATAR.height, 16);
+
+	// コンテンツの有効性チェック
+	const hasValidContent = children != null && 
+		(typeof children === 'string' ? children.trim().length > 0 : true);
+
+	// 無効な名前の場合のフォールバック
+	const safeName = name && name.trim() ? name.trim() : "ユーザー";
+
+	// 画像読み込みエラーハンドラー
+	const handleImageError = () => {
+		setImageError(true);
+		setImageLoading(false);
+	};
+
+	// 画像読み込み完了ハンドラー
+	const handleImageLoad = () => {
+		setImageLoading(false);
+		setImageError(false);
+	};
 
 	return (
 		<div
@@ -189,19 +212,52 @@ export function SpeechBubble({
 				className,
 			)}
 			role="group"
-			aria-label={`${name}からのメッセージ`}
+			aria-label={`${safeName}からのメッセージ`}
 			{...props}
 		>
 			{/* アバター画像 */}
 			<div className="relative">
+				{/* 画像読み込み中のスケルトン */}
+				{imageLoading && (
+					<div
+						className={cn(
+							avatarVariants({ size }),
+							"absolute inset-0 bg-gray-200 dark:bg-gray-700 animate-pulse rounded-full",
+						)}
+						aria-hidden="true"
+					/>
+				)}
+				
 				<Image
-					src={effectiveAvatarSrc}
-					alt={`${name}のアバター`}
+					src={imageError ? DEFAULT_AVATAR.src : effectiveAvatarSrc}
+					alt={`${safeName}のアバター`}
 					width={effectiveAvatarWidth}
 					height={effectiveAvatarHeight}
-					className={cn(avatarVariants({ size }))}
+					className={cn(
+						avatarVariants({ size }),
+						imageLoading ? "opacity-0" : "opacity-100",
+						"transition-opacity duration-300"
+					)}
 					priority={false}
+					onLoad={handleImageLoad}
+					onError={handleImageError}
+					loading="lazy"
+					placeholder="blur"
+					blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
 				/>
+				
+				{/* エラー時のフォールバック表示 */}
+				{imageError && effectiveAvatarSrc !== DEFAULT_AVATAR.src && (
+					<div 
+						className={cn(
+							avatarVariants({ size }),
+							"absolute inset-0 bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-400 text-xs"
+						)}
+						aria-label="画像読み込み失敗"
+					>
+						?
+					</div>
+				)}
 			</div>
 
 			{/* 吹き出しバブル */}
@@ -221,7 +277,13 @@ export function SpeechBubble({
 
 				{/* テキストコンテンツ */}
 				<div id={contentId} className="relative z-10">
-					{children}
+					{hasValidContent ? (
+						children
+					) : (
+						<div className="text-gray-400 dark:text-gray-600 italic" role="alert">
+							コンテンツが提供されていません
+						</div>
+					)}
 				</div>
 			</div>
 		</div>
