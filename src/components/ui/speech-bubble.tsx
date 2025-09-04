@@ -8,8 +8,8 @@ import { use, Suspense } from "react";
 import { cn } from "@/lib/utils";
 import { 
 	useSpeechBubble, 
-	useAvatarConfiguration, 
-	useContentConfiguration,
+	createAvatarConfiguration, 
+	validateContentConfiguration,
 	useSpeechBubblePerformance,
 } from "@/hooks/use-speech-bubble";
 
@@ -240,12 +240,6 @@ export interface SpeechBubbleProps
 	contentPromise?: Promise<React.ReactNode>;
 
 	/**
-	 * React 19のアクション機能（フォーム送信など）
-	 * @experimental React 19対応
-	 */
-	onAction?: (formData: FormData) => void;
-
-	/**
 	 * Suspense境界のフォールバック要素
 	 * @default SpeechBubbleSkeleton
 	 */
@@ -330,8 +324,8 @@ function SpeechBubbleSkeleton({
  * アバター画像コンポーネント（分割されたサブコンポーネント）
  */
 interface AvatarImageProps {
-	avatarConfig: ReturnType<typeof useAvatarConfiguration>;
-	contentConfig: ReturnType<typeof useContentConfiguration>;
+	avatarConfig: ReturnType<typeof createAvatarConfiguration>;
+	contentConfig: ReturnType<typeof validateContentConfiguration>;
 	imageLoading: boolean;
 	imageError: boolean;
 	handleImageLoad: () => void;
@@ -402,7 +396,7 @@ function AvatarImage({
  */
 interface BubbleContentProps {
 	contentId: string;
-	contentConfig: ReturnType<typeof useContentConfiguration>;
+	contentConfig: ReturnType<typeof validateContentConfiguration>;
 	children: React.ReactNode;
 }
 
@@ -413,26 +407,13 @@ function BubbleContent({
 	contentPromise,
 }: BubbleContentProps & { contentPromise?: Promise<React.ReactNode> }) {
 	// React 19の非同期コンテンツサポート
-	let resolvedContent = children;
-	
-	if (contentPromise) {
-		try {
-			// React 19のuse()でPromiseを解決
-			resolvedContent = use(contentPromise);
-		} catch (error) {
-			// Promiseが拒否された場合のエラーハンドリング
-			resolvedContent = (
-				<div className="text-red-500 dark:text-red-400" role="alert">
-					コンテンツの読み込みに失敗しました
-				</div>
-			);
-		}
-	}
+	// use()のエラーハンドリングはError Boundaryに委任
+	const resolvedContent = contentPromise ? use(contentPromise) : children;
 
 	return (
 		<div id={contentId} className="relative z-10">
 			{contentConfig.hasValidContent || resolvedContent ? (
-				resolvedContent || children
+				resolvedContent
 			) : (
 				<div className="text-gray-400 dark:text-gray-600 italic" role="alert">
 					コンテンツが提供されていません
@@ -468,7 +449,6 @@ export function SpeechBubble({
 	disableResponsive = false,
 	className,
 	contentPromise,
-	onAction,
 	fallback,
 	disableSuspense = false,
 	...props
@@ -486,7 +466,7 @@ export function SpeechBubble({
 	const { renderCount, lastRenderTime } = useSpeechBubblePerformance("SpeechBubble");
 
 	// アバター設定の最適化
-	const avatarConfig = useAvatarConfiguration({
+	const avatarConfig = createAvatarConfiguration({
 		avatarSrc,
 		avatarWidth,
 		avatarHeight,
@@ -495,7 +475,7 @@ export function SpeechBubble({
 	});
 
 	// コンテンツとユーザー情報の検証
-	const contentConfig = useContentConfiguration({ children, name });
+	const contentConfig = validateContentConfiguration({ children, name });
 
 	// デフォルトのフォールバック要素
 	const defaultFallback = fallback || (
@@ -516,11 +496,6 @@ export function SpeechBubble({
 			)}
 			role="group"
 			aria-label={`${contentConfig.safeName}からのメッセージ`}
-			// React 19のアクション機能サポート
-			{...(onAction && {
-				action: onAction,
-				// React 19では自動的にform要素として扱われる
-			})}
 			{...props}
 		>
 			{/* アバター画像 */}
