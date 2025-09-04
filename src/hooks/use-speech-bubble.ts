@@ -32,9 +32,9 @@ export function useSpeechBubble() {
 }
 
 /**
- * アバター設定の最適化とバリデーション用フック
+ * アバター設定の最適化とバリデーション（純関数）
  */
-export function useAvatarConfiguration({
+export function createAvatarConfiguration({
 	avatarSrc,
 	avatarWidth,
 	avatarHeight,
@@ -67,9 +67,9 @@ export function useAvatarConfiguration({
 }
 
 /**
- * コンテンツバリデーション用フック
+ * コンテンツバリデーション（純関数）
  */
-export function useContentConfiguration({
+export function validateContentConfiguration({
 	children,
 	name,
 }: {
@@ -91,22 +91,21 @@ export function useContentConfiguration({
 
 /**
  * パフォーマンス監視用フック（開発時のデバッグ用）
+ * 無限レンダリングを防ぐため、レンダリング時に直接カウント
  */
 export function useSpeechBubblePerformance(componentName = "SpeechBubble") {
 	const renderCountRef = useRef(0);
 	const lastRenderTimeRef = useRef<number>(0);
 
-	// useEffect でレンダリング完了後に追跡（副作用なし）
-	useEffect(() => {
-		const now = performance.now();
-		renderCountRef.current += 1;
-		lastRenderTimeRef.current = now;
-		
-		// 開発環境でのみログ出力
-		if (process.env.NODE_ENV === 'development') {
-			console.log(`${componentName} rendered #${renderCountRef.current} at ${now.toFixed(2)}ms`);
-		}
-	});
+	// レンダリング時に直接カウント（useEffectは使わない）
+	const now = performance.now();
+	renderCountRef.current += 1;
+	lastRenderTimeRef.current = now;
+	
+	// 開発環境でのみログ出力（適度な頻度で）
+	if (process.env.NODE_ENV === 'development' && renderCountRef.current % 10 === 1) {
+		console.log(`${componentName} rendered #${renderCountRef.current} at ${now.toFixed(2)}ms`);
+	}
 
 	return {
 		renderCount: renderCountRef.current,
