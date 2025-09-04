@@ -483,12 +483,7 @@ export function SpeechBubble({
 	} = useSpeechBubble();
 
 	// パフォーマンス監視（開発環境のみ）
-	const { trackRender } = useSpeechBubblePerformance("SpeechBubble");
-	
-	// レンダリング追跡
-	if (process.env.NODE_ENV === 'development') {
-		trackRender();
-	}
+	const { renderCount, lastRenderTime } = useSpeechBubblePerformance("SpeechBubble");
 
 	// アバター設定の最適化
 	const avatarConfig = useAvatarConfiguration({

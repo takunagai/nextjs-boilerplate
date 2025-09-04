@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useId, useState, useEffect, useRef } from "react";
 
 /**
  * Speech Bubble用のカスタムフック
@@ -93,24 +93,23 @@ export function useContentConfiguration({
  * パフォーマンス監視用フック（開発時のデバッグ用）
  */
 export function useSpeechBubblePerformance(componentName = "SpeechBubble") {
-	const [renderCount, setRenderCount] = useState(0);
-	const [lastRenderTime, setLastRenderTime] = useState<number>(0);
+	const renderCountRef = useRef(0);
+	const lastRenderTimeRef = useRef<number>(0);
 
-	// レンダリング回数とタイミングを記録
-	const trackRender = () => {
+	// useEffect でレンダリング完了後に追跡（副作用なし）
+	useEffect(() => {
 		const now = performance.now();
-		setRenderCount(prev => prev + 1);
-		setLastRenderTime(now);
+		renderCountRef.current += 1;
+		lastRenderTimeRef.current = now;
 		
 		// 開発環境でのみログ出力
 		if (process.env.NODE_ENV === 'development') {
-			console.log(`${componentName} rendered #${renderCount + 1} at ${now.toFixed(2)}ms`);
+			console.log(`${componentName} rendered #${renderCountRef.current} at ${now.toFixed(2)}ms`);
 		}
-	};
+	});
 
 	return {
-		renderCount,
-		lastRenderTime,
-		trackRender,
+		renderCount: renderCountRef.current,
+		lastRenderTime: lastRenderTimeRef.current,
 	};
 }
