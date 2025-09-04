@@ -92,8 +92,8 @@ interface SocialLinksProps {
 export function SocialLinks({ className = "" }: SocialLinksProps) {
 	return (
 		<div className={`space-y-4 ${className}`}>
-			<h4 className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
-				Follow Me
+			<h4 className="text-sm font-medium text-muted-foreground">
+				お気軽にフォローしてください。
 			</h4>
 			
 			{/* グリッドレイアウト - バランス調整済み */}
