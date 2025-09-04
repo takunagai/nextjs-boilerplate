@@ -1,7 +1,7 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import Image from "next/image";
 import type * as React from "react";
-import { use } from "react";
+import { use, Suspense } from "react";
 
 import { cn } from "@/lib/utils";
 import { 
@@ -242,6 +242,18 @@ export interface SpeechBubbleProps
 	 * @experimental React 19対応
 	 */
 	onAction?: (formData: FormData) => void;
+
+	/**
+	 * Suspense境界のフォールバック要素
+	 * @default SpeechBubbleSkeleton
+	 */
+	fallback?: React.ReactNode;
+
+	/**
+	 * Suspense境界の無効化
+	 * @default false
+	 */
+	disableSuspense?: boolean;
 }
 
 /**
@@ -253,6 +265,63 @@ const DEFAULT_AVATAR = {
 	height: 48,
 	alt: "デフォルトアバター",
 } as const;
+
+/**
+ * Speech Bubbleのスケルトンコンポーネント（Suspenseフォールバック用）
+ */
+function SpeechBubbleSkeleton({
+	direction = "left",
+	size = "md",
+	spacing = "normal",
+}: {
+	direction?: "left" | "right";
+	size?: "sm" | "md" | "lg";
+	spacing?: "tight" | "normal" | "loose";
+}) {
+	return (
+		<div
+			className={cn(
+				speechBubbleVariants({ direction, size, spacing }),
+				"max-w-full animate-pulse"
+			)}
+			role="group"
+			aria-label="メッセージ読み込み中"
+		>
+			{/* アバタースケルトン */}
+			<div className="relative">
+				<div
+					className={cn(
+						avatarVariants({ size }),
+						"bg-gray-200 dark:bg-gray-700"
+					)}
+				/>
+			</div>
+
+			{/* バブルスケルトン */}
+			<div
+				className={cn(
+					bubbleVariants({ size, theme: "default" }),
+					"w-full sm:w-auto bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-600"
+				)}
+			>
+				{/* テールスケルトン */}
+				<div
+					className={cn(
+						tailVariants({ direction, theme: "default" }),
+						"bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-600"
+					)}
+					aria-hidden="true"
+				/>
+
+				{/* コンテンツスケルトン */}
+				<div className="relative z-10 space-y-2">
+					<div className="h-4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
+					<div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4 animate-pulse" />
+				</div>
+			</div>
+		</div>
+	);
+}
 
 
 /**
@@ -398,6 +467,8 @@ export function SpeechBubble({
 	className,
 	contentPromise,
 	onAction,
+	fallback,
+	disableSuspense = false,
 	...props
 }: SpeechBubbleProps) {
 	// カスタムフックの統合
@@ -429,7 +500,17 @@ export function SpeechBubble({
 	// コンテンツとユーザー情報の検証
 	const contentConfig = useContentConfiguration({ children, name });
 
-	return (
+	// デフォルトのフォールバック要素
+	const defaultFallback = fallback || (
+		<SpeechBubbleSkeleton
+			direction={direction}
+			size={size}
+			spacing={spacing}
+		/>
+	);
+
+	// Speech Bubbleコンポーネント本体
+	const speechBubbleContent = (
 		<div
 			className={cn(
 				speechBubbleVariants({ direction, size, spacing }),
@@ -481,6 +562,18 @@ export function SpeechBubble({
 				/>
 			</div>
 		</div>
+	);
+
+	// Suspense境界が無効化されている場合、または非同期コンテンツがない場合は直接レンダリング
+	if (disableSuspense || !contentPromise) {
+		return speechBubbleContent;
+	}
+
+	// Suspense境界でラップして非同期コンテンツをサポート
+	return (
+		<Suspense fallback={defaultFallback}>
+			{speechBubbleContent}
+		</Suspense>
 	);
 }
 
