@@ -237,6 +237,169 @@ const DEFAULT_AVATAR = {
 } as const;
 
 /**
+ * アバター設定の最適化とバリデーション
+ */
+function useAvatarConfig({
+	avatarSrc,
+	avatarWidth,
+	avatarHeight,
+	imageError,
+}: {
+	avatarSrc?: string;
+	avatarWidth?: number;
+	avatarHeight?: number;
+	imageError: boolean;
+}) {
+	return {
+		src: imageError ? DEFAULT_AVATAR.src : (avatarSrc || DEFAULT_AVATAR.src),
+		width: Math.max(avatarWidth || DEFAULT_AVATAR.width, 16),
+		height: Math.max(avatarHeight || DEFAULT_AVATAR.height, 16),
+	};
+}
+
+/**
+ * コンテンツとユーザー情報の検証
+ */
+function useContentValidation({
+	children,
+	name,
+}: {
+	children: React.ReactNode;
+	name?: string;
+}) {
+	const hasValidContent = children != null && 
+		(typeof children === 'string' ? children.trim().length > 0 : true);
+	
+	const safeName = name && name.trim() ? name.trim() : "ユーザー";
+
+	return {
+		hasValidContent,
+		safeName,
+	};
+}
+
+/**
+ * 画像ハンドラー関数群
+ */
+function useImageHandlers(
+	setImageError: (error: boolean) => void,
+	setImageLoading: (loading: boolean) => void,
+) {
+	const handleImageError = () => {
+		setImageError(true);
+		setImageLoading(false);
+	};
+
+	const handleImageLoad = () => {
+		setImageLoading(false);
+		setImageError(false);
+	};
+
+	return {
+		handleImageError,
+		handleImageLoad,
+	};
+}
+
+/**
+ * アバター画像コンポーネント（分割されたサブコンポーネント）
+ */
+interface AvatarImageProps {
+	avatarConfig: ReturnType<typeof useAvatarConfig>;
+	contentConfig: ReturnType<typeof useContentValidation>;
+	imageLoading: boolean;
+	imageError: boolean;
+	handleImageLoad: () => void;
+	handleImageError: () => void;
+	size?: "sm" | "md" | "lg";
+	avatarSrc?: string;
+}
+
+function AvatarImage({
+	avatarConfig,
+	contentConfig,
+	imageLoading,
+	imageError,
+	handleImageLoad,
+	handleImageError,
+	size = "md",
+	avatarSrc,
+}: AvatarImageProps) {
+	return (
+		<div className="relative">
+			{/* 画像読み込み中のスケルトン */}
+			{imageLoading && (
+				<div
+					className={cn(
+						avatarVariants({ size }),
+						"absolute inset-0 bg-gray-200 dark:bg-gray-700 animate-pulse rounded-full",
+					)}
+					aria-hidden="true"
+				/>
+			)}
+			
+			<Image
+				src={avatarConfig.src}
+				alt={`${contentConfig.safeName}のアバター`}
+				width={avatarConfig.width}
+				height={avatarConfig.height}
+				className={cn(
+					avatarVariants({ size }),
+					imageLoading ? "opacity-0" : "opacity-100",
+					"transition-opacity duration-300"
+				)}
+				priority={false}
+				onLoad={handleImageLoad}
+				onError={handleImageError}
+				loading="lazy"
+				placeholder="blur"
+				blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+			/>
+			
+			{/* エラー時のフォールバック表示 */}
+			{imageError && avatarConfig.src === DEFAULT_AVATAR.src && avatarSrc && avatarSrc !== DEFAULT_AVATAR.src && (
+				<div 
+					className={cn(
+						avatarVariants({ size }),
+						"absolute inset-0 bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-400 text-xs"
+					)}
+					aria-label="画像読み込み失敗"
+				>
+					?
+				</div>
+			)}
+		</div>
+	);
+}
+
+/**
+ * バブルコンテンツコンポーネント（分割されたサブコンポーネント）
+ */
+interface BubbleContentProps {
+	contentId: string;
+	contentConfig: ReturnType<typeof useContentValidation>;
+	children: React.ReactNode;
+}
+
+function BubbleContent({
+	contentId,
+	contentConfig,
+	children,
+}: BubbleContentProps) {
+	return (
+		<div id={contentId} className="relative z-10">
+			{contentConfig.hasValidContent ? (
+				children
+			) : (
+				<div className="text-gray-400 dark:text-gray-600 italic" role="alert">
+					コンテンツが提供されていません
+				</div>
+			)}
+		</div>
+	);
+}
+
+/**
  * 吹き出し(Speech Bubble)コンポーネント
  *
  * 人物画像と吹き出しテキストを表示するレスポンシブ対応コンポーネント
@@ -268,28 +431,21 @@ export function SpeechBubble({
 	const [imageLoading, setImageLoading] = useState(true);
 
 	// プロップス値の最適化とエラーハンドリング
-	const effectiveAvatarSrc = avatarSrc || DEFAULT_AVATAR.src;
-	const effectiveAvatarWidth = Math.max(avatarWidth || DEFAULT_AVATAR.width, 16);
-	const effectiveAvatarHeight = Math.max(avatarHeight || DEFAULT_AVATAR.height, 16);
+	const avatarConfig = useAvatarConfig({
+		avatarSrc,
+		avatarWidth,
+		avatarHeight,
+		imageError,
+	});
 
-	// コンテンツの有効性チェック
-	const hasValidContent = children != null && 
-		(typeof children === 'string' ? children.trim().length > 0 : true);
+	// コンテンツとユーザー情報の検証
+	const contentConfig = useContentValidation({ children, name });
 
-	// 無効な名前の場合のフォールバック
-	const safeName = name && name.trim() ? name.trim() : "ユーザー";
-
-	// 画像読み込みエラーハンドラー
-	const handleImageError = () => {
-		setImageError(true);
-		setImageLoading(false);
-	};
-
-	// 画像読み込み完了ハンドラー
-	const handleImageLoad = () => {
-		setImageLoading(false);
-		setImageError(false);
-	};
+	// 画像ハンドラーの初期化
+	const { handleImageError, handleImageLoad } = useImageHandlers(
+		setImageError,
+		setImageLoading,
+	);
 
 	return (
 		<div
@@ -299,53 +455,20 @@ export function SpeechBubble({
 				className,
 			)}
 			role="group"
-			aria-label={`${safeName}からのメッセージ`}
+			aria-label={`${contentConfig.safeName}からのメッセージ`}
 			{...props}
 		>
 			{/* アバター画像 */}
-			<div className="relative">
-				{/* 画像読み込み中のスケルトン */}
-				{imageLoading && (
-					<div
-						className={cn(
-							avatarVariants({ size }),
-							"absolute inset-0 bg-gray-200 dark:bg-gray-700 animate-pulse rounded-full",
-						)}
-						aria-hidden="true"
-					/>
-				)}
-				
-				<Image
-					src={imageError ? DEFAULT_AVATAR.src : effectiveAvatarSrc}
-					alt={`${safeName}のアバター`}
-					width={effectiveAvatarWidth}
-					height={effectiveAvatarHeight}
-					className={cn(
-						avatarVariants({ size }),
-						imageLoading ? "opacity-0" : "opacity-100",
-						"transition-opacity duration-300"
-					)}
-					priority={false}
-					onLoad={handleImageLoad}
-					onError={handleImageError}
-					loading="lazy"
-					placeholder="blur"
-					blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
-				/>
-				
-				{/* エラー時のフォールバック表示 */}
-				{imageError && effectiveAvatarSrc !== DEFAULT_AVATAR.src && (
-					<div 
-						className={cn(
-							avatarVariants({ size }),
-							"absolute inset-0 bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-400 text-xs"
-						)}
-						aria-label="画像読み込み失敗"
-					>
-						?
-					</div>
-				)}
-			</div>
+			<AvatarImage
+				avatarConfig={avatarConfig}
+				contentConfig={contentConfig}
+				imageLoading={imageLoading}
+				imageError={imageError}
+				handleImageLoad={handleImageLoad}
+				handleImageError={handleImageError}
+				size={size}
+				avatarSrc={avatarSrc}
+			/>
 
 			{/* 吹き出しバブル */}
 			<div
@@ -363,15 +486,11 @@ export function SpeechBubble({
 				/>
 
 				{/* テキストコンテンツ */}
-				<div id={contentId} className="relative z-10">
-					{hasValidContent ? (
-						children
-					) : (
-						<div className="text-gray-400 dark:text-gray-600 italic" role="alert">
-							コンテンツが提供されていません
-						</div>
-					)}
-				</div>
+				<BubbleContent
+					contentId={contentId}
+					contentConfig={contentConfig}
+					children={children}
+				/>
 			</div>
 		</div>
 	);
