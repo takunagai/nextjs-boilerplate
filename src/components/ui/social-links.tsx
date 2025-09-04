@@ -71,7 +71,7 @@ export const socialLinks: SocialLinkItem[] = [
 	},
 	{
 		name: "Qiita",
-		url: "https://qiita.com/",
+		url: "https://qiita.com/oreo3",
 		icon: <SiQiita className="w-5 h-5" />,
 		bgColor: "hover:bg-green-600",
 		textColor: "hover:text-white",
