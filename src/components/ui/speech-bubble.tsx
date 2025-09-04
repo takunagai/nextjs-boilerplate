@@ -26,6 +26,30 @@ const speechBubbleVariants = cva("flex gap-3 items-start", {
 			loose: "gap-4 sm:gap-6",
 		},
 	},
+	compoundVariants: [
+		// サイズとスペーシングの最適化された組み合わせ
+		{
+			size: "sm",
+			spacing: "tight",
+			class: "gap-1.5 sm:gap-2",
+		},
+		{
+			size: "lg",
+			spacing: "loose",
+			class: "gap-5 sm:gap-8 md:gap-10",
+		},
+		// 右側配置時の追加のマージン調整
+		{
+			direction: "right",
+			spacing: "normal",
+			class: "justify-end",
+		},
+		{
+			direction: "right",
+			spacing: "loose",
+			class: "justify-end pr-2",
+		},
+	],
 	defaultVariants: {
 		direction: "left",
 		size: "md",
@@ -51,6 +75,35 @@ const bubbleVariants = cva(
 				lg: "px-5 py-4 text-lg rounded-2xl max-w-lg",
 			},
 		},
+		compoundVariants: [
+			// テーマとサイズの最適化された組み合わせ
+			{
+				theme: "primary",
+				size: "sm",
+				class: "bg-blue-25 border-blue-100 shadow-blue-100/20",
+			},
+			{
+				theme: "primary",
+				size: "lg",
+				class: "bg-blue-75 border-blue-300 shadow-blue-200/30 shadow-lg",
+			},
+			{
+				theme: "secondary",
+				size: "sm",
+				class: "bg-gray-25 border-gray-200",
+			},
+			{
+				theme: "secondary",
+				size: "lg",
+				class: "bg-gray-75 border-gray-400 shadow-lg",
+			},
+			// デフォルトテーマの高度なスタイリング
+			{
+				theme: "default",
+				size: "lg",
+				class: "shadow-lg border-gray-300 bg-gray-25",
+			},
+		],
 		defaultVariants: {
 			theme: "default",
 			size: "md",
@@ -69,6 +122,17 @@ const avatarVariants = cva("rounded-full object-cover flex-shrink-0", {
 			lg: "w-12 h-12 sm:w-16 sm:h-16",
 		},
 	},
+	compoundVariants: [
+		// サイズに応じた影とリングの追加
+		{
+			size: "lg",
+			class: "ring-2 ring-white shadow-md",
+		},
+		{
+			size: "md",
+			class: "ring-1 ring-white/50 shadow-sm",
+		},
+	],
 	defaultVariants: {
 		size: "md",
 	},
@@ -89,6 +153,29 @@ const tailVariants = cva("absolute top-4 w-3 h-3 rotate-45", {
 			secondary: "bg-gray-50 border-gray-300",
 		},
 	},
+	compoundVariants: [
+		// 方向とテーマの組み合わせによる詳細なスタイリング
+		{
+			direction: "left",
+			theme: "primary",
+			class: "-left-1.5 bg-blue-50 border-l border-b border-blue-200",
+		},
+		{
+			direction: "right",
+			theme: "primary",
+			class: "-right-1.5 bg-blue-50 border-r border-t border-blue-200",
+		},
+		{
+			direction: "left",
+			theme: "secondary",
+			class: "-left-1.5 bg-gray-50 border-l border-b border-gray-300",
+		},
+		{
+			direction: "right",
+			theme: "secondary",
+			class: "-right-1.5 bg-gray-50 border-r border-t border-gray-300",
+		},
+	],
 	defaultVariants: {
 		direction: "left",
 		theme: "default",
