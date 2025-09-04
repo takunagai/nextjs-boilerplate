@@ -45,6 +45,7 @@ const headerVariants = cva(
 export interface NavItem {
 	label: string;
 	href: string;
+	icon?: React.ReactNode;
 	active?: boolean;
 	external?: boolean;
 	children?: NavItem[];
@@ -185,6 +186,7 @@ export function Header({
 		const convertToNavItem = (item: HeaderLink): NavItem => ({
 			label: item.label,
 			href: item.href,
+			icon: item.icon,
 			external: item.external,
 			active: pathname === item.href,
 			children: item.submenu?.map(convertToNavItem),
