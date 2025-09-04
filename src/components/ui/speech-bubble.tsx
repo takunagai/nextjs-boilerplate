@@ -1,6 +1,7 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import Image from "next/image";
 import type * as React from "react";
+import { useId } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -95,11 +96,17 @@ const tailVariants = cva("absolute top-4 w-3 h-3 rotate-45", {
 });
 
 /**
+ * バブルバリアントの型を抽出
+ */
+type BubbleVariantProps = VariantProps<typeof bubbleVariants>;
+
+/**
  * SpeechBubbleコンポーネントのプロパティ
  */
 export interface SpeechBubbleProps
 	extends Omit<React.ComponentProps<"div">, "children">,
-		VariantProps<typeof speechBubbleVariants> {
+		VariantProps<typeof speechBubbleVariants>,
+		BubbleVariantProps {
 	/**
 	 * 吹き出し内のテキストコンテンツ
 	 */
@@ -124,11 +131,6 @@ export interface SpeechBubbleProps
 	 * アバター画像の高さ（Next.js Image最適化用）
 	 */
 	avatarHeight?: number;
-
-	/**
-	 * 吹き出しのテーマ
-	 */
-	theme?: "default" | "primary" | "secondary";
 
 	/**
 	 * レスポンシブ対応の無効化
@@ -174,6 +176,7 @@ export function SpeechBubble({
 	className,
 	...props
 }: SpeechBubbleProps) {
+	const contentId = useId();
 	const effectiveAvatarSrc = avatarSrc || DEFAULT_AVATAR.src;
 	const effectiveAvatarWidth = avatarWidth || DEFAULT_AVATAR.width;
 	const effectiveAvatarHeight = avatarHeight || DEFAULT_AVATAR.height;
@@ -208,7 +211,7 @@ export function SpeechBubble({
 					!disableResponsive && "w-full sm:w-auto",
 				)}
 				role="dialog"
-				aria-labelledby="speech-content"
+				aria-labelledby={contentId}
 			>
 				{/* 吹き出しの尻尾 */}
 				<div
@@ -217,7 +220,7 @@ export function SpeechBubble({
 				/>
 
 				{/* テキストコンテンツ */}
-				<div id="speech-content" className="relative z-10">
+				<div id={contentId} className="relative z-10">
 					{children}
 				</div>
 			</div>
