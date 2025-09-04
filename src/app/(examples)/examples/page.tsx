@@ -125,6 +125,12 @@ export default function ExamplesPage() {
 			description: "様々な業種・サービス向けの料金プラン設計例。制作物単価型・サブスクリプション型など、再利用可能なコンポーネントでの実装例。",
 			href: "/examples/pricing-plans",
 		},
+		{
+			title: "吹き出し（Speech Bubble）",
+			description:
+				"人物画像と吹き出しテキストを表示するレスポンシブ対応コンポーネント。カスタムアバター、テーマ、サイズバリエーション対応。",
+			href: "/examples/speech-bubble",
+		},
 	];
 
 	return (

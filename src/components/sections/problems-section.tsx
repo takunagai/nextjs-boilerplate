@@ -1,6 +1,10 @@
 import { AnimatedItemList } from "@/components/ui/animated-item-list";
 import { Container } from "@/components/ui/container";
 import { Heading } from "@/components/ui/heading";
+import {
+	SpeechBubble,
+	SpeechBubbleMessage,
+} from "@/components/ui/speech-bubble";
 
 // 二次元配列の例（フリップアニメーション用）
 const problems = [
@@ -55,12 +59,19 @@ export function ProblemsSection({
 					className="max-w-2xl mx-auto space-y-4 mb-12"
 				/>
 
-				<div className="text-center">
-					<Heading as="h3" align="center" className="text-xl md:text-2xl">
-						そのお悩み、
-						<span className="text-primary font-bold">AI と一緒に</span>
-						解決しませんか？
-					</Heading>
+				<div className="flex justify-center">
+					<SpeechBubble 
+						name="担当者" 
+						direction="left" 
+						theme="primary"
+						avatarSrc="/images/avatars/default-avatar.jpg"
+						avatarWidth={64}
+						avatarHeight={64}
+					>
+						<SpeechBubbleMessage className="font-bold text-lg">
+							気軽に単発のスポット相談をご利用ください。
+						</SpeechBubbleMessage>
+					</SpeechBubble>
 				</div>
 			</Container>
 		</section>
