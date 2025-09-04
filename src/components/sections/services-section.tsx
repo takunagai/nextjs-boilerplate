@@ -165,10 +165,10 @@ export function ServicesSection() {
 			>
 				<div className="text-center mb-16">
 					<Heading as="h2" align="center" className="mb-4">
-						3つのサービス紹介
+						サービス紹介
 					</Heading>
 					<p className="text-muted-foreground max-w-2xl mx-auto">
-						AI を活用した効率的なサービスで、あなたの課題を解決します
+						複数サービスの組合せもOK。ここにないものでもご相談ください。
 					</p>
 				</div>
 
