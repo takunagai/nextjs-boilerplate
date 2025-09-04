@@ -1,9 +1,14 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import Image from "next/image";
 import type * as React from "react";
-import { useId, useState } from "react";
 
 import { cn } from "@/lib/utils";
+import { 
+	useSpeechBubble, 
+	useAvatarConfiguration, 
+	useContentConfiguration,
+	useSpeechBubblePerformance,
+} from "@/hooks/use-speech-bubble";
 
 /**
  * 吹き出し(Speech Bubble)コンポーネントのバリアント設定
@@ -236,77 +241,13 @@ const DEFAULT_AVATAR = {
 	alt: "デフォルトアバター",
 } as const;
 
-/**
- * アバター設定の最適化とバリデーション
- */
-function useAvatarConfig({
-	avatarSrc,
-	avatarWidth,
-	avatarHeight,
-	imageError,
-}: {
-	avatarSrc?: string;
-	avatarWidth?: number;
-	avatarHeight?: number;
-	imageError: boolean;
-}) {
-	return {
-		src: imageError ? DEFAULT_AVATAR.src : (avatarSrc || DEFAULT_AVATAR.src),
-		width: Math.max(avatarWidth || DEFAULT_AVATAR.width, 16),
-		height: Math.max(avatarHeight || DEFAULT_AVATAR.height, 16),
-	};
-}
-
-/**
- * コンテンツとユーザー情報の検証
- */
-function useContentValidation({
-	children,
-	name,
-}: {
-	children: React.ReactNode;
-	name?: string;
-}) {
-	const hasValidContent = children != null && 
-		(typeof children === 'string' ? children.trim().length > 0 : true);
-	
-	const safeName = name && name.trim() ? name.trim() : "ユーザー";
-
-	return {
-		hasValidContent,
-		safeName,
-	};
-}
-
-/**
- * 画像ハンドラー関数群
- */
-function useImageHandlers(
-	setImageError: (error: boolean) => void,
-	setImageLoading: (loading: boolean) => void,
-) {
-	const handleImageError = () => {
-		setImageError(true);
-		setImageLoading(false);
-	};
-
-	const handleImageLoad = () => {
-		setImageLoading(false);
-		setImageError(false);
-	};
-
-	return {
-		handleImageError,
-		handleImageLoad,
-	};
-}
 
 /**
  * アバター画像コンポーネント（分割されたサブコンポーネント）
  */
 interface AvatarImageProps {
-	avatarConfig: ReturnType<typeof useAvatarConfig>;
-	contentConfig: ReturnType<typeof useContentValidation>;
+	avatarConfig: ReturnType<typeof useAvatarConfiguration>;
+	contentConfig: ReturnType<typeof useContentConfiguration>;
 	imageLoading: boolean;
 	imageError: boolean;
 	handleImageLoad: () => void;
@@ -377,7 +318,7 @@ function AvatarImage({
  */
 interface BubbleContentProps {
 	contentId: string;
-	contentConfig: ReturnType<typeof useContentValidation>;
+	contentConfig: ReturnType<typeof useContentConfiguration>;
 	children: React.ReactNode;
 }
 
@@ -426,26 +367,34 @@ export function SpeechBubble({
 	className,
 	...props
 }: SpeechBubbleProps) {
-	const contentId = useId();
-	const [imageError, setImageError] = useState(false);
-	const [imageLoading, setImageLoading] = useState(true);
+	// カスタムフックの統合
+	const {
+		contentId,
+		imageError,
+		imageLoading,
+		handleImageError,
+		handleImageLoad,
+	} = useSpeechBubble();
 
-	// プロップス値の最適化とエラーハンドリング
-	const avatarConfig = useAvatarConfig({
+	// パフォーマンス監視（開発環境のみ）
+	const { trackRender } = useSpeechBubblePerformance("SpeechBubble");
+	
+	// レンダリング追跡
+	if (process.env.NODE_ENV === 'development') {
+		trackRender();
+	}
+
+	// アバター設定の最適化
+	const avatarConfig = useAvatarConfiguration({
 		avatarSrc,
 		avatarWidth,
 		avatarHeight,
 		imageError,
+		defaultAvatar: DEFAULT_AVATAR,
 	});
 
 	// コンテンツとユーザー情報の検証
-	const contentConfig = useContentValidation({ children, name });
-
-	// 画像ハンドラーの初期化
-	const { handleImageError, handleImageLoad } = useImageHandlers(
-		setImageError,
-		setImageLoading,
-	);
+	const contentConfig = useContentConfiguration({ children, name });
 
 	return (
 		<div
