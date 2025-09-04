@@ -115,6 +115,12 @@ export default function ExamplesPage() {
 			description: "ユーザーへの通知を表示するトーストコンポーネントです。",
 			href: "/examples/toast",
 		},
+		{
+			title: "吹き出し（Speech Bubble）",
+			description:
+				"人物画像と吹き出しテキストを表示するレスポンシブ対応コンポーネント。カスタムアバター、テーマ、サイズバリエーション対応。",
+			href: "/examples/speech-bubble",
+		},
 	];
 
 	return (
