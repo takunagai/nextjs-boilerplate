@@ -6,7 +6,7 @@ import {
 	WebsiteJsonLd,
 } from "@/components/seo";
 import { ConsultingBenefitsSection } from "@/components/services/ai-consulting-and-support/benefits-section";
-import { ConsultingFinalCTASection } from "@/components/services/ai-consulting-and-support/final-cta-section";
+import { BackgroundImageCTA } from "@/components/ui/background-image-cta";
 import { ConsultingHeroSection } from "@/components/services/ai-consulting-and-support/hero-section";
 import { ConsultingPricingSection } from "@/components/services/ai-consulting-and-support/pricing-section";
 import { ConsultingProblemsSection } from "@/components/services/ai-consulting-and-support/problems-section";
@@ -75,7 +75,15 @@ export default function ConsultingPage() {
 				<ConsultingBenefitsSection />
 				<ConsultingTransformationSection />
 				<ConsultingWhyAISection />
-				<ConsultingFinalCTASection />
+				<BackgroundImageCTA
+					backgroundImage="/dummy-images/photo-07.jpg"
+					title="AIの「？」を「！」に変える、あなた専用サポーター"
+					description="AI初心者から上級者まで、あなたのペースでAI活用法を学べます。テスター特別価格で先着10名様限定。"
+					primaryButtonText="無料相談を予約"
+					secondaryButtonText="学習メニューを見る"
+					primaryButtonHref="/contact"
+					secondaryButtonHref="/services/ai-consulting-and-support#services"
+				/>
 			</main>
 		</>
 	);

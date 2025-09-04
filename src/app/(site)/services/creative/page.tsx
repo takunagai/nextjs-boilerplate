@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { CreativeAITruthSection } from "@/components/services/creative/ai-truth-section";
-import { CreativeFinalCTASection } from "@/components/services/creative/final-cta-section";
+import { BackgroundImageCTA } from "@/components/ui/background-image-cta";
 import { CreativeHeroSection } from "@/components/services/creative/hero-section";
 import { CreativePricingSection } from "@/components/services/creative/pricing-section";
 import { CreativeReasonsSection } from "@/components/services/creative/reasons-section";
@@ -48,7 +48,15 @@ export default function CreativePage() {
 			<CreativePricingSection />
 			<CreativeReasonsSection />
 			<CreativeSampleGallerySection />
-			<CreativeFinalCTASection />
+			<BackgroundImageCTA
+				backgroundImage="/dummy-images/street-photo-04.jpg"
+				title="AI × 人の感性で、あなたのクリエイティブを加速"
+				description="画像・動画・音声・テキスト制作を革新的な価格で。テスター特別価格50%OFF、先着10名様限定。"
+				primaryButtonText="無料相談を予約"
+				secondaryButtonText="サンプルを見る"
+				primaryButtonHref="/contact"
+				secondaryButtonHref="/services/creative#gallery"
+			/>
 		</main>
 	);
 }
