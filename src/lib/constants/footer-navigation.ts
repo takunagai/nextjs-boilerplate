@@ -28,7 +28,10 @@ export const FOOTER_NAVIGATION: MaxFourNavGroups = [
 		links: [
 			{ label: "サービス一覧", href: "/services" },
 			{ label: "ウェブ制作・アプリ開発", href: "/services/web-development" },
-			{ label: "AIコンサル＆サポート", href: "/services/ai-consulting-and-support" },
+			{
+				label: "AIコンサル＆サポート",
+				href: "/services/ai-consulting-and-support",
+			},
 			{ label: "クリエイティブ", href: "/services/creative" },
 		],
 	},
