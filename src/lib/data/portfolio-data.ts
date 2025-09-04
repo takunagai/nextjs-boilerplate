@@ -24,7 +24,37 @@ export type PortfolioCategory = {
 	serviceUrl?: string;
 };
 
-// ポートフォリオカテゴリのデータ
+// フィルタリング用の新しいカテゴリ定義（4つ）
+export const portfolioFilterCategories = [
+	{
+		id: "website-app" as const,
+		name: "ウェブサイト/アプリ",
+		description: "WordPress、WixやECサイトの制作実績",
+		originalCategories: ["web", "shop"] as const,
+	},
+	{
+		id: "photography" as const,
+		name: "写真撮影",
+		description: "商品写真、サービス写真などの撮影実績",
+		originalCategories: ["photo"] as const,
+	},
+	{
+		id: "ai-image" as const,
+		name: "AI画像生成",
+		description: "AI技術を活用した画像生成・編集サービス",
+		originalCategories: ["ai-image"] as const,
+	},
+	{
+		id: "other" as const,
+		name: "その他",
+		description: "デザイン、ロゴ制作、コピー作成など",
+		originalCategories: ["design", "logo", "other"] as const,
+	},
+] as const;
+
+export type PortfolioFilterCategory = (typeof portfolioFilterCategories)[number]["id"];
+
+// 旧カテゴリ定義（互換性のため残存）
 export const portfolioCategories: PortfolioCategory[] = [
 	{
 		id: "web",
@@ -295,4 +325,45 @@ export function getPortfolioItemsByTag(tag?: string): PortfolioItem[] {
 		return portfolioItems;
 	}
 	return portfolioItems.filter((item) => item.servicesTags?.includes(tag));
+}
+
+// 新しいフィルタカテゴリでフィルタリングする関数
+export function getPortfolioItemsByFilterCategory(
+	filterCategory?: PortfolioFilterCategory | "all",
+): PortfolioItem[] {
+	if (!filterCategory || filterCategory === "all") {
+		return portfolioItems;
+	}
+
+	const categoryConfig = portfolioFilterCategories.find(
+		(cat) => cat.id === filterCategory,
+	);
+
+	if (!categoryConfig) {
+		return portfolioItems;
+	}
+
+	return portfolioItems.filter((item) =>
+		(categoryConfig.originalCategories as readonly string[]).includes(item.category),
+	);
+}
+
+// フィルタカテゴリからオリジナルカテゴリへの変換
+export function getOriginalCategoriesFromFilter(
+	filterCategory: PortfolioFilterCategory,
+): readonly string[] {
+	const categoryConfig = portfolioFilterCategories.find(
+		(cat) => cat.id === filterCategory,
+	);
+	return categoryConfig?.originalCategories || [];
+}
+
+// オリジナルカテゴリからフィルタカテゴリへの変換
+export function getFilterCategoryFromOriginal(
+	originalCategory: string,
+): PortfolioFilterCategory | null {
+	const filterCategory = portfolioFilterCategories.find((cat) =>
+		(cat.originalCategories as readonly string[]).includes(originalCategory),
+	);
+	return filterCategory?.id || null;
 }

@@ -1,18 +1,23 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Suspense } from "react";
 import {
 	BreadcrumbJsonLd,
 	generateMetadata,
 	generateViewport,
 	WebsiteJsonLd,
 } from "@/components/seo";
-import { ContentItems } from "@/components/services/content-items";
-import { Badge } from "@/components/ui/badge";
+import { PortfolioFilter } from "@/components/portfolio/portfolio-filter";
+import { PortfolioContent } from "@/components/portfolio/portfolio-content";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Container } from "@/components/ui/container";
 import { PageHeader } from "@/components/ui/page-header";
 import { META } from "@/lib/constants";
-import { getAllServiceTags, portfolioItems } from "@/lib/data/portfolio-data";
+import { 
+	portfolioItems,
+	portfolioFilterCategories,
+	type PortfolioFilterCategory,
+} from "@/lib/data/portfolio-data";
 import { createBreadcrumbs } from "@/lib/utils";
 
 export const metadata: Metadata = generateMetadata({
@@ -32,7 +37,14 @@ export const metadata: Metadata = generateMetadata({
 
 export const viewport = generateViewport();
 
-export default function PortfolioPage() {
+interface PortfolioPageProps {
+	searchParams?: Promise<{ category?: string }>;
+}
+
+export default async function PortfolioPage({ searchParams }: PortfolioPageProps) {
+	// Next.js 15のsearchParamsがPromiseの場合に対応
+	const resolvedSearchParams = searchParams ? await searchParams : {};
+	const selectedCategory = resolvedSearchParams?.category as PortfolioFilterCategory | undefined;
 	// パンくずリストのデータを定義
 	const breadcrumbItems = [
 		{ title: "ホーム", path: "/" },
@@ -41,15 +53,23 @@ export default function PortfolioPage() {
 	const { ui: uiBreadcrumbs, jsonLd: jsonLdBreadcrumbs } =
 		createBreadcrumbs(breadcrumbItems);
 
-	// サービスタグ一覧を取得
-	const serviceTags = getAllServiceTags();
+	// 選択されたカテゴリ情報を取得
+	const selectedCategoryInfo = selectedCategory 
+		? portfolioFilterCategories.find(cat => cat.id === selectedCategory)
+		: null;
 
 	return (
 		<>
 			<WebsiteJsonLd
 				name={`ポートフォリオ | ${META.DEFAULT_TITLE}`}
-				description="これまでに制作したウェブサイト、ロゴデザイン、ECサイトなどの実績をご紹介します。"
-				url={`${META.SITE_URL}/portfolio`}
+				description={
+					selectedCategoryInfo
+						? `${selectedCategoryInfo.name}の制作実績をご紹介します。${selectedCategoryInfo.description}`
+						: "これまでに制作したウェブサイト、ロゴデザイン、ECサイトなどの実績をご紹介します。"
+				}
+				url={`${META.SITE_URL}/portfolio${
+					selectedCategory ? `?category=${selectedCategory}` : ""
+				}`}
 			/>
 			<BreadcrumbJsonLd items={jsonLdBreadcrumbs} />
 			<Container paddingY={"none"}>
@@ -59,35 +79,42 @@ export default function PortfolioPage() {
 			<PageHeader
 				title="ポートフォリオ"
 				className="my-8"
-				description="これまでに制作したウェブサイト、ロゴデザイン、ECサイトなどの実績をご紹介します。"
+				description={
+					selectedCategoryInfo
+						? `${selectedCategoryInfo.name}の制作実績をご紹介します。`
+						: "これまでに制作したウェブサイト、ロゴデザイン、ECサイトなどの実績をご紹介します。"
+				}
 			/>
 			<Container className="mt-8" width="lg">
-				{/* サービスタグフィルター */}
+				{/* フィルタリング機能 */}
+				<Suspense fallback={
+					<div className="flex flex-wrap justify-center gap-2">
+						{portfolioFilterCategories.map((category) => (
+							<div key={category.id} className="px-3 py-1 bg-muted rounded-full animate-pulse">
+								{category.name}
+							</div>
+						))}
+					</div>
+				}>
+					<PortfolioFilter />
+				</Suspense>
 
-				<div className="flex flex-wrap justify-center gap-2">
-					{serviceTags.map((tag) => (
-						<Badge key={tag} variant="outline" className="px-3 py-1">
-							{tag}
-						</Badge>
-					))}
-				</div>
-
-				{/* ポートフォリオアイテム */}
-				<div className="mt-10">
-					<h2 className="text-2xl font-bold mb-6">主な制作実績</h2>
-					<ContentItems
-						items={portfolioItems.map((item) => ({
-							title: item.title,
-							description: item.clientName || "",
-							image: item.image,
-							imageAlt: item.imageAlt || `${item.title}のイメージ`,
-							link: item.link,
-						}))}
-						columns={3}
-						className="gap-6"
-						aspectRatio="2/3"
+				{/* ポートフォリオコンテンツ */}
+				<Suspense fallback={
+					<div className="mt-10">
+						<div className="h-8 bg-muted rounded animate-pulse mb-6" />
+						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+							{Array.from({ length: 6 }).map((_, i) => (
+								<div key={i} className="aspect-[2/3] bg-muted rounded animate-pulse" />
+							))}
+						</div>
+					</div>
+				}>
+					<PortfolioContent 
+						items={portfolioItems} 
+						filterCategory={selectedCategory}
 					/>
-				</div>
+				</Suspense>
 
 				<div className="mt-12 py-6 px-6 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-lg">
 					<div className="text-center">
