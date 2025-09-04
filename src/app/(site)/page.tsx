@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { HeroSection } from "@/components/home/hero-section";
-import { ContactCTASection } from "@/components/sections/contact-cta-section";
+import { BackgroundImageCTA } from "@/components/ui/background-image-cta";
 import { PortfolioSection } from "@/components/sections/portfolio-section";
 import { ProblemsSection } from "@/components/sections/problems-section";
 import { ProfileSection } from "@/components/sections/profile-section";
@@ -43,7 +43,15 @@ export default function Home() {
 				<ReasonsSection />
 				<PortfolioSection />
 				<ProfileSection />
-				<ContactCTASection />
+				<BackgroundImageCTA
+					backgroundImage="/dummy-images/street-photo-03.jpg"
+					title="AI × 経験で、あなたのビジネスを加速させます"
+					description="「できない」「面倒」「時間がない」を解決。無料相談で具体的な解決策をご提案します。"
+					primaryButtonText="無料相談を予約"
+					secondaryButtonText="サービス詳細"
+					primaryButtonHref="/contact"
+					secondaryButtonHref="/services"
+				/>
 			</main>
 		</>
 	);

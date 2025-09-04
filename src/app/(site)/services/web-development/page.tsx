@@ -7,7 +7,7 @@ import {
 } from "@/components/seo";
 import { AffordableSection } from "@/components/services/web-development/affordable-section";
 import { AIBenefitsSection } from "@/components/services/web-development/ai-benefits-section";
-import { FinalCTASection } from "@/components/services/web-development/final-cta-section";
+import { BackgroundImageCTA } from "@/components/ui/background-image-cta";
 import { WebDevHeroSection } from "@/components/services/web-development/hero-section";
 import { PortfolioLinkSection } from "@/components/services/web-development/portfolio-link-section";
 import { PricingSection } from "@/components/services/web-development/pricing-section";
@@ -75,7 +75,15 @@ export default function WebDevelopmentPage() {
 				<PricingSection />
 				<AIBenefitsSection />
 				<PortfolioLinkSection />
-				<FinalCTASection />
+				<BackgroundImageCTA
+					backgroundImage="/dummy-images/street-photo-01.jpg"
+					title="AI × 経験で、理想のWebサイト・アプリを"
+					description="高品質なのにお手頃価格。先着10名様限定のテスター特別価格でお受けします。"
+					primaryButtonText="無料相談を予約"
+					secondaryButtonText="料金プランを見る"
+					primaryButtonHref="/contact"
+					secondaryButtonHref="/services/web-development#pricing"
+				/>
 			</main>
 		</>
 	);
