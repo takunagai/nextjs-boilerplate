@@ -50,7 +50,7 @@ const services: FeatureItem[] = [
 		title: "ウェブ制作・アプリ開発",
 		description:
 			"AI を活用した効率的な制作で、高品質かつお手頃な価格を実現。\nお客様のニーズに合わせ、最適な構成を提案いたします。",
-		imageUrl: "/dummy-images/photo-05.jpg",
+		imageUrl: "/images/service-web.jpg",
 		icon: <FaCode className="w-6 h-6 text-blue-600" />,
 		buttonText: "詳しく見る",
 		buttonUrl: "/services/web-development",
@@ -65,7 +65,7 @@ const services: FeatureItem[] = [
 		title: "AIコンサル＆サポート",
 		description:
 			"AI活用による省力化、高品質化、アイデア出しなどをアドバイス。\nご相談者様の状況に合わせ、柔軟なサポートを提供します。",
-		imageUrl: "/dummy-images/photo-06.jpg",
+		imageUrl: "/images/service-consulting.jpg",
 		icon: <FaChalkboardUser className="w-6 h-6 text-green-600" />,
 		buttonText: "詳しく見る",
 		buttonUrl: "/services/ai-consulting-and-support",
@@ -80,7 +80,7 @@ const services: FeatureItem[] = [
 		title: "クリエイティブ",
 		description:
 			"文章、写真、イラスト、図解、動画、音楽、3D…。\nAI x デザイナーで、短時間かつお手頃価格で高品質に仕上げます。",
-		imageUrl: "/dummy-images/photo-07.jpg",
+		imageUrl: "/images/service-creative.jpg",
 		icon: <FaPaintbrush className="w-6 h-6 text-purple-600" />,
 		buttonText: "詳しく見る",
 		buttonUrl: "/services/creative",
