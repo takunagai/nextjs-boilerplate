@@ -55,7 +55,7 @@ export function createAvatarConfiguration({
 		height: number;
 	};
 }) {
-	const src = imageError ? defaultAvatar.src : (avatarSrc || defaultAvatar.src);
+	const src = imageError ? defaultAvatar.src : avatarSrc || defaultAvatar.src;
 	const width = Math.max(avatarWidth || defaultAvatar.width, 16);
 	const height = Math.max(avatarHeight || defaultAvatar.height, 16);
 
@@ -77,9 +77,10 @@ export function validateContentConfiguration({
 	name?: string;
 }) {
 	// コンテンツの有効性チェック
-	const hasValidContent = children != null && 
-		(typeof children === 'string' ? children.trim().length > 0 : true);
-	
+	const hasValidContent =
+		children != null &&
+		(typeof children === "string" ? children.trim().length > 0 : true);
+
 	// 安全な名前の取得
 	const safeName = name && name.trim() ? name.trim() : "ユーザー";
 
@@ -101,10 +102,15 @@ export function useSpeechBubblePerformance(componentName = "SpeechBubble") {
 	const now = performance.now();
 	renderCountRef.current += 1;
 	lastRenderTimeRef.current = now;
-	
+
 	// 開発環境でのみログ出力（適度な頻度で）
-	if (process.env.NODE_ENV === 'development' && renderCountRef.current % 10 === 1) {
-		console.log(`${componentName} rendered #${renderCountRef.current} at ${now.toFixed(2)}ms`);
+	if (
+		process.env.NODE_ENV === "development" &&
+		renderCountRef.current % 10 === 1
+	) {
+		console.log(
+			`${componentName} rendered #${renderCountRef.current} at ${now.toFixed(2)}ms`,
+		);
 	}
 
 	return {

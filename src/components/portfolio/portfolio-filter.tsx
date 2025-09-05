@@ -18,13 +18,15 @@ export function PortfolioFilter({ className }: PortfolioFilterProps) {
 	const searchParams = useSearchParams();
 	const [isPending, startTransition] = useTransition();
 
-	const currentFilter = searchParams.get("category") as PortfolioFilterCategory | null;
+	const currentFilter = searchParams.get(
+		"category",
+	) as PortfolioFilterCategory | null;
 
 	const handleFilterChange = useCallback(
 		(filterCategory: PortfolioFilterCategory | "all") => {
 			startTransition(() => {
 				const params = new URLSearchParams(searchParams);
-				
+
 				if (filterCategory === "all") {
 					params.delete("category");
 				} else {
@@ -32,7 +34,9 @@ export function PortfolioFilter({ className }: PortfolioFilterProps) {
 				}
 
 				// URLを更新（ページリロードなし）
-				const newUrl = params.toString() ? `?${params.toString()}` : "/portfolio";
+				const newUrl = params.toString()
+					? `?${params.toString()}`
+					: "/portfolio";
 				router.push(newUrl, { scroll: false });
 			});
 		},
@@ -40,7 +44,10 @@ export function PortfolioFilter({ className }: PortfolioFilterProps) {
 	);
 
 	const handleKeyDown = useCallback(
-		(event: React.KeyboardEvent, filterCategory: PortfolioFilterCategory | "all") => {
+		(
+			event: React.KeyboardEvent,
+			filterCategory: PortfolioFilterCategory | "all",
+		) => {
 			if (event.key === "Enter" || event.key === " ") {
 				event.preventDefault();
 				handleFilterChange(filterCategory);

@@ -60,9 +60,9 @@ export function ProblemsSection({
 				/>
 
 				<div className="flex justify-center">
-					<SpeechBubble 
-						name="担当者" 
-						direction="left" 
+					<SpeechBubble
+						name="担当者"
+						direction="left"
 						theme="primary"
 						avatarSrc="/images/avatars/default-avatar.jpg"
 						avatarWidth={64}

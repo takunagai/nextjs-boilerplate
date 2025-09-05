@@ -96,12 +96,15 @@ export default function AboutPage() {
 							/>
 						</div>
 						<div className="space-y-2">
-							<h1 className="text-4xl font-bold tracking-tight">ながたく (Taku Nagai)</h1>
+							<h1 className="text-4xl font-bold tracking-tight">
+								ながたく (Taku Nagai)
+							</h1>
 							<p className="text-2xl text-primary font-medium">
 								ウェブデザイナー・AI活用コンサルタント
 							</p>
 							<p className="text-muted-foreground">
-								📍 兵庫県川西市<br />
+								📍 兵庫県川西市
+								<br />
 								(北摂、大阪北エリア、オンライン対応可)
 							</p>
 						</div>
@@ -124,13 +127,17 @@ export default function AboutPage() {
 
 				{/* メインメッセージ */}
 				<section className="space-y-6">
-					<h2 className="text-3xl font-bold text-foreground mb-4 border-l-4 border-primary pl-6">はじめまして</h2>
+					<h2 className="text-3xl font-bold text-foreground mb-4 border-l-4 border-primary pl-6">
+						はじめまして
+					</h2>
 					<div className="prose prose-lg max-w-none">
 						<p className="text-lg leading-8 mb-4">
 							15年以上ウェブ制作に携わってきた経験と、最新の AI
 							技術を組み合わせて、あなたのビジネスの
-							<span className="font-semibold text-primary">「できたらいいな」</span>を
-							<span className="font-semibold text-primary">「できた！」</span>
+							<span className="font-semibold text-primary">
+								「できたらいいな」
+							</span>
+							を<span className="font-semibold text-primary">「できた！」</span>
 							に変えるお手伝いをしています。
 						</p>
 						<p className="text-lg leading-8">
@@ -143,7 +150,9 @@ export default function AboutPage() {
 
 				{/* 私の強み */}
 				<section className="space-y-8">
-					<h2 className="text-3xl font-bold text-foreground mb-8 border-l-4 border-primary pl-6">私の強み</h2>
+					<h2 className="text-3xl font-bold text-foreground mb-8 border-l-4 border-primary pl-6">
+						私の強み
+					</h2>
 					<div>
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 							<div className="border-l-2 border-muted pl-6">
@@ -161,7 +170,9 @@ export default function AboutPage() {
 									2. AI ツールの実践的な知識
 								</h3>
 								<ul className="space-y-2 text-muted-foreground leading-7">
-									<li>• ChatGPT、Claude、Midjourney など主要ツールを日常使用</li>
+									<li>
+										• ChatGPT、Claude、Midjourney など主要ツールを日常使用
+									</li>
 									<li>• 最新情報を常にキャッチアップ</li>
 									<li>• 「使える AI 活用法」を熟知</li>
 								</ul>
@@ -192,7 +203,9 @@ export default function AboutPage() {
 
 				{/* スキル・使用ツール */}
 				<section className="space-y-8">
-					<h2 className="text-3xl font-bold text-foreground mb-8 border-l-4 border-primary pl-6">スキル・使用ツール</h2>
+					<h2 className="text-3xl font-bold text-foreground mb-8 border-l-4 border-primary pl-6">
+						スキル・使用ツール
+					</h2>
 					<div>
 						<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 							<div className="space-y-4">
@@ -200,11 +213,21 @@ export default function AboutPage() {
 									ウェブ制作
 								</h3>
 								<div className="flex flex-wrap gap-2">
-									<Badge variant="outline" className="text-xs">HTML / CSS / JavaScript</Badge>
-									<Badge variant="outline" className="text-xs">WordPress</Badge>
-									<Badge variant="outline" className="text-xs">Next.js</Badge>
-									<Badge variant="outline" className="text-xs">Figma</Badge>
-									<Badge variant="outline" className="text-xs">Adobe Creative Cloud</Badge>
+									<Badge variant="outline" className="text-xs">
+										HTML / CSS / JavaScript
+									</Badge>
+									<Badge variant="outline" className="text-xs">
+										WordPress
+									</Badge>
+									<Badge variant="outline" className="text-xs">
+										Next.js
+									</Badge>
+									<Badge variant="outline" className="text-xs">
+										Figma
+									</Badge>
+									<Badge variant="outline" className="text-xs">
+										Adobe Creative Cloud
+									</Badge>
 								</div>
 							</div>
 							<div className="space-y-4">
@@ -212,12 +235,24 @@ export default function AboutPage() {
 									AI ツール
 								</h3>
 								<div className="flex flex-wrap gap-2">
-									<Badge variant="outline" className="text-xs">ChatGPT Plus</Badge>
-									<Badge variant="outline" className="text-xs">Claude Pro</Badge>
-									<Badge variant="outline" className="text-xs">Midjourney</Badge>
-									<Badge variant="outline" className="text-xs">DALL-E</Badge>
-									<Badge variant="outline" className="text-xs">Stable Diffusion</Badge>
-									<Badge variant="outline" className="text-xs">GitHub Copilot</Badge>
+									<Badge variant="outline" className="text-xs">
+										ChatGPT Plus
+									</Badge>
+									<Badge variant="outline" className="text-xs">
+										Claude Pro
+									</Badge>
+									<Badge variant="outline" className="text-xs">
+										Midjourney
+									</Badge>
+									<Badge variant="outline" className="text-xs">
+										DALL-E
+									</Badge>
+									<Badge variant="outline" className="text-xs">
+										Stable Diffusion
+									</Badge>
+									<Badge variant="outline" className="text-xs">
+										GitHub Copilot
+									</Badge>
 								</div>
 							</div>
 							<div className="space-y-4">
@@ -225,9 +260,15 @@ export default function AboutPage() {
 									その他
 								</h3>
 								<div className="flex flex-wrap gap-2">
-									<Badge variant="outline" className="text-xs">SEO / アクセス解析</Badge>
-									<Badge variant="outline" className="text-xs">SNS マーケティング</Badge>
-									<Badge variant="outline" className="text-xs">プロジェクト管理</Badge>
+									<Badge variant="outline" className="text-xs">
+										SEO / アクセス解析
+									</Badge>
+									<Badge variant="outline" className="text-xs">
+										SNS マーケティング
+									</Badge>
+									<Badge variant="outline" className="text-xs">
+										プロジェクト管理
+									</Badge>
 								</div>
 							</div>
 						</div>
@@ -237,9 +278,7 @@ export default function AboutPage() {
 				{/* 経歴とAI サービスを始めた理由 */}
 				<section className="space-y-8">
 					<div className="border-l-4 border-primary pl-6">
-						<h2 className="text-3xl font-bold text-foreground mb-8">
-							経歴
-						</h2>
+						<h2 className="text-3xl font-bold text-foreground mb-8">経歴</h2>
 					</div>
 
 					<Timeline className="ml-6">
@@ -250,17 +289,15 @@ export default function AboutPage() {
 							</TimelineIcon>
 							<TimelineContent variant="card">
 								<div className="flex flex-col sm:flex-row justify-between sm:items-center mb-2 gap-2">
-									<TimelineTitle>印刷営業、グラフィックデザイナーの経験</TimelineTitle>
+									<TimelineTitle>
+										印刷営業、グラフィックデザイナーの経験
+									</TimelineTitle>
 									<TimelineDate>〜0000年</TimelineDate>
 								</div>
 								<div className="text-gray-700 dark:text-gray-300">
 									<ul className="space-y-1">
-										<li>
-											• 食品パッケージ(軟包材)の印刷営業を担当
-										</li>
-										<li>
-											• 大手デザイン会社で有名通販カタログの制作を担当
-										</li>
+										<li>• 食品パッケージ(軟包材)の印刷営業を担当</li>
+										<li>• 大手デザイン会社で有名通販カタログの制作を担当</li>
 									</ul>
 								</div>
 							</TimelineContent>
@@ -273,20 +310,19 @@ export default function AboutPage() {
 							</TimelineIcon>
 							<TimelineContent variant="card">
 								<div className="flex flex-col sm:flex-row justify-between sm:items-center mb-2 gap-2">
-									<TimelineTitle>ウェブデザイナー兼 ECショップ運営の経験</TimelineTitle>
+									<TimelineTitle>
+										ウェブデザイナー兼 ECショップ運営の経験
+									</TimelineTitle>
 									<TimelineDate>〜0000年</TimelineDate>
 								</div>
 								<div className="text-gray-700 dark:text-gray-300">
 									<ul className="space-y-1">
+										<li>• 寝具の卸会社で ECショップの店長を担当</li>
 										<li>
-											• 寝具の卸会社で ECショップの店長を担当
+											•
+											ECサイトの立ち上げ、商品撮影、コピー作成、バックエンド業務などを経験
 										</li>
-										<li>
-											• ECサイトの立ち上げ、商品撮影、コピー作成、バックエンド業務などを経験
-										</li>
-										<li>
-											• 繁盛期は月商700万円くらい
-										</li>
+										<li>• 繁盛期は月商700万円くらい</li>
 									</ul>
 								</div>
 							</TimelineContent>
@@ -307,12 +343,8 @@ export default function AboutPage() {
 										<li>
 											• 小中規模のウェブサイト(WordPressメイン)の制作を請負
 										</li>
-										<li>
-											• 涼感寝具のECサイトを期間限定で運営
-										</li>
-										<li>
-											• React/Next.js を学び、Jamstack サイトを制作
-										</li>
+										<li>• 涼感寝具のECサイトを期間限定で運営</li>
+										<li>• React/Next.js を学び、Jamstack サイトを制作</li>
 									</ul>
 								</div>
 							</TimelineContent>
@@ -330,9 +362,17 @@ export default function AboutPage() {
 								</div>
 								<div className="text-gray-700 dark:text-gray-300">
 									<ul className="space-y-1">
-										<li>• ChatGPT(gpt-3)の登場に衝撃を受け、AI関連情報を追い続ける</li>
-										<li>• 様々なジャンルの AIツールを試用、効率的な使い方などを研究</li>
-										<li>• コーディングを始めとする様々な作業にAIエージェントを本格的に活用</li>
+										<li>
+											• ChatGPT(gpt-3)の登場に衝撃を受け、AI関連情報を追い続ける
+										</li>
+										<li>
+											• 様々なジャンルの
+											AIツールを試用、効率的な使い方などを研究
+										</li>
+										<li>
+											•
+											コーディングを始めとする様々な作業にAIエージェントを本格的に活用
+										</li>
 									</ul>
 								</div>
 							</TimelineContent>
@@ -342,7 +382,9 @@ export default function AboutPage() {
 
 				{/* 大切にしていること */}
 				<section className="space-y-8">
-					<h2 className="text-3xl font-bold text-foreground mb-8 border-l-4 border-primary pl-6">大切にしていること</h2>
+					<h2 className="text-3xl font-bold text-foreground mb-8 border-l-4 border-primary pl-6">
+						大切にしていること
+					</h2>
 					<div>
 						<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 							<div className="space-y-4">
@@ -367,7 +409,9 @@ export default function AboutPage() {
 								<ul className="space-y-3 text-muted-foreground leading-7">
 									<li>
 										•{" "}
-										<span className="font-semibold text-foreground">誠実さ</span>
+										<span className="font-semibold text-foreground">
+											誠実さ
+										</span>
 									</li>
 									<li>• できることとできないことを正直に</li>
 									<li>• 納期と品質の約束は必ず守る</li>
@@ -415,7 +459,7 @@ export default function AboutPage() {
 									無料相談を予約する
 								</a>
 							</div>
-							
+
 							{/* SNSリンクセクション */}
 							<div>
 								<SocialLinks className="pt-0" />

@@ -5,10 +5,14 @@ import { useMergedRefs } from "../use-merged-refs";
 
 describe("useMergedRefs", () => {
 	it("RefObjectを正しく統合する", () => {
-		const { result: ref1Result } = renderHook(() => useRef<HTMLDivElement>(null));
-		const { result: ref2Result } = renderHook(() => useRef<HTMLDivElement>(null));
+		const { result: ref1Result } = renderHook(() =>
+			useRef<HTMLDivElement>(null),
+		);
+		const { result: ref2Result } = renderHook(() =>
+			useRef<HTMLDivElement>(null),
+		);
 		const { result: mergedResult } = renderHook(() =>
-			useMergedRefs(ref1Result.current, ref2Result.current)
+			useMergedRefs(ref1Result.current, ref2Result.current),
 		);
 
 		const testElement = document.createElement("div");
@@ -40,11 +44,13 @@ describe("useMergedRefs", () => {
 	});
 
 	it("RefObjectとRefCallbackを混合して統合する", () => {
-		const { result: refResult } = renderHook(() => useRef<HTMLDivElement>(null));
+		const { result: refResult } = renderHook(() =>
+			useRef<HTMLDivElement>(null),
+		);
 		const callback = vi.fn();
 
 		const { result } = renderHook(() =>
-			useMergedRefs(refResult.current, callback)
+			useMergedRefs(refResult.current, callback),
 		);
 
 		const testElement = document.createElement("div");
@@ -59,10 +65,12 @@ describe("useMergedRefs", () => {
 	});
 
 	it("nullやundefinedのrefを適切に処理する", () => {
-		const { result: refResult } = renderHook(() => useRef<HTMLDivElement>(null));
+		const { result: refResult } = renderHook(() =>
+			useRef<HTMLDivElement>(null),
+		);
 
 		const { result } = renderHook(() =>
-			useMergedRefs(refResult.current, null, undefined)
+			useMergedRefs(refResult.current, null, undefined),
 		);
 
 		const testElement = document.createElement("div");

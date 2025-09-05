@@ -100,9 +100,9 @@ export function ReasonsSection() {
 					<div className="aurora-2 absolute inset-0" />
 					<div className="aurora-3 absolute inset-0" />
 				</div>
-				
+
 				{/* ノイズテクスチャ風オーバーレイ */}
-				<div 
+				<div
 					className="absolute inset-0 opacity-30"
 					style={{
 						backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.1'/%3E%3C/svg%3E")`,
@@ -117,7 +117,11 @@ export function ReasonsSection() {
 				className="relative z-10"
 			>
 				<div className="text-center mb-12">
-					<Heading as="h2" align="center" className="mb-4 text-white dark:text-white">
+					<Heading
+						as="h2"
+						align="center"
+						className="mb-4 text-white dark:text-white"
+					>
 						選ばれる5つの理由
 					</Heading>
 					<p className="text-gray-300 dark:text-gray-400 max-w-2xl mx-auto">
@@ -129,7 +133,7 @@ export function ReasonsSection() {
 					{reasons.map((reason, index) => {
 						const IconComponent = reason.icon;
 						const animationDelay = index * 0.5;
-						
+
 						return (
 							<div
 								key={reason.id}
@@ -152,7 +156,7 @@ export function ReasonsSection() {
 									)}
 								>
 									{/* カード内部のオーロラエフェクト */}
-									<div 
+									<div
 										className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
 										style={{
 											background: `
@@ -177,7 +181,7 @@ export function ReasonsSection() {
 									/>
 
 									{/* 数字（ソフトグロー付き） */}
-									<div 
+									<div
 										className="absolute top-4 right-4 text-6xl font-bold text-white/5"
 										style={{
 											textShadow: `
@@ -193,7 +197,7 @@ export function ReasonsSection() {
 									<div className="relative p-8">
 										{/* アイコン（グロウエフェクト） */}
 										<div className="mb-6">
-											<div 
+											<div
 												className={cn(
 													"w-16 h-16 rounded-full",
 													"bg-gradient-to-br from-purple-500/20 to-pink-500/20",
@@ -205,18 +209,20 @@ export function ReasonsSection() {
 													"relative",
 												)}
 											>
-												<IconComponent 
+												<IconComponent
 													className="w-8 h-8 text-white"
 													style={{
-														filter: "drop-shadow(0 0 10px rgba(255, 255, 255, 0.5))",
+														filter:
+															"drop-shadow(0 0 10px rgba(255, 255, 255, 0.5))",
 													}}
 												/>
-												
+
 												{/* アイコンの後ろのグロウ */}
-												<div 
+												<div
 													className="absolute inset-0 rounded-full opacity-50 group-hover:opacity-100 transition-opacity duration-500"
 													style={{
-														background: "radial-gradient(circle, rgba(120, 119, 198, 0.4), transparent 70%)",
+														background:
+															"radial-gradient(circle, rgba(120, 119, 198, 0.4), transparent 70%)",
 														filter: "blur(20px)",
 													}}
 												/>
@@ -227,11 +233,12 @@ export function ReasonsSection() {
 										<h3 className="text-xl font-bold text-white mb-2">
 											{reason.title}
 										</h3>
-										
-										<p 
+
+										<p
 											className="text-sm font-semibold mb-4"
 											style={{
-												background: "linear-gradient(135deg, #667eea 0%, #f093fb 100%)",
+												background:
+													"linear-gradient(135deg, #667eea 0%, #f093fb 100%)",
 												WebkitBackgroundClip: "text",
 												WebkitTextFillColor: "transparent",
 												backgroundClip: "text",
@@ -246,7 +253,7 @@ export function ReasonsSection() {
 									</div>
 
 									{/* 底部のオーロララインエフェクト */}
-									<div 
+									<div
 										className="absolute bottom-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
 										style={{
 											background: `linear-gradient(

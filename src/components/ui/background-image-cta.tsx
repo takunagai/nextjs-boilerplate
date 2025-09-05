@@ -5,39 +5,39 @@ interface BackgroundImageCTAProps {
 	 * 背景画像のURL（必須）
 	 */
 	backgroundImage: string;
-	
+
 	/**
 	 * メインタイトル
 	 */
 	title: string;
-	
+
 	/**
 	 * 説明文
 	 */
 	description: string;
-	
+
 	/**
 	 * メインボタンのテキスト
 	 * @default "お問い合わせ"
 	 */
 	primaryButtonText?: string;
-	
+
 	/**
 	 * サブボタンのテキスト（オプション）
 	 */
 	secondaryButtonText?: string;
-	
+
 	/**
 	 * メインボタンのリンク先
 	 * @default "/contact"
 	 */
 	primaryButtonHref?: string;
-	
+
 	/**
 	 * サブボタンのリンク先
 	 */
 	secondaryButtonHref?: string;
-	
+
 	/**
 	 * 追加のクラス名
 	 */
@@ -46,10 +46,10 @@ interface BackgroundImageCTAProps {
 
 /**
  * 背景画像付き統一CTAコンポーネント
- * 
+ *
  * 各ページで統一された背景画像付きCTAセクションを表示します。
  * 背景画像とメッセージをProps でカスタマイズ可能です。
- * 
+ *
  * @example
  * ```tsx
  * <BackgroundImageCTA
@@ -81,22 +81,17 @@ export function BackgroundImageCTA({
 		>
 			<CTASection.Container>
 				<CTASection.Content>
-					<CTASection.Title className="text-white">
-						{title}
-					</CTASection.Title>
+					<CTASection.Title className="text-white">{title}</CTASection.Title>
 					<CTASection.Description className="text-white/80">
 						{description}
 					</CTASection.Description>
 				</CTASection.Content>
 				<CTASection.Actions className="justify-center">
-					<CTASection.PrimaryButton 
-						variant="default" 
-						href={primaryButtonHref}
-					>
+					<CTASection.PrimaryButton variant="default" href={primaryButtonHref}>
 						{primaryButtonText}
 					</CTASection.PrimaryButton>
 					{secondaryButtonText && secondaryButtonHref && (
-						<CTASection.SecondaryButton 
+						<CTASection.SecondaryButton
 							variant="outline"
 							href={secondaryButtonHref}
 						>

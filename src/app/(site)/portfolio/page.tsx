@@ -13,7 +13,7 @@ import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Container } from "@/components/ui/container";
 import { PageHeader } from "@/components/ui/page-header";
 import { META } from "@/lib/constants";
-import { 
+import {
 	portfolioItems,
 	portfolioFilterCategories,
 	type PortfolioFilterCategory,
@@ -41,10 +41,14 @@ interface PortfolioPageProps {
 	searchParams?: Promise<{ category?: string }>;
 }
 
-export default async function PortfolioPage({ searchParams }: PortfolioPageProps) {
+export default async function PortfolioPage({
+	searchParams,
+}: PortfolioPageProps) {
 	// Next.js 15のsearchParamsがPromiseの場合に対応
 	const resolvedSearchParams = searchParams ? await searchParams : {};
-	const selectedCategory = resolvedSearchParams?.category as PortfolioFilterCategory | undefined;
+	const selectedCategory = resolvedSearchParams?.category as
+		| PortfolioFilterCategory
+		| undefined;
 	// パンくずリストのデータを定義
 	const breadcrumbItems = [
 		{ title: "ホーム", path: "/" },
@@ -54,8 +58,8 @@ export default async function PortfolioPage({ searchParams }: PortfolioPageProps
 		createBreadcrumbs(breadcrumbItems);
 
 	// 選択されたカテゴリ情報を取得
-	const selectedCategoryInfo = selectedCategory 
-		? portfolioFilterCategories.find(cat => cat.id === selectedCategory)
+	const selectedCategoryInfo = selectedCategory
+		? portfolioFilterCategories.find((cat) => cat.id === selectedCategory)
 		: null;
 
 	return (
@@ -87,31 +91,41 @@ export default async function PortfolioPage({ searchParams }: PortfolioPageProps
 			/>
 			<Container className="mt-8" width="lg">
 				{/* フィルタリング機能 */}
-				<Suspense fallback={
-					<div className="flex flex-wrap justify-center gap-2">
-						{portfolioFilterCategories.map((category) => (
-							<div key={category.id} className="px-3 py-1 bg-muted rounded-full animate-pulse">
-								{category.name}
-							</div>
-						))}
-					</div>
-				}>
+				<Suspense
+					fallback={
+						<div className="flex flex-wrap justify-center gap-2">
+							{portfolioFilterCategories.map((category) => (
+								<div
+									key={category.id}
+									className="px-3 py-1 bg-muted rounded-full animate-pulse"
+								>
+									{category.name}
+								</div>
+							))}
+						</div>
+					}
+				>
 					<PortfolioFilter />
 				</Suspense>
 
 				{/* ポートフォリオコンテンツ */}
-				<Suspense fallback={
-					<div className="mt-10">
-						<div className="h-8 bg-muted rounded animate-pulse mb-6" />
-						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-							{Array.from({ length: 6 }).map((_, i) => (
-								<div key={i} className="aspect-[2/3] bg-muted rounded animate-pulse" />
-							))}
+				<Suspense
+					fallback={
+						<div className="mt-10">
+							<div className="h-8 bg-muted rounded animate-pulse mb-6" />
+							<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+								{Array.from({ length: 6 }).map((_, i) => (
+									<div
+										key={i}
+										className="aspect-[2/3] bg-muted rounded animate-pulse"
+									/>
+								))}
+							</div>
 						</div>
-					</div>
-				}>
-					<PortfolioContent 
-						items={portfolioItems} 
+					}
+				>
+					<PortfolioContent
+						items={portfolioItems}
 						filterCategory={selectedCategory}
 					/>
 				</Suspense>

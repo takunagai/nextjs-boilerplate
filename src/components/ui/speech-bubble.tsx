@@ -6,9 +6,9 @@ import type * as React from "react";
 import { use, Suspense } from "react";
 
 import { cn } from "@/lib/utils";
-import { 
-	useSpeechBubble, 
-	createAvatarConfiguration, 
+import {
+	useSpeechBubble,
+	createAvatarConfiguration,
 	validateContentConfiguration,
 	useSpeechBubblePerformance,
 } from "@/hooks/use-speech-bubble";
@@ -278,7 +278,7 @@ function SpeechBubbleSkeleton({
 		<div
 			className={cn(
 				speechBubbleVariants({ direction, size, spacing }),
-				"max-w-full animate-pulse"
+				"max-w-full animate-pulse",
 			)}
 			role="group"
 			aria-label="メッセージ読み込み中"
@@ -288,7 +288,7 @@ function SpeechBubbleSkeleton({
 				<div
 					className={cn(
 						avatarVariants({ size }),
-						"bg-gray-200 dark:bg-gray-700"
+						"bg-gray-200 dark:bg-gray-700",
 					)}
 				/>
 			</div>
@@ -297,14 +297,14 @@ function SpeechBubbleSkeleton({
 			<div
 				className={cn(
 					bubbleVariants({ size, theme: "default" }),
-					"w-full sm:w-auto bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-600"
+					"w-full sm:w-auto bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-600",
 				)}
 			>
 				{/* テールスケルトン */}
 				<div
 					className={cn(
 						tailVariants({ direction, theme: "default" }),
-						"bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-600"
+						"bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-600",
 					)}
 					aria-hidden="true"
 				/>
@@ -318,7 +318,6 @@ function SpeechBubbleSkeleton({
 		</div>
 	);
 }
-
 
 /**
  * アバター画像コンポーネント（分割されたサブコンポーネント）
@@ -356,7 +355,7 @@ function AvatarImage({
 					aria-hidden="true"
 				/>
 			)}
-			
+
 			<Image
 				src={avatarConfig.src}
 				alt={`${contentConfig.safeName}のアバター`}
@@ -365,7 +364,7 @@ function AvatarImage({
 				className={cn(
 					avatarVariants({ size }),
 					imageLoading ? "opacity-0" : "opacity-100",
-					"transition-opacity duration-300"
+					"transition-opacity duration-300",
 				)}
 				priority={false}
 				onLoad={handleImageLoad}
@@ -374,19 +373,22 @@ function AvatarImage({
 				placeholder="blur"
 				blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
 			/>
-			
+
 			{/* エラー時のフォールバック表示 */}
-			{imageError && avatarConfig.src === DEFAULT_AVATAR.src && avatarSrc && avatarSrc !== DEFAULT_AVATAR.src && (
-				<div 
-					className={cn(
-						avatarVariants({ size }),
-						"absolute inset-0 bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-400 text-xs"
-					)}
-					aria-label="画像読み込み失敗"
-				>
-					?
-				</div>
-			)}
+			{imageError &&
+				avatarConfig.src === DEFAULT_AVATAR.src &&
+				avatarSrc &&
+				avatarSrc !== DEFAULT_AVATAR.src && (
+					<div
+						className={cn(
+							avatarVariants({ size }),
+							"absolute inset-0 bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-400 text-xs",
+						)}
+						aria-label="画像読み込み失敗"
+					>
+						?
+					</div>
+				)}
 		</div>
 	);
 }
@@ -463,7 +465,8 @@ export function SpeechBubble({
 	} = useSpeechBubble();
 
 	// パフォーマンス監視（開発環境のみ）
-	const { renderCount, lastRenderTime } = useSpeechBubblePerformance("SpeechBubble");
+	const { renderCount, lastRenderTime } =
+		useSpeechBubblePerformance("SpeechBubble");
 
 	// アバター設定の最適化
 	const avatarConfig = createAvatarConfiguration({
@@ -542,11 +545,7 @@ export function SpeechBubble({
 	}
 
 	// Suspense境界でラップして非同期コンテンツをサポート
-	return (
-		<Suspense fallback={defaultFallback}>
-			{speechBubbleContent}
-		</Suspense>
-	);
+	return <Suspense fallback={defaultFallback}>{speechBubbleContent}</Suspense>;
 }
 
 /**

@@ -20,17 +20,35 @@ export const BlobMasks = () => (
 			</clipPath>
 
 			{/* グラデーション効果（オプション） */}
-			<linearGradient id="blob-gradient-blue" x1="0%" y1="0%" x2="100%" y2="100%">
+			<linearGradient
+				id="blob-gradient-blue"
+				x1="0%"
+				y1="0%"
+				x2="100%"
+				y2="100%"
+			>
 				<stop offset="0%" stopColor="rgba(59, 130, 246, 0.1)" />
 				<stop offset="100%" stopColor="rgba(59, 130, 246, 0)" />
 			</linearGradient>
 
-			<linearGradient id="blob-gradient-green" x1="0%" y1="0%" x2="100%" y2="100%">
+			<linearGradient
+				id="blob-gradient-green"
+				x1="0%"
+				y1="0%"
+				x2="100%"
+				y2="100%"
+			>
 				<stop offset="0%" stopColor="rgba(34, 197, 94, 0.1)" />
 				<stop offset="100%" stopColor="rgba(34, 197, 94, 0)" />
 			</linearGradient>
 
-			<linearGradient id="blob-gradient-purple" x1="0%" y1="0%" x2="100%" y2="100%">
+			<linearGradient
+				id="blob-gradient-purple"
+				x1="0%"
+				y1="0%"
+				x2="100%"
+				y2="100%"
+			>
 				<stop offset="0%" stopColor="rgba(168, 85, 247, 0.1)" />
 				<stop offset="100%" stopColor="rgba(168, 85, 247, 0)" />
 			</linearGradient>

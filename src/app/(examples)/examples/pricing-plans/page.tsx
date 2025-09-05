@@ -35,7 +35,7 @@ function PricingPlans({
 	plans,
 	additionalServices,
 	notes,
-	ctaText = "無料見積もり依頼"
+	ctaText = "無料見積もり依頼",
 }: PricingPlansProps) {
 	return (
 		<section className="bg-gray-50 py-16 dark:bg-gray-900 sm:py-24">
@@ -313,7 +313,7 @@ export default function PricingPlansPage() {
 				"基本テンプレート",
 				"メールサポート",
 				"1GBストレージ",
-				"基本分析機能"
+				"基本分析機能",
 			],
 			color: "border-gray-200 dark:border-gray-700",
 			popular: false,
@@ -331,7 +331,7 @@ export default function PricingPlansPage() {
 				"10GBストレージ",
 				"高度な分析機能",
 				"チーム機能",
-				"API アクセス"
+				"API アクセス",
 			],
 			color: "border-blue-200 dark:border-blue-500",
 			popular: true,
@@ -349,7 +349,7 @@ export default function PricingPlansPage() {
 				"オンプレミス対応",
 				"SLA保証",
 				"セキュリティ監査",
-				"トレーニング提供"
+				"トレーニング提供",
 			],
 			color: "border-purple-200 dark:border-purple-500",
 			popular: false,
@@ -358,9 +358,9 @@ export default function PricingPlansPage() {
 
 	return (
 		<Container className="mt-8" paddingY="lg" paddingX="2xl">
-			<PageHeader 
-				title="料金プランサンプル集" 
-				description="様々な業種・サービス向けの料金プラン設計例を紹介します。" 
+			<PageHeader
+				title="料金プランサンプル集"
+				description="様々な業種・サービス向けの料金プラン設計例を紹介します。"
 			/>
 
 			{/* AI画像生成サービスの料金プラン */}
@@ -414,17 +414,29 @@ export default function PricingPlansPage() {
 						<li>• 追加サービス表示による売上機会の拡大</li>
 					</ul>
 				</div>
-				
+
 				<div className="mt-6 rounded-lg bg-green-50 p-6 dark:bg-green-900/20">
 					<h3 className="mb-4 text-lg font-semibold text-green-900 dark:text-green-100">
 						活用例
 					</h3>
 					<ul className="space-y-2 text-sm text-green-800 dark:text-green-200">
-						<li>• <strong>制作会社</strong>: 単価型料金（デザイン・開発・動画制作など）</li>
-						<li>• <strong>SaaS・Webサービス</strong>: サブスクリプション型（月額・年額）</li>
-						<li>• <strong>コンサルティング</strong>: 時間単価・プロジェクト型</li>
-						<li>• <strong>EC・物販</strong>: 商品価格帯別のサービスレベル</li>
-						<li>• <strong>教育・研修</strong>: コース別・期間別料金</li>
+						<li>
+							• <strong>制作会社</strong>:
+							単価型料金（デザイン・開発・動画制作など）
+						</li>
+						<li>
+							• <strong>SaaS・Webサービス</strong>:
+							サブスクリプション型（月額・年額）
+						</li>
+						<li>
+							• <strong>コンサルティング</strong>: 時間単価・プロジェクト型
+						</li>
+						<li>
+							• <strong>EC・物販</strong>: 商品価格帯別のサービスレベル
+						</li>
+						<li>
+							• <strong>教育・研修</strong>: コース別・期間別料金
+						</li>
 					</ul>
 				</div>
 			</div>

@@ -95,7 +95,7 @@ export function SocialLinks({ className = "" }: SocialLinksProps) {
 			<h4 className="text-sm font-medium text-muted-foreground">
 				お気軽にフォローしてください。
 			</h4>
-			
+
 			{/* グリッドレイアウト - バランス調整済み */}
 			<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
 				{socialLinks.map((link) => (

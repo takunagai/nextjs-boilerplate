@@ -13,7 +13,10 @@ interface PortfolioContentProps {
 	filterCategory?: PortfolioFilterCategory | null;
 }
 
-export function PortfolioContent({ items, filterCategory }: PortfolioContentProps) {
+export function PortfolioContent({
+	items,
+	filterCategory,
+}: PortfolioContentProps) {
 	const filteredItems = useMemo(() => {
 		if (!filterCategory) {
 			return items;
@@ -29,10 +32,12 @@ export function PortfolioContent({ items, filterCategory }: PortfolioContentProp
 				image: item.image,
 				imageAlt: item.imageAlt || `${item.title}のイメージ`,
 				tags: item.servicesTags,
-				link: item.websiteUrl ? {
-					href: item.websiteUrl,
-					text: "詳細を見る →",
-				} : item.link,
+				link: item.websiteUrl
+					? {
+							href: item.websiteUrl,
+							text: "詳細を見る →",
+						}
+					: item.link,
 			})),
 		[filteredItems],
 	);
@@ -45,7 +50,7 @@ export function PortfolioContent({ items, filterCategory }: PortfolioContentProp
 					{filteredItems.length} 件の実績
 				</span>
 			</div>
-			
+
 			{filteredItems.length === 0 ? (
 				<div className="text-center py-12 text-muted-foreground">
 					<p className="text-lg mb-2">該当する実績がありません</p>
