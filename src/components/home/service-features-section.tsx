@@ -58,8 +58,10 @@ export function ServiceFeaturesSection({
 				<div className="pt-12">
 					<FeatureItems
 						items={featureItems}
-						variant="split"
-						alternateLayout={true}
+						styling={{
+							layout: "split",
+													alternateLayout: true
+						}}
 					/>
 				</div>
 			</Container>
