@@ -205,7 +205,7 @@ export default function AboutPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="space-y-4">
                 <h3 className="text-xl font-bold text-primary border-b border-primary/20 pb-2">
-                  ウェブ制作
+                  ウェブ制作・ウェブ開発
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   <Badge variant="outline" className="text-xs">
@@ -221,7 +221,10 @@ export default function AboutPage() {
                     Figma
                   </Badge>
                   <Badge variant="outline" className="text-xs">
-                    Adobe Creative Cloud
+                    Git/GitHub
+                  </Badge>
+                  <Badge variant="outline" className="text-xs">
+                    Windsurf
                   </Badge>
                 </div>
               </div>
@@ -231,22 +234,22 @@ export default function AboutPage() {
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   <Badge variant="outline" className="text-xs">
-                    ChatGPT Plus
+                    ChatGPT
                   </Badge>
                   <Badge variant="outline" className="text-xs">
-                    Claude Pro
+                    Claude Code
                   </Badge>
                   <Badge variant="outline" className="text-xs">
-                    Midjourney
-                  </Badge>
-                  <Badge variant="outline" className="text-xs">
-                    DALL-E
+                    Nano Banana
                   </Badge>
                   <Badge variant="outline" className="text-xs">
                     Stable Diffusion
                   </Badge>
                   <Badge variant="outline" className="text-xs">
-                    GitHub Copilot
+                    Suno AI
+                  </Badge>
+                  <Badge variant="outline" className="text-xs">
+                    Vidu
                   </Badge>
                 </div>
               </div>
@@ -256,10 +259,10 @@ export default function AboutPage() {
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   <Badge variant="outline" className="text-xs">
-                    SEO / アクセス解析
+                    Adobe Creative Cloud
                   </Badge>
                   <Badge variant="outline" className="text-xs">
-                    SNS マーケティング
+                    SEO / アクセス解析
                   </Badge>
                   <Badge variant="outline" className="text-xs">
                     プロジェクト管理
