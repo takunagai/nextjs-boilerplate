@@ -140,11 +140,6 @@ export default function AboutPage() {
               を<span className="font-semibold text-primary">「できた！」</span>
               に変えるお手伝いをしています。
             </p>
-            <p className="text-lg leading-8">
-              技術の話も、できるだけ分かりやすく。一緒に、
-              <span className="font-semibold text-primary">AI の可能性</span>
-              を探していきましょう。
-            </p>
           </div>
         </section>
 
