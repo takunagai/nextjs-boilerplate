@@ -28,7 +28,11 @@ export function PortfolioContent({ items, filterCategory }: PortfolioContentProp
 				description: item.clientName || "",
 				image: item.image,
 				imageAlt: item.imageAlt || `${item.title}のイメージ`,
-				link: item.link,
+				tags: item.servicesTags,
+				link: item.websiteUrl ? {
+					href: item.websiteUrl,
+					text: "詳細を見る →",
+				} : item.link,
 			})),
 		[filteredItems],
 	);

@@ -21,7 +21,7 @@ import {
 import { createBreadcrumbs } from "@/lib/utils";
 
 export const metadata: Metadata = generateMetadata({
-	title: "ポートフォリオ",
+	title: "実績紹介",
 	description:
 		"これまでに制作したウェブサイト、ロゴデザイン、ECサイトなどの実績をご紹介します。",
 	keywords: [
@@ -48,7 +48,7 @@ export default async function PortfolioPage({ searchParams }: PortfolioPageProps
 	// パンくずリストのデータを定義
 	const breadcrumbItems = [
 		{ title: "ホーム", path: "/" },
-		{ title: "ポートフォリオ", path: "/portfolio", current: true },
+		{ title: "実績紹介", path: "/portfolio", current: true },
 	];
 	const { ui: uiBreadcrumbs, jsonLd: jsonLdBreadcrumbs } =
 		createBreadcrumbs(breadcrumbItems);
@@ -61,7 +61,7 @@ export default async function PortfolioPage({ searchParams }: PortfolioPageProps
 	return (
 		<>
 			<WebsiteJsonLd
-				name={`ポートフォリオ | ${META.DEFAULT_TITLE}`}
+				name={`実績紹介 | ${META.DEFAULT_TITLE}`}
 				description={
 					selectedCategoryInfo
 						? `${selectedCategoryInfo.name}の制作実績をご紹介します。${selectedCategoryInfo.description}`
@@ -77,7 +77,7 @@ export default async function PortfolioPage({ searchParams }: PortfolioPageProps
 			</Container>
 
 			<PageHeader
-				title="ポートフォリオ"
+				title="実績紹介"
 				className="my-8"
 				description={
 					selectedCategoryInfo

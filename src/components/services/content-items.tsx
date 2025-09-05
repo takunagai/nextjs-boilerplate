@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
 
 // コンテンツアイテムの型定義
 export type ContentItem = {
@@ -7,6 +8,7 @@ export type ContentItem = {
 	description: string;
 	image?: string;
 	imageAlt?: string;
+	tags?: string[];
 	link?: {
 		href: string;
 		text: string;
@@ -100,11 +102,24 @@ export function ContentItems({
 					)}
 					<div className="p-5">
 						<h3 className="text-lg font-semibold mb-2">{item.title}</h3>
-						<p className="text-muted-foreground">{item.description}</p>
+						<p className="text-muted-foreground mb-3">{item.description}</p>
+						{item.tags && item.tags.length > 0 && (
+							<div className="flex flex-wrap gap-1 mb-3">
+								{item.tags.map((tag, tagIndex) => (
+									<Badge
+										key={`${tag}-${tagIndex}`}
+										variant="secondary"
+										className="text-[10px] px-1.5 py-0 h-5"
+									>
+										{tag}
+									</Badge>
+								))}
+							</div>
+						)}
 						{item.link && (
 							<Link
 								href={item.link.href}
-								className="inline-block mt-4 text-primary hover:underline font-medium"
+								className="inline-block mt-1 text-primary hover:underline font-medium"
 							>
 								{item.link.text}
 							</Link>

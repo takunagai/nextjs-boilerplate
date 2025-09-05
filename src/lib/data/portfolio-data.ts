@@ -52,7 +52,8 @@ export const portfolioFilterCategories = [
 	},
 ] as const;
 
-export type PortfolioFilterCategory = (typeof portfolioFilterCategories)[number]["id"];
+export type PortfolioFilterCategory =
+	(typeof portfolioFilterCategories)[number]["id"];
 
 // 旧カテゴリ定義（互換性のため残存）
 export const portfolioCategories: PortfolioCategory[] = [
@@ -241,7 +242,7 @@ export const portfolioItems: PortfolioItem[] = [
 		title: "スフレ専門店 ナッツベリー",
 		image: "/images/portfolio/knots-berry.jpg",
 		imageAlt: "スフレ専門店 ナッツベリーのWebサイト",
-		category: "design",
+		category: "web",
 		clientName: "株式会社ナッツベリー様",
 		servicesTags: ["デザイン", "写真撮影"],
 		websiteUrl: "https://knotts-berry.com/",
@@ -344,7 +345,9 @@ export function getPortfolioItemsByFilterCategory(
 	}
 
 	return portfolioItems.filter((item) =>
-		(categoryConfig.originalCategories as readonly string[]).includes(item.category),
+		(categoryConfig.originalCategories as readonly string[]).includes(
+			item.category,
+		),
 	);
 }
 
