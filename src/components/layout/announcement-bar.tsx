@@ -25,7 +25,7 @@ export function AnnouncementBar() {
               <span className="inline-block animate-pulse mr-1">🧪</span>
               <span>
                 {/*マークが付いたサービスは、新規サービスにつき格安でお試しいただけるテスター募集中！*/}
-                ⚠️制作中につき未完成の箇所がございます。近日中に修正いたします。
+                ⚠️制作中につきダミー情報の箇所があります。公開時には修正いたします。
               </span>
             </p>
           </div>
