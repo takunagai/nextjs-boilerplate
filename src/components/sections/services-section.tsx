@@ -1,8 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import Image from "next/image";
 import Link from "next/link";
+import { AnimatedImage } from "@/components/ui/animated-image";
 import {
 	FaArrowRight,
 	FaChalkboardUser,
@@ -168,7 +168,7 @@ export function ServicesSection() {
 		<section className="w-full py-16 md:py-24 bg-background relative overflow-hidden">
 			{/* SVG定義を追加 */}
 			<BlobMasks />
-			
+
 			<Container
 				width="2xl"
 				paddingY="lg"
@@ -222,7 +222,6 @@ export function ServicesSection() {
 										</h3>
 									</div>
 
-
 									{/* 説明文 */}
 									<p className="text-foreground/80 leading-relaxed whitespace-pre-line">
 										{item.description}
@@ -259,16 +258,28 @@ export function ServicesSection() {
 								{/* 画像 - モバイルでは上に表示 */}
 								{item.imageUrl && (
 									<div className="relative w-full h-full [direction:ltr] order-1 md:order-none">
-										<div 
+										<div
 											className="aspect-[4/3] relative overflow-hidden"
 											style={{ clipPath: `url(#blob-${item.blobShape})` }}
 										>
-											<Image
+											<AnimatedImage
 												src={item.imageUrl}
 												alt={`${item.title}のイメージ画像`}
-												fill
-												className="object-cover"
+												width={800}
+												height={600}
+												className="w-full h-full object-cover"
 												sizes="(max-width: 768px) 100vw, 50vw"
+												animation={{
+													duration: 0.8,
+													delay: index * 0.2,
+													yOffset: 30,
+													ease: "easeOut",
+												}}
+												intersection={{
+													threshold: 0.15,
+													rootMargin: "0px 0px -80px 0px",
+													triggerOnce: true,
+												}}
 											/>
 										</div>
 									</div>
@@ -301,7 +312,9 @@ export function ServicesSection() {
 										</h2>
 									</Link>
 								) : (
-									<h2 className="text-lg font-semibold mb-2">{category.name}</h2>
+									<h2 className="text-lg font-semibold mb-2">
+										{category.name}
+									</h2>
 								)}
 								<p className="text-sm text-muted-foreground">
 									{category.description}
