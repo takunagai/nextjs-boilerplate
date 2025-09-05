@@ -1,0 +1,133 @@
+/*
+ * 画像フェードインアニメーション専用CSS
+ * パフォーマンス最適化とアクセシビリティ対応
+ */
+
+/* Fade-in animations for images */
+@layer utilities {
+	/* Fade-in animation respecting user preferences */
+	.fade-in-animation {
+		transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+		will-change: transform, opacity;
+	}
+
+	/* Performance optimized animation classes */
+	.animate-fade-in {
+		animation: fade-in 0.6s ease-out forwards;
+	}
+
+	.animate-fade-in-up {
+		animation: fade-in-up 0.6s ease-out forwards;
+	}
+
+	.animate-fade-in-up-delayed {
+		animation: fade-in-up 0.6s ease-out 0.2s forwards;
+		opacity: 0;
+		transform: translateY(20px);
+	}
+
+	.animate-fade-in-scale {
+		animation: fade-in-scale 0.8s ease-out forwards;
+	}
+}
+
+/* Keyframes for fade-in animations */
+@keyframes fade-in {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes fade-in-up {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes fade-in-scale {
+	from {
+		opacity: 0;
+		transform: scale(0.95) translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1) translateY(0);
+	}
+}
+
+/* Motion preferences support - アクセシビリティ */
+@media (prefers-reduced-motion: reduce) {
+	/* すべてのアニメーションを最小限に */
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+
+	/* フェードインアニメーションのみを許可（モーション敏感な方向け） */
+	.fade-in-animation {
+		transition: opacity 0.15s ease-out;
+		transform: none !important;
+	}
+
+	.animate-fade-in,
+	.animate-fade-in-up,
+	.animate-fade-in-up-delayed,
+	.animate-fade-in-scale {
+		animation: fade-in-reduced 0.15s ease-out forwards;
+		transform: none !important;
+	}
+
+	@keyframes fade-in-reduced {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+	.fade-in-animation,
+	.animate-fade-in,
+	.animate-fade-in-up,
+	.animate-fade-in-up-delayed,
+	.animate-fade-in-scale {
+		/* より強いコントラストのためのスタイル */
+		transition-duration: 0.2s;
+		filter: contrast(1.2);
+	}
+}
+
+/* Performance optimization for smooth animations */
+.will-change-transform {
+	will-change: transform;
+}
+
+.will-change-opacity {
+	will-change: opacity;
+}
+
+.will-change-transform-opacity {
+	will-change: transform, opacity;
+}
+
+/* GPU層分離による最適化 */
+.gpu-optimized {
+	transform: translateZ(0);
+	backface-visibility: hidden;
+	perspective: 1000px;
+}
