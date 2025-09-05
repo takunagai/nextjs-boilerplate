@@ -2,32 +2,32 @@ import { AnimatedItemList } from "@/components/ui/animated-item-list";
 import { Container } from "@/components/ui/container";
 import { Heading } from "@/components/ui/heading";
 import {
-	SpeechBubble,
-	SpeechBubbleMessage,
+  SpeechBubble,
+  SpeechBubbleMessage,
 } from "@/components/ui/speech-bubble";
 
 // 二次元配列の例（フリップアニメーション用）
 const problems = [
-	[
-		"ウェブサイトを作りたいけど予算が...",
-		"SNS 投稿を続けたいけど、時間がない",
-		"AI を使ってみたいけど、やり方が分からない",
-		"外注したいけど、高すぎる",
-		"自分でやりたいけど、スキルがない",
-	],
-	[
-		"新しい商品の宣伝がうまくいかない",
-		"顧客とのコミュニケーションが難しい",
-		"競合他社に差をつけられない",
-		"マーケティングの知識が不足している",
-		"効果的な広告が作れない",
-	],
-	[
-		"業務効率化したいけど方法が分からない",
-		"データ分析が苦手で判断に困る",
-		"新しいツールの導入が難しい",
-		"デジタル化についていけない",
-	],
+  [
+    "ウェブサイトを作りたいけど予算が...",
+    "SNS 投稿を続けたいけど、時間がない",
+    "AI を使ってみたいけど、やり方が分からない",
+    "外注したいけど、高すぎる",
+    "自分でやりたいけど、スキルがない",
+  ],
+  [
+    "新しい商品の宣伝がうまくいかない",
+    "顧客とのコミュニケーションが難しい",
+    "競合他社に差をつけられない",
+    "マーケティングの知識が不足している",
+    "効果的な広告が作れない",
+  ],
+  [
+    "業務効率化したいけど方法が分からない",
+    "データ分析が苦手で判断に困る",
+    "新しいツールの導入が難しい",
+    "デジタル化についていけない",
+  ],
 ];
 
 type Problem = string;
@@ -35,45 +35,45 @@ type ProblemSet = Problem[];
 type ProblemData = Problem[] | ProblemSet[];
 
 interface ProblemsSectionProps {
-	problems?: ProblemData;
-	intervalSeconds?: number;
+  problems?: ProblemData;
+  intervalSeconds?: number;
 }
 
 export function ProblemsSection({
-	problems: externalProblems = problems,
-	intervalSeconds = 5,
+  problems: externalProblems = problems,
+  intervalSeconds = 5,
 }: ProblemsSectionProps = {}) {
-	return (
-		<section className="w-full py-16 md:py-24 bg-muted/30">
-			<Container width="2xl" paddingY="lg" paddingX="lg">
-				<div className="text-center mb-12">
-					<Heading as="h2" align="center" className="mb-6">
-						こんなお悩み、ありませんか？
-					</Heading>
-				</div>
+  return (
+    <section className="w-full py-16 md:py-24 bg-muted/30">
+      <Container width="2xl" paddingY="lg" paddingX="lg">
+        <div className="text-center mb-12">
+          <Heading as="h2" align="center" className="mb-6">
+            こんなお悩み、ありませんか？
+          </Heading>
+        </div>
 
-				<AnimatedItemList
-					items={externalProblems}
-					intervalSeconds={intervalSeconds}
-					showIndicator={true}
-					className="max-w-2xl mx-auto space-y-4 mb-12"
-				/>
+        <AnimatedItemList
+          items={externalProblems}
+          intervalSeconds={intervalSeconds}
+          showIndicator={true}
+          className="max-w-2xl mx-auto space-y-4 mb-12"
+        />
 
-				<div className="flex justify-center">
-					<SpeechBubble
-						name="担当者"
-						direction="left"
-						theme="primary"
-						avatarSrc="/images/avatars/default-avatar.jpg"
-						avatarWidth={64}
-						avatarHeight={64}
-					>
-						<SpeechBubbleMessage className="font-bold text-lg">
-							気軽に単発のスポット相談をご利用ください。
-						</SpeechBubbleMessage>
-					</SpeechBubble>
-				</div>
-			</Container>
-		</section>
-	);
+        <div className="flex justify-center">
+          <SpeechBubble
+            name="担当者"
+            direction="left"
+            theme="primary"
+            avatarSrc="/images/portrait.png"
+            avatarWidth={64}
+            avatarHeight={64}
+          >
+            <SpeechBubbleMessage className="font-bold text-lg">
+              気軽に単発のスポット相談をご利用ください。
+            </SpeechBubbleMessage>
+          </SpeechBubble>
+        </div>
+      </Container>
+    </section>
+  );
 }
