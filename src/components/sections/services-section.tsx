@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { type FeatureItem, FeatureItems } from "@/components/ui/feature-items";
 import { Heading } from "@/components/ui/heading";
+import { BlobMasks, type BlobShape } from "@/components/ui/blob-mask";
 import { usePerformanceCheck } from "@/hooks/use-webgl-support";
 import { portfolioCategories } from "@/lib/data/portfolio-data";
 
@@ -43,11 +44,17 @@ const LightweightBackground = dynamic(
 	},
 );
 
-// FeatureItem形式でサービスデータを定義
-const services: FeatureItem[] = [
+// FeatureItem形式を拡張してBlob形状を追加
+interface ServiceItem extends FeatureItem {
+	blobShape: BlobShape;
+}
+
+// サービスデータを定義
+const services: ServiceItem[] = [
 	{
 		id: "web-development",
 		title: "ウェブ制作・アプリ開発",
+		blobShape: "web",
 		description:
 			"AI を活用した効率的な制作で、高品質かつお手頃な価格を実現。\nお客様のニーズに合わせ、最適な構成を提案いたします。",
 		imageUrl: "/images/service-web.jpg",
@@ -63,6 +70,7 @@ const services: FeatureItem[] = [
 	{
 		id: "consulting",
 		title: "AIコンサル＆サポート",
+		blobShape: "consulting",
 		description:
 			"AI活用による省力化、高品質化、アイデア出しなどをアドバイス。\nご相談者様の状況に合わせ、柔軟なサポートを提供します。",
 		imageUrl: "/images/service-consulting.jpg",
@@ -78,6 +86,7 @@ const services: FeatureItem[] = [
 	{
 		id: "creative",
 		title: "クリエイティブ",
+		blobShape: "creative",
 		description:
 			"文章、写真、イラスト、図解、動画、音楽、3D…。\nAI x デザイナーで、短時間かつお手頃価格で高品質に仕上げます。",
 		imageUrl: "/images/service-creative.jpg",
@@ -157,6 +166,9 @@ export function ServicesSection() {
 
 	return (
 		<section className="w-full py-16 md:py-24 bg-background relative overflow-hidden">
+			{/* SVG定義を追加 */}
+			<BlobMasks />
+			
 			<Container
 				width="2xl"
 				paddingY="lg"
@@ -246,13 +258,16 @@ export function ServicesSection() {
 
 								{/* 画像 - モバイルでは上に表示 */}
 								{item.imageUrl && (
-									<div className="relative w-full h-full overflow-hidden rounded-lg [direction:ltr] order-1 md:order-none">
-										<div className="aspect-[4/3] relative">
+									<div className="relative w-full h-full [direction:ltr] order-1 md:order-none">
+										<div 
+											className="aspect-[4/3] relative overflow-hidden"
+											style={{ clipPath: `url(#blob-${item.blobShape})` }}
+										>
 											<Image
 												src={item.imageUrl}
 												alt={`${item.title}のイメージ画像`}
 												fill
-												className="object-cover rounded-lg"
+												className="object-cover"
 												sizes="(max-width: 768px) 100vw, 50vw"
 											/>
 										</div>
