@@ -3,25 +3,25 @@
 import { useEffect, useRef, useState } from "react";
 
 export interface UseIntersectionObserverOptions {
-	/** ルート要素（デフォルト: viewport） */
-	root?: Element | null;
-	/** ルートマージン（デフォルト: "0px"） */
-	rootMargin?: string;
-	/** 表示閾値（デフォルト: 0.1 = 10%表示で発火） */
-	threshold?: number | number[];
-	/** 一度だけ実行するか（デフォルト: true） */
-	triggerOnce?: boolean;
-	/** 初期の可視状態（デフォルト: false） */
-	initialIsIntersecting?: boolean;
+  /** ルート要素（デフォルト: viewport） */
+  root?: Element | null;
+  /** ルートマージン（デフォルト: "0px"） */
+  rootMargin?: string;
+  /** 表示閾値（デフォルト: 0.1 = 10%表示で発火） */
+  threshold?: number | number[];
+  /** 一度だけ実行するか（デフォルト: true） */
+  triggerOnce?: boolean;
+  /** 初期の可視状態（デフォルト: false） */
+  initialIsIntersecting?: boolean;
 }
 
 export interface UseIntersectionObserverReturn {
-	/** 対象要素への参照 */
-	ref: React.RefObject<Element>;
-	/** 現在の可視状態 */
-	isIntersecting: boolean;
-	/** Intersection Observer エントリ */
-	entry: IntersectionObserverEntry | undefined;
+  /** 対象要素への参照 */
+  ref: React.RefObject<Element | null>;
+  /** 現在の可視状態 */
+  isIntersecting: boolean;
+  /** Intersection Observer エントリ */
+  entry: IntersectionObserverEntry | undefined;
 }
 
 /**
@@ -40,63 +40,63 @@ export interface UseIntersectionObserverReturn {
  * ```
  */
 export function useIntersectionObserver(
-	options: UseIntersectionObserverOptions = {},
+  options: UseIntersectionObserverOptions = {},
 ): UseIntersectionObserverReturn {
-	const {
-		root = null,
-		rootMargin = "0px",
-		threshold = 0.1,
-		triggerOnce = true,
-		initialIsIntersecting = false,
-	} = options;
+  const {
+    root = null,
+    rootMargin = "0px",
+    threshold = 0.1,
+    triggerOnce = true,
+    initialIsIntersecting = false,
+  } = options;
 
-	const ref = useRef<Element>(null);
-	const [entry, setEntry] = useState<IntersectionObserverEntry | undefined>();
-	const [isIntersecting, setIsIntersecting] = useState(initialIsIntersecting);
+  const ref = useRef<Element>(null);
+  const [entry, setEntry] = useState<IntersectionObserverEntry | undefined>();
+  const [isIntersecting, setIsIntersecting] = useState(initialIsIntersecting);
 
-	useEffect(() => {
-		const element = ref.current;
+  useEffect(() => {
+    const element = ref.current;
 
-		// 要素が存在しない場合は早期リターン
-		if (!element) return;
+    // 要素が存在しない場合は早期リターン
+    if (!element) return;
 
-		// ブラウザサポートチェック
-		if (!("IntersectionObserver" in window)) {
-			// フォールバック: 即座に表示状態にする
-			setIsIntersecting(true);
-			return;
-		}
+    // ブラウザサポートチェック
+    if (!("IntersectionObserver" in window)) {
+      // フォールバック: 即座に表示状態にする
+      setIsIntersecting(true);
+      return;
+    }
 
-		const observer = new IntersectionObserver(
-			([entry]) => {
-				const isElementIntersecting = entry.isIntersecting;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const isElementIntersecting = entry.isIntersecting;
 
-				setEntry(entry);
-				setIsIntersecting(isElementIntersecting);
+        setEntry(entry);
+        setIsIntersecting(isElementIntersecting);
 
-				// 一度だけの実行で、かつ表示されている場合は監視を停止
-				if (triggerOnce && isElementIntersecting) {
-					observer.unobserve(element);
-				}
-			},
-			{
-				root,
-				rootMargin,
-				threshold,
-			},
-		);
+        // 一度だけの実行で、かつ表示されている場合は監視を停止
+        if (triggerOnce && isElementIntersecting) {
+          observer.unobserve(element);
+        }
+      },
+      {
+        root,
+        rootMargin,
+        threshold,
+      },
+    );
 
-		observer.observe(element);
+    observer.observe(element);
 
-		// クリーンアップ関数
-		return () => {
-			observer.disconnect();
-		};
-	}, [root, rootMargin, threshold, triggerOnce]);
+    // クリーンアップ関数
+    return () => {
+      observer.disconnect();
+    };
+  }, [root, rootMargin, threshold, triggerOnce]);
 
-	return {
-		ref,
-		isIntersecting,
-		entry,
-	};
+  return {
+    ref,
+    isIntersecting,
+    entry,
+  };
 }
