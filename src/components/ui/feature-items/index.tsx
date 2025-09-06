@@ -106,26 +106,8 @@ export interface FeatureItemsProps
   overlayHeight?: "auto" | "full" | "half" | "third";
   renderItem?: (item: FeatureItem, index: number) => ReactNode;
 
-  /** 構造化されたスタイリング設定（推奨） */
+  /** 構造化されたスタイリング設定 */
   styling?: StylingOptions;
-
-  // 後方互換性のため維持（非推奨）
-  /** @deprecated styling.heading.level を使用してください */
-  headingLevel?: HeadingLevel;
-  /** @deprecated styling.heading.className を使用してください */
-  headingClassName?: string;
-  /** @deprecated styling.description.className を使用してください */
-  descriptionClassName?: string;
-  /** @deprecated styling.icon.className を使用してください */
-  iconClassName?: string;
-  /** @deprecated styling.button.className を使用してください */
-  buttonClassName?: string;
-  /** @deprecated styling.image.className を使用してください */
-  imageClassName?: string;
-  /** @deprecated styling.image.containerClassName を使用してください */
-  imageContainerClassName?: string;
-  /** @deprecated styling.content.blockClassName を使用してください */
-  contentBlockClassName?: string;
 }
 
 /**
@@ -146,46 +128,34 @@ export const FeatureItems = ({
   overlayStyle = "dark",
   overlayHeight,
   renderItem,
-
   styling,
-
-  // 後方互換性
-  headingLevel,
-  headingClassName,
-  descriptionClassName,
-  iconClassName,
-  buttonClassName,
-  imageClassName,
-  imageContainerClassName,
-  contentBlockClassName,
 }: FeatureItemsProps) => {
   const containerClass = cn(
     featureItemsVariants({ layout, background, spacing }),
     className,
   );
 
-  // スタイリングオプションを統合（新しい方式を優先）
+  // スタイリングオプションを統合
   const resolvedStyling: Required<StylingOptions> = {
     heading: {
-      level: styling?.heading?.level ?? headingLevel,
-      className: styling?.heading?.className ?? headingClassName,
+      level: styling?.heading?.level,
+      className: styling?.heading?.className,
     },
     description: {
-      className: styling?.description?.className ?? descriptionClassName,
+      className: styling?.description?.className,
     },
     icon: {
-      className: styling?.icon?.className ?? iconClassName,
+      className: styling?.icon?.className,
     },
     button: {
-      className: styling?.button?.className ?? buttonClassName,
+      className: styling?.button?.className,
     },
     image: {
-      className: styling?.image?.className ?? imageClassName,
-      containerClassName:
-        styling?.image?.containerClassName ?? imageContainerClassName,
+      className: styling?.image?.className,
+      containerClassName: styling?.image?.containerClassName,
     },
     content: {
-      blockClassName: styling?.content?.blockClassName ?? contentBlockClassName,
+      blockClassName: styling?.content?.blockClassName,
     },
   };
 
