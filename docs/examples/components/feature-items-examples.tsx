@@ -233,12 +233,12 @@ export const CustomRenderingExample = () => {
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-xl font-semibold">{item.title}</h3>
             <div className="flex gap-2">
-              {item.customData?.isNew && (
+              {(item.customData?.isNew as boolean) && (
                 <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
                   New!
                 </span>
               )}
-              {item.customData?.isBeta && (
+              {(item.customData?.isBeta as boolean) && (
                 <span className="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded-full">
                   Beta
                 </span>

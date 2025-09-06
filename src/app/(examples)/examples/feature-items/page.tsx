@@ -75,9 +75,10 @@ export default function FeatureItemsPage() {
           <h2 className="text-2xl font-bold mb-8">Split Layout - 基本</h2>
           <FeatureItems
             items={featureItems.slice(0, 3)}
+            layout="vertical"
+            variant="split"
+            alternateLayout={false}
             styling={{
-              layout: "split",
-              alternateLayout: false,
               heading: {
                 level: "h3",
                 className: "text-xl font-semibold mb-3",
@@ -97,10 +98,11 @@ export default function FeatureItemsPage() {
           <h2 className="text-2xl font-bold mb-8">Split Layout - 左右交互</h2>
           <FeatureItems
             items={featureItems.slice(0, 3)}
+            layout="vertical"
+            variant="split"
+            alternateLayout={true}
+            spacing="large"
             styling={{
-              layout: "split",
-              alternateLayout: true,
-              spacing: "large",
               heading: {
                 level: "h3",
                 className: "text-xl font-semibold mb-3",
@@ -120,11 +122,11 @@ export default function FeatureItemsPage() {
           <h2 className="text-2xl font-bold mb-8">Grid Layout - 新機能</h2>
           <FeatureItems
             items={featureItems}
+            layout="grid"
+            variant="simple"
+            background="accent"
+            spacing="medium"
             styling={{
-              layout: "grid",
-              variant: "simple",
-              background: "accent",
-              spacing: "medium",
               heading: {
                 level: "h3",
                 className: "text-lg font-semibold mb-2",
@@ -145,10 +147,10 @@ export default function FeatureItemsPage() {
           </h2>
           <FeatureItems
             items={featureItems}
+            layout="horizontal"
+            variant="simple"
+            spacing="large"
             styling={{
-              layout: "horizontal",
-              variant: "simple",
-              spacing: "large",
               heading: {
                 level: "h3",
                 className: "text-lg font-medium mb-2",
@@ -170,11 +172,11 @@ export default function FeatureItemsPage() {
               <FeatureItems
                 key={item.id}
                 items={[item]}
+                variant="overlay"
+                overlayStyle="dark"
+                overlayHeight="auto"
+                spacing="small"
                 styling={{
-                layout: "overlay",
-                overlayStyle: "dark",
-                overlayHeight: "auto",
-                spacing: "small",
                   heading: {
                     level: "h4",
                     className: "text-white text-lg font-semibold mb-2",
@@ -201,11 +203,11 @@ export default function FeatureItemsPage() {
               <FeatureItems
                 key={item.id}
                 items={[item]}
+                variant="overlay"
+                overlayStyle="gradient"
+                overlayHeight="half"
+                spacing="small"
                 styling={{
-                layout: "overlay",
-                overlayStyle: "gradient",
-                overlayHeight: "half",
-                spacing: "small",
                   heading: {
                     level: "h4",
                     className: "text-white text-lg font-semibold mb-2",
@@ -231,11 +233,11 @@ export default function FeatureItemsPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <FeatureItems
                 items={[featureItems[0]]}
+                variant="overlay"
+                overlayStyle="dark"
+                overlayHeight="third"
+                spacing="small"
                 styling={{
-                layout: "overlay",
-                overlayStyle: "dark",
-                overlayHeight: "third",
-                spacing: "small",
                   heading: {
                     className: "text-white text-base font-semibold",
                   },
@@ -247,11 +249,11 @@ export default function FeatureItemsPage() {
               />
               <FeatureItems
                 items={[featureItems[1]]}
+                variant="overlay"
+                overlayStyle="gradient"
+                overlayHeight="third"
+                spacing="small"
                 styling={{
-                layout: "overlay",
-                overlayStyle: "gradient",
-                overlayHeight: "third",
-                spacing: "small",
                   heading: {
                     className: "text-white text-base font-semibold",
                   },
@@ -269,11 +271,11 @@ export default function FeatureItemsPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <FeatureItems
                 items={[featureItems[2]]}
+                variant="overlay"
+                overlayStyle="dark"
+                overlayHeight="full"
+                spacing="small"
                 styling={{
-                layout: "overlay",
-                overlayStyle: "dark",
-                overlayHeight: "full",
-                spacing: "small",
                   heading: {
                     className: "text-white text-xl font-bold mb-4",
                   },
@@ -288,11 +290,11 @@ export default function FeatureItemsPage() {
               />
               <FeatureItems
                 items={[featureItems[3]]}
+                variant="overlay"
+                overlayStyle="gradient"
+                overlayHeight="full"
+                spacing="small"
                 styling={{
-                layout: "overlay",
-                overlayStyle: "gradient",
-                overlayHeight: "full",
-                spacing: "small",
                   heading: {
                     className: "text-white text-xl font-bold mb-4",
                   },
@@ -346,10 +348,11 @@ export default function FeatureItemsPage() {
           <h2 className="text-2xl font-bold mb-8">XLarge Spacing - 新機能</h2>
           <FeatureItems
             items={featureItems.slice(0, 2)}
+            layout="vertical"
+            variant="split"
+            alternateLayout={true}
+            spacing="xlarge"
             styling={{
-              layout: "split",
-              alternateLayout: true,
-              spacing: "xlarge",
               heading: {
                 level: "h3",
                 className: "text-2xl font-bold mb-4",
