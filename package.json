@@ -44,6 +44,7 @@
 		"embla-carousel-fade": "^8.6.0",
 		"embla-carousel-react": "^8.6.0",
 		"immer": "^10.1.1",
+		"lucide-react": "^0.542.0",
 		"motion": "^12.19.1",
 		"next": "^15.3.4",
 		"next-auth": "^5.0.0-beta.25",
