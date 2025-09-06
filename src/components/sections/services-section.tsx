@@ -44,9 +44,10 @@ const LightweightBackground = dynamic(
   },
 );
 
-// FeatureItem形式を拡張してBlob形状を追加
+// FeatureItem形式を拡張してBlob形状と特徴リストを追加
 interface ServiceItem extends FeatureItem {
   blobShape: BlobShape;
+  features?: string[];
 }
 
 // サービスデータを定義
@@ -187,11 +188,9 @@ export function ServicesSection() {
         {/* 左右交互レイアウト */}
         <FeatureItems
           items={services}
-          styling={{
-    layout: "split",
-              alternateLayout: true,
-              spacing: "large"
-  }}
+          variant="split"
+          alternateLayout={true}
+          spacing="none"
           renderItem={(item, index) => (
             <div key={item.id} className="relative overflow-hidden">
               {/* 各サービスエリアの背景エフェクト */}
@@ -230,9 +229,9 @@ export function ServicesSection() {
                   </p>
 
                   {/* 特徴リスト */}
-                  {item.features && Array.isArray(item.features) && (
+                  {(item as ServiceItem).features && Array.isArray((item as ServiceItem).features) && (
                     <ul className="space-y-3">
-                      {(item.features as string[]).map((feature: string) => (
+                      {((item as ServiceItem).features as string[]).map((feature: string) => (
                         <li
                           key={feature}
                           className="text-sm text-muted-foreground flex items-start gap-2"
@@ -262,7 +261,7 @@ export function ServicesSection() {
                   <div className="relative w-full h-full [direction:ltr] order-1 md:order-none">
                     <div
                       className="aspect-[4/3] relative overflow-hidden"
-                      style={{ clipPath: `url(#blob-${item.blobShape})` }}
+                      style={{ clipPath: `url(#blob-${(item as ServiceItem).blobShape})` }}
                     >
                       <AnimatedImage
                         src={item.imageUrl}
