@@ -106,6 +106,11 @@ export default function ExamplesPage() {
 			href: "/examples/skeleton",
 		},
 		{
+			title: "ローディング状態",
+			description: "ページ遷移やコンポーネントローディングのサンプル集。ミニマルなローディングシステムの動作確認ができます。",
+			href: "/examples/loading-states",
+		},
+		{
 			title: "日付選択（DatePicker）",
 			description: "カレンダーから日付を選択できる日付選択コンポーネントです。",
 			href: "/examples/date-picker",
