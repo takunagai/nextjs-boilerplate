@@ -1,3 +1,14 @@
+import { ReactNode } from "react";
+import {
+	FaCode,
+	FaPaintbrush,
+	FaCamera,
+	FaPalette,
+	FaCartShopping,
+	FaRobot,
+	FaGears,
+} from "react-icons/fa6";
+
 // ポートフォリオのダミーデータ
 export type PortfolioItem = {
 	id: string;
@@ -22,6 +33,7 @@ export type PortfolioCategory = {
 	name: string;
 	description: string;
 	serviceUrl?: string;
+	icon?: ReactNode;
 };
 
 // フィルタリング用の新しいカテゴリ定義（4つ）
@@ -62,42 +74,49 @@ export const portfolioCategories: PortfolioCategory[] = [
 		name: "ウェブサイト制作",
 		description: "WordPress、Wixなどを活用したウェブサイト制作実績",
 		serviceUrl: "/services/web-development",
+		icon: <FaCode className="w-5 h-5 text-blue-600" />,
 	},
 	{
 		id: "design",
 		name: "デザイン",
 		description: "Webデザイン、ロゴデザインなどの制作実績",
 		serviceUrl: "/services/creative",
+		icon: <FaPaintbrush className="w-5 h-5 text-purple-600" />,
 	},
 	{
 		id: "photo",
 		name: "写真撮影",
 		description: "商品写真、サービス写真などの撮影実績",
 		serviceUrl: "/services/photography",
+		icon: <FaCamera className="w-5 h-5 text-green-600" />,
 	},
 	{
 		id: "logo",
 		name: "ロゴ制作",
 		description: "企業・サービスのロゴデザイン制作実績",
 		// serviceUrl削除: クリエイティブサービスの一部のため独立ページなし
+		icon: <FaPalette className="w-5 h-5 text-pink-600" />,
 	},
 	{
 		id: "shop",
 		name: "ECサイト構築",
 		description: "オンラインショップの構築実績",
 		// serviceUrl削除: ウェブ制作サービスの一部のため独立ページなし
+		icon: <FaCartShopping className="w-5 h-5 text-orange-600" />,
 	},
 	{
 		id: "ai-image",
 		name: "AI画像生成・画像補正",
 		description: "AI技術を活用した画像生成・編集サービス",
 		serviceUrl: "/services/ai-image-generation",
+		icon: <FaRobot className="w-5 h-5 text-cyan-600" />,
 	},
 	{
 		id: "other",
 		name: "その他",
 		description: "コピー作成、データ移行などの実績",
 		serviceUrl: "/services/ai-consulting-and-support",
+		icon: <FaGears className="w-5 h-5 text-gray-600" />,
 	},
 ];
 
