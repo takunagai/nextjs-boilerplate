@@ -300,24 +300,33 @@ export function ServicesSection() {
               どんなご要望も、まずはお聞かせください。15年の経験とAIの力で、最適な解決策をご提案します。
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          <div className="flex flex-wrap gap-4 justify-center">
             {portfolioCategories.map((category) => (
               <div
                 key={category.id}
-                className="p-4 border rounded-md bg-card hover:bg-accent/50 transition-colors"
+                className="p-4 border rounded-lg bg-card hover:bg-accent/50 transition-colors w-[180px] flex-shrink-0"
               >
-                {category.serviceUrl ? (
-                  <Link href={category.serviceUrl} className="inline-block">
-                    <h2 className="text-lg font-semibold hover:underline cursor-pointer mb-2">
-                      {category.name}
-                    </h2>
-                  </Link>
-                ) : (
-                  <h2 className="text-lg font-semibold mb-2">
-                    {category.name}
-                  </h2>
-                )}
-                <p className="text-sm text-muted-foreground">
+                <div className="flex items-start gap-3 mb-2">
+                  {category.icon && (
+                    <div className="flex-shrink-0 mt-0.5">
+                      {category.icon}
+                    </div>
+                  )}
+                  <div className="flex-1 min-w-0">
+                    {category.serviceUrl ? (
+                      <Link href={category.serviceUrl} className="inline-block">
+                        <h3 className="text-sm md:text-base font-semibold hover:underline cursor-pointer leading-tight">
+                          {category.name}
+                        </h3>
+                      </Link>
+                    ) : (
+                      <h3 className="text-sm md:text-base font-semibold leading-tight">
+                        {category.name}
+                      </h3>
+                    )}
+                  </div>
+                </div>
+                <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">
                   {category.description}
                 </p>
               </div>
