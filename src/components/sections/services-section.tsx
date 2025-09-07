@@ -16,6 +16,7 @@ import { Heading } from "@/components/ui/heading";
 import { BlobMasks, type BlobShape } from "@/components/ui/blob-mask";
 import { usePerformanceCheck } from "@/hooks/use-webgl-support";
 import { portfolioCategories } from "@/lib/data/portfolio-data";
+import { ServiceCategories } from "./service-categories";
 
 // 動的インポート - エフェクトコンポーネント
 const FlowingComments = dynamic(
@@ -290,49 +291,8 @@ export function ServicesSection() {
           )}
         />
 
-        {/* カテゴリー紹介 */}
-        <div className="mt-12">
-          <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold mb-3">
-              あなたの「できたらいいな」に、全力でお応えします
-            </h3>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              どんなご要望も、まずはお聞かせください。15年の経験とAIの力で、最適な解決策をご提案します。
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-4 justify-center">
-            {portfolioCategories.map((category) => (
-              <div
-                key={category.id}
-                className="p-4 border rounded-lg bg-card hover:bg-accent/50 transition-colors w-[180px] flex-shrink-0"
-              >
-                <div className="flex items-start gap-3 mb-2">
-                  {category.icon && (
-                    <div className="flex-shrink-0 mt-0.5">
-                      {category.icon}
-                    </div>
-                  )}
-                  <div className="flex-1 min-w-0">
-                    {category.serviceUrl ? (
-                      <Link href={category.serviceUrl} className="inline-block">
-                        <h3 className="text-sm md:text-base font-semibold hover:underline cursor-pointer leading-tight">
-                          {category.name}
-                        </h3>
-                      </Link>
-                    ) : (
-                      <h3 className="text-sm md:text-base font-semibold leading-tight">
-                        {category.name}
-                      </h3>
-                    )}
-                  </div>
-                </div>
-                <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">
-                  {category.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
+        {/* サービスカテゴリー */}
+        <ServiceCategories categories={portfolioCategories} />
       </Container>
     </section>
   );
