@@ -5,6 +5,8 @@ import {
 	WebsiteJsonLd,
 } from "@/components/seo";
 import { ContentItems } from "@/components/services/content-items"; // 追加
+import { ServiceCategories } from "@/components/sections/service-categories";
+import { portfolioCategories } from "@/lib/data/portfolio-data";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Container } from "@/components/ui/container";
 import { PageHeader } from "@/components/ui/page-header";
@@ -65,8 +67,8 @@ export default function ServicesPage() {
 							{
 								title: "ウェブ制作・アプリ開発",
 								description:
-									"AI活用で高品質なのに驚きの低価格を実現。ウェブサイト・アプリ開発から運用・保守まで、全工程をワンストップで提供します。コーポレートサイト、ECサイト、モバイルアプリまで幅広く対応。",
-								image: "/dummy-images/street-photo-01.jpg",
+									"AI を活用した効率的な制作で、高品質かつお手頃な価格を実現。\nお客様のニーズに合わせ、最適な構成を提案いたします。",
+								image: "/images/service-web.jpg",
 								imageAlt: "ウェブ制作・アプリ開発のイメージ",
 								link: {
 									href: "/services/web-development",
@@ -76,8 +78,8 @@ export default function ServicesPage() {
 							{
 								title: "AIコンサル＆サポート",
 								description:
-									"AI初心者から上級者まで対応。あなたの疑問やビジネス課題をAIで解決するための個別指導・コンサルティングサービス。スポット相談から継続サポートまで、柔軟に対応します。",
-								image: "/dummy-images/street-photo-02.jpg",
+									"AI活用による省力化、高品質化、アイデア出しなどをアドバイス。\nご相談者様の状況に合わせ、柔軟なサポートを提供します。",
+								image: "/images/service-consulting.jpg",
 								imageAlt: "AIコンサル＆サポートのイメージ",
 								link: {
 									href: "/services/ai-consulting-and-support",
@@ -85,10 +87,10 @@ export default function ServicesPage() {
 								},
 							},
 							{
-								title: "AIを活用したクリエイティブ",
+								title: "クリエイティブ",
 								description:
-									"AIの創造力×人の感性で、ライティング・画像生成・動画制作・音声生成まで。プロ級のコンテンツを従来の半額以下の低価格で提供。テスター特別価格で先着10名様限定50%OFF。",
-								image: "/dummy-images/street-photo-03.jpg",
+									"文章、写真、イラスト、図解、動画、音楽、3D…。\nAI x デザイナーで、短時間かつお手頃価格で高品質に仕上げます。",
+								image: "/images/service-creative.jpg",
 								imageAlt: "AIクリエイティブのイメージ",
 								link: {
 									href: "/services/creative",
@@ -97,8 +99,17 @@ export default function ServicesPage() {
 							},
 						]}
 						columns={3}
-						className="gap-6"
+						className="gap-8"
 						aspectRatio="3/2"
+					/>
+				</div>
+
+				{/* サービスカテゴリー */}
+				<div className="mt-16">
+					<ServiceCategories 
+						categories={portfolioCategories}
+						titleLevel="h2"
+						maxWidth="xl"
 					/>
 				</div>
 
