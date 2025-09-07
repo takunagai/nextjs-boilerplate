@@ -88,21 +88,21 @@ export function ContentItems({
 			{items.map((item, index) => (
 				<div
 					key={`${item.title}-${index}`}
-					className="border rounded-md overflow-hidden hover:shadow-md transition-shadow bg-card"
+					className="group overflow-hidden"
 				>
 					{item.image && (
-						<div className={`relative w-full ${aspectRatioClass}`}>
+						<div className={`relative w-full ${aspectRatioClass} mb-4 rounded-lg overflow-hidden`}>
 							<Image
 								src={item.image}
 								alt={item.imageAlt || `${item.title}のイメージ`}
 								fill
-								className="object-cover"
+								className="object-cover transition-transform duration-300 group-hover:scale-105"
 							/>
 						</div>
 					)}
-					<div className="p-5">
-						<h3 className="text-lg font-semibold mb-2">{item.title}</h3>
-						<p className="text-muted-foreground mb-3">{item.description}</p>
+					<div>
+						<h3 className="text-xl font-bold mb-3">{item.title}</h3>
+						<p className="text-muted-foreground leading-relaxed mb-4">{item.description}</p>
 						{item.tags && item.tags.length > 0 && (
 							<div className="flex flex-wrap gap-1 mb-3">
 								{item.tags.map((tag, tagIndex) => (
@@ -119,7 +119,7 @@ export function ContentItems({
 						{item.link && (
 							<Link
 								href={item.link.href}
-								className="inline-block mt-1 text-primary hover:underline font-medium"
+								className="inline-flex items-center mt-2 text-primary hover:text-primary/80 font-semibold transition-colors duration-200"
 							>
 								{item.link.text}
 							</Link>
