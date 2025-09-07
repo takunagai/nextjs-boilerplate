@@ -20,7 +20,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Architecture Overview
 
-This project follows Next.js 15 App Router best practices with comprehensive error handling, security middleware, and optimized loading states.
+This project follows Next.js 15 App Router best practices with comprehensive error handling, security middleware, and minimal loading states.
 
 ### Directory Structure
 
@@ -32,15 +32,15 @@ This project follows Next.js 15 App Router best practices with comprehensive err
   - `reference/` - Technical specifications & reference (specifications, features, business)
 
 - `/src/app/` - Next.js App Router pages with parallel route groups:
-  - `(site)` - Public pages (home, about, services, etc.) with site-specific error/loading
-  - `(auth)` - Authentication pages (login, register) with auth-specific error/loading
-  - `(app)` - Protected application area (dashboard) with app-specific error/loading
-  - `(examples)` - Development sample pages with dev-focused error/loading (hidden in production via env var)
+  - `(site)` - Public pages (home, about, services, etc.)
+  - `(auth)` - Authentication pages (login, register)
+  - `(app)` - Protected application area (dashboard)
+  - `(examples)` - Development sample pages (hidden in production via env var)
   - `api/` - API routes including auth endpoints
   - `actions/` - Server Actions for forms and data mutations
   - `error.tsx` - Root error boundary with user-friendly error handling
   - `global-error.tsx` - Global error boundary for critical system errors
-  - `loading.tsx` - Root loading component with branded loading UI
+  - `loading.tsx` - Minimal loading component with performance-optimized spinner
   - `robots.ts` - Enhanced SEO robots.txt with comprehensive crawling rules
   - `sitemap.ts` - Dynamic sitemap generation with service pages and news
 
@@ -92,7 +92,7 @@ This project follows Next.js 15 App Router best practices with comprehensive err
    - Security headers (CSP, HSTS, etc.)
    - Request sanitization and validation
 7. **Error Handling**: Route-specific error boundaries with graceful degradation
-8. **Loading States**: Suspense-based loading with route-specific optimizations
+8. **Loading States**: Minimal Suspense-based loading with unified design
 9. **SEO**: Enhanced robots.txt and dynamic sitemap generation
 10. **Component Architecture**: Shared component patterns for DRY principles
 11. **Accessibility**: WCAG 2.1 AA compliance as standard
@@ -121,14 +121,10 @@ Route-specific error boundaries provide graceful error handling:
 
 ### Loading State System
 
-Suspense-based loading states optimized for each route group:
+Unified minimal loading state across all route groups:
 
-- **Root Loading** (`loading.tsx`): Branded loading UI with progress indicators
-- **Route Group Loading**: Specialized loading states for:
-  - `(auth)/loading.tsx`: Authentication process indicators
-  - `(app)/loading.tsx`: Dashboard data loading with progress
-  - `(site)/loading.tsx`: Public page loading with performance info
-  - `(examples)/loading.tsx`: Development-focused loading with technical details
+- **Root Loading** (`loading.tsx`): Performance-optimized CSS-only spinner
+- **Route Groups**: All groups use the same minimal loading component for consistency
 
 ## Code Style
 
@@ -410,9 +406,9 @@ export async function updateProfile(data: ProfileFormValues) {
 - **Error Handling**: Route-specific error boundaries with graceful UX
   - User-friendly error pages with retry functionality
   - Developer-focused error details in examples route group
-- **Loading States**: Suspense-based loading optimized for each route group
-  - Branded loading UI with progress indicators
-  - Route-specific loading optimizations
+- **Loading States**: Minimal Suspense-based loading with unified design
+  - CSS-only spinner for optimal performance
+  - Consistent loading experience across all routes
 - **SEO**: Enhanced robots.txt and dynamic sitemap generation
   - Comprehensive crawling rules for public/private content
   - Dynamic news and service page inclusion
