@@ -16,10 +16,16 @@
 		"test:e2e:debug": "playwright test --debug",
 		"test:e2e:report": "playwright show-report",
 		"test:e2e:chromium": "playwright test --project=chromium",
-		"analyze": "cross-env ANALYZE=true npm run build"
+		"analyze": "cross-env ANALYZE=true npm run build",
+		"build:cloudflare": "npm run build && opennextjs-cloudflare",
+		"preview:cloudflare": "npm run build:cloudflare && wrangler dev",
+		"deploy:preview": "npm run build:cloudflare && wrangler deploy --env preview",
+		"deploy:production": "npm run build:cloudflare && wrangler deploy --env production",
+		"cf-typegen": "wrangler types"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^5.1.1",
+		"@opennextjs/cloudflare": "^1.8.2",
 		"@radix-ui/react-accordion": "^1.2.11",
 		"@radix-ui/react-aspect-ratio": "^1.1.7",
 		"@radix-ui/react-avatar": "^1.1.10",
@@ -64,6 +70,7 @@
 	"devDependencies": {
 		"@axe-core/playwright": "^4.10.2",
 		"@biomejs/biome": "^2.0.5",
+		"@cloudflare/workers-types": "^4.20250911.0",
 		"@next/bundle-analyzer": "^15.4.6",
 		"@playwright/test": "^1.53.1",
 		"@testing-library/dom": "^10.4.0",
@@ -85,7 +92,8 @@
 		"typescript": "^5",
 		"vite-tsconfig-paths": "^5.1.4",
 		"vitest": "^3.2.4",
-		"web-vitals": "^5.1.0"
+		"web-vitals": "^5.1.0",
+		"wrangler": "^4.35.0"
 	},
 	"browserslist": [
 		"Chrome >= 111",

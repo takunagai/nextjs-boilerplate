@@ -1,0 +1,37 @@
+name = "nextjs-boilerplate"
+compatibility_date = "2025-04-01"
+compatibility_flags = ["nodejs_compat"]
+
+# ワーカーのメイン設定
+main = ".worker-next/index.mjs"
+
+# 環境変数設定（開発環境）
+[env.development]
+vars = { NODE_ENV = "development" }
+
+# 環境変数設定（プレビュー環境）
+[env.preview]
+vars = { NODE_ENV = "development", NEXT_PUBLIC_SHOW_EXAMPLES = "true" }
+
+# 環境変数設定（本番環境）
+[env.production]
+vars = { NODE_ENV = "production", NEXT_PUBLIC_SHOW_EXAMPLES = "false" }
+
+# ログ設定
+observability = { enabled = true }
+
+# アセット設定
+[assets]
+directory = ".worker-next/static"
+binding = "ASSETS"
+
+# 必要に応じてKV、D1、R2などのリソースバインディングを追加
+# 例：
+# [[env.production.kv_namespaces]]
+# binding = "KV_STORE"
+# id = "your-kv-namespace-id"
+
+# [[env.production.d1_databases]]
+# binding = "DB"
+# database_name = "your-database-name"
+# database_id = "your-database-id"

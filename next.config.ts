@@ -23,10 +23,10 @@ const nextConfig: NextConfig = {
 		NEXT_PUBLIC_SHOW_EXAMPLES: process.env.NEXT_PUBLIC_SHOW_EXAMPLES || "true",
 	},
 
-	// 画像最適化の設定
+	// 画像最適化の設定（Cloudflare Workers対応）
 	images: {
-		// 画像の最適化オプション
-		formats: ["image/avif", "image/webp"],
+		// Cloudflare Workers では画像最適化を無効化（Cloudflare Images使用推奨）
+		unoptimized: true,
 		// 外部ドメインの許可リスト
 		remotePatterns: [
 			{
