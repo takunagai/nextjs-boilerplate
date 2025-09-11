@@ -107,7 +107,8 @@ export default function ExamplesPage() {
 		},
 		{
 			title: "ローディング状態",
-			description: "ページ遷移やコンポーネントローディングのサンプル集。ミニマルなローディングシステムの動作確認ができます。",
+			description:
+				"ページ遷移やコンポーネントローディングのサンプル集。ミニマルなローディングシステムの動作確認ができます。",
 			href: "/examples/loading-states",
 		},
 		{

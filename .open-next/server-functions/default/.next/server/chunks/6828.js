@@ -1,0 +1,1 @@
+"use strict";exports.id=6828,exports.ids=[6828],exports.modules={46828:(a,b,c)=>{c.d(b,{getTestUsers:()=>d});let d=()=>process.env.ALLOW_TEST_USERS?[{id:"1",name:"一般ユーザー",email:"user@example.com",password:"password123",role:"user"},{id:"2",name:"管理者ユーザー",email:"admin@example.com",password:"password123",role:"admin"}]:[]}};

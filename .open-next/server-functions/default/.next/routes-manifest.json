@@ -1,0 +1,346 @@
+{
+  "version": 3,
+  "pages404": true,
+  "caseSensitive": false,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "internal": true,
+      "statusCode": 308,
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    }
+  ],
+  "headers": [],
+  "rewrites": {
+    "beforeFiles": [],
+    "afterFiles": [],
+    "fallback": []
+  },
+  "dynamicRoutes": [
+    {
+      "page": "/api/auth/[...nextauth]",
+      "regex": "^/api/auth/(.+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPnextauth": "nxtPnextauth"
+      },
+      "namedRegex": "^/api/auth/(?<nxtPnextauth>.+?)(?:/)?$"
+    },
+    {
+      "page": "/news/[id]",
+      "regex": "^/news/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/news/(?<nxtPid>[^/]+?)(?:/)?$"
+    }
+  ],
+  "staticRoutes": [
+    {
+      "page": "/",
+      "regex": "^/(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/(?:/)?$"
+    },
+    {
+      "page": "/_not-found",
+      "regex": "^/_not\\-found(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_not\\-found(?:/)?$"
+    },
+    {
+      "page": "/about",
+      "regex": "^/about(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/about(?:/)?$"
+    },
+    {
+      "page": "/contact",
+      "regex": "^/contact(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/contact(?:/)?$"
+    },
+    {
+      "page": "/dashboard",
+      "regex": "^/dashboard(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/dashboard(?:/)?$"
+    },
+    {
+      "page": "/examples",
+      "regex": "^/examples(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/examples(?:/)?$"
+    },
+    {
+      "page": "/examples/animated-images",
+      "regex": "^/examples/animated\\-images(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/examples/animated\\-images(?:/)?$"
+    },
+    {
+      "page": "/examples/animated-item-list",
+      "regex": "^/examples/animated\\-item\\-list(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/examples/animated\\-item\\-list(?:/)?$"
+    },
+    {
+      "page": "/examples/card-designs",
+      "regex": "^/examples/card\\-designs(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/examples/card\\-designs(?:/)?$"
+    },
+    {
+      "page": "/examples/carousel",
+      "regex": "^/examples/carousel(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/examples/carousel(?:/)?$"
+    },
+    {
+      "page": "/examples/column-layout",
+      "regex": "^/examples/column\\-layout(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/examples/column\\-layout(?:/)?$"
+    },
+    {
+      "page": "/examples/content-items",
+      "regex": "^/examples/content\\-items(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/examples/content\\-items(?:/)?$"
+    },
+    {
+      "page": "/examples/cta-section",
+      "regex": "^/examples/cta\\-section(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/examples/cta\\-section(?:/)?$"
+    },
+    {
+      "page": "/examples/data-fetching",
+      "regex": "^/examples/data\\-fetching(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/examples/data\\-fetching(?:/)?$"
+    },
+    {
+      "page": "/examples/date-picker",
+      "regex": "^/examples/date\\-picker(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/examples/date\\-picker(?:/)?$"
+    },
+    {
+      "page": "/examples/enhanced-tabs",
+      "regex": "^/examples/enhanced\\-tabs(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/examples/enhanced\\-tabs(?:/)?$"
+    },
+    {
+      "page": "/examples/expandable-content",
+      "regex": "^/examples/expandable\\-content(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/examples/expandable\\-content(?:/)?$"
+    },
+    {
+      "page": "/examples/faq",
+      "regex": "^/examples/faq(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/examples/faq(?:/)?$"
+    },
+    {
+      "page": "/examples/feature-comparison",
+      "regex": "^/examples/feature\\-comparison(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/examples/feature\\-comparison(?:/)?$"
+    },
+    {
+      "page": "/examples/feature-items",
+      "regex": "^/examples/feature\\-items(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/examples/feature\\-items(?:/)?$"
+    },
+    {
+      "page": "/examples/form",
+      "regex": "^/examples/form(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/examples/form(?:/)?$"
+    },
+    {
+      "page": "/examples/heading",
+      "regex": "^/examples/heading(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/examples/heading(?:/)?$"
+    },
+    {
+      "page": "/examples/list",
+      "regex": "^/examples/list(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/examples/list(?:/)?$"
+    },
+    {
+      "page": "/examples/loading-states",
+      "regex": "^/examples/loading\\-states(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/examples/loading\\-states(?:/)?$"
+    },
+    {
+      "page": "/examples/map",
+      "regex": "^/examples/map(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/examples/map(?:/)?$"
+    },
+    {
+      "page": "/examples/masonry-gallery",
+      "regex": "^/examples/masonry\\-gallery(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/examples/masonry\\-gallery(?:/)?$"
+    },
+    {
+      "page": "/examples/pricing-plans",
+      "regex": "^/examples/pricing\\-plans(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/examples/pricing\\-plans(?:/)?$"
+    },
+    {
+      "page": "/examples/skeleton",
+      "regex": "^/examples/skeleton(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/examples/skeleton(?:/)?$"
+    },
+    {
+      "page": "/examples/speech-bubble",
+      "regex": "^/examples/speech\\-bubble(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/examples/speech\\-bubble(?:/)?$"
+    },
+    {
+      "page": "/examples/spinner",
+      "regex": "^/examples/spinner(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/examples/spinner(?:/)?$"
+    },
+    {
+      "page": "/examples/table",
+      "regex": "^/examples/table(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/examples/table(?:/)?$"
+    },
+    {
+      "page": "/examples/toast",
+      "regex": "^/examples/toast(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/examples/toast(?:/)?$"
+    },
+    {
+      "page": "/examples/ui-components",
+      "regex": "^/examples/ui\\-components(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/examples/ui\\-components(?:/)?$"
+    },
+    {
+      "page": "/favicon.ico",
+      "regex": "^/favicon\\.ico(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/favicon\\.ico(?:/)?$"
+    },
+    {
+      "page": "/login",
+      "regex": "^/login(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/login(?:/)?$"
+    },
+    {
+      "page": "/news",
+      "regex": "^/news(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/news(?:/)?$"
+    },
+    {
+      "page": "/portfolio",
+      "regex": "^/portfolio(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/portfolio(?:/)?$"
+    },
+    {
+      "page": "/privacy",
+      "regex": "^/privacy(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/privacy(?:/)?$"
+    },
+    {
+      "page": "/profile",
+      "regex": "^/profile(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/profile(?:/)?$"
+    },
+    {
+      "page": "/register",
+      "regex": "^/register(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/register(?:/)?$"
+    },
+    {
+      "page": "/robots.txt",
+      "regex": "^/robots\\.txt(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/robots\\.txt(?:/)?$"
+    },
+    {
+      "page": "/services",
+      "regex": "^/services(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/services(?:/)?$"
+    },
+    {
+      "page": "/services/ai-consulting-and-support",
+      "regex": "^/services/ai\\-consulting\\-and\\-support(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/services/ai\\-consulting\\-and\\-support(?:/)?$"
+    },
+    {
+      "page": "/services/ai-image-generation",
+      "regex": "^/services/ai\\-image\\-generation(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/services/ai\\-image\\-generation(?:/)?$"
+    },
+    {
+      "page": "/services/creative",
+      "regex": "^/services/creative(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/services/creative(?:/)?$"
+    },
+    {
+      "page": "/services/photography",
+      "regex": "^/services/photography(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/services/photography(?:/)?$"
+    },
+    {
+      "page": "/services/web-development",
+      "regex": "^/services/web\\-development(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/services/web\\-development(?:/)?$"
+    },
+    {
+      "page": "/sitemap.xml",
+      "regex": "^/sitemap\\.xml(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/sitemap\\.xml(?:/)?$"
+    }
+  ],
+  "dataRoutes": [],
+  "rsc": {
+    "header": "rsc",
+    "varyHeader": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+    "prefetchHeader": "next-router-prefetch",
+    "didPostponeHeader": "x-nextjs-postponed",
+    "contentTypeHeader": "text/x-component",
+    "suffix": ".rsc",
+    "prefetchSuffix": ".prefetch.rsc",
+    "prefetchSegmentHeader": "next-router-segment-prefetch",
+    "prefetchSegmentSuffix": ".segment.rsc",
+    "prefetchSegmentDirSuffix": ".segments"
+  },
+  "rewriteHeaders": {
+    "pathHeader": "x-nextjs-rewritten-path",
+    "queryHeader": "x-nextjs-rewritten-query"
+  }
+}

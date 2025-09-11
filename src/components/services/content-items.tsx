@@ -86,12 +86,11 @@ export function ContentItems({
 	return (
 		<div className={`grid ${getGridCols()} gap-6 ${className}`}>
 			{items.map((item, index) => (
-				<div
-					key={`${item.title}-${index}`}
-					className="group overflow-hidden"
-				>
+				<div key={`${item.title}-${index}`} className="group overflow-hidden">
 					{item.image && (
-						<div className={`relative w-full ${aspectRatioClass} mb-4 rounded-lg overflow-hidden`}>
+						<div
+							className={`relative w-full ${aspectRatioClass} mb-4 rounded-lg overflow-hidden`}
+						>
 							<Image
 								src={item.image}
 								alt={item.imageAlt || `${item.title}のイメージ`}
@@ -102,7 +101,9 @@ export function ContentItems({
 					)}
 					<div>
 						<h3 className="text-xl font-bold mb-3">{item.title}</h3>
-						<p className="text-muted-foreground leading-relaxed mb-4">{item.description}</p>
+						<p className="text-muted-foreground leading-relaxed mb-4">
+							{item.description}
+						</p>
 						{item.tags && item.tags.length > 0 && (
 							<div className="flex flex-wrap gap-1 mb-3">
 								{item.tags.map((tag, tagIndex) => (

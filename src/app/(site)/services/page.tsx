@@ -106,7 +106,7 @@ export default function ServicesPage() {
 
 				{/* サービスカテゴリー */}
 				<div className="mt-16">
-					<ServiceCategories 
+					<ServiceCategories
 						categories={portfolioCategories}
 						titleLevel="h2"
 						maxWidth="xl"

@@ -62,7 +62,7 @@ export default function RootLoading() {
 					pointer-events: none;
 				}
 			`}</style>
-			
+
 			{/* メインローディングインジケーター */}
 			<div className="loading-container">
 				{/* 背景グラデーション効果 */}

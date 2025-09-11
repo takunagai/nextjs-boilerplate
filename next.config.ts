@@ -10,6 +10,9 @@ const nextConfig: NextConfig = {
 
 	reactStrictMode: true,
 
+	// Cloudflare Workers用の設定
+	output: "standalone",
+
 	// Reactコンパイラの有効化
 	experimental: {
 		reactCompiler: true,

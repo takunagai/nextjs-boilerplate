@@ -18,7 +18,8 @@ const reasons = [
 		id: "pro-ai-strength",
 		number: "1",
 		title: "プロ × AI の強み",
-		description: "ウェブデザイナーの経験でAIに的確な指示を出し、出力結果を丁寧に仕上げ。高品質な成果物を効率的に制作します。",
+		description:
+			"ウェブデザイナーの経験でAIに的確な指示を出し、出力結果を丁寧に仕上げ。高品質な成果物を効率的に制作します。",
 		icon: FaPaintbrush,
 		gradient: "from-emerald-500 to-teal-600",
 		lightGradient: "from-emerald-500/20 via-teal-500/10 to-transparent",
@@ -27,7 +28,8 @@ const reasons = [
 		id: "cost-performance",
 		number: "2",
 		title: "圧倒的なコスパ",
-		description: "AI活用で作業効率を大幅向上。短納期・低コストを実現しつつ、品質は一切妥協しない制作体制です。",
+		description:
+			"AI活用で作業効率を大幅向上。短納期・低コストを実現しつつ、品質は一切妥協しない制作体制です。",
 		icon: FaDollarSign,
 		gradient: "from-blue-500 to-cyan-600",
 		lightGradient: "from-blue-500/20 via-cyan-500/10 to-transparent",
@@ -36,7 +38,8 @@ const reasons = [
 		id: "one-stop-service",
 		number: "3",
 		title: "ワンストップ対応",
-		description: "様々なAIサービスを熟知し、デザインから実装、運用まで全て対応。複数業者への依頼が不要です。",
+		description:
+			"様々なAIサービスを熟知し、デザインから実装、運用まで全て対応。複数業者への依頼が不要です。",
 		icon: FaLayerGroup,
 		gradient: "from-purple-500 to-pink-600",
 		lightGradient: "from-purple-500/20 via-pink-500/10 to-transparent",
@@ -45,7 +48,8 @@ const reasons = [
 		id: "flexible-support",
 		number: "4",
 		title: "柔軟な対応",
-		description: "ご依頼者様の要望を丁寧にヒアリング。最適なメニューと進め方をご提案し、理想を形にします。",
+		description:
+			"ご依頼者様の要望を丁寧にヒアリング。最適なメニューと進め方をご提案し、理想を形にします。",
 		icon: FaHandshake,
 		gradient: "from-orange-500 to-amber-600",
 		lightGradient: "from-orange-500/20 via-amber-500/10 to-transparent",
@@ -54,7 +58,8 @@ const reasons = [
 		id: "easy-consultation",
 		number: "5",
 		title: "気軽に相談可能",
-		description: "小さな疑問から本格的なプロジェクトまで、気軽にご相談いただけます。まずはお話から始めましょう。",
+		description:
+			"小さな疑問から本格的なプロジェクトまで、気軽にご相談いただけます。まずはお話から始めましょう。",
 		icon: FaComments,
 		gradient: "from-red-500 to-rose-600",
 		lightGradient: "from-red-500/20 via-rose-500/10 to-transparent",
@@ -222,7 +227,7 @@ export function ReasonsSection() {
 										</div>
 
 										{/* テキスト */}
-										<h3 
+										<h3
 											className="text-xl font-bold mb-4"
 											style={{
 												background:
