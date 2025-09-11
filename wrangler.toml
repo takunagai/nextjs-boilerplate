@@ -1,9 +1,10 @@
 name = "nextjs-boilerplate"
+account_id = "20d0f1d15393a71d8e2d2a056c2d294d"
 compatibility_date = "2025-04-01"
 compatibility_flags = ["nodejs_compat"]
 
 # ワーカーのメイン設定
-main = ".worker-next/index.mjs"
+main = ".open-next/worker.js"
 
 # 環境変数設定（開発環境）
 [env.development]
@@ -22,7 +23,7 @@ observability = { enabled = true }
 
 # アセット設定
 [assets]
-directory = ".worker-next/static"
+directory = ".open-next/assets"
 binding = "ASSETS"
 
 # 必要に応じてKV、D1、R2などのリソースバインディングを追加
