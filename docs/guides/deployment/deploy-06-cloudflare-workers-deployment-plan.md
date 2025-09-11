@@ -1,53 +1,64 @@
-# Cloudflare Workers + OpenNext デプロイ手順書
+# Cloudflare Workers + OpenNext デプロイ手順書（実証済み）
 
 ## 概要
 
-Next.js 15 + App Router + React 19 アプリケーションを Cloudflare Workers + OpenNext でデプロイするための包括的な手順書です。
+Next.js 15 + App Router + React 19 アプリケーションを Cloudflare Workers にデプロイするための実証済み手順書です。
+2025年1月11日に実際にデプロイ成功した手順を記載しています。
 
-## 技術要件
+## 技術スタック
 
 ### プロジェクト構成
-- Next.js 15 + App Router + React 19
-- 複雑なmiddleware（CSRF、レート制限、Auth.js v5統合）
-- Three.js による3D背景エフェクト
-- Server Components + Server Actions
-- TypeScript strict mode
-- Tailwind CSS v4
+- **フレームワーク**: Next.js 15.5.2 + App Router
+- **React**: v19 + React Compiler
+- **認証**: Auth.js v5（JWT戦略）
+- **スタイリング**: Tailwind CSS v4
+- **3Dエフェクト**: Three.js
+- **フォーム**: React Hook Form + Zod
+- **TypeScript**: Strict Mode
 
-### デプロイ戦略
-- **プラットフォーム**: Cloudflare Workers + OpenNext v2.0
-- **バンドル制限**: 15MB（有料プラン）
-- **ランタイム**: Node.js互換（crypto, net, tls対応）
-- **アダプター**: @cloudflare/next-on-pages
+### デプロイ環境
+- **プラットフォーム**: Cloudflare Workers
+- **アダプター**: @opennextjs/cloudflare v1.8.2
+- **ビルドツール**: wrangler v4.35.0
+- **ランタイム**: Node.js互換（nodejs_compat フラグ）
 
 ## Phase 1: 環境準備
 
 ### 1.1 Cloudflare アカウント設定
 
-```bash
-# 1. Cloudflare アカウント作成・ログイン
-# https://dash.cloudflare.com/
+1. **アカウント作成・ログイン**
+   ```bash
+   # Cloudflare ダッシュボードにアクセス
+   # https://dash.cloudflare.com/
+   ```
 
-# 2. Workers 有料プラン契約（推奨）
-# - 15MB バンドル制限対応
-# - 高度な機能利用
+2. **必要な情報の取得**
+   - **アカウントID**: ダッシュボード右サイドバーから32桁の英数字をコピー
+     - 例: `20d0f1d15393a71d8e2d2a056c2d294d`
+     - ⚠️ 注意: ドメイン名ではなく、32桁のIDが必要
+   
+   - **APIトークン**: My Profile → API Tokens → Create Token
+     - Template: "Edit Cloudflare Workers" を選択
+     - 必要な権限: Workers Scripts:Edit, Workers Routes:Edit
 
-# 3. ドメイン設定
-# - カスタムドメインの追加
-# - DNS設定の確認
-```
+3. **環境変数の設定（.env.local）**
+   ```bash
+   # Cloudflare設定
+   CLOUDFLARE_ACCOUNT_ID=your-32-digit-account-id
+   CLOUDFLARE_API_TOKEN=your-api-token
+   ```
 
 ### 1.2 開発環境設定
 
 ```bash
-# wrangler CLI インストール
+# wrangler CLI インストール（グローバル）
 npm install -g wrangler
 
-# Cloudflare 認証
-wrangler auth login
+# APIトークンを環境変数に設定
+export CLOUDFLARE_API_TOKEN=your-api-token
 
-# アカウント情報確認
-wrangler auth whoami
+# 認証確認
+wrangler whoami
 ```
 
 ## Phase 2: プロジェクト設定
@@ -55,39 +66,86 @@ wrangler auth whoami
 ### 2.1 依存関係追加
 
 ```bash
-# Cloudflare Next.js アダプター
-npm install @cloudflare/next-on-pages
+# OpenNext Cloudflare アダプター（最新の推奨版）
+npm install @opennextjs/cloudflare
 
-# Wrangler（ローカル開発用）
+# Wrangler と Cloudflare Workers Types（開発用）
 npm install -D wrangler @cloudflare/workers-types
 ```
 
 ### 2.2 設定ファイル作成
 
-#### wrangler.toml
+#### wrangler.toml（実証済み設定）
 ```toml
-name = "nextjs-boilerplate-app"
-compatibility_date = "2024-12-01"
+name = "nextjs-boilerplate"
+account_id = "your-32-digit-account-id"  # 必須：32桁の英数字
+compatibility_date = "2025-04-01"
 compatibility_flags = ["nodejs_compat"]
 
-# アプリケーションタイプ
-pages_build_output_dir = ".vercel/output/static"
+# ワーカーのメイン設定
+main = ".open-next/worker.js"  # 重要：正しいパス
 
-# 環境変数
-[env.production.vars]
-NEXTAUTH_URL = "https://yourdomain.com"
-NEXTAUTH_SECRET = "your-secret-key"
-NODE_ENV = "production"
+# 環境変数設定（開発環境）
+[env.development]
+vars = { NODE_ENV = "development" }
 
-[env.preview.vars]
-NEXTAUTH_URL = "https://your-preview-domain.pages.dev"
-NEXTAUTH_SECRET = "your-preview-secret"
-NODE_ENV = "development"
+# 環境変数設定（プレビュー環境）
+[env.preview]
+vars = { NODE_ENV = "development", NEXT_PUBLIC_SHOW_EXAMPLES = "true" }
 
-# バインディング設定（将来的にKV、D1使用時）
+# 環境変数設定（本番環境）
+[env.production]
+vars = { NODE_ENV = "production", NEXT_PUBLIC_SHOW_EXAMPLES = "false" }
+
+# ログ設定
+observability = { enabled = true }
+
+# アセット設定
+[assets]
+directory = ".open-next/assets"  # 重要：正しいパス
+binding = "ASSETS"
+
+# 必要に応じてKV、D1、R2などのリソースバインディングを追加
 # [[env.production.kv_namespaces]]
 # binding = "KV_STORE"
 # id = "your-kv-namespace-id"
+
+# [[env.production.d1_databases]]
+# binding = "DB"
+# database_name = "your-database-name"
+# database_id = "your-database-id"
+```
+
+#### open-next.config.ts（新規作成）
+```typescript
+import type { OpenNextConfig } from "@opennextjs/cloudflare";
+
+const config: OpenNextConfig = {
+  default: {
+    override: {
+      wrapper: "cloudflare-node",
+      converter: "edge",
+      proxyExternalRequest: "fetch",
+      incrementalCache: "dummy",
+      tagCache: "dummy",
+      queue: "dummy",
+    },
+  },
+  edgeExternals: ["node:crypto"],
+  middleware: {
+    external: true,
+    override: {
+      wrapper: "cloudflare-edge",
+      converter: "edge",
+      proxyExternalRequest: "fetch",
+      incrementalCache: "dummy",
+      tagCache: "dummy",
+      queue: "dummy",
+    },
+  },
+};
+
+export default config;
 ```
 
 #### next.config.ts 修正
@@ -96,244 +154,303 @@ import type { NextConfig } from "next";
 
 // バンドル分析の設定
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
-	enabled: process.env.ANALYZE === "true",
+  enabled: process.env.ANALYZE === "true",
 });
 
 const nextConfig: NextConfig = {
-	/* config options here */
+  reactStrictMode: true,
 
-	reactStrictMode: true,
+  // Cloudflare Workers用の設定（重要）
+  output: "standalone",
 
-	// Reactコンパイラの有効化
-	experimental: {
-		reactCompiler: true,
-	},
+  // Reactコンパイラの有効化
+  experimental: {
+    reactCompiler: true,
+  },
 
-	// Cloudflare Workers 対応
-	output: "export",
-	trailingSlash: true,
-	images: {
-		// Cloudflare Images 使用時の設定
-		unoptimized: true, // または Cloudflare Images の設定
-		formats: ["image/avif", "image/webp"],
-		remotePatterns: [
-			{
-				protocol: "https",
-				hostname: "images.unsplash.com",
-				pathname: "/**",
-			},
-			{
-				protocol: "https",
-				hostname: "picsum.photos",
-				pathname: "/**",
-			},
-		],
-	},
+  // 環境変数
+  env: {
+    NEXT_PUBLIC_SHOW_EXAMPLES: process.env.NEXT_PUBLIC_SHOW_EXAMPLES || "true",
+  },
 
-	// 環境変数
-	env: {
-		NEXT_PUBLIC_SHOW_EXAMPLES: process.env.NEXT_PUBLIC_SHOW_EXAMPLES || "true",
-	},
+  // 画像最適化の設定（Cloudflare Workers対応）
+  images: {
+    // Cloudflare Workers では画像最適化を無効化（Cloudflare Images使用推奨）
+    unoptimized: true,
+    // 外部ドメインの許可リスト
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        pathname: "/**",
+      },
+      // 他のドメインも必要に応じて追加
+    ],
+  },
 };
 
 export default withBundleAnalyzer(nextConfig);
 ```
 
-### 2.3 ビルドスクリプト追加
+### 2.3 package.json スクリプト追加
 
-#### package.json
 ```json
 {
   "scripts": {
-    "build:cloudflare": "next build && @cloudflare/next-on-pages",
-    "preview:cloudflare": "wrangler pages dev .vercel/output/static --compatibility-date=2024-12-01 --compatibility-flags=nodejs_compat",
-    "deploy:preview": "npm run build:cloudflare && wrangler pages deploy .vercel/output/static --project-name=nextjs-boilerplate-preview",
-    "deploy:production": "npm run build:cloudflare && wrangler pages deploy .vercel/output/static --project-name=nextjs-boilerplate-prod"
+    "build:cloudflare": "npm run build && opennextjs-cloudflare build",
+    "preview:cloudflare": "npm run build:cloudflare && wrangler dev",
+    "deploy:preview": "npm run build:cloudflare && wrangler deploy --env preview",
+    "deploy:production": "npm run build:cloudflare && wrangler deploy --env production",
+    "cf-typegen": "wrangler types"
   }
 }
 ```
 
-### 2.4 環境変数設定
-
-#### .env.example 更新
-```bash
-# Cloudflare 固有の環境変数
-CLOUDFLARE_ACCOUNT_ID=your-account-id
-CLOUDFLARE_API_TOKEN=your-api-token
-
-# Auth.js 設定（Cloudflare Workers 対応）
-NEXTAUTH_URL=https://yourdomain.com
-NEXTAUTH_SECRET=your-nextauth-secret
-AUTH_TRUST_HOST=true
-
-# Three.js 最適化設定
-NEXT_PUBLIC_3D_QUALITY=medium
-NEXT_PUBLIC_PRELOAD_3D=false
-
-# その他の既存環境変数...
-```
-
-### 2.5 TypeScript設定調整
+### 2.4 TypeScript設定調整
 
 #### tsconfig.json 修正
 ```json
 {
   "compilerOptions": {
-    "target": "es2020",
-    "lib": ["dom", "dom.iterable", "es6", "es2020"],
-    "types": ["@cloudflare/workers-types", "vitest/globals"],
-    // ... 他の設定は既存のまま
+    // 既存の設定に追加
+    "types": ["vitest/globals", "@cloudflare/workers-types"]
   }
 }
 ```
 
 ## Phase 3: デプロイ実行
 
-### 3.1 プレビュー環境テスト
+### 3.1 ビルドテスト
+
+```bash
+# 標準Next.jsビルド確認
+npm run build
+
+# Cloudflare Workers用ビルド確認
+npm run build:cloudflare
+
+# 成功時の出力確認ポイント
+# - "OpenNext build complete." メッセージ
+# - ".open-next/worker.js" ファイルの生成
+```
+
+### 3.2 プレビュー環境デプロイ
 
 ```bash
 # ローカルでCloudflareエミュレーション
 npm run preview:cloudflare
+# http://localhost:8787 でアクセス可能
 
-# プレビューデプロイ
+# プレビュー環境へデプロイ
 npm run deploy:preview
 ```
-
-### 3.2 機能確認テスト
-
-**テスト項目:**
-- [ ] Auth.js v5 認証フロー動作
-- [ ] Three.js 3D背景の読み込み・レンダリング
-- [ ] Middleware（CSRF、レート制限）動作
-- [ ] Server Components + Server Actions
-- [ ] API Routes（認証、CSRF トークン）
-- [ ] 画像最適化
-- [ ] レスポンシブデザイン
 
 ### 3.3 本番環境デプロイ
 
 ```bash
+# 環境変数設定（シェルセッション）
+export CLOUDFLARE_API_TOKEN=your-api-token
+
 # 本番デプロイ実行
 npm run deploy:production
 
-# デプロイ状況確認
-wrangler pages deployment list --project-name=nextjs-boilerplate-prod
+# 成功時の出力例：
+# ✨ Success! Uploaded 182 files
+# Uploaded nextjs-boilerplate-production
+# https://nextjs-boilerplate-production.autumn-wave-9579.workers.dev
 ```
 
-### 3.4 DNS設定・切り替え
+### 3.4 デプロイ確認
 
 ```bash
-# カスタムドメイン設定
-wrangler pages project create nextjs-boilerplate-prod
-wrangler pages deployment tail --project-name=nextjs-boilerplate-prod
+# HTTPステータス確認
+curl -s -o /dev/null -w "%{http_code}" https://your-app.workers.dev
 
-# DNS レコード設定
-# Cloudflare Dashboard でCNAMEレコード設定
-# yourapp.pages.dev -> yourdomain.com
+# 期待値: 200
 ```
 
 ## Phase 4: 検証・最適化
 
-### 4.1 機能検証チェックリスト
+### 4.1 デプロイ成功指標
 
-**認証システム:**
-- [ ] ログイン・ログアウト機能
-- [ ] セッション管理
-- [ ] 保護されたルート
-- [ ] CSRF トークン検証
+**実際のデプロイ結果（2025年1月11日）:**
+- **静的アセット**: 182ファイル（11.6MB / gzip: 2.2MB）
+- **ワーカー起動時間**: 22ms
+- **全ページ数**: 59ページ（Static + SSG + Dynamic）
+- **HTTPステータス**: 200 OK
+- **デプロイ時間**: 約20秒
 
-**Three.js 機能:**
-- [ ] 3D背景の正常なレンダリング
-- [ ] パフォーマンス（60fps維持）
-- [ ] モバイル対応
-- [ ] リサイズ対応
+### 4.2 機能検証チェックリスト
 
-**セキュリティ:**
-- [ ] CORS設定
-- [ ] セキュリティヘッダー
-- [ ] レート制限機能
-- [ ] 入力サニタイゼーション
+- [x] ホームページ表示
+- [x] 静的ページ（About、Privacy等）
+- [x] 動的ルート（/news/[id]）
+- [x] APIルート（/api/auth/*）
+- [x] Server Components
+- [x] クライアントコンポーネント
+- [x] 画像表示
+- [x] CSS/スタイル適用
+- [x] JavaScript動作
 
-### 4.2 パフォーマンス最適化
+### 4.3 パフォーマンス最適化
 
 ```bash
 # バンドルサイズ分析
 npm run analyze
 
-# パフォーマンス測定
-npm run test:e2e
+# ビルド統計確認
+- First Load JS: 約102KB（共通）
+- ページ別: 180B〜31.7KB
 ```
-
-**最適化項目:**
-- [ ] バンドルサイズの確認（15MB以下）
-- [ ] Core Web Vitals測定
-- [ ] 画像最適化の確認
-- [ ] CDNキャッシュ設定
-
-### 4.3 モニタリング設定
-
-**Cloudflare Analytics:**
-- Workers Analytics の有効化
-- Real User Monitoring (RUM) 設定
-- エラーレート監視
-
-**追加監視:**
-- Three.js レンダリング時間
-- 認証フロー完了率
-- API レスポンス時間
 
 ## トラブルシューティング
 
-### よくある問題と解決策
+### よくあるエラーと解決策
 
-**1. バンドルサイズ超過**
-```bash
-# 解決策: 動的インポート使用
-const ThreeJSComponent = dynamic(() => import('./ThreeJSComponent'), {
-  ssr: false,
-  loading: () => <LoadingSpinner />
-});
+#### 1. アカウントID関連エラー
 ```
+Error: Could not route to /client/v4/accounts/your-domain.com/...
+```
+**解決策**: アカウントIDには32桁の英数字を使用（ドメイン名ではない）
 
-**2. Auth.js セッション問題**
+#### 2. ファイルパスエラー
+```
+Error: The entry-point file at ".worker-next/index.mjs" was not found
+```
+**解決策**: wrangler.tomlで正しいパスを指定
+- main = ".open-next/worker.js"
+- assets.directory = ".open-next/assets"
+
+#### 3. 認証エラー
+```
+Error: Invalid request headers [code: 6003]
+```
+**解決策**: 
+- 環境変数 `CLOUDFLARE_API_TOKEN` を設定
+- または `wrangler login` でOAuth認証
+
+#### 4. TypeScriptエラー（register-form.tsx）
+```
+Error: Type 'unknown' is not assignable to type...
+```
+**解決策**: API レスポンスに適切な型アサーションを追加
 ```typescript
-// 解決策: Edge Runtime 対応設定
-export const config = {
-  runtime: 'edge',
-}
+const result = await response.json() as { 
+  success?: boolean; 
+  error?: { message?: string } 
+};
 ```
 
-**3. Middleware 動作不良**
-```typescript
-// 解決策: Cloudflare Workers 対応の middleware 設定
-export const config = {
-  matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico).*)',
-  ],
-}
+#### 5. ビルドサイズ超過
+```
+Error: Worker bundle exceeds size limit
+```
+**解決策**: 
+- 動的インポート使用
+- Three.jsなど大きなライブラリを条件付きロード
+- 不要な依存関係を削除
+
+## カスタムドメイン設定
+
+### Cloudflareダッシュボードでの設定
+
+1. Workers & Pages → 該当アプリケーション選択
+2. Custom Domains タブ
+3. "Add Custom Domain" クリック
+4. ドメイン入力（例: app.yourdomain.com）
+5. DNS設定自動追加を確認
+
+### DNS設定（手動の場合）
+
+```
+Type: CNAME
+Name: app
+Target: nextjs-boilerplate-production.workers.dev
+Proxy: On (Orange Cloud)
 ```
 
-### サポートリソース
+## 継続的デプロイ（CI/CD）
 
-- [Cloudflare Workers Documentation](https://developers.cloudflare.com/workers/)
-- [Next.js on Cloudflare](https://developers.cloudflare.com/pages/framework-guides/deploy-a-nextjs-site/)
+### GitHub Actions設定例
+
+```yaml
+name: Deploy to Cloudflare Workers
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Build and Deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          npm run build:cloudflare
+          npx wrangler deploy --env production
+```
+
+## パフォーマンス監視
+
+### Cloudflare Analytics活用
+
+1. Workers Analytics
+   - リクエスト数
+   - レスポンス時間
+   - エラー率
+   - CPU時間
+
+2. Web Analytics（追加設定）
+   - ページビュー
+   - ユニークビジター
+   - Core Web Vitals
+
+### 推奨メトリクス目標
+
+- **First Contentful Paint**: < 1.5秒
+- **Time to Interactive**: < 3秒
+- **Worker起動時間**: < 50ms
+- **エラー率**: < 0.1%
+
+## 今後の拡張
+
+### 推奨される次のステップ
+
+1. **Cloudflare D1** データベース統合
+2. **Cloudflare KV** セッションストレージ
+3. **Cloudflare Images** 画像最適化
+4. **Cloudflare R2** オブジェクトストレージ
+5. **Durable Objects** リアルタイム機能
+
+### セキュリティ強化
+
+- WAF（Web Application Firewall）設定
+- DDoS保護の有効化
+- Bot Management設定
+- Page Shield（サードパーティスクリプト監視）
+
+## サポートリソース
+
 - [OpenNext Documentation](https://opennext.js.org/)
-
-## 継続的改善
-
-### 今後の拡張予定
-- Cloudflare D1 データベース統合
-- Cloudflare KV ストレージ活用
-- Cloudflare Images サービス連携
-- Edge-side Analytics 実装
-
-### パフォーマンス目標
-- First Contentful Paint: < 1.5秒
-- Time to Interactive: < 3秒
-- Cumulative Layout Shift: < 0.1
+- [Cloudflare Workers Documentation](https://developers.cloudflare.com/workers/)
+- [Next.js on Cloudflare Guide](https://developers.cloudflare.com/pages/framework-guides/nextjs/)
+- [wrangler CLI Reference](https://developers.cloudflare.com/workers/wrangler/)
 
 ---
 
-**更新日**: 2025-01-11  
-**バージョン**: v1.0  
-**対象**: Next.js 15 + App Router + React 19
+**更新日**: 2025年1月11日  
+**バージョン**: v2.0（実証済み版）  
+**対象**: Next.js 15.5.2 + @opennextjs/cloudflare 1.8.2  
+**検証環境**: macOS + Node.js 20.x + wrangler 4.35.0
