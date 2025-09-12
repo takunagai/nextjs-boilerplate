@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import { type ReactNode, memo } from "react";
 import { type PortfolioCategory } from "@/lib/data/portfolio-data";
