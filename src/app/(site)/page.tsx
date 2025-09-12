@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 import { HeroSection } from "@/components/home/hero-section";
+
+// Route Segment Config for caching
+export const revalidate = 3600; // 1時間キャッシュ
+
 import { BackgroundImageCTA } from "@/components/ui/background-image-cta";
 import { PortfolioSection } from "@/components/sections/portfolio-section";
 import { ProblemsSection } from "@/components/sections/problems-section";

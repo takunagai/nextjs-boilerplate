@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+
+// Route Segment Config for caching
+export const revalidate = 7200; // 2時間キャッシュ（静的コンテンツ）
+
 import {
 	FaBriefcase,
 	FaCode,

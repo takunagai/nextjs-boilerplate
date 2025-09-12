@@ -4,6 +4,10 @@ import {
 	generateViewport,
 	WebsiteJsonLd,
 } from "@/components/seo";
+
+// Route Segment Config for caching
+export const revalidate = 7200; // 2時間キャッシュ（静的コンテンツ）
+
 import { ContentItems } from "@/components/services/content-items"; // 追加
 import { ServiceCategories } from "@/components/sections/service-categories";
 import { portfolioCategories } from "@/lib/data/portfolio-data";
