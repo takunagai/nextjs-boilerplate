@@ -1,5 +1,36 @@
 # パフォーマンスメトリクス技術仕様書
 
+## 実測パフォーマンス改善結果 (2024年リファクタリング)
+
+### 🎯 コンポーネント最適化実績
+
+#### Services Section Component
+- **削減率**: 83% (304行 → 54行)
+- **分離パターン**: データレイヤー + 個別コンポーネント
+- **アーキテクチャ**: `/src/lib/data/services-data.tsx` + `/src/components/sections/service-item.tsx`
+
+#### Speech Bubble Component  
+- **削減率**: 56% (592行 → 260行)
+- **分離パターン**: CVA バリアント + Suspense フォールバック
+- **アーキテクチャ**: `/src/lib/data/speech-bubble-variants.ts` + `/src/components/ui/speech-bubble-skeleton.tsx`
+
+### 📦 Bundle Size 最適化実績
+
+#### Homepage JavaScript Bundle
+- **削減率**: 33% (23.1kB → 15.5kB)
+- **最適化手法**: 
+  - Server Component への変換
+  - TypeScript ES2022 最適化
+  - 不要な "use client" 削除
+
+### ⚙️ TypeScript 最適化実績
+
+#### 設定変更による効果
+- **Target**: ES5 → ES2022 (最新JavaScript機能活用)
+- **Module Detection**: "force" (改善されたモジュール解決)
+- **Verbatim Module Syntax**: true (型のみインポート最適化)
+- **Edge Runtime**: 完全対応 (Cloudflare Workers対応)
+
 ## 測定メトリクス一覧と実装方法
 
 ### 1. Core Web Vitals (優先度: CRITICAL)
@@ -138,6 +169,16 @@ const bundleMetrics = await page.evaluate(() => {
   };
 });
 ```
+
+**実測改善値 (Homepage):**
+- **Before**: 23.1kB JavaScript
+- **After**: 15.5kB JavaScript  
+- **Improvement**: 33% reduction (-7.6kB)
+
+**改善手法:**
+- Data layer extraction (`/src/lib/data/` directory)
+- Server Component optimization (unnecessary "use client" removal)
+- TypeScript ES2022 compilation optimization
 
 #### 3.2 Image Optimization Metrics
 **測定内容:** 画像最適化効果測定
@@ -348,6 +389,69 @@ const validatePerformanceBudget = (metrics: PerformanceMetrics) => {
 ### Phase 3-4: 継続的監視 (1日)
 - CI/CD統合
 - アラート設定
+
+## アーキテクチャ最適化パターン
+
+### データレイヤー分離パターン
+
+**実装された設計パターン:**
+
+#### Pattern 1: コンテンツとスタイルの分離
+```typescript
+// /src/lib/data/services-data.tsx - データとコンテンツ
+export const services: ServiceItem[] = [
+  {
+    id: "web-development",
+    title: "ウェブ制作・アプリ開発",
+    features: ["Next.js", "WordPress", "リニューアル"],
+  }
+];
+
+// /src/lib/data/speech-bubble-variants.ts - CVA バリアント
+export const speechBubbleVariants = cva("flex gap-3", {
+  variants: {
+    direction: { left: "flex-row", right: "flex-row-reverse" }
+  }
+});
+```
+
+#### Pattern 2: コンポーネント責務分離
+```typescript  
+// メインコンポーネント - 依存関係の管理のみ
+export function ServicesSection() {
+  return services.map((item, index) => (
+    <ServiceItemComponent key={item.id} item={item} index={index} />
+  ));
+}
+
+// 個別コンポーネント - レンダリング責務
+export function ServiceItemComponent({ item, index }: Props) {
+  // 具体的なレンダリングロジック
+}
+```
+
+### 実測パフォーマンス改善効果
+
+| 最適化パターン | Before | After | 削減率 |
+|---------------|--------|-------|--------|
+| Services Section | 304行 | 54行 | -83% |
+| Speech Bubble | 592行 | 260行 | -56% |
+| Homepage JS Bundle | 23.1kB | 15.5kB | -33% |
+
+### Route Segment Config キャッシュ戦略
+
+```typescript
+// 静的コンテンツ (2時間キャッシュ)
+export const revalidate = 7200;
+
+// 動的コンテンツ (1時間キャッシュ)  
+export const revalidate = 3600;
+```
+
+**効果:**
+- Server-side レンダリング最適化
+- CDN キャッシュ効率向上
+- ユーザー体感パフォーマンス改善
 
 ---
 

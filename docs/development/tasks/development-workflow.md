@@ -54,15 +54,43 @@ Next.js 15 (App Router) + React 19 + TypeScript環境での効率的で高品質
 - [ ] 共通コンポーネントは`src/components/`に配置
 - [ ] カスタムhooksは`src/hooks/`に配置
 - [ ] 型定義は`src/types/`に配置
+- [ ] **データレイヤー**: `src/lib/data/`に配置 (NEW)
+  - [ ] コンテンツデータ（JSX対応）: `.tsx` 拡張子
+  - [ ] CVA バリアント定義: `.ts` 拡張子
+  - [ ] ヘルパー関数との明確な分離
 
 ### 🔧 実装時のベストプラクティス
 - [ ] **TypeScript**: すべての関数とコンポーネントに型注釈
+  - [ ] `verbatimModuleSyntax: true` - 型のみインポート: `import type { ReactNode }`
+  - [ ] ES2022 target でのモダン JavaScript 活用
 - [ ] **Server/Client Components**: 適切な使い分け
   ```typescript
   // Client Componentの場合のみ
   'use client'
   
   // Server Componentは何も記載しない（デフォルト）
+  ```
+- [ ] **データレイヤー分離**: コンポーネントの肥大化防止 (NEW)
+  ```typescript
+  // ❌ 大きすぎるコンポーネント (300+ lines)
+  export function LargeComponent() {
+    // データ定義、バリアント、レンダリング全て含む
+  }
+  
+  // ✅ データレイヤー分離パターン
+  // 1. データ定義: /src/lib/data/component-data.tsx
+  export const componentData = [...];
+  
+  // 2. バリアント定義: /src/lib/data/component-variants.ts  
+  export const componentVariants = cva(...);
+  
+  // 3. メインコンポーネント: 依存関係管理のみ (50-100 lines)
+  export function Component() {
+    return componentData.map(item => <ItemComponent key={item.id} item={item} />);
+  }
+  
+  // 4. 個別コンポーネント: 具体的レンダリング (100-200 lines)
+  export function ItemComponent({ item }: Props) { ... }
   ```
 - [ ] **Error Boundaries**: 適切なエラー処理の実装
 - [ ] **Suspense**: データフェッチ箇所での活用
@@ -80,6 +108,23 @@ Next.js 15 (App Router) + React 19 + TypeScript環境での効率的で高品質
   ```
 - [ ] **新しいフック**: use() hookの適切な活用
 - [ ] **Concurrent Features**: Suspenseとストリーミングの活用
+
+### 📈 パフォーマンス最適化パターン (NEW)
+- [ ] **コンポーネント分離によるサイズ削減**
+  - [ ] 300+ lines のコンポーネントは分離候補
+  - [ ] 目標: 50-80% のコード削減 (実績: services: -83%, speech-bubble: -56%)
+- [ ] **バンドルサイズ最適化**
+  - [ ] Server Component への変換で JavaScript 削減
+  - [ ] 不要な "use client" の削除
+  - [ ] 目標: 30%+ の bundle size 削減 (実績: Homepage -33%)
+- [ ] **Route Segment Config によるキャッシュ最適化**
+  ```typescript
+  // 静的コンテンツ
+  export const revalidate = 7200; // 2時間
+  
+  // 動的コンテンツ  
+  export const revalidate = 3600; // 1時間
+  ```
 
 ### 🔐 セキュリティ考慮事項
 - [ ] **Auth.js v5**: セッション管理の適切な実装
@@ -163,7 +208,8 @@ Next.js 15 (App Router) + React 19 + TypeScript環境での効率的で高品質
 - [ ] **Lighthouse Performance**: 90+
 - [ ] **Lighthouse Accessibility**: 100
 - [ ] **テストカバレッジ**: 80%以上
-- [ ] **Bundle Size**: 前回比で増加なし
+- [ ] **Bundle Size**: 前回比30%+削減 (実績に基づく新目標)
+- [ ] **Component Size**: 大型コンポーネントの50%+削減 (300+ lines → 150- lines)
 - [ ] **First Contentful Paint**: 1.5s以下
 
 ### 理想目標 (Could Have)

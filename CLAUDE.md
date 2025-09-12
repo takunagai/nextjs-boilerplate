@@ -69,6 +69,10 @@ This project follows Next.js 15 App Router best practices with comprehensive err
 - `/src/lib/` - Utilities and configurations:
   - `auth/` - Auth.js (NextAuth v5) configuration with JWT strategy
   - `constants/` - Application-wide constants and configurations
+  - `data/` - **Data layer organization** (NEW):
+    - `services-data.tsx` - Service content and configuration with JSX support
+    - `speech-bubble-variants.ts` - CVA variants for speech bubble components
+    - Centralized data management for component content and styling
   - `server/` - Server-side utilities for API responses and validation
   - `validation/` - Zod schemas for form and API validation
   - `accessibility/` - Accessibility utilities and helpers
@@ -86,16 +90,26 @@ This project follows Next.js 15 App Router best practices with comprehensive err
 3. **Forms**: React Hook Form + Zod for type-safe validation
 4. **Testing**: Vitest for unit tests, Playwright for E2E tests
 5. **Performance**: React 19 Compiler enabled for automatic optimizations
+   - **TypeScript Optimization**: ES2022 target with verbatimModuleSyntax
+   - **Bundle Optimization**: Homepage JS reduced by 33% (23.1kB→15.5kB)
+   - **Component Refactoring**: Major size reductions (services: -83%, speech-bubble: -56%)
 6. **Security**: Comprehensive middleware with Auth.js v5 integration:
+   - **Edge Runtime Compatible**: Map-based rate limiting for Cloudflare Workers
    - CSRF protection with token validation
    - Rate limiting for API endpoints
    - Security headers (CSP, HSTS, etc.)
    - Request sanitization and validation
-7. **Error Handling**: Route-specific error boundaries with graceful degradation
-8. **Loading States**: Minimal Suspense-based loading with unified design
-9. **SEO**: Enhanced robots.txt and dynamic sitemap generation
-10. **Component Architecture**: Shared component patterns for DRY principles
-11. **Accessibility**: WCAG 2.1 AA compliance as standard
+7. **Caching Strategy**: Route Segment Config for Incremental Static Regeneration
+   - Static pages: 2-hour cache (7200s)
+   - Dynamic pages: 1-hour cache (3600s)
+8. **Error Handling**: Route-specific error boundaries with graceful degradation
+9. **Loading States**: Minimal Suspense-based loading with unified design
+10. **SEO**: Enhanced robots.txt and dynamic sitemap generation
+11. **Component Architecture**: Data-driven component patterns with separation of concerns
+   - **Data Layer**: Centralized content and styling configuration in `/src/lib/data/`
+   - **Component Separation**: Extract variants, data, and rendering logic
+   - **DRY Principles**: Shared patterns reduce code duplication by 50-80%
+12. **Accessibility**: WCAG 2.1 AA compliance as standard
 
 ### Security Architecture
 
@@ -128,7 +142,10 @@ Unified minimal loading state across all route groups:
 
 ## Code Style
 
-- TypeScript with strict type checking
+- **TypeScript Optimization**: ES2022 target with strict type checking
+  - `verbatimModuleSyntax: true` - Use type-only imports: `import type { ReactNode }`
+  - `moduleDetection: "force"` - Improved module resolution
+  - Enhanced performance and better Edge Runtime compatibility
 - Tabs for indentation (width: 2)
 - Double quotes for strings
 - Line width: 80 characters max
@@ -178,6 +195,15 @@ Unified minimal loading state across all route groups:
 
 - **Large Component Refactoring**: Split 600+ line components into modules
   - Example: Digital Constellation split from 604 lines to 13 files
+  - **Services Section**: Refactored from 304→54 lines (83% reduction)
+  - **Speech Bubble**: Refactored from 592→260 lines (56% reduction)
+- **Data Layer Extraction**: Separate content, variants, and logic
+  - `/src/lib/data/services-data.tsx` - Service content with JSX support
+  - `/src/lib/data/speech-bubble-variants.ts` - CVA variant definitions
+  - Individual component files: `service-item.tsx`, `speech-bubble-skeleton.tsx`
+- **Server/Client Optimization**: Remove unnecessary "use client" directives
+  - Convert components to server components when no client-side interactivity needed
+  - Reduces JavaScript bundle size significantly
 - **Custom Hooks**: Create hooks for shared logic patterns
   - `useFormSubmission` - Centralized form handling
   - `useHeroHeight` - Dynamic height calculations
@@ -337,6 +363,129 @@ export async function updateProfile(data: ProfileFormValues) {
 }
 ```
 
+### Data Layer Architecture
+
+Centralized data management with separation of concerns:
+
+```typescript
+// /src/lib/data/services-data.tsx - Content with JSX support
+export interface ServiceItem extends FeatureItem {
+  blobShape: BlobShape;
+  features?: string[];
+}
+
+export const services: ServiceItem[] = [
+  {
+    id: "web-development",
+    title: "ウェブ制作・アプリ開発",
+    blobShape: "web",
+    description: "AI を活用した効率的な制作で、高品質かつお手頃な価格を実現。",
+    imageUrl: "/images/service-web.jpg",
+    icon: <FaCode className="w-6 h-6 text-blue-600" />,
+    features: [
+      "高パフォーマンスな Next.js ウェブサイト/アプリ",
+      // ... more features
+    ],
+  },
+  // ... more services
+];
+
+// Helper functions for data access
+export function getCommentsForService(serviceId: string): readonly string[] {
+  return serviceComments[serviceId as keyof typeof serviceComments] || serviceComments["web-development"];
+}
+```
+
+```typescript
+// /src/lib/data/speech-bubble-variants.ts - CVA variants
+import { cva, type VariantProps } from "class-variance-authority";
+
+export const speechBubbleVariants = cva("flex gap-3 items-start", {
+  variants: {
+    direction: {
+      left: "flex-row",
+      right: "flex-row-reverse",
+    },
+    size: {
+      sm: "text-sm",
+      md: "text-base", 
+      lg: "text-lg",
+    },
+  },
+  defaultVariants: {
+    direction: "left",
+    size: "md",
+  },
+});
+
+// Export types for component props
+export type SpeechBubbleVariantProps = VariantProps<typeof speechBubbleVariants>;
+```
+
+### Component Separation Patterns
+
+Split large components into focused, reusable modules:
+
+```typescript
+// /src/components/sections/services-section.tsx - Main component (54 lines)
+import { services, getCommentsForService } from "@/lib/data/services-data";
+import { ServiceItemComponent } from "./service-item";
+
+export function ServicesSection() {
+  return (
+    <section className="py-16 md:py-24">
+      <div className="container space-y-16 md:space-y-24">
+        {services.map((item, index) => {
+          const comments = getCommentsForService(item.id);
+          return (
+            <ServiceItemComponent
+              key={item.id}
+              item={item}
+              index={index}
+              comments={comments}
+            />
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+```
+
+```typescript
+// /src/components/sections/service-item.tsx - Individual item renderer
+import type { ServiceItem } from "@/lib/data/services-data";
+
+interface ServiceItemProps {
+  item: ServiceItem;
+  index: number;
+  comments: readonly string[];
+}
+
+export function ServiceItemComponent({ item, index, comments }: ServiceItemProps) {
+  // Component-specific rendering logic
+  return (
+    <div className="relative overflow-hidden">
+      {/* Background effects and content */}
+    </div>
+  );
+}
+```
+
+### Route Segment Config for ISR
+
+```typescript
+// Static content with longer cache
+export const revalidate = 7200; // 2 hours
+
+// Dynamic content with shorter cache  
+export const revalidate = 3600; // 1 hour
+
+export default function Page() {
+  // Page content with automatic ISR
+}
+```
+
 ## Common Issues & Solutions
 
 ### React Hooks Errors
@@ -369,6 +518,22 @@ export async function updateProfile(data: ProfileFormValues) {
   ```typescript
   import React from "react";
   type Element = keyof React.JSX.IntrinsicElements;
+  ```
+- Use type-only imports with verbatimModuleSyntax
+  ```typescript
+  // ❌ Wrong: Regular import for types
+  import { ReactNode } from "react";
+  
+  // ✅ Correct: Type-only import
+  import type { ReactNode } from "react";
+  ```
+- JSX content requires .tsx extension
+  ```typescript
+  // ❌ Wrong: JSX in .ts file
+  // services-data.ts with JSX content
+  
+  // ✅ Correct: Use .tsx extension
+  // services-data.tsx for JSX content
   ```
 
 ### SSR Window Errors
