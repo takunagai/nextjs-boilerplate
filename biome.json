@@ -11,6 +11,7 @@
 			"**",
 			"!src/components/seo/json-ld.tsx",
 			"!.next",
+			"!.open-next",
 			"!node_modules",
 			"!coverage",
 			"!.claude",
