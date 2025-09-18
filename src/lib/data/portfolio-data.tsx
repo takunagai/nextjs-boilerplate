@@ -7,6 +7,7 @@ import {
 	FaCartShopping,
 	FaRobot,
 	FaGears,
+	FaRocket,
 } from "react-icons/fa6";
 
 // ポートフォリオのダミーデータ
@@ -29,7 +30,7 @@ export type PortfolioItem = {
 };
 
 export type PortfolioCategory = {
-	id: "web" | "design" | "photo" | "logo" | "shop" | "other" | "ai-image";
+	id: "web" | "design" | "photo" | "logo" | "shop" | "other" | "ai-image" | "instant-site";
 	name: string;
 	description: string;
 	serviceUrl?: string;
@@ -117,6 +118,13 @@ export const portfolioCategories: PortfolioCategory[] = [
 		description: "コピー作成、データ移行などの実績",
 		serviceUrl: "/services/ai-consulting-and-support",
 		icon: <FaGears className="w-5 h-5 text-gray-600" />,
+	},
+	{
+		id: "instant-site",
+		name: "一夜城 - インスタントHP制作",
+		description: "55,000円・当日公開。AI×プロで超高速制作",
+		serviceUrl: "/services/instant-site",
+		icon: <FaRocket className="w-5 h-5 text-orange-600" />,
 	},
 ];
 
