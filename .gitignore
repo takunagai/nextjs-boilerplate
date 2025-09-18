@@ -115,3 +115,6 @@ local/
 # Playwright
 /blob-report/
 /playwright/.cache/
+
+# MCP server directories
+.serena/
