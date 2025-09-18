@@ -64,23 +64,7 @@ export const services: ServiceItem[] = [
 			"動画、歌・BGM、3D などもご相談ください",
 		],
 	},
-	{
-		id: "instant-site",
-		title: "一夜城 - インスタントホームページ制作",
-		blobShape: "web",
-		description:
-			"55,000円・当日公開。AI×プロの集中スプリントで「速い・安い・ちゃんと良い」を実現。\n半日〜1日で、高品質なホームページを構築します。",
-		imageUrl: "/images/service-instant.jpg",
-		icon: <FaRocket className="w-6 h-6 text-orange-600" />,
-		buttonText: "詳しく見る",
-		buttonUrl: "/services/instant-site",
-		features: [
-			"55,000円（税込）の固定価格で透明性のある料金体系",
-			"半日〜1日で完成・公開の超高速制作",
-			"Next.js × Cloudflare Pagesでランニングコスト0円",
-		],
-	},
-];
+];;
 
 // サービス別フローコメント
 export const serviceComments = {
@@ -90,7 +74,7 @@ export const serviceComments = {
 		"品質は妥協しません",
 		"Next.js + AI APIで最先端開発",
 		"WordPress × AI でパワーアップ",
-		"効率的な制作で50〜70% OFF",
+		"効率的な制作で50～70% OFF",
 		"高品質なWeb制作",
 		"AI機能でサイトを強化",
 		"最新技術をお手軽に",
@@ -126,21 +110,7 @@ export const serviceComments = {
 		"実用的なAIスキル習得",
 		"ビジネス活用のコツ",
 	],
-	"instant-site": [
-		"半日〜1日で完成",
-		"55,000円の明朗会計",
-		"AI×プロのタッグ",
-		"Next.js で高速サイト",
-		"ランニングコスト0円",
-		"即日公開可能",
-		"高品質を約束",
-		"素材があればOK",
-		"スマホ対応標準",
-		"SEO対策込み",
-		"Cloudflare で安心",
-		"微修正2回無料",
-	],
-} as const;
+} as const;;
 
 // コメント取得ヘルパー関数
 export function getCommentsForService(serviceId: string): readonly string[] {
