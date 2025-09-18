@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useAnnouncementBar } from "@/components/layout/announcement-bar-context";
 import type { HeroHeightData } from "@/types/hero";
 
@@ -13,9 +14,16 @@ const MIN_HERO_HEIGHT = 400; // 最小ヒーロー高さ
  */
 export function useHeroHeight(): HeroHeightData {
 	const { isVisible, height } = useAnnouncementBar();
+	const [mounted, setMounted] = useState(false);
+
+	// ハイドレーション完了後にマウント状態を更新
+	useEffect(() => {
+		setMounted(true);
+	}, []);
 
 	// ヘッダーの高さとお知らせバーの高さを合計
-	const paddingTop = isVisible ? HEADER_HEIGHT + height : HEADER_HEIGHT;
+	// SSR時は固定値（64px）を使用、ハイドレーション後に動的値を使用
+	const paddingTop = mounted && isVisible ? HEADER_HEIGHT + height : HEADER_HEIGHT;
 
 	// ヒーローセクション用のスタイルオブジェクト
 	const heroStyle = {
