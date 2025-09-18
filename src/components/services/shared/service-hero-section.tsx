@@ -11,6 +11,10 @@ export interface ServiceHeroSectionProps {
 	contactButtonText?: string;
 	serviceMenuButtonText?: string;
 
+	// Link props
+	contactButtonHref?: string;
+	serviceMenuButtonHref?: string;
+
 	// Styling props
 	backgroundGradient?: string;
 	className?: string;
@@ -29,6 +33,8 @@ export function ServiceHeroSection({
 	description,
 	contactButtonText = "無料相談を予約する",
 	serviceMenuButtonText = "サービス内容を見る",
+	contactButtonHref = "/contact",
+	serviceMenuButtonHref = "#service-menu",
 	backgroundGradient,
 	className,
 	decorationColors,
@@ -57,7 +63,7 @@ export function ServiceHeroSection({
 							size="lg"
 							className={`text-base px-8 py-3 ${contactButtonClassName || ""}`}
 						>
-							<Link href="/contact">
+							<Link href={contactButtonHref}>
 								{contactButtonText}
 								<FaCalendarCheck className="w-5 h-5 ml-2" />
 							</Link>
@@ -68,7 +74,7 @@ export function ServiceHeroSection({
 							size="lg"
 							className={`text-base px-8 py-3 ${serviceMenuButtonClassName || ""}`}
 						>
-							<Link href="#service-menu">
+							<Link href={serviceMenuButtonHref}>
 								{serviceMenuButtonText}
 								<FaArrowRight className="w-5 h-5 ml-2" />
 							</Link>
