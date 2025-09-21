@@ -3,11 +3,16 @@ import { FeatureItems } from "@/components/ui/feature-items";
 import { Heading } from "@/components/ui/heading";
 import { BlobMasks } from "@/components/ui/blob-mask";
 import { portfolioCategories } from "@/lib/data/portfolio-data";
-import { services, getCommentsForService, type ServiceItem } from "@/lib/data/services-data";
+import { 
+	getMainServices, 
+	getCommentsForService, 
+	type ServiceItem 
+} from "@/lib/data/services-data";
 import { ServiceCategories } from "./service-categories";
 import { ServiceItemComponent } from "./service-item";
 
 export function ServicesSection() {
+	const mainServices = getMainServices();
 
 	return (
 		<section className="w-full py-16 md:py-24 bg-background relative overflow-hidden">
@@ -29,9 +34,9 @@ export function ServicesSection() {
 					</p>
 				</div>
 
-				{/* 左右交互レイアウト */}
+				{/* メインサービス（左右交互レイアウト） */}
 				<FeatureItems
-					items={services}
+					items={mainServices}
 					variant="split"
 					alternateLayout={true}
 					spacing="none"
@@ -44,6 +49,7 @@ export function ServicesSection() {
 						/>
 					)}
 				/>
+
 
 				{/* サービスカテゴリー */}
 				<ServiceCategories categories={portfolioCategories} />
