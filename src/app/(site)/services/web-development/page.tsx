@@ -5,15 +5,14 @@ import {
 	generateViewport,
 	WebsiteJsonLd,
 } from "@/components/seo";
-import { AffordableSection } from "@/components/services/web-development/affordable-section";
-import { AIBenefitsSection } from "@/components/services/web-development/ai-benefits-section";
-import { BackgroundImageCTA } from "@/components/ui/background-image-cta";
 import { WebDevHeroSection } from "@/components/services/web-development/hero-section";
-import { PortfolioLinkSection } from "@/components/services/web-development/portfolio-link-section";
-import { PricingSection } from "@/components/services/web-development/pricing-section";
-import { ProcessSection } from "@/components/services/web-development/process-section";
-import { RecommendedForSection } from "@/components/services/web-development/recommended-for-section";
+import { WhyChooseSection } from "@/components/services/web-development/why-choose-section";
+import { StrengthsSection } from "@/components/services/web-development/strengths-section";
 import { ServiceMenuSection } from "@/components/services/web-development/service-menu-section";
+import { ProcessSection } from "@/components/services/web-development/process-section";
+import { PricingSection } from "@/components/services/web-development/pricing-section";
+import { FAQSection } from "@/components/services/web-development/faq-section";
+import { FinalCTASection } from "@/components/services/web-development/final-cta-section";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Container } from "@/components/ui/container";
 import { META } from "@/lib/constants";
@@ -26,18 +25,18 @@ const PAGE_TITLE = "ウェブ制作・アプリ開発";
 export const metadata: Metadata = generateMetadata({
 	title: PAGE_TITLE,
 	description:
-		"AI×15年の制作経験で高品質なのにお手頃価格を実現。Next.js + AI API での Web アプリ開発、WordPress + AI プラグインでのサイト制作、既存サイトのリニューアルまで対応。テスター特別価格で先着10名様限定受付中。",
+		"AIと経験を活かして、良いものを手が届く価格で。15年のウェブ制作経験とAIを組み合わせることで、制作時間を短縮しながら丁寧な仕上がりをお約束します。WordPressからNext.jsまで幅広く対応。お試し価格で先着10名様。",
 	keywords: [
 		"AI",
 		"ウェブ制作",
 		"アプリ開発",
 		"Next.js",
 		"WordPress",
-		"AI API",
 		"ホームページ制作",
 		"リニューアル",
 		"お手頃価格",
 		"高品質",
+		"経験豊富",
 	],
 	canonical: PAGE_PATH,
 });
@@ -58,7 +57,7 @@ export default function WebDevelopmentPage() {
 		<>
 			<WebsiteJsonLd
 				name={`${PAGE_TITLE} | ${META.DEFAULT_TITLE}`}
-				description="AI×15年の制作経験で高品質なのにお手頃価格を実現。Next.js + AI API での Web アプリ開発から WordPress まで対応。"
+				description="AIと経験を活かして、良いものを手が届く価格で。15年のウェブ制作経験とAIを組み合わせて、丁寧な仕上がりをお約束します。"
 				url={`${META.SITE_URL}${PAGE_PATH}`}
 			/>
 			<BreadcrumbJsonLd items={jsonLdBreadcrumbs} />
@@ -68,22 +67,13 @@ export default function WebDevelopmentPage() {
 
 			<main className="flex min-h-screen flex-col">
 				<WebDevHeroSection />
-				<AffordableSection />
-				<RecommendedForSection />
+				<WhyChooseSection />
+				<StrengthsSection />
 				<ServiceMenuSection />
 				<ProcessSection />
 				<PricingSection />
-				<AIBenefitsSection />
-				<PortfolioLinkSection />
-				<BackgroundImageCTA
-					backgroundImage="/dummy-images/street-photo-01.jpg"
-					title="AI × 経験で、理想のWebサイト・アプリを"
-					description="高品質なのにお手頃価格。先着10名様限定のテスター特別価格でお受けします。"
-					primaryButtonText="無料相談を予約"
-					secondaryButtonText="料金プランを見る"
-					primaryButtonHref="/contact"
-					secondaryButtonHref="/services/web-development#pricing"
-				/>
+				<FAQSection />
+				<FinalCTASection />
 			</main>
 		</>
 	);

@@ -6,38 +6,38 @@ import { Heading } from "@/components/ui/heading";
 const pricingPlans = [
 	{
 		id: "light",
-		name: "ライトプラン",
-		description: "WordPress サイト（5ページまで）\nAI 活用で充実コンテンツ",
+		name: "お手軽プラン",
+		description: "WordPressサイト（5ページ）\n更新しやすい基本サイト",
 		normalCompany: "60万円〜",
 		ourNormal: "30万円〜",
-		specialPrice: "15万円〜",
+		specialPrice: "18万円〜",
 		highlight: false,
 	},
 	{
 		id: "standard",
-		name: "スタンダードプラン",
-		description: "オリジナルデザイン\nAI 機能実装\n高速制作",
+		name: "しっかりプラン",
+		description: "オリジナルデザイン\nお客様だけのサイト",
 		normalCompany: "100万円〜",
 		ourNormal: "50万円〜",
-		specialPrice: "25万円〜",
+		specialPrice: "30万円〜",
 		highlight: true,
 	},
 	{
 		id: "premium",
-		name: "プレミアムプラン",
-		description: "フルカスタマイズ\n高度な AI 機能\n3ヶ月サポート付き",
+		name: "おまかせプラン",
+		description: "こだわり抜いたサイト\n3ヶ月サポート込み",
 		normalCompany: "150万円〜",
 		ourNormal: "80万円〜",
-		specialPrice: "40万円〜",
+		specialPrice: "50万円〜",
 		highlight: false,
 	},
 	{
 		id: "additional",
-		name: "ページ追加",
-		description: "AI 活用で効率制作",
+		name: "ちょい足し",
+		description: "ページだけ追加したい時に",
 		normalCompany: "5万円〜",
 		ourNormal: "3万円〜",
-		specialPrice: "1.5万円〜",
+		specialPrice: "2万円〜",
 		highlight: false,
 	},
 ];
@@ -45,13 +45,13 @@ const pricingPlans = [
 const features = [
 	{
 		icon: FaShield,
-		title: "全額返金保証付き",
-		description: "満足いただけなければ全額返金",
+		title: "安心の返金保証",
+		description: "満足いただけなければ、遠慮なくお申し出ください",
 	},
 	{
 		icon: FaCreditCard,
-		title: "分割払い相談可",
-		description: "お支払いプランもご相談ください",
+		title: "お支払いも相談OK",
+		description: "分割払いなど、お気軽にご相談ください",
 	},
 ];
 
@@ -61,10 +61,10 @@ export function PricingSection() {
 			<Container width="2xl" paddingY="lg" paddingX="lg">
 				<div className="text-center mb-12">
 					<Heading as="h2" align="center" className="mb-4">
-						料金プラン
+						気になる料金
 					</Heading>
-					<div className="inline-block bg-gradient-to-r from-red-500 to-pink-500 text-white px-6 py-2 rounded-full text-lg font-bold mb-6">
-						テスター特別価格（先着10名様限定）
+					<div className="inline-block bg-gradient-to-r from-primary/80 to-primary text-primary-foreground px-6 py-2 rounded-full text-lg font-bold mb-6">
+						お試し価格（先着10名様）
 					</div>
 				</div>
 

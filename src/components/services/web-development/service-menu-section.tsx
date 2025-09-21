@@ -6,12 +6,12 @@ import { Heading } from "@/components/ui/heading";
 const serviceMenuItems = [
 	{
 		id: "nextjs-app",
-		title: "Next.js + AI API での Web アプリ開発",
-		subtitle: "AI がコーディングを支援 → 開発期間を半分に短縮",
+		title: "Webアプリ開発",
+		subtitle: "AIで開発スピードアップ。納期も早く、料金もお得に",
 		features: [
-			"ChatGPT や Claude の API を活用した対話型アプリ",
-			"AI がベースコードを生成、私が実装・最適化",
-			"モダンで高速、でも予算は抑えめ",
+			"ChatGPTなどのAIと連携するアプリ",
+			"サクサク動くモダンなWebアプリ",
+			"制作期間は通常の約半分",
 		],
 		icon: FaReact,
 		iconColor: "text-blue-600",
@@ -20,12 +20,12 @@ const serviceMenuItems = [
 	},
 	{
 		id: "wordpress-ai",
-		title: "WordPress + AI プラグインでのサイト制作",
-		subtitle: "AI がコンテンツ作成を支援 → 充実した内容を低コストで",
+		title: "WordPressサイト制作",
+		subtitle: "ブログやお知らせを更新しやすいサイトづくり",
 		features: [
-			"AI が SEO 最適化されたページ構成を提案",
-			"記事の下書きも AI が作成（もちろん私がブラッシュアップ）",
-			"更新も AI 機能で楽々",
+			"SEOに強いサイト構成",
+			"AIがコンテンツ作成をお手伝い",
+			"更新も簡単、管理も楽々",
 		],
 		icon: FaWordpress,
 		iconColor: "text-indigo-600",
@@ -34,12 +34,12 @@ const serviceMenuItems = [
 	},
 	{
 		id: "renewal",
-		title: "既存サイトのリニューアル",
-		subtitle: "AI が問題点を分析 → 的確な改善を効率的に",
+		title: "サイトリニューアル",
+		subtitle: "今のサイトをもっと良くしたい方へ",
 		features: [
-			"AI による現状分析で改善点を明確化",
-			"必要な部分だけを効率的にリニューアル",
-			"無駄なコストをカット",
+			"現状の課題を一緒に整理",
+			"必要な部分だけ改善でコスト削減",
+			"スマホ対応や速度改善も",
 		],
 		icon: FaArrowsRotate,
 		iconColor: "text-green-600",
@@ -48,12 +48,12 @@ const serviceMenuItems = [
 	},
 	{
 		id: "additional",
-		title: "追加ページ作成・機能追加",
-		subtitle: "AI 活用で単価を大幅削減",
+		title: "ページ・機能追加",
+		subtitle: "「ここだけ」のご相談も大歓迎",
 		features: [
-			"LP 作成も AI でスピードアップ",
-			"機能追加の実装時間を短縮",
-			"だから 1ページ 1.5万円〜が可能に",
+			"ランディングページ作成",
+			"お問い合わせフォーム追加",
+			"1ページ2万円〜のお手軽価格",
 		],
 		icon: FaPlus,
 		iconColor: "text-orange-600",
@@ -68,10 +68,10 @@ export function ServiceMenuSection() {
 			<Container width="2xl" paddingY="lg" paddingX="lg">
 				<div className="text-center mb-12">
 					<Heading as="h2" align="center" className="mb-4">
-						サービスメニュー
+						こんなことができます
 					</Heading>
 					<p className="text-muted-foreground max-w-2xl mx-auto">
-						AI を活用した効率的な制作で、様々なニーズにお応えします
+						ウェブサイトのことなら、何でもご相談ください
 					</p>
 				</div>
 

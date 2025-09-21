@@ -13,11 +13,11 @@ const processSteps = [
 	{
 		id: "hearing",
 		step: "1",
-		title: "ヒアリング",
-		duration: "（無料）",
+		title: "まずはお話を",
+		duration: "（無料相談）",
 		description: [
-			"お悩みや要望をじっくりお聞きします",
-			"AI を活用した効率的なプランをご提案",
+			"どんなサイトを作りたいか",
+			"お困りごとを気軽に相談",
 		],
 		icon: FaComments,
 		iconColor: "text-blue-600",
@@ -26,12 +26,12 @@ const processSteps = [
 	{
 		id: "research",
 		step: "2",
-		title: "AI リサーチ＆企画",
+		title: "リサーチ＆企画",
 		duration: "（1〜2日）",
-		highlight: "← 通常の 1/3 の期間！",
+		highlight: "とても早い！",
 		description: [
-			"AI が競合分析・市場調査",
-			"最適なサイト構成を AI と一緒に設計",
+			"AIがお客様の業界を調査",
+			"最適な構成をご提案",
 		],
 		icon: FaMagnifyingGlass,
 		iconColor: "text-green-600",
@@ -40,13 +40,13 @@ const processSteps = [
 	{
 		id: "development",
 		step: "3",
-		title: "AI アシスト制作",
+		title: "制作開始",
 		duration: "（1〜3週間）",
-		highlight: "← 通常の半分！",
+		highlight: "スピーディー",
 		description: [
-			"AI がデザイン案・コードを生成",
-			"私が調整・ブラッシュアップ",
-			"随時確認していただきながら進めます",
+			"AIと一緒に効率よく制作",
+			"途中経過もお見せします",
+			"修正も柔軟に対応",
 		],
 		icon: FaGears,
 		iconColor: "text-purple-600",
@@ -55,11 +55,11 @@ const processSteps = [
 	{
 		id: "testing",
 		step: "4",
-		title: "テスト・納品",
+		title: "確認・公開",
 		duration: "（2〜3日）",
 		description: [
-			"AI による自動テスト＋人の目でダブルチェック",
-			"納品・公開作業",
+			"しっかり動作確認",
+			"公開作業もお任せ",
 		],
 		icon: FaCircleCheck,
 		iconColor: "text-orange-600",
@@ -68,9 +68,9 @@ const processSteps = [
 	{
 		id: "support",
 		step: "5",
-		title: "アフターサポート",
+		title: "その後も安心",
 		duration: "",
-		description: ["操作説明", "軽微な修正対応（1ヶ月間無料）"],
+		description: ["使い方をご説明", "1ヶ月間は修正無料"],
 		icon: FaHandshake,
 		iconColor: "text-red-600",
 		bgColor: "bg-red-50",
@@ -83,10 +83,10 @@ export function ProcessSection() {
 			<Container width="2xl" paddingY="lg" paddingX="lg">
 				<div className="text-center mb-12">
 					<Heading as="h2" align="center" className="mb-4">
-						制作の流れ
+						ご依頼から公開まで
 					</Heading>
 					<p className="text-muted-foreground max-w-2xl mx-auto">
-						AI を活用した効率的なプロセスで、短期間・高品質な制作を実現
+						スピーディーに、でも丁寧に進めます
 					</p>
 				</div>
 
