@@ -8,6 +8,7 @@ import {
 	FaRobot,
 	FaGears,
 	FaRocket,
+	FaWrench,
 } from "react-icons/fa6";
 
 // ポートフォリオのダミーデータ
@@ -30,7 +31,7 @@ export type PortfolioItem = {
 };
 
 export type PortfolioCategory = {
-	id: "web" | "design" | "photo" | "logo" | "shop" | "other" | "ai-image" | "instant-site";
+	id: "web" | "design" | "photo" | "logo" | "shop" | "other" | "ai-image" | "instant-site" | "frontend-repair";
 	name: string;
 	description: string;
 	serviceUrl?: string;
@@ -70,33 +71,13 @@ export type PortfolioFilterCategory =
 
 // 旧カテゴリ定義（互換性のため残存）
 export const portfolioCategories: PortfolioCategory[] = [
+	// ウェブ関連サービス
 	{
 		id: "web",
 		name: "ウェブサイト制作",
 		description: "WordPress、Wixなどを活用したウェブサイト制作実績",
 		serviceUrl: "/services/web-development",
 		icon: <FaCode className="w-5 h-5 text-blue-600" />,
-	},
-	{
-		id: "design",
-		name: "デザイン",
-		description: "Webデザイン、ロゴデザインなどの制作実績",
-		serviceUrl: "/services/creative",
-		icon: <FaPaintbrush className="w-5 h-5 text-purple-600" />,
-	},
-	{
-		id: "photo",
-		name: "写真撮影",
-		description: "商品写真、サービス写真などの撮影実績",
-		serviceUrl: "/services/photography",
-		icon: <FaCamera className="w-5 h-5 text-green-600" />,
-	},
-	{
-		id: "logo",
-		name: "ロゴ制作",
-		description: "企業・サービスのロゴデザイン制作実績",
-		// serviceUrl削除: クリエイティブサービスの一部のため独立ページなし
-		icon: <FaPalette className="w-5 h-5 text-pink-600" />,
 	},
 	{
 		id: "shop",
@@ -106,25 +87,55 @@ export const portfolioCategories: PortfolioCategory[] = [
 		icon: <FaCartShopping className="w-5 h-5 text-orange-600" />,
 	},
 	{
+		id: "instant-site",
+		name: "一夜城 - インスタントHP制作",
+		description: "55,000円・当日公開。AI×プロで超高速制作",
+		serviceUrl: "/services/instant-site",
+		icon: <FaRocket className="w-5 h-5 text-orange-600" />,
+	},
+	{
+		id: "frontend-repair",
+		name: "フロントエンドリペア",
+		description: "AIで作ったサイトをプロが最終調整。安心の品質で公開",
+		serviceUrl: "/services/frontend-repair",
+		icon: <FaWrench className="w-5 h-5 text-orange-600" />,
+	},
+	// クリエイティブ関連サービス
+	{
+		id: "design",
+		name: "デザイン",
+		description: "Webデザイン、ロゴデザインなどの制作実績",
+		serviceUrl: "/services/creative",
+		icon: <FaPaintbrush className="w-5 h-5 text-purple-600" />,
+	},
+	{
+		id: "logo",
+		name: "ロゴ制作",
+		description: "企業・サービスのロゴデザイン制作実績",
+		// serviceUrl削除: クリエイティブサービスの一部のため独立ページなし
+		icon: <FaPalette className="w-5 h-5 text-pink-600" />,
+	},
+	{
+		id: "photo",
+		name: "写真撮影",
+		description: "商品写真、サービス写真などの撮影実績",
+		serviceUrl: "/services/photography",
+		icon: <FaCamera className="w-5 h-5 text-green-600" />,
+	},
+	{
 		id: "ai-image",
 		name: "AI画像生成・画像補正",
 		description: "AI技術を活用した画像生成・編集サービス",
 		serviceUrl: "/services/ai-image-generation",
 		icon: <FaRobot className="w-5 h-5 text-cyan-600" />,
 	},
+	// その他のサービス
 	{
 		id: "other",
 		name: "その他",
 		description: "コピー作成、データ移行などの実績",
 		serviceUrl: "/services/ai-consulting-and-support",
 		icon: <FaGears className="w-5 h-5 text-gray-600" />,
-	},
-	{
-		id: "instant-site",
-		name: "一夜城 - インスタントHP制作",
-		description: "55,000円・当日公開。AI×プロで超高速制作",
-		serviceUrl: "/services/instant-site",
-		icon: <FaRocket className="w-5 h-5 text-orange-600" />,
 	},
 ];
 
