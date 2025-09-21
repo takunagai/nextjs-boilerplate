@@ -11,7 +11,7 @@ export const revalidate = 7200; // 2時間キャッシュ（静的コンテン�
 import { ContentItems } from "@/components/services/content-items"; // 追加
 import { ServiceCategories } from "@/components/sections/service-categories";
 import { portfolioCategories } from "@/lib/data/portfolio-data";
-import { services } from "@/lib/data/services-data";
+import { getMainServices } from "@/lib/data/services-data";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Container } from "@/components/ui/container";
 import { PageHeader } from "@/components/ui/page-header";
@@ -42,6 +42,9 @@ export const metadata: Metadata = generateMetadata({
 export const viewport = generateViewport();
 
 export default function ServicesPage() {
+	// メインサービスのみを取得
+	const mainServices = getMainServices();
+	
 	// パンくずリストのデータを定義
 	const breadcrumbItems = [
 		{ title: "ホーム", path: "/" },
@@ -72,7 +75,7 @@ export default function ServicesPage() {
 			<Container className="mt-8" width="lg">
 				<div className="mt-8">
 					<ContentItems
-						items={services.map((service) => ({
+						items={mainServices.map((service) => ({
 							title: service.title,
 							description: service.description || "",
 							image: service.imageUrl || "/images/placeholder.jpg",
@@ -82,7 +85,7 @@ export default function ServicesPage() {
 								text: service.buttonText || "詳細を見る →",
 							},
 						}))}
-						columns={4}
+						columns={3}
 						className="gap-8"
 						aspectRatio="3/2"
 					/>
