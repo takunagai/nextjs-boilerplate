@@ -13,6 +13,7 @@ import React from "react";
 export interface ServiceItem extends FeatureItem {
 	blobShape: BlobShape;
 	features?: string[];
+	category?: "main" | "sub"; // メインサービスかサブサービスか
 }
 
 // サービスデータ定義
@@ -27,6 +28,7 @@ export const services: ServiceItem[] = [
 		icon: <FaCode className="w-6 h-6 text-blue-600" />,
 		buttonText: "詳しく見る",
 		buttonUrl: "/services/web-development",
+		category: "main",
 		features: [
 			"高パフォーマンスな Next.js ウェブサイト/アプリ",
 			"多彩な機能を活用できる WordPress サイト",
@@ -43,6 +45,7 @@ export const services: ServiceItem[] = [
 		icon: <FaChalkboardUser className="w-6 h-6 text-green-600" />,
 		buttonText: "詳しく見る",
 		buttonUrl: "/services/ai-consulting-and-support",
+		category: "main",
 		features: [
 			"単発のスポット相談・レクチャー",
 			"実践的な AI活用講座の講師",
@@ -59,6 +62,7 @@ export const services: ServiceItem[] = [
 		icon: <FaPaintbrush className="w-6 h-6 text-purple-600" />,
 		buttonText: "詳しく見る",
 		buttonUrl: "/services/creative",
+		category: "main",
 		features: [
 			"質の高い販促用コピー、ブログ記事の作成",
 			"AI画像生成と編集技術で仕上げるオリジナル画像やロゴ制作",
@@ -75,6 +79,7 @@ export const services: ServiceItem[] = [
 		icon: <FaWrench className="w-6 h-6 text-orange-600" />,
 		buttonText: "無料診断を依頼",
 		buttonUrl: "/services/frontend-repair",
+		category: "sub",
 		features: [
 			"React/Next.js コードの品質向上とバグ修正",
 			"レスポンシブデザインとUI/UXの改善",
@@ -146,4 +151,13 @@ export const serviceComments = {
 // コメント取得ヘルパー関数
 export function getCommentsForService(serviceId: string): readonly string[] {
 	return serviceComments[serviceId as keyof typeof serviceComments] || serviceComments["web-development"];
+}
+
+// サービスカテゴリ別フィルタ関数
+export function getMainServices(): ServiceItem[] {
+	return services.filter(service => service.category === "main");
+}
+
+export function getSubServices(): ServiceItem[] {
+	return services.filter(service => service.category === "sub");
 }
