@@ -5,6 +5,7 @@ import {
 	FaCode,
 	FaPaintbrush,
 	FaRocket,
+	FaWrench,
 } from "react-icons/fa6";
 import React from "react";
 
@@ -64,6 +65,22 @@ export const services: ServiceItem[] = [
 			"動画、歌・BGM、3D などもご相談ください",
 		],
 	},
+	{
+		id: "frontend-repair",
+		title: "フロントエンドリペア",
+		blobShape: "repair",
+		description:
+			"AI で作ったサイト、そのままで大丈夫？\nプロがコード品質とデザインを最終調整し、安心してリリースできる状態に仕上げます。",
+		imageUrl: "/images/service-frontend-repair.jpg",
+		icon: <FaWrench className="w-6 h-6 text-orange-600" />,
+		buttonText: "無料診断を依頼",
+		buttonUrl: "/services/frontend-repair",
+		features: [
+			"React/Next.js コードの品質向上とバグ修正",
+			"レスポンシブデザインとUI/UXの改善",
+			"デプロイ支援とパフォーマンス最適化",
+		],
+	},
 ];;
 
 // サービス別フローコメント
@@ -109,6 +126,20 @@ export const serviceComments = {
 		"継続的なサポート",
 		"実用的なAIスキル習得",
 		"ビジネス活用のコツ",
+	],
+	"frontend-repair": [
+		"AIで作ったコードを安心品質に",
+		"React/Next.js 専門のプロが対応",
+		"無料診断で現状把握から",
+		"コード品質とデザイン両面を改善",
+		"¥30,000〜のお手頃価格",
+		"デプロイまで完全サポート",
+		"小規模案件も大歓迎",
+		"最短24時間で診断完了",
+		"プロのデザイナーが最終調整",
+		"レスポンシブ対応もお任せ",
+		"パフォーマンス最適化も実施",
+		"安心のアフターサポート",
 	],
 } as const;;
 

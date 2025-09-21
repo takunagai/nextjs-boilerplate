@@ -19,6 +19,11 @@ export const BlobMasks = () => (
 				<path d="M0.75,0.08 C0.88,0.12 0.95,0.22 0.98,0.35 C1,0.48 0.96,0.62 0.88,0.72 C0.8,0.82 0.68,0.88 0.55,0.9 C0.42,0.92 0.28,0.88 0.18,0.78 C0.08,0.68 0.02,0.55 0.02,0.42 C0.02,0.29 0.08,0.18 0.18,0.1 C0.28,0.02 0.42,0 0.55,0.02 C0.65,0.04 0.7,0.06 0.75,0.08" />
 			</clipPath>
 
+			{/* リペア用Blob - 修理・改善を表現する安定感のある形状 */}
+			<clipPath id="blob-repair" clipPathUnits="objectBoundingBox">
+				<path d="M0.82,0.12 C0.9,0.18 0.96,0.28 0.98,0.4 C1,0.52 0.96,0.64 0.88,0.74 C0.8,0.84 0.68,0.92 0.56,0.95 C0.44,0.98 0.32,0.95 0.22,0.88 C0.12,0.81 0.05,0.71 0.02,0.6 C0,0.48 0.02,0.36 0.08,0.26 C0.14,0.16 0.24,0.08 0.36,0.04 C0.48,0 0.6,0.02 0.7,0.08 C0.76,0.1 0.82,0.12 0.82,0.12" />
+			</clipPath>
+
 			{/* グラデーション効果（オプション） */}
 			<linearGradient
 				id="blob-gradient-blue"
@@ -52,12 +57,23 @@ export const BlobMasks = () => (
 				<stop offset="0%" stopColor="rgba(168, 85, 247, 0.1)" />
 				<stop offset="100%" stopColor="rgba(168, 85, 247, 0)" />
 			</linearGradient>
+
+			<linearGradient
+				id="blob-gradient-orange"
+				x1="0%"
+				y1="0%"
+				x2="100%"
+				y2="100%"
+			>
+				<stop offset="0%" stopColor="rgba(249, 115, 22, 0.1)" />
+				<stop offset="100%" stopColor="rgba(249, 115, 22, 0)" />
+			</linearGradient>
 		</defs>
 	</svg>
 );
 
 // Blob形状を適用するための型定義
-export type BlobShape = "web" | "consulting" | "creative";
+export type BlobShape = "web" | "consulting" | "creative" | "repair";
 
 // Blob形状を返すヘルパー関数
 export const getBlobClipPath = (shape: BlobShape): string => {
@@ -71,6 +87,7 @@ export const getBlobClass = (shape: BlobShape): string => {
 		web: "[clip-path:url(#blob-web)]",
 		consulting: "[clip-path:url(#blob-consulting)]",
 		creative: "[clip-path:url(#blob-creative)]",
+		repair: "[clip-path:url(#blob-repair)]",
 	};
 	return `${baseClass} ${shapeClasses[shape]}`;
 };
