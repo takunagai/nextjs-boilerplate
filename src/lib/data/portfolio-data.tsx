@@ -90,14 +90,14 @@ export const portfolioCategories: PortfolioCategory[] = [
 		id: "instant-site",
 		name: "一夜城 - インスタントHP制作",
 		description: "55,000円・当日公開。AI×プロで超高速制作",
-		serviceUrl: "/services/instant-site",
+		serviceUrl: "/services/web-development/instant-site",
 		icon: <FaRocket className="w-5 h-5 text-orange-600" />,
 	},
 	{
 		id: "frontend-repair",
 		name: "フロントエンドリペア",
 		description: "AIで作ったサイトをプロが最終調整。安心の品質で公開",
-		serviceUrl: "/services/frontend-repair",
+		serviceUrl: "/services/web-development/frontend-repair",
 		icon: <FaWrench className="w-5 h-5 text-orange-600" />,
 	},
 	// クリエイティブ関連サービス

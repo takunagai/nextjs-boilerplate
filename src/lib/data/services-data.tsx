@@ -78,7 +78,7 @@ export const services: ServiceItem[] = [
 		imageUrl: "/images/service-frontend-repair.jpg",
 		icon: <FaWrench className="w-6 h-6 text-orange-600" />,
 		buttonText: "無料診断を依頼",
-		buttonUrl: "/services/frontend-repair",
+		buttonUrl: "/services/web-development/frontend-repair",
 		category: "sub",
 		features: [
 			"React/Next.js コードの品質向上とバグ修正",
