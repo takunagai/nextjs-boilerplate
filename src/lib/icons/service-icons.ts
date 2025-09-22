@@ -1,8 +1,8 @@
 import type { ComponentType } from "react";
-import { FaCode, FaToolbox, FaBolt } from "react-icons/fa6";
+import { FaCode, FaToolbox, FaBolt, FaRocket, FaWordpress, FaLifeRing } from "react-icons/fa6";
 
 // サービス用アイコンの型定義
-export type ServiceIconName = "code" | "toolbox" | "bolt";
+export type ServiceIconName = "code" | "toolbox" | "bolt" | "rocket" | "wordpress" | "lifeRing";
 
 export interface ServiceIcon {
 	name: ServiceIconName;
@@ -26,6 +26,21 @@ export const SERVICE_ICONS: Record<ServiceIconName, ServiceIcon> = {
 		name: "bolt",
 		component: FaBolt,
 		description: "Fast and instant services",
+	},
+	rocket: {
+		name: "rocket",
+		component: FaRocket,
+		description: "Modern Jamstack development",
+	},
+	wordpress: {
+		name: "wordpress",
+		component: FaWordpress,
+		description: "WordPress content management",
+	},
+	lifeRing: {
+		name: "lifeRing",
+		component: FaLifeRing,
+		description: "Support and troubleshooting",
 	},
 };
 

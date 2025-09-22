@@ -8,6 +8,7 @@ export interface ServiceHeroSectionProps {
 	// Content props
 	title: React.ReactNode;
 	description: React.ReactNode;
+	highlights?: string[];
 	contactButtonText?: string;
 	serviceMenuButtonText?: string;
 
@@ -31,6 +32,7 @@ export interface ServiceHeroSectionProps {
 export function ServiceHeroSection({
 	title,
 	description,
+	highlights,
 	contactButtonText = "無料相談を予約する",
 	serviceMenuButtonText = "サービス内容を見る",
 	contactButtonHref = "/contact",
@@ -56,6 +58,16 @@ export function ServiceHeroSection({
 					</h1>
 
 					<div className="mb-8">{description}</div>
+
+					{highlights && highlights.length > 0 && (
+						<div className="mb-8 grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+							{highlights.map((highlight, index) => (
+								<div key={index} className="flex items-center justify-center text-muted-foreground">
+									{highlight}
+								</div>
+							))}
+						</div>
+					)}
 
 					<div className="flex flex-col sm:flex-row gap-4">
 						<Button
