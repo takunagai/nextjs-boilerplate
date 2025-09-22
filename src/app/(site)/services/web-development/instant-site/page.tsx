@@ -21,7 +21,7 @@ import { META } from "@/lib/constants";
 import { createBreadcrumbs } from "@/lib/utils";
 
 // ページ固有の定数を定義
-const PAGE_PATH = "/services/instant-site";
+const PAGE_PATH = "/services/web-development/instant-site";
 const PAGE_TITLE = "一夜城 - インスタントホームページ制作";
 
 export const metadata: Metadata = generateMetadata({
@@ -58,6 +58,7 @@ export default function InstantSitePage() {
 	const breadcrumbItems = [
 		{ title: "ホーム", path: "/" },
 		{ title: "サービス", path: "/services" },
+		{ title: "ウェブ制作・アプリ開発", path: "/services/web-development" },
 		{ title: PAGE_TITLE, path: PAGE_PATH, current: true },
 	];
 	const { ui: uiBreadcrumbs, jsonLd: jsonLdBreadcrumbs } =
@@ -92,7 +93,7 @@ export default function InstantSitePage() {
 					primaryButtonText="初回相談（ワンコイン）を予約"
 					secondaryButtonText="料金詳細を見る"
 					primaryButtonHref="/contact?service=instant-site"
-					secondaryButtonHref="/services/instant-site#pricing"
+					secondaryButtonHref="/services/web-development/instant-site#pricing"
 				/>
 			</main>
 		</>

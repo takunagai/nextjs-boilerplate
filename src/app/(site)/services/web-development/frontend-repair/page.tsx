@@ -17,7 +17,7 @@ import { META } from "@/lib/constants";
 import { createBreadcrumbs } from "@/lib/utils";
 
 // ページ固有の定数を定義
-const PAGE_PATH = "/services/frontend-repair";
+const PAGE_PATH = "/services/web-development/frontend-repair";
 const PAGE_TITLE = "フロントエンドリペア";
 
 export const metadata: Metadata = generateMetadata({
@@ -48,6 +48,7 @@ export default function FrontendRepairPage() {
 	const breadcrumbItems = [
 		{ title: "ホーム", path: "/" },
 		{ title: "サービス", path: "/services" },
+		{ title: "ウェブ制作・アプリ開発", path: "/services/web-development" },
 		{ title: PAGE_TITLE, path: PAGE_PATH, current: true },
 	];
 	const { ui: uiBreadcrumbs, jsonLd: jsonLdBreadcrumbs } =
