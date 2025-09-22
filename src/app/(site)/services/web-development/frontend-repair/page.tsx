@@ -29,7 +29,7 @@ const pageConfig = createWebDevelopmentServiceConfig(
 		"デプロイ支援",
 		"無料診断",
 		"TypeScript対応",
-	]
+	],
 );
 
 export const metadata = generateServiceMetadata(pageConfig);

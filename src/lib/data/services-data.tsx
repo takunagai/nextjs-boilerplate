@@ -86,7 +86,7 @@ export const services: ServiceItem[] = [
 			"デプロイ支援とパフォーマンス最適化",
 		],
 	},
-];;
+];
 
 // サービス別フローコメント
 export const serviceComments = {
@@ -146,18 +146,21 @@ export const serviceComments = {
 		"パフォーマンス最適化も実施",
 		"安心のアフターサポート",
 	],
-} as const;;
+} as const;
 
 // コメント取得ヘルパー関数
 export function getCommentsForService(serviceId: string): readonly string[] {
-	return serviceComments[serviceId as keyof typeof serviceComments] || serviceComments["web-development"];
+	return (
+		serviceComments[serviceId as keyof typeof serviceComments] ||
+		serviceComments["web-development"]
+	);
 }
 
 // サービスカテゴリ別フィルタ関数
 export function getMainServices(): ServiceItem[] {
-	return services.filter(service => service.category === "main");
+	return services.filter((service) => service.category === "main");
 }
 
 export function getSubServices(): ServiceItem[] {
-	return services.filter(service => service.category === "sub");
+	return services.filter((service) => service.category === "sub");
 }

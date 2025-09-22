@@ -184,9 +184,7 @@ export function ProcessSection() {
 												{step.id}
 											</span>
 										</div>
-										<h3 className="mb-1 text-lg font-semibold">
-											{step.title}
-										</h3>
+										<h3 className="mb-1 text-lg font-semibold">{step.title}</h3>
 										<p className="mb-2 text-sm text-muted-foreground">
 											{step.description}
 										</p>
@@ -198,10 +196,8 @@ export function ProcessSection() {
 													: "bg-primary/5 text-primary/70",
 											)}
 										>
-											{step.role === "both"
-												? "打ち合わせ"
-												: "制作作業"}
-											・{step.duration}
+											{step.role === "both" ? "打ち合わせ" : "制作作業"}・
+											{step.duration}
 										</span>
 
 										{/* 詳細（ホバー時） */}
@@ -260,9 +256,7 @@ export function ProcessSection() {
 												{step.id}
 											</span>
 										</div>
-										<h3 className="mb-1 text-lg font-semibold">
-											{step.title}
-										</h3>
+										<h3 className="mb-1 text-lg font-semibold">{step.title}</h3>
 										<p className="mb-2 text-sm text-muted-foreground">
 											{step.description}
 										</p>
@@ -274,10 +268,8 @@ export function ProcessSection() {
 													: "bg-primary/5 text-primary/70",
 											)}
 										>
-											{step.role === "both"
-												? "打ち合わせ"
-												: "制作作業"}
-											・{step.duration}
+											{step.role === "both" ? "打ち合わせ" : "制作作業"}・
+											{step.duration}
 										</span>
 
 										{/* 詳細（ホバー時） */}
@@ -306,9 +298,7 @@ export function ProcessSection() {
 				<div className="mt-12 flex flex-wrap justify-center gap-6 text-sm">
 					<div className="flex items-center">
 						<div className="mr-2 h-4 w-4 rounded-full bg-primary" />
-						<span className="text-muted-foreground">
-							お客様との打ち合わせ
-						</span>
+						<span className="text-muted-foreground">お客様との打ち合わせ</span>
 					</div>
 					<div className="flex items-center">
 						<div className="mr-2 h-4 w-4 rounded-full bg-primary/60" />

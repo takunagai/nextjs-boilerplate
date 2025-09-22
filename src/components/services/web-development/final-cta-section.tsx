@@ -52,7 +52,9 @@ export function FinalCTASection() {
 									<span className="text-primary text-sm">✓</span>
 								</div>
 								<p className="text-muted-foreground">
-									<strong className="text-foreground">しつこい営業はしません</strong>
+									<strong className="text-foreground">
+										しつこい営業はしません
+									</strong>
 									。安心してご相談ください
 								</p>
 							</div>

@@ -78,7 +78,10 @@ export function RegisterForm() {
 				}),
 			});
 
-			const result = await response.json() as { success?: boolean; error?: { message?: string } };
+			const result = (await response.json()) as {
+				success?: boolean;
+				error?: { message?: string };
+			};
 
 			if (response.ok && result.success) {
 				toast.success("アカウントが作成されました");

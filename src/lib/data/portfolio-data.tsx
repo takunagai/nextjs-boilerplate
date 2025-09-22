@@ -31,7 +31,16 @@ export type PortfolioItem = {
 };
 
 export type PortfolioCategory = {
-	id: "web" | "design" | "photo" | "logo" | "shop" | "other" | "ai-image" | "instant-site" | "frontend-repair";
+	id:
+		| "web"
+		| "design"
+		| "photo"
+		| "logo"
+		| "shop"
+		| "other"
+		| "ai-image"
+		| "instant-site"
+		| "frontend-repair";
 	name: string;
 	description: string;
 	serviceUrl?: string;

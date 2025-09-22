@@ -40,7 +40,10 @@ export function generateServiceMetadata(config: ServicePageConfig): Metadata {
 // ビューポート生成ヘルパー
 export const serviceViewport = generateViewport();
 
-export function ServicePageWrapper({ config, children }: ServicePageWrapperProps) {
+export function ServicePageWrapper({
+	config,
+	children,
+}: ServicePageWrapperProps) {
 	// パンくずリストのデータを定義
 	const breadcrumbItems = [
 		{ title: "ホーム", path: "/" },
@@ -66,9 +69,7 @@ export function ServicePageWrapper({ config, children }: ServicePageWrapperProps
 				<Breadcrumb items={uiBreadcrumbs} />
 			</Container>
 
-			<main className="flex min-h-screen flex-col">
-				{children}
-			</main>
+			<main className="flex min-h-screen flex-col">{children}</main>
 		</>
 	);
 }
@@ -79,7 +80,7 @@ export function createWebDevelopmentServiceConfig(
 	pageTitle: string,
 	description: string,
 	keywords: string[],
-	options?: { revalidate?: number }
+	options?: { revalidate?: number },
 ): ServicePageConfig {
 	return {
 		pagePath: `/services/web-development/${serviceId}`,

@@ -17,7 +17,12 @@ const techStack = {
 	},
 	performance: {
 		title: "パフォーマンス",
-		items: ["画像最適化（AVIF/WebP）", "Lazy Loading", "Prefetch", "Minimal JS"],
+		items: [
+			"画像最適化（AVIF/WebP）",
+			"Lazy Loading",
+			"Prefetch",
+			"Minimal JS",
+		],
 	},
 	seo: {
 		title: "SEO対策",
@@ -25,7 +30,11 @@ const techStack = {
 	},
 	analytics: {
 		title: "分析",
-		items: ["Cloudflare Analytics", "Core Web Vitals計測", "代替分析ツール対応"],
+		items: [
+			"Cloudflare Analytics",
+			"Core Web Vitals計測",
+			"代替分析ツール対応",
+		],
 	},
 };
 
@@ -53,7 +62,9 @@ export function TechSpecsSection() {
 							key={key}
 							className="rounded-lg border bg-card p-6 hover:shadow-lg transition-shadow"
 						>
-							<h3 className="mb-4 font-semibold text-primary">{section.title}</h3>
+							<h3 className="mb-4 font-semibold text-primary">
+								{section.title}
+							</h3>
 							<ul className="space-y-2">
 								{section.items.map((item) => (
 									<li key={item} className="flex items-center text-sm">
@@ -74,7 +85,9 @@ export function TechSpecsSection() {
 								<Badge variant="secondary" className="mr-2 mt-0.5">
 									✓
 								</Badge>
-								<span className="text-sm text-muted-foreground">{standard}</span>
+								<span className="text-sm text-muted-foreground">
+									{standard}
+								</span>
 							</div>
 						))}
 					</div>
@@ -92,7 +105,8 @@ export function TechSpecsSection() {
 						<li className="flex items-start">
 							<span className="mr-2 text-green-600">✓</span>
 							<span>
-								<strong>品質保証：</strong>読みやすさ・階層設計・アクセシビリティ配慮
+								<strong>品質保証：</strong>
+								読みやすさ・階層設計・アクセシビリティ配慮
 							</span>
 						</li>
 						<li className="flex items-start">
@@ -104,7 +118,8 @@ export function TechSpecsSection() {
 						<li className="flex items-start">
 							<span className="mr-2 text-green-600">✓</span>
 							<span>
-								<strong>著作権：</strong>AI生成物は商用利用可のポリシー準拠素材のみ使用
+								<strong>著作権：</strong>
+								AI生成物は商用利用可のポリシー準拠素材のみ使用
 							</span>
 						</li>
 					</ul>

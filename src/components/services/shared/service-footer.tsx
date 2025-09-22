@@ -1,62 +1,16 @@
 import Link from "next/link";
 import { Container } from "@/components/ui/container";
-import { FaCode, FaToolbox, FaBolt } from "react-icons/fa6";
-
-// サービスフッター項目の型定義
-interface ServiceFooterItem {
-	href: string;
-	title: string;
-	description: string;
-	icon: React.ComponentType<{ className?: string }>;
-	color: string;
-	gradientFrom: string;
-}
-
-interface ServiceFooterConfig {
-	title: string;
-	description: string;
-	items: ServiceFooterItem[];
-}
-
-// Web Development サービスフッターの設定
-const WEB_DEV_FOOTER_CONFIG: ServiceFooterConfig = {
-	title: "ウェブ制作・アプリ開発サービス",
-	description:
-		"AIと15年の経験を活かして、高品質なウェブサイト・アプリケーションをお手頃価格でご提供します。",
-	items: [
-		{
-			href: "/services/web-development",
-			title: "ウェブ制作・アプリ開発",
-			description: "フルカスタムの高品質なサイト制作",
-			icon: FaCode,
-			color: "text-primary",
-			gradientFrom: "from-primary/5",
-		},
-		{
-			href: "/services/web-development/frontend-repair",
-			title: "フロントエンドリペア",
-			description: "AI生成コードの品質向上・修正",
-			icon: FaToolbox,
-			color: "text-blue-600",
-			gradientFrom: "from-blue-600/5",
-		},
-		{
-			href: "/services/web-development/instant-site",
-			title: "一夜城",
-			description: "55,000円・当日公開の高速制作",
-			icon: FaBolt,
-			color: "text-orange-600",
-			gradientFrom: "from-orange-600/5",
-		},
-	],
-};
+import {
+	WEB_DEV_FOOTER_CONFIG,
+	type WebDevFooterConfig,
+} from "@/lib/data/web-development-config";
 
 interface ServiceFooterProps {
-	config?: ServiceFooterConfig;
+	config?: WebDevFooterConfig;
 }
 
-export function ServiceFooter({ 
-	config = WEB_DEV_FOOTER_CONFIG 
+export function ServiceFooter({
+	config = WEB_DEV_FOOTER_CONFIG,
 }: ServiceFooterProps) {
 	return (
 		<section className="py-16 bg-muted/30 border-t">
@@ -82,7 +36,9 @@ export function ServiceFooter({
 											{item.description}
 										</p>
 									</div>
-									<div className={`absolute inset-0 bg-gradient-to-br ${item.gradientFrom} to-transparent opacity-0 group-hover:opacity-100 transition-opacity`} />
+									<div
+										className={`absolute inset-0 bg-gradient-to-br ${item.gradientFrom} to-transparent opacity-0 group-hover:opacity-100 transition-opacity`}
+									/>
 								</Link>
 							);
 						})}

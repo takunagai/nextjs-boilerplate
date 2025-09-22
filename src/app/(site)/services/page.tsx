@@ -44,7 +44,7 @@ export const viewport = generateViewport();
 export default function ServicesPage() {
 	// メインサービスのみを取得
 	const mainServices = getMainServices();
-	
+
 	// パンくずリストのデータを定義
 	const breadcrumbItems = [
 		{ title: "ホーム", path: "/" },

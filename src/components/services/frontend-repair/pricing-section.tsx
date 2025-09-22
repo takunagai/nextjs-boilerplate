@@ -103,7 +103,9 @@ export function PricingSection() {
 								<h3 className="text-xl font-bold mb-2">{plan.name}</h3>
 								<div className="mb-4">
 									<span className="text-3xl font-bold">¥{plan.price}</span>
-									<span className="text-muted-foreground ml-1">{plan.unit}</span>
+									<span className="text-muted-foreground ml-1">
+										{plan.unit}
+									</span>
 								</div>
 								<p className="text-muted-foreground text-sm mb-2">
 									{plan.description}

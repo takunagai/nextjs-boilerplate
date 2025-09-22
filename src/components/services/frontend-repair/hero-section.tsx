@@ -18,7 +18,8 @@ export function FrontendRepairHeroSection() {
 						AI で作ったサイト、そのままで大丈夫？
 					</p>
 					<p className="text-base md:text-lg opacity-90">
-						React / Next.js コード修正・デザインブラッシュアップ・デプロイ支援まで、
+						React / Next.js
+						コード修正・デザインブラッシュアップ・デプロイ支援まで、
 						<br />
 						プロが最終調整して安心してリリースできる状態に仕上げます。
 					</p>

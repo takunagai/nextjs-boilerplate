@@ -12,7 +12,8 @@ const reasons = [
 	{
 		icon: <Layers className="h-5 w-5" />,
 		title: "再利用設計",
-		description: "実績から磨いたセクション群（Hero/Problem/Solution/Offer/CTA等）",
+		description:
+			"実績から磨いたセクション群（Hero/Problem/Solution/Offer/CTA等）",
 	},
 	{
 		icon: <Code className="h-5 w-5" />,
@@ -41,7 +42,7 @@ export function WhyAffordableSection() {
 
 				<div className="mt-12 rounded-lg border border-primary/20 bg-primary/5 p-6">
 					<p className="text-center text-lg font-medium">
-						15年の制作経験 × 最新のAI技術 = 
+						15年の制作経験 × 最新のAI技術 =
 						<span className="text-primary"> 高品質なのにお手頃価格</span>
 					</p>
 				</div>

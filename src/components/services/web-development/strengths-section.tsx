@@ -1,11 +1,18 @@
 import { Container } from "@/components/ui/container";
-import { FaPalette, FaCode, FaUsers, FaRocket, FaHandshake } from "react-icons/fa6";
+import {
+	FaPalette,
+	FaCode,
+	FaUsers,
+	FaRocket,
+	FaHandshake,
+} from "react-icons/fa6";
 
 const strengths = [
 	{
 		icon: FaHandshake,
 		title: "ワンストップ対応",
-		description: "デザインもコーディングも写真撮影も。全部まとめてお任せください。",
+		description:
+			"デザインもコーディングも写真撮影も。全部まとめてお任せください。",
 		details: ["デザイン制作", "プログラミング", "写真撮影", "文章作成"],
 	},
 	{
@@ -24,13 +31,24 @@ const strengths = [
 		icon: FaPalette,
 		title: "AIを正しく活用",
 		description: "AIの良さを引き出しながら、人の目でしっかり仕上げます。",
-		details: ["AIへの的確な指示", "出力の修正・改善", "品質チェック", "最終調整"],
+		details: [
+			"AIへの的確な指示",
+			"出力の修正・改善",
+			"品質チェック",
+			"最終調整",
+		],
 	},
 	{
 		icon: FaUsers,
 		title: "柔軟な対応",
-		description: "個人だから小回りが利きます。お客様のペースに合わせて進められます。",
-		details: ["スケジュール調整", "予算相談", "部分的な対応", "アフターサポート"],
+		description:
+			"個人だから小回りが利きます。お客様のペースに合わせて進められます。",
+		details: [
+			"スケジュール調整",
+			"予算相談",
+			"部分的な対応",
+			"アフターサポート",
+		],
 	},
 ];
 
@@ -39,9 +57,7 @@ export function StrengthsSection() {
 		<section className="py-16 md:py-24 bg-muted/30">
 			<Container width="xl">
 				<div className="text-center mb-12 md:mb-16">
-					<h2 className="text-3xl md:text-4xl font-bold mb-4">
-						私たちの強み
-					</h2>
+					<h2 className="text-3xl md:text-4xl font-bold mb-4">私たちの強み</h2>
 					<p className="text-lg text-muted-foreground max-w-2xl mx-auto">
 						AIと経験を組み合わせて、あなたに最適なサービスを
 					</p>
@@ -60,9 +76,7 @@ export function StrengthsSection() {
 										<Icon className="w-7 h-7 text-primary" />
 									</div>
 								</div>
-								<h3 className="text-xl font-semibold mb-3">
-									{strength.title}
-								</h3>
+								<h3 className="text-xl font-semibold mb-3">{strength.title}</h3>
 								<p className="text-muted-foreground mb-4">
 									{strength.description}
 								</p>
@@ -95,9 +109,7 @@ export function StrengthsSection() {
 										<Icon className="w-7 h-7 text-primary" />
 									</div>
 								</div>
-								<h3 className="text-xl font-semibold mb-3">
-									{strength.title}
-								</h3>
+								<h3 className="text-xl font-semibold mb-3">{strength.title}</h3>
 								<p className="text-muted-foreground mb-4">
 									{strength.description}
 								</p>

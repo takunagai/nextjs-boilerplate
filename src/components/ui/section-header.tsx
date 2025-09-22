@@ -6,7 +6,11 @@ interface SectionHeaderProps {
 	className?: string;
 }
 
-export function SectionHeader({ title, description, className = "" }: SectionHeaderProps) {
+export function SectionHeader({
+	title,
+	description,
+	className = "",
+}: SectionHeaderProps) {
 	return (
 		<div className={`text-center ${className}`}>
 			<h2 className="text-3xl font-bold tracking-tight sm:text-4xl">{title}</h2>

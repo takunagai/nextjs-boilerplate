@@ -75,12 +75,18 @@ export function DeliverableSection() {
 							key={section.number}
 							className="group relative overflow-hidden rounded-lg border bg-card p-6 transition-all hover:shadow-lg"
 						>
-							<div className={`mb-2 text-3xl font-bold ${section.color} opacity-20`}>
+							<div
+								className={`mb-2 text-3xl font-bold ${section.color} opacity-20`}
+							>
 								{section.number}
 							</div>
 							<h3 className="mb-2 font-semibold">{section.title}</h3>
-							<p className="mb-2 text-sm text-muted-foreground">{section.description}</p>
-							<p className={`text-xs font-medium ${section.color}`}>{section.textCount}</p>
+							<p className="mb-2 text-sm text-muted-foreground">
+								{section.description}
+							</p>
+							<p className={`text-xs font-medium ${section.color}`}>
+								{section.textCount}
+							</p>
 						</div>
 					))}
 				</div>
@@ -120,7 +126,9 @@ export function DeliverableSection() {
 				</div>
 
 				<div className="mt-6 rounded-lg border border-red-600/20 bg-red-50/50 p-6 dark:bg-red-950/20">
-					<h3 className="mb-3 font-semibold">含まないもの（上位プラン/追加対応）</h3>
+					<h3 className="mb-3 font-semibold">
+						含まないもの（上位プラン/追加対応）
+					</h3>
 					<ul className="space-y-2 text-sm text-muted-foreground">
 						<li className="flex items-start">
 							<span className="mr-2 text-red-600">×</span>

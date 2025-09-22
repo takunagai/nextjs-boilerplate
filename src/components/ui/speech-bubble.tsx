@@ -212,9 +212,7 @@ export function SpeechBubble({
 	// Suspense境界の処理
 	if (!disableSuspense && contentPromise) {
 		return (
-			<Suspense fallback={defaultFallback}>
-				{speechBubbleContent}
-			</Suspense>
+			<Suspense fallback={defaultFallback}>{speechBubbleContent}</Suspense>
 		);
 	}
 

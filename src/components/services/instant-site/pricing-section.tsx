@@ -1,5 +1,12 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardFooter,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
 import { SectionHeader } from "@/components/ui/section-header";
 import { Check, Plus } from "lucide-react";
@@ -94,17 +101,20 @@ export function PricingSection() {
 									</div>
 									<div className="flex items-center justify-center gap-2">
 										<span className="text-lg text-muted-foreground line-through">
-											{mainPlan.originalPrice}{mainPlan.unit}
+											{mainPlan.originalPrice}
+											{mainPlan.unit}
 										</span>
-										<span className="text-xl font-bold text-red-600">
-											→
-										</span>
+										<span className="text-xl font-bold text-red-600">→</span>
 									</div>
 								</div>
 							</div>
 							<div className="mb-6 flex items-baseline justify-center">
-								<span className="text-4xl font-bold text-red-600">{mainPlan.price}</span>
-								<span className="ml-2 text-muted-foreground">{mainPlan.unit}</span>
+								<span className="text-4xl font-bold text-red-600">
+									{mainPlan.price}
+								</span>
+								<span className="ml-2 text-muted-foreground">
+									{mainPlan.unit}
+								</span>
 								<div className="ml-3 bg-red-600 text-white px-2 py-1 rounded text-xs font-bold">
 									限定価格
 								</div>
@@ -134,11 +144,16 @@ export function PricingSection() {
 						<CardContent>
 							<ul className="space-y-4">
 								{options.map((option) => (
-									<li key={option.title} className="border-b pb-3 last:border-0">
+									<li
+										key={option.title}
+										className="border-b pb-3 last:border-0"
+									>
 										<div className="flex items-start justify-between">
 											<div className="flex-1">
 												<p className="text-sm font-medium">{option.title}</p>
-												<p className="text-xs text-muted-foreground">{option.description}</p>
+												<p className="text-xs text-muted-foreground">
+													{option.description}
+												</p>
 											</div>
 											<span className="ml-2 text-sm font-semibold text-orange-600">
 												{option.price}

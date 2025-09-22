@@ -120,7 +120,9 @@ export const avatarVariants = cva(
 );
 
 // 型定義のエクスポート
-export type SpeechBubbleVariantProps = VariantProps<typeof speechBubbleVariants>;
+export type SpeechBubbleVariantProps = VariantProps<
+	typeof speechBubbleVariants
+>;
 export type BubbleVariantProps = VariantProps<typeof bubbleVariants>;
 export type AvatarVariantProps = VariantProps<typeof avatarVariants>;
 

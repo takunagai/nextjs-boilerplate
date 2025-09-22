@@ -23,7 +23,8 @@ export function useHeroHeight(): HeroHeightData {
 
 	// ヘッダーの高さとお知らせバーの高さを合計
 	// SSR時は固定値（64px）を使用、ハイドレーション後に動的値を使用
-	const paddingTop = mounted && isVisible ? HEADER_HEIGHT + height : HEADER_HEIGHT;
+	const paddingTop =
+		mounted && isVisible ? HEADER_HEIGHT + height : HEADER_HEIGHT;
 
 	// ヒーローセクション用のスタイルオブジェクト
 	const heroStyle = {

@@ -1,52 +1,16 @@
 import Link from "next/link";
 import { Container } from "@/components/ui/container";
-import { FaCode, FaToolbox, FaBolt } from "react-icons/fa6";
-
-// サービスナビゲーション設定の型定義
-interface ServiceNavItem {
-	href: string;
-	label: string;
-	icon?: React.ComponentType<{ className?: string }>;
-}
-
-interface ServiceNavigationConfig {
-	title: string;
-	titleIcon: React.ComponentType<{ className?: string }>;
-	mainHref: string;
-	contactHref: string;
-	items: ServiceNavItem[];
-}
-
-// Web Development サービスの設定
-const WEB_DEV_CONFIG: ServiceNavigationConfig = {
-	title: "ウェブ制作・アプリ開発",
-	titleIcon: FaCode,
-	mainHref: "/services/web-development",
-	contactHref: "/contact?service=web-development",
-	items: [
-		{
-			href: "/services/web-development",
-			label: "トップ",
-		},
-		{
-			href: "/services/web-development/frontend-repair",
-			label: "フロントエンドリペア",
-			icon: FaToolbox,
-		},
-		{
-			href: "/services/web-development/instant-site",
-			label: "一夜城",
-			icon: FaBolt,
-		},
-	],
-};
+import {
+	WEB_DEV_NAVIGATION_CONFIG,
+	type WebDevNavigationConfig,
+} from "@/lib/data/web-development-config";
 
 interface ServiceNavigationProps {
-	config?: ServiceNavigationConfig;
+	config?: WebDevNavigationConfig;
 }
 
-export function ServiceNavigation({ 
-	config = WEB_DEV_CONFIG 
+export function ServiceNavigation({
+	config = WEB_DEV_NAVIGATION_CONFIG,
 }: ServiceNavigationProps) {
 	const TitleIcon = config.titleIcon;
 

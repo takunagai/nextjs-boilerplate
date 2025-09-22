@@ -41,7 +41,11 @@ interface ServiceItemProps {
 	comments: readonly string[];
 }
 
-export function ServiceItemComponent({ item, index, comments }: ServiceItemProps) {
+export function ServiceItemComponent({
+	item,
+	index,
+	comments,
+}: ServiceItemProps) {
 	const { shouldLoad3D, isMediumOrBetter, isLoading } = usePerformanceCheck();
 
 	return (
@@ -68,12 +72,8 @@ export function ServiceItemComponent({ item, index, comments }: ServiceItemProps
 				{/* テキストコンテンツ - モバイルでは下に表示 */}
 				<div className="flex flex-col gap-6 max-w-xl [direction:ltr] relative z-20 order-2 md:order-none">
 					<div className="flex items-center gap-3">
-						{item.icon && (
-							<div className="flex-shrink-0">{item.icon}</div>
-						)}
-						<h3 className="text-2xl md:text-3xl font-bold">
-							{item.title}
-						</h3>
+						{item.icon && <div className="flex-shrink-0">{item.icon}</div>}
+						<h3 className="text-2xl md:text-3xl font-bold">{item.title}</h3>
 					</div>
 
 					{/* 説明文 */}

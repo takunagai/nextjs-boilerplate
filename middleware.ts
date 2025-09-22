@@ -134,7 +134,10 @@ function setSecurityHeaders(response: NextResponse, req: NextRequest): void {
 	response.headers.set("X-Frame-Options", "DENY");
 	response.headers.set("X-XSS-Protection", "1; mode=block");
 	response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
-	response.headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=()");
+	response.headers.set(
+		"Permissions-Policy",
+		"camera=(), microphone=(), geolocation=()",
+	);
 
 	// HSTS (HTTP Strict Transport Security)
 	// 本番環境でHTTPSを使用している場合のみ有効
@@ -148,7 +151,7 @@ function setSecurityHeaders(response: NextResponse, req: NextRequest): void {
 	// Content Security Policy (CSP)
 	// 開発環境と本番環境で異なる設定
 	const isDevelopment = process.env.NODE_ENV === "development";
-	
+
 	const cspDirectives = [
 		"default-src 'self'",
 		"script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net",
@@ -178,7 +181,7 @@ function setSecurityHeaders(response: NextResponse, req: NextRequest): void {
 // 通常のmiddleware関数（テスト目的）
 export default function middleware(req: NextRequest) {
 	console.log("Middleware called for:", req.nextUrl.pathname);
-	
+
 	// CSRF保護
 	if (!validateCsrf(req)) {
 		const errorResponse = new NextResponse(
@@ -210,7 +213,7 @@ export default function middleware(req: NextRequest) {
 
 	// 通常のレスポンスを作成
 	const response = NextResponse.next();
-	
+
 	// セキュリティヘッダーの設定
 	setSecurityHeaders(response, req);
 

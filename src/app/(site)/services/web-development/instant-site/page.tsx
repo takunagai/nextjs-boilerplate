@@ -37,7 +37,7 @@ const pageConfig = createWebDevelopmentServiceConfig(
 		"北摂",
 		"大阪",
 	],
-	{ revalidate: 7200 } // 2 hours
+	{ revalidate: 7200 }, // 2 hours
 );
 
 export const metadata = generateServiceMetadata(pageConfig);

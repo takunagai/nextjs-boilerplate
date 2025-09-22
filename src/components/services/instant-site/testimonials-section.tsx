@@ -15,7 +15,8 @@ const testimonials = [
 		id: "tax",
 		business: "税理士事務所",
 		location: "吹田",
-		comment: "「よくある質問」を整理しただけで問い合わせの質が上がり、初回面談の歩留まりが改善。",
+		comment:
+			"「よくある質問」を整理しただけで問い合わせの質が上がり、初回面談の歩留まりが改善。",
 		result: "面談成約率 +25%",
 	},
 	{
@@ -44,7 +45,9 @@ export function TestimonialsSection() {
 								<Quote className="mb-4 h-8 w-8 text-primary/20" />
 								<div className="mb-4">
 									<p className="font-semibold">{testimonial.business}</p>
-									<p className="text-sm text-muted-foreground">{testimonial.location}</p>
+									<p className="text-sm text-muted-foreground">
+										{testimonial.location}
+									</p>
 								</div>
 								<p className="mb-4 text-muted-foreground">
 									{testimonial.comment}

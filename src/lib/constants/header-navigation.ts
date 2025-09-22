@@ -33,7 +33,10 @@ export const HEADER_NAVIGATION: HeaderLink[] = [
 				href: "/services/ai-consulting-and-support",
 			},
 			{ label: "クリエイティブ", href: "/services/creative" },
-			{ label: "フロントエンドリペア", href: "/services/web-development/frontend-repair" },
+			{
+				label: "フロントエンドリペア",
+				href: "/services/web-development/frontend-repair",
+			},
 		],
 	},
 	{

@@ -3,10 +3,10 @@ import { FeatureItems } from "@/components/ui/feature-items";
 import { Heading } from "@/components/ui/heading";
 import { BlobMasks } from "@/components/ui/blob-mask";
 import { portfolioCategories } from "@/lib/data/portfolio-data";
-import { 
-	getMainServices, 
-	getCommentsForService, 
-	type ServiceItem 
+import {
+	getMainServices,
+	getCommentsForService,
+	type ServiceItem,
 } from "@/lib/data/services-data";
 import { ServiceCategories } from "./service-categories";
 import { ServiceItemComponent } from "./service-item";
@@ -49,7 +49,6 @@ export function ServicesSection() {
 						/>
 					)}
 				/>
-
 
 				{/* サービスカテゴリー */}
 				<ServiceCategories categories={portfolioCategories} />

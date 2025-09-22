@@ -58,7 +58,9 @@ export function RecommendedForSection() {
 						>
 							<div className="text-center mb-6">
 								<h3 className="text-xl font-bold mb-2">{group.title}</h3>
-								<p className="text-sm text-muted-foreground">{group.subtitle}</p>
+								<p className="text-sm text-muted-foreground">
+									{group.subtitle}
+								</p>
 							</div>
 
 							<ul className="space-y-4">
