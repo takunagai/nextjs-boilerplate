@@ -1,4 +1,4 @@
-import { FaClock, FaDollarSign, FaRocket, FaTrophy } from "react-icons/fa6";
+import { FaClock, FaLightbulb, FaTrophy } from "react-icons/fa6";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
 import { Heading } from "@/components/ui/heading";
@@ -8,35 +8,26 @@ const reasons = [
 		id: "competitive",
 		number: "1",
 		title: "競合に差をつける",
-		description: "使える人と使えない人の差は開く一方",
+		description: "使える人と使えない人の差は開く一方。AI を味方につけた人だけが次のステージに進める時代になっています。",
 		icon: FaTrophy,
 		iconColor: "text-yellow-600",
 		bgColor: "bg-yellow-50",
 	},
 	{
-		id: "time",
+		id: "efficiency",
 		number: "2",
-		title: "時間を生み出す",
-		description: "単純作業は AI に任せて、創造的な仕事に集中",
+		title: "時間・コストを削減",
+		description: "単純作業は AI に任せて、創造的な仕事に集中。外注費を大幅カットし、本当に大切な業務に時間を使えるようになります。",
 		icon: FaClock,
 		iconColor: "text-blue-600",
 		bgColor: "bg-blue-50",
 	},
 	{
-		id: "cost",
+		id: "innovation",
 		number: "3",
-		title: "コストを削減",
-		description: "外注費を大幅カット",
-		icon: FaDollarSign,
-		iconColor: "text-green-600",
-		bgColor: "bg-green-50",
-	},
-	{
-		id: "possibilities",
-		number: "4",
-		title: "可能性を広げる",
-		description: "今まで諦めていたことが実現可能に",
-		icon: FaRocket,
+		title: "高品質化、可能性を広げる",
+		description: "AI との壁打ちで今まで出なかったアイデアを創出。また、今まで諦めていたことが実現可能になり、ビジネスの幅が格段に広がります。",
+		icon: FaLightbulb,
 		iconColor: "text-purple-600",
 		bgColor: "bg-purple-50",
 	},
@@ -48,14 +39,14 @@ export function ConsultingWhyAISection() {
 			<Container width="2xl" paddingY="lg" paddingX="lg">
 				<div className="text-center mb-12">
 					<Heading as="h2" align="center" className="mb-4">
-						なぜ今、AI を学ぶべき？
+						なぜ今、AI を始めるべき？
 					</Heading>
 					<p className="text-muted-foreground max-w-2xl mx-auto">
-						AI 時代を勝ち抜く4つの理由
+						AI 時代を勝ち抜く3つの理由
 					</p>
 				</div>
 
-				<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+				<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 					{reasons.map((reason) => {
 						const IconComponent = reason.icon;
 						return (
