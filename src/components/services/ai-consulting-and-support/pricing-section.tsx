@@ -1,56 +1,63 @@
-import { FaDesktop, FaShield, FaVideo } from "react-icons/fa6";
+import { FaBolt, FaCheck, FaCrown, FaDesktop, FaShield, FaStar, FaVideo } from "react-icons/fa6";
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
 import { Heading } from "@/components/ui/heading";
 
 const pricingPlans = [
 	{
-		id: "spot-30",
+		id: "spot",
 		service: "スポット相談",
-		content: "30分",
-		normalPrice: "1万円",
-		specialPrice: "5,000円",
-		highlight: false,
-	},
-	{
-		id: "spot-60",
-		service: "",
-		content: "60分",
-		normalPrice: "1.8万円",
-		specialPrice: "9,000円",
-		highlight: false,
-	},
-	{
-		id: "ai-writing",
-		service: "AI ライティング指南",
-		content: "全3回（各 90分）",
-		normalPrice: "9万円",
-		specialPrice: "4.5万円",
+		content: "1時間",
+		normalPrice: "11,000円",
+		specialPrice: "5,500円",
+		discount: "50%",
+		description: "聞きたい内容をピンポイントで、もしくは漠然とした相談もOK！",
+		features: [
+			"質問への具体的な回答",
+			"おすすめツールリスト",
+			"次のステップの提案",
+			"フォローアップ資料付き",
+		],
 		highlight: true,
-	},
-	{
-		id: "prompt-course",
-		service: "プロンプト作成講座",
-		content: "全2回（各 2時間）",
-		normalPrice: "8万円",
-		specialPrice: "4万円",
-		highlight: false,
-	},
-	{
-		id: "consulting-monthly",
-		service: "1対1コンサル",
-		content: "月額（月 2回面談）",
-		normalPrice: "10万円/月",
-		specialPrice: "5万円/月",
-		highlight: false,
+		icon: FaBolt,
+		iconColor: "text-blue-600",
 	},
 	{
 		id: "consulting-pack",
-		service: "",
+		service: "定期コンサルティング",
 		content: "3ヶ月パック",
-		normalPrice: "27万円",
-		specialPrice: "13.5万円",
-		highlight: true,
+		normalPrice: "132,000円",
+		specialPrice: "66,000円",
+		discount: "50%",
+		description: "継続的なサポートで確実にスキルアップ",
+		features: [
+			"月2回の定期ミーティング（各60分）",
+			"チャットでの質問サポート",
+			"AI ツールの導入・運用支援",
+			"業務効率化の継続的な改善",
+		],
+		highlight: false,
+		icon: FaCrown,
+		iconColor: "text-orange-600",
+	},
+	{
+		id: "others",
+		service: "講座・セミナー",
+		content: "ご要望に応じて",
+		normalPrice: "",
+		specialPrice: "ご相談ください",
+		description: "単発レクチャー、企業研修など柔軟に対応",
+		features: [
+			"ChatGPT/Claude/Gemini の使い方",
+			"AI ライティング指南",
+			"画像生成 AI レクチャー",
+			"ワークフロー構築（n8n、Dify等）",
+			"バイブコーディング入門",
+		],
+		highlight: false,
+		icon: FaStar,
+		iconColor: "text-purple-600",
 	},
 ];
 
@@ -78,69 +85,96 @@ export function ConsultingPricingSection() {
 			<Container width="2xl" paddingY="lg" paddingX="lg">
 				<div className="text-center mb-12">
 					<Heading as="h2" align="center" className="mb-4">
-						料金プラン
+						料金
 					</Heading>
-					<div className="inline-block bg-gradient-to-r from-red-500 to-pink-500 text-white px-6 py-2 rounded-full text-lg font-bold mb-6">
-						テスター特別価格（先着10名様限定）
+					<p className="text-muted-foreground max-w-2xl mx-auto mb-6">
+						テスター特別価格でサービスをご提供中
+					</p>
+					<div className="inline-flex items-center gap-2 px-4 py-2 bg-orange-100 text-orange-800 rounded-full text-sm font-semibold mb-8">
+						🎉 現在、テスター特別価格で50%OFF！
 					</div>
 				</div>
 
-				{/* 価格表 */}
-				<div className="overflow-x-auto mb-12">
-					<div className="min-w-[700px]">
-						{/* ヘッダー */}
-						<div className="grid grid-cols-4 gap-4 mb-4">
-							<div className="font-bold text-lg">サービス</div>
-							<div className="text-center font-bold text-lg">内容</div>
-							<div className="text-center font-bold text-lg text-muted-foreground">
-								通常価格
-							</div>
-							<div className="text-center font-bold text-lg text-primary">
-								特別価格
-							</div>
-						</div>
-
-						{/* プランデータ */}
-						{pricingPlans.map((plan) => (
+				{/* 料金カード */}
+				<div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+					{pricingPlans.map((plan) => {
+						const IconComponent = plan.icon;
+						return (
 							<Card
 								key={plan.id}
-								className={`mb-4 ${
+								className={`h-full border-2 transition-all duration-300 hover:shadow-lg relative ${
 									plan.highlight
-										? "border-primary border-2 bg-primary/5"
-										: "border-border"
+										? "border-blue-500 ring-2 ring-blue-500 ring-opacity-50"
+										: "border-gray-200"
 								}`}
 							>
-								<CardContent className="p-4">
-									<div className="grid grid-cols-4 gap-4 items-center">
-										<div>
-											{plan.service && (
-												<h3 className="font-bold text-lg">{plan.service}</h3>
-											)}
-											{plan.highlight && (
-												<div className="text-xs bg-primary text-primary-foreground px-2 py-1 rounded mt-1 inline-block">
-													人気
-												</div>
-											)}
+								{plan.highlight && (
+									<div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+										<Badge className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1">
+											おすすめ
+										</Badge>
+									</div>
+								)}
+								<CardHeader className="text-center pb-4">
+									<div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
+										<IconComponent className={`w-8 h-8 ${plan.iconColor}`} />
+									</div>
+									<CardTitle className="text-xl mb-2">{plan.service}</CardTitle>
+									<p className="text-sm text-muted-foreground">
+										{plan.description}
+									</p>
+								</CardHeader>
+								<CardContent className="text-center space-y-6">
+									<div>
+										{plan.normalPrice && (
+											<div className="flex items-center justify-center gap-2 mb-2">
+												<span className="text-lg text-muted-foreground line-through">
+													{plan.normalPrice}
+												</span>
+												{plan.discount && (
+													<Badge variant="destructive" className="text-xs">
+														{plan.discount} OFF
+													</Badge>
+												)}
+											</div>
+										)}
+										<div className="text-3xl font-bold text-foreground">
+											{plan.specialPrice}
 										</div>
-										<div className="text-center">
-											<p className="text-sm text-muted-foreground">
-												{plan.content}
-											</p>
-										</div>
-										<div className="text-center">
-											<p className="text-lg line-through text-muted-foreground">
-												{plan.normalPrice}
-											</p>
-										</div>
-										<div className="text-center">
-											<p className="text-2xl font-bold text-primary">
-												{plan.specialPrice}
-											</p>
-										</div>
+										<p className="text-sm text-muted-foreground mt-1">
+											{plan.content}
+										</p>
+									</div>
+
+									<div className="space-y-3">
+										{plan.features.map((feature, index) => (
+											<div
+												key={index}
+												className="flex items-start gap-3 text-left"
+											>
+												<FaCheck className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+												<span className="text-sm text-foreground">
+													{feature}
+												</span>
+											</div>
+										))}
 									</div>
 								</CardContent>
 							</Card>
-						))}
+						);
+					})}
+				</div>
+
+				{/* 案内メッセージ */}
+				<div className="text-center mb-12">
+					<div className="bg-muted/50 p-6 rounded-lg max-w-2xl mx-auto">
+						<h3 className="font-semibold text-lg mb-2">
+							🎯 まずはスポット相談から
+						</h3>
+						<p className="text-sm text-muted-foreground">
+							どのサービスが最適かわからない方も、まずはお気軽にスポット相談をご利用ください。
+							あなたの状況に最適なプランをご提案いたします。
+						</p>
 					</div>
 				</div>
 
