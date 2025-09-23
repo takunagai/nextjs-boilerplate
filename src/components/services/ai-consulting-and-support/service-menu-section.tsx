@@ -1,9 +1,17 @@
 import {
+	FaCalendarCheck,
+	FaChalkboardUser,
+	FaCircleInfo,
 	FaClockRotateLeft,
+	FaLightbulb,
 	FaPenToSquare,
-	FaUserTie,
+	FaRobot,
+	FaUsers,
 	FaWandMagicSparkles,
 } from "react-icons/fa6";
+import { SiN8N, SiWindsurf } from "react-icons/si";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
 import { Heading } from "@/components/ui/heading";
@@ -11,81 +19,72 @@ import { Heading } from "@/components/ui/heading";
 const serviceMenuItems = [
 	{
 		id: "spot-consultation",
-		title: "スポット相談（30分・60分）",
-		subtitle: "今すぐ聞きたい！にお答えします",
+		title: "スポット相談",
+		subtitle: "時間単位でピンポイント相談",
+		description: "聞きたい内容をピンポイントで、もしくは漠然とした相談もOK！まずはお気軽にこちらからどうぞ。",
 		features: [
-			"「うちの業界で AI ってどう使える？」",
-			"「この作業、AI で効率化できる？」",
-			"「ChatGPT と Claude、どっちがいい？」",
-			"「AI ツールの選び方を教えて」",
+			"1時間単位でお気軽に相談",
+			"具体的な質問から漠然とした相談まで対応",
+			"その場で解決策をご提案",
+			"フォローアップ資料付き",
 		],
-		benefits: [
-			"質問への具体的な回答",
-			"おすすめツールリスト",
-			"次のステップの提案",
-			"フォローアップメール付き",
-		],
+		price: "5,500円/時間",
+		originalPrice: "11,000円",
 		icon: FaClockRotateLeft,
 		iconColor: "text-blue-600",
 		bgColor: "bg-blue-50",
 		borderColor: "border-blue-200",
+		isRecommended: true,
 	},
 	{
-		id: "ai-writing",
-		title: "AI ライティング指南（全3回）",
-		subtitle: "もう「AI っぽい文章」とは言わせない！",
+		id: "single-lecture",
+		title: "単発レクチャー",
+		subtitle: "知りたい分野をピンポイント学習",
+		description: "各分野の専門知識を効率的に学べます",
 		features: [
-			"第1回：基礎編（AI の仕組み・ツール比較・基本プロンプト）",
-			"第2回：実践編（ブログ・SNS・SEO 対応文章）",
-			"第3回：応用編（文体学習・リライト・協働方法）",
+			"ChatGPT/Claude/Gemini の効率的な使い方",
+			"AI ライティング指南（記事・ブログ執筆の流れ）",
+			"画像生成 AI（サービス比較・著作権・実践活用）",
+			"ワークフロー構築（n8n、Dify 等）の基本",
+			"バイブコーディング（Claude Code、Windsurf 等）入門",
 		],
-		benefits: [
-			"AI ライティングの完全マスター",
-			"実践的なテクニック習得",
-			"自分らしい文章作成",
-			"効率的な文章作成フロー",
-		],
-		icon: FaPenToSquare,
+		price: "要相談",
+		icon: FaChalkboardUser,
 		iconColor: "text-green-600",
 		bgColor: "bg-green-50",
 		borderColor: "border-green-200",
 	},
 	{
-		id: "prompt-course",
-		title: "プロンプト作成講座（全2回）",
-		subtitle: "AI の実力を 120% 引き出す魔法の言葉",
+		id: "seminar",
+		title: "講座・セミナー",
+		subtitle: "チーム全体のスキルアップ",
+		description: "企業・団体向けのカスタマイズ研修",
 		features: [
-			"理論編（プロンプトエンジニアリングの基本・良し悪しの判断）",
-			"実践編（業務別テンプレート・トラブルシューティング）",
+			"単発レクチャーの内容をカスタマイズ",
+			"チーム全体の AI リテラシー向上",
+			"実践的なワークショップ形式",
+			"業界特化の内容にアレンジ可能",
 		],
-		benefits: [
-			"AI を思い通りに動かすスキル",
-			"業務特化のプロンプト集",
-			"効率的な指示の出し方",
-			"AI との最適な対話術",
-		],
-		icon: FaWandMagicSparkles,
+		price: "ご相談ください",
+		icon: FaUsers,
 		iconColor: "text-purple-600",
 		bgColor: "bg-purple-50",
 		borderColor: "border-purple-200",
 	},
 	{
-		id: "one-on-one",
-		title: "1対1コンサル（月額制）",
-		subtitle: "あなた専属の AI アドバイザー",
+		id: "regular-consulting",
+		title: "定期コンサルティング",
+		subtitle: "継続的なAI活用サポート",
+		description: "3ヶ月間の定期契約で継続的にサポート",
 		features: [
-			"月 2回の定期ミーティング（各 60分）",
-			"チャットでの質問し放題",
-			"AI ツールの導入サポート",
-			"業務効率化の提案・実装支援",
+			"月2回の定期ミーティング（各60分）",
+			"チャットでの質問サポート",
+			"AI ツールの導入・運用支援",
+			"業務効率化の継続的な改善",
 		],
-		benefits: [
-			"記事作成時間 70% 削減",
-			"SNS 投稿の自動化実現",
-			"社内 AI 活用ガイドライン作成",
-			"チーム全体の生産性向上",
-		],
-		icon: FaUserTie,
+		price: "66,000円/3ヶ月",
+		originalPrice: "132,000円",
+		icon: FaCalendarCheck,
 		iconColor: "text-orange-600",
 		bgColor: "bg-orange-50",
 		borderColor: "border-orange-200",
@@ -100,9 +99,18 @@ export function ConsultingServiceMenuSection() {
 					<Heading as="h2" align="center" className="mb-4">
 						サービスメニュー
 					</Heading>
-					<p className="text-muted-foreground max-w-2xl mx-auto">
-						あなたのレベルに合わせて、最適なサポートをご提供します
+					<p className="text-muted-foreground max-w-2xl mx-auto mb-6">
+						あなたのニーズに合わせて柔軟にサポートします
 					</p>
+					<Alert className="max-w-3xl mx-auto border-blue-200 bg-blue-50/50">
+						<FaCircleInfo className="h-4 w-4 text-blue-600" />
+						<AlertDescription className="text-left text-sm">
+							現在、どんなサービスが最も皆様のお役に立てるか模索中です。柔軟に対応いたしますので、いずれの場合もまずは<span className="font-semibold text-blue-600">「スポット相談」</span>からお気軽にご利用ください。
+							<span className="block mt-2 font-semibold text-orange-600">
+								🎉 現在、テスター特別価格でサービス提供中！
+							</span>
+						</AlertDescription>
+					</Alert>
 				</div>
 
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -114,28 +122,40 @@ export function ConsultingServiceMenuSection() {
 								className={`h-full border-2 ${service.borderColor} hover:shadow-lg transition-all duration-300 hover:scale-[1.02]`}
 							>
 								<CardHeader className="pb-4">
-									<div className="flex items-center gap-4 mb-4">
-										<div
-											className={`w-12 h-12 ${service.bgColor} rounded-lg flex items-center justify-center`}
-										>
-											<IconComponent
-												className={`w-6 h-6 ${service.iconColor}`}
-											/>
+									<div className="flex items-center justify-between mb-4">
+										<div className="flex items-center gap-4">
+											<div
+												className={`w-12 h-12 ${service.bgColor} rounded-lg flex items-center justify-center`}
+											>
+												<IconComponent
+													className={`w-6 h-6 ${service.iconColor}`}
+												/>
+											</div>
+											<div>
+												<CardTitle className="text-lg leading-tight">
+													{service.title}
+												</CardTitle>
+											</div>
 										</div>
-										<div className="flex-1">
-											<CardTitle className="text-lg leading-tight">
-												{service.title}
-											</CardTitle>
-										</div>
+										{service.isRecommended && (
+											<Badge className="bg-orange-500 hover:bg-orange-600">
+												おすすめ
+											</Badge>
+										)}
 									</div>
-									<p className="text-sm font-bold text-primary">
+									<p className="text-sm font-bold text-primary mb-2">
 										{service.subtitle}
 									</p>
+									{service.description && (
+										<p className="text-sm text-muted-foreground">
+											{service.description}
+										</p>
+									)}
 								</CardHeader>
 								<CardContent className="space-y-4">
 									<div>
 										<h4 className="text-sm font-semibold text-muted-foreground mb-2">
-											こんな質問・内容OK！
+											内容
 										</h4>
 										<ul className="space-y-2">
 											{service.features.map((feature) => (
@@ -149,22 +169,25 @@ export function ConsultingServiceMenuSection() {
 											))}
 										</ul>
 									</div>
-									<div>
-										<h4 className="text-sm font-semibold text-muted-foreground mb-2">
-											受講後にはこんな成果が！
-										</h4>
-										<ul className="space-y-2">
-											{service.benefits.map((benefit) => (
-												<li
-													key={benefit}
-													className="text-sm text-foreground flex items-start gap-2"
-												>
-													<span className="text-green-600 text-xs mt-1">✓</span>
-													{benefit}
-												</li>
-											))}
-										</ul>
-									</div>
+									{service.price && (
+										<div className="pt-4 mt-4 border-t border-gray-100">
+											<div className="flex items-baseline gap-2">
+												<span className="text-2xl font-bold text-foreground">
+													{service.price}
+												</span>
+												{service.originalPrice && (
+													<>
+														<span className="text-sm text-muted-foreground line-through">
+															{service.originalPrice}
+														</span>
+														<Badge variant="destructive" className="text-xs">
+															50% OFF
+														</Badge>
+													</>
+												)}
+											</div>
+										</div>
+									)}
 								</CardContent>
 							</Card>
 						);
