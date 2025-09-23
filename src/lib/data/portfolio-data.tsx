@@ -9,6 +9,8 @@ import {
 	FaGears,
 	FaRocket,
 	FaWrench,
+	FaWordpress,
+	FaLifeRing,
 } from "react-icons/fa6";
 
 // ポートフォリオのダミーデータ
@@ -40,7 +42,10 @@ export type PortfolioCategory = {
 		| "other"
 		| "ai-image"
 		| "instant-site"
-		| "frontend-repair";
+		| "frontend-repair"
+		| "jamstack"
+		| "wordpress"
+		| "web-spot-support";
 	name: string;
 	description: string;
 	serviceUrl?: string;
@@ -94,6 +99,27 @@ export const portfolioCategories: PortfolioCategory[] = [
 		description: "オンラインショップの構築実績",
 		// serviceUrl削除: ウェブ制作サービスの一部のため独立ページなし
 		icon: <FaCartShopping className="w-5 h-5 text-orange-600" />,
+	},
+	{
+		id: "jamstack",
+		name: "Jamstackサイト制作(Next.js)",
+		description: "高速・安全・SEO最適化。Next.js + ヘッドレスCMSで最新サイト",
+		serviceUrl: "/services/web-development/jamstack",
+		icon: <FaRocket className="w-5 h-5 text-green-600" />,
+	},
+	{
+		id: "wordpress",
+		name: "WordPressサイト制作",
+		description: "カスタムテーマ・プラグイン開発。ECサイト・会員システムも対応",
+		serviceUrl: "/services/web-development/wordpress",
+		icon: <FaWordpress className="w-5 h-5 text-blue-500" />,
+	},
+	{
+		id: "web-spot-support",
+		name: "Webお困りごとスポット対応",
+		description: "24時間以内対応。緊急トラブル・バグ修正・小規模修正を迅速解決",
+		serviceUrl: "/services/web-development/web-spot-support",
+		icon: <FaLifeRing className="w-5 h-5 text-purple-600" />,
 	},
 	{
 		id: "instant-site",
