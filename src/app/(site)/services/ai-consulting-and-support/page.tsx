@@ -9,8 +9,7 @@ import { ConsultingBenefitsSection } from "@/components/services/ai-consulting-a
 import { BackgroundImageCTA } from "@/components/ui/background-image-cta";
 import { ConsultingHeroSection } from "@/components/services/ai-consulting-and-support/hero-section";
 import { ConsultingPricingSection } from "@/components/services/ai-consulting-and-support/pricing-section";
-import { ConsultingProblemsSection } from "@/components/services/ai-consulting-and-support/problems-section";
-import { ConsultingRecommendedForSection } from "@/components/services/ai-consulting-and-support/recommended-for-section";
+import { ConsultingProblemsAndRecommendedSection } from "@/components/services/ai-consulting-and-support/problems-and-recommended-section";
 import { ConsultingServiceMenuSection } from "@/components/services/ai-consulting-and-support/service-menu-section";
 import { ConsultingTransformationSection } from "@/components/services/ai-consulting-and-support/transformation-section";
 import { ConsultingWhyAISection } from "@/components/services/ai-consulting-and-support/why-ai-section";
@@ -68,13 +67,12 @@ export default function ConsultingPage() {
 
 			<main className="flex min-h-screen flex-col">
 				<ConsultingHeroSection />
-				<ConsultingProblemsSection />
-				<ConsultingRecommendedForSection />
+				<ConsultingProblemsAndRecommendedSection />
+				<ConsultingWhyAISection />
 				<ConsultingServiceMenuSection />
 				<ConsultingPricingSection />
-				<ConsultingBenefitsSection />
 				<ConsultingTransformationSection />
-				<ConsultingWhyAISection />
+				<ConsultingBenefitsSection />
 				<BackgroundImageCTA
 					backgroundImage="/dummy-images/photo-07.jpg"
 					title="AIの「？」を「！」に変える、あなた専用サポーター"
