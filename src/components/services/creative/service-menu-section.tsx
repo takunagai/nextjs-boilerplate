@@ -30,51 +30,6 @@ interface ServiceMenu {
 
 const serviceMenus: ServiceMenu[] = [
 	{
-		id: "writing",
-		title: "AI ライティング",
-		subtitle: "もう記事作成に悩まない！SEO に強い文章を高速作成",
-		icon: FaPenToSquare,
-		iconColor: "text-primary",
-		items: [
-			{
-				title: "ブログ記事作成（SEO 対策込み）",
-				description: "2,000〜5,000文字の充実した内容",
-				features: [
-					"キーワード調査から構成まで AI が提案",
-					"読みやすく、人間味のある文章に調整",
-					"SEO最適化で検索順位アップ",
-				],
-			},
-			{
-				title: "SNS 投稿文作成",
-				description: "各プラットフォームに最適化された投稿文",
-				features: [
-					"Twitter、Instagram、Facebook 用に最適化",
-					"バズりやすい構成を AI が分析",
-					"月間投稿カレンダー付き",
-				],
-			},
-			{
-				title: "商品説明文・LP コピー",
-				description: "売れる文章で商品の魅力を最大化",
-				features: [
-					"売れる文章の型を AI が適用",
-					"ターゲットに刺さる表現に調整",
-					"コンバージョン率向上をサポート",
-				],
-			},
-			{
-				title: "メルマガ原稿",
-				description: "開封率・クリック率を向上させる配信文",
-				features: [
-					"開封率を上げる件名を AI が提案",
-					"読者の行動を促す構成",
-					"継続的な関係構築をサポート",
-				],
-			},
-		],
-	},
-	{
 		id: "image",
 		title: "画像生成",
 		subtitle: "イメージを伝えるだけで、プロ級のビジュアルが完成",
@@ -185,7 +140,7 @@ const serviceMenus: ServiceMenu[] = [
 ];
 
 export function CreativeServiceMenuSection() {
-	const [activeTab, setActiveTab] = useState("writing");
+	const [activeTab, setActiveTab] = useState("image");
 
 	const activeService = serviceMenus.find(
 		(service) => service.id === activeTab,
@@ -275,6 +230,32 @@ export function CreativeServiceMenuSection() {
 						</div>
 					</div>
 				)}
+
+				{/* AIライティングリンク */}
+				<div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/30 rounded-2xl p-8 mt-12 border border-blue-200 dark:border-blue-800">
+					<div className="text-center space-y-4">
+						<div className="flex items-center justify-center gap-3 mb-4">
+							<FaPenToSquare className="w-8 h-8 text-blue-600" />
+							<h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+								AIライティングサービス
+							</h3>
+						</div>
+						<p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+							ブログ記事、SNS投稿、商品説明文、メルマガ原稿など、
+							コンテンツ制作全般に対応するAIライティングサービスを別途ご提供しています。
+						</p>
+						<Button
+							asChild
+							variant="outline"
+							size="lg"
+							className="mt-4 border-2 border-blue-200 dark:border-blue-800 bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm hover:bg-blue-50 dark:hover:bg-blue-950/50 hover:border-blue-300 dark:hover:border-blue-700"
+						>
+							<a href="/services/writing">
+								AIライティングサービスの詳細を見る
+							</a>
+						</Button>
+					</div>
+				</div>
 
 				{/* CTA */}
 				<div className="text-center mt-12">

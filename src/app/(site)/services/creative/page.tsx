@@ -1,36 +1,40 @@
 import type { Metadata } from "next";
-import { CreativeAITruthSection } from "@/components/services/creative/ai-truth-section";
 import { BackgroundImageCTA } from "@/components/ui/background-image-cta";
 import { CreativeHeroSection } from "@/components/services/creative/hero-section";
-import { CreativePricingSection } from "@/components/services/creative/pricing-section";
+import { WorkExamplesSection } from "@/components/services/creative/work-examples-section";
+import { DesignerAISection } from "@/components/services/creative/designer-ai-section";
+import { AILimitationsSection } from "@/components/services/creative/ai-limitations-section";
 import { CreativeReasonsSection } from "@/components/services/creative/reasons-section";
-import { CreativeRecommendedForSection } from "@/components/services/creative/recommended-for-section";
-import { CreativeSampleGallerySection } from "@/components/services/creative/sample-gallery-section";
 import { CreativeServiceMenuSection } from "@/components/services/creative/service-menu-section";
+import { CreativePricingSection } from "@/components/services/creative/pricing-section";
+import { CreativeSampleGallerySection } from "@/components/services/creative/sample-gallery-section";
 
 export const metadata: Metadata = {
 	title:
-		"AIを活用したクリエイティブサービス | AI × 人の感性でプロ級コンテンツ制作",
+		"AIクリエイティブサービス | デザイナーの経験 × AI の力で高品質デザイン素材を制作",
 	description:
-		"AIの創造力と人の感性を掛け合わせた革新的なクリエイティブサービス。ライティング、画像生成、動画制作、サウンド生成まで、高品質なのに驚きの低価格でご提供。テスター特別価格で先着10名様限定50%OFF。",
+		"15年のデザイン経験とAI技術を組み合わせた革新的なクリエイティブサービス。ロゴデザイン、画像生成、写真補正から動画制作まで、プロクオリティの素材をお手頃価格で提供。制作過程のレクチャーも対応。",
 	keywords: [
 		"AI クリエイティブ",
+		"デザイナー",
 		"画像生成",
-		"動画制作",
-		"ライティング",
-		"サウンド生成",
-		"コンテンツ制作",
-		"デザイン",
-		"SNS投稿",
-		"ブログ記事",
-		"低価格",
+		"ロゴデザイン",
+		"写真補正",
+		"バナーデザイン",
+		"インフォグラフィック",
+		"パッケージデザイン",
+		"Photoshop",
+		"Illustrator",
+		"Midjourney",
+		"DALL-E",
 		"高品質",
+		"低価格",
 	],
 	openGraph: {
 		title:
-			"AIを活用したクリエイティブサービス | AI × 人の感性でプロ級コンテンツ制作",
+			"AIクリエイティブサービス | デザイナーの経験 × AI の力で高品質デザイン素材を制作",
 		description:
-			"AIの創造力と人の感性を掛け合わせた革新的なクリエイティブサービス。高品質なのに驚きの低価格でご提供。",
+			"15年のデザイン経験とAI技術を組み合わせて、プロクオリティのデザイン素材をお手頃価格で提供。",
 		type: "website",
 	},
 	alternates: {
@@ -42,18 +46,19 @@ export default function CreativePage() {
 	return (
 		<main className="flex min-h-screen flex-col">
 			<CreativeHeroSection />
-			<CreativeAITruthSection />
-			<CreativeRecommendedForSection />
+			<WorkExamplesSection />
+			<DesignerAISection />
+			<AILimitationsSection />
+			<CreativeReasonsSection />
 			<CreativeServiceMenuSection />
 			<CreativePricingSection />
-			<CreativeReasonsSection />
 			<CreativeSampleGallerySection />
 			<BackgroundImageCTA
-				backgroundImage="/dummy-images/street-photo-04.jpg"
-				title="AI × 人の感性で、あなたのクリエイティブを加速"
-				description="画像・動画・音声・テキスト制作を革新的な価格で。テスター特別価格50%OFF、先着10名様限定。"
+				backgroundImage="/dummy-images/creative-workspace.jpg"
+				title="デザイナーの経験 × AI の力で、あなたのクリエイティブを加速"
+				description="プロクオリティのデザイン素材を、従来より大幅にお手頃な価格で。制作過程のレクチャーも対応します。"
 				primaryButtonText="無料相談を予約"
-				secondaryButtonText="サンプルを見る"
+				secondaryButtonText="作品を見る"
 				primaryButtonHref="/contact"
 				secondaryButtonHref="/services/creative#gallery"
 			/>
