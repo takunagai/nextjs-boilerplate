@@ -128,16 +128,26 @@ export function DesignerAISection() {
 						</p>
 						<div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
 							<div className="text-center p-6 bg-white dark:bg-gray-800 rounded-lg">
-								<div className="text-3xl font-bold text-violet-600 mb-2">75%</div>
-								<div className="text-sm text-muted-foreground">制作時間短縮</div>
+								<div className="text-3xl font-bold text-violet-600 mb-2">
+									75%
+								</div>
+								<div className="text-sm text-muted-foreground">
+									制作時間短縮
+								</div>
 							</div>
 							<div className="text-center p-6 bg-white dark:bg-gray-800 rounded-lg">
-								<div className="text-3xl font-bold text-purple-600 mb-2">50%</div>
+								<div className="text-3xl font-bold text-purple-600 mb-2">
+									50%
+								</div>
 								<div className="text-sm text-muted-foreground">コスト削減</div>
 							</div>
 							<div className="text-center p-6 bg-white dark:bg-gray-800 rounded-lg">
-								<div className="text-3xl font-bold text-pink-600 mb-2">100%</div>
-								<div className="text-sm text-muted-foreground">プロクオリティ</div>
+								<div className="text-3xl font-bold text-pink-600 mb-2">
+									100%
+								</div>
+								<div className="text-sm text-muted-foreground">
+									プロクオリティ
+								</div>
 							</div>
 						</div>
 					</div>

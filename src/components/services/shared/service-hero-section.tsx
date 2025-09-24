@@ -62,7 +62,10 @@ export function ServiceHeroSection({
 					{highlights && highlights.length > 0 && (
 						<div className="mb-8 grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
 							{highlights.map((highlight, index) => (
-								<div key={index} className="flex items-center justify-center text-muted-foreground">
+								<div
+									key={index}
+									className="flex items-center justify-center text-muted-foreground"
+								>
 									{highlight}
 								</div>
 							))}

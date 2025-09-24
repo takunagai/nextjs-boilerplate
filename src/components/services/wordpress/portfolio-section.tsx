@@ -11,7 +11,7 @@ const portfolioItems = [
 		image: "/dummy-images/portfolio-corporate-wp-01.jpg",
 		features: ["カスタムテーマ", "多言語対応", "IR情報管理"],
 		url: "#",
-		category: "企業サイト"
+		category: "企業サイト",
 	},
 	{
 		title: "オウンドメディア",
@@ -19,7 +19,7 @@ const portfolioItems = [
 		image: "/dummy-images/portfolio-media-wp-01.jpg",
 		features: ["高速化対策", "SEO最適化", "アナリティクス連携"],
 		url: "#",
-		category: "メディア"
+		category: "メディア",
 	},
 	{
 		title: "ECサイト",
@@ -27,7 +27,7 @@ const portfolioItems = [
 		image: "/dummy-images/portfolio-ecommerce-wp-01.jpg",
 		features: ["WooCommerce", "在庫管理", "会員システム"],
 		url: "#",
-		category: "ECサイト"
+		category: "ECサイト",
 	},
 ];
 
@@ -39,7 +39,7 @@ export function WordPressPortfolioSection() {
 					title="制作事例"
 					description="WordPressで実現した多様なサイトの実績"
 				/>
-				
+
 				<div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 					{portfolioItems.map((item, index) => (
 						<div
@@ -68,7 +68,9 @@ export function WordPressPortfolioSection() {
 								</div>
 
 								<div>
-									<h4 className="text-xs font-semibold text-muted-foreground mb-2">主要機能:</h4>
+									<h4 className="text-xs font-semibold text-muted-foreground mb-2">
+										主要機能:
+									</h4>
 									<div className="flex flex-wrap gap-1">
 										{item.features.map((feature, featureIndex) => (
 											<span

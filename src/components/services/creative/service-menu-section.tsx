@@ -250,9 +250,7 @@ export function CreativeServiceMenuSection() {
 							size="lg"
 							className="mt-4 border-2 border-blue-200 dark:border-blue-800 bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm hover:bg-blue-50 dark:hover:bg-blue-950/50 hover:border-blue-300 dark:hover:border-blue-700"
 						>
-							<a href="/services/writing">
-								AIライティングサービスの詳細を見る
-							</a>
+							<a href="/services/writing">AIライティングサービスの詳細を見る</a>
 						</Button>
 					</div>
 				</div>

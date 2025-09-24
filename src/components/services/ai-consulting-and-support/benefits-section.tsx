@@ -7,7 +7,8 @@ const benefits = [
 	{
 		id: "community",
 		title: "受講者限定 Discord コミュニティへご招待",
-		description: "メンバーと情報交換、いつでも質問できる環境で継続学習をサポート",
+		description:
+			"メンバーと情報交換、いつでも質問できる環境で継続学習をサポート",
 		icon: FaDiscord,
 		iconColor: "text-purple-600",
 		bgColor: "bg-purple-50",
@@ -39,9 +40,7 @@ export function ConsultingBenefitsSection() {
 									<div
 										className={`w-16 h-16 ${benefit.bgColor} rounded-full flex items-center justify-center mx-auto mb-4`}
 									>
-										<IconComponent
-											className={`w-8 h-8 ${benefit.iconColor}`}
-										/>
+										<IconComponent className={`w-8 h-8 ${benefit.iconColor}`} />
 									</div>
 									<CardTitle className="text-xl leading-tight">
 										{benefit.title}

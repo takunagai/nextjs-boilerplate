@@ -8,7 +8,8 @@ const reasons = [
 		id: "competitive",
 		number: "1",
 		title: "競合に差をつける",
-		description: "使える人と使えない人の差は開く一方。AI を味方につけた人だけが次のステージに進める時代になっています。",
+		description:
+			"使える人と使えない人の差は開く一方。AI を味方につけた人だけが次のステージに進める時代になっています。",
 		icon: FaTrophy,
 		iconColor: "text-yellow-600",
 		bgColor: "bg-yellow-50",
@@ -17,7 +18,8 @@ const reasons = [
 		id: "efficiency",
 		number: "2",
 		title: "時間・コストを削減",
-		description: "単純作業は AI に任せて、創造的な仕事に集中。外注費を大幅カットし、本当に大切な業務に時間を使えるようになります。",
+		description:
+			"単純作業は AI に任せて、創造的な仕事に集中。外注費を大幅カットし、本当に大切な業務に時間を使えるようになります。",
 		icon: FaClock,
 		iconColor: "text-blue-600",
 		bgColor: "bg-blue-50",
@@ -26,7 +28,8 @@ const reasons = [
 		id: "innovation",
 		number: "3",
 		title: "高品質化、可能性を広げる",
-		description: "AI との壁打ちで今まで出なかったアイデアを創出。また、今まで諦めていたことが実現可能になり、ビジネスの幅が格段に広がります。",
+		description:
+			"AI との壁打ちで今まで出なかったアイデアを創出。また、今まで諦めていたことが実現可能になり、ビジネスの幅が格段に広がります。",
 		icon: FaLightbulb,
 		iconColor: "text-purple-600",
 		bgColor: "bg-purple-50",

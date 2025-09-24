@@ -45,7 +45,8 @@ const problemAndRecommendCategories = [
 			"「画像生成 AI も使ってみたい」",
 			"「自社専用の AI ツールが欲しい」",
 		],
-		recommendedFor: "社内に AI を導入したいけど、何から始めたらいいか分からない方",
+		recommendedFor:
+			"社内に AI を導入したいけど、何から始めたらいいか分からない方",
 		icon: FaArrowUpRightFromSquare,
 		iconColor: "text-purple-600",
 		bgColor: "bg-purple-50",

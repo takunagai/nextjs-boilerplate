@@ -20,13 +20,9 @@ const pricingPlans = [
 			"3ヶ月保守サポート",
 			"Vercel/Netlifyデプロイ",
 		],
-		notIncluded: [
-			"CMS機能",
-			"高度なアニメーション",
-			"多言語対応",
-		],
+		notIncluded: ["CMS機能", "高度なアニメーション", "多言語対応"],
 		buttonText: "詳細を相談",
-		buttonVariant: "outline" as const
+		buttonVariant: "outline" as const,
 	},
 	{
 		name: "プロフェッショナル",
@@ -45,12 +41,9 @@ const pricingPlans = [
 			"6ヶ月保守サポート",
 			"独自ドメイン設定",
 		],
-		notIncluded: [
-			"ECサイト機能",
-			"会員機能",
-		],
+		notIncluded: ["ECサイト機能", "会員機能"],
 		buttonText: "今すぐ相談",
-		buttonVariant: "default" as const
+		buttonVariant: "default" as const,
 	},
 	{
 		name: "エンタープライズ",
@@ -72,7 +65,7 @@ const pricingPlans = [
 		],
 		notIncluded: [],
 		buttonText: "要件を相談",
-		buttonVariant: "outline" as const
+		buttonVariant: "outline" as const,
 	},
 ];
 
@@ -89,9 +82,9 @@ export function JamstackPricingSection() {
 						<div
 							key={index}
 							className={`relative bg-card border rounded-lg p-6 ${
-								plan.popular 
-									? 'border-green-600 shadow-lg scale-105' 
-									: 'hover:shadow-lg'
+								plan.popular
+									? "border-green-600 shadow-lg scale-105"
+									: "hover:shadow-lg"
 							} transition-all duration-300`}
 						>
 							{plan.popular && (
@@ -107,7 +100,9 @@ export function JamstackPricingSection() {
 									<h3 className="text-xl font-bold">{plan.name}</h3>
 									<div className="mt-2">
 										<span className="text-3xl font-bold">{plan.price}</span>
-										<span className="text-muted-foreground ml-1">{plan.period}</span>
+										<span className="text-muted-foreground ml-1">
+											{plan.period}
+										</span>
 									</div>
 									<p className="text-sm text-muted-foreground mt-2">
 										{plan.description}
@@ -124,11 +119,18 @@ export function JamstackPricingSection() {
 									))}
 									{plan.notIncluded.length > 0 && (
 										<>
-											<h4 className="font-semibold text-sm mt-4">含まれない機能:</h4>
+											<h4 className="font-semibold text-sm mt-4">
+												含まれない機能:
+											</h4>
 											{plan.notIncluded.map((feature, featureIndex) => (
-												<div key={featureIndex} className="flex items-start gap-2">
+												<div
+													key={featureIndex}
+													className="flex items-start gap-2"
+												>
 													<FaXmark className="w-4 h-4 text-muted-foreground mt-0.5 flex-shrink-0" />
-													<span className="text-sm text-muted-foreground">{feature}</span>
+													<span className="text-sm text-muted-foreground">
+														{feature}
+													</span>
 												</div>
 											))}
 										</>
@@ -136,10 +138,7 @@ export function JamstackPricingSection() {
 								</div>
 
 								<Link href="/contact?service=jamstack" className="block">
-									<Button 
-										variant={plan.buttonVariant}
-										className="w-full"
-									>
+									<Button variant={plan.buttonVariant} className="w-full">
 										{plan.buttonText}
 									</Button>
 								</Link>
@@ -151,8 +150,7 @@ export function JamstackPricingSection() {
 				<div className="mt-12 text-center">
 					<p className="text-sm text-muted-foreground">
 						※ 上記は基本料金です。追加機能・カスタマイズにより変動します
-						<br />
-						※ 運用費: 月額1,000円〜（ホスティング・ドメイン・SSL込み）
+						<br />※ 運用費: 月額1,000円〜（ホスティング・ドメイン・SSL込み）
 					</p>
 				</div>
 			</Container>
