@@ -15,7 +15,8 @@ const workExamples: WorkExample[] = [
 		id: "logo-design-1",
 		title: "テックスタートアップのロゴ",
 		category: "ロゴデザイン",
-		description: "AIで生成したベースデザインを、ブランドコンセプトに合わせて精緻に調整",
+		description:
+			"AIで生成したベースデザインを、ブランドコンセプトに合わせて精緻に調整",
 		imageUrl: "/dummy-images/logo-sample-1.jpg",
 		tags: ["Midjourney", "Illustrator", "ブランディング"],
 	},
@@ -31,7 +32,8 @@ const workExamples: WorkExample[] = [
 		id: "photo-retouch-1",
 		title: "商品写真の背景除去・加工",
 		category: "写真補正・加工",
-		description: "ECサイト用商品写真の背景をクリーンに処理し、購買意欲を高める仕上がりに",
+		description:
+			"ECサイト用商品写真の背景をクリーンに処理し、購買意欲を高める仕上がりに",
 		imageUrl: "/dummy-images/product-photo-after.jpg",
 		beforeImageUrl: "/dummy-images/product-photo-before.jpg",
 		tags: ["Photoshop", "背景除去", "商品撮影"],
@@ -40,7 +42,8 @@ const workExamples: WorkExample[] = [
 		id: "illustration-1",
 		title: "ウェブサイト用イラスト",
 		category: "イラスト作成",
-		description: "サービス紹介ページのメインビジュアル。AIで生成後、統一感のあるスタイルに調整",
+		description:
+			"サービス紹介ページのメインビジュアル。AIで生成後、統一感のあるスタイルに調整",
 		imageUrl: "/dummy-images/illustration-sample-1.jpg",
 		tags: ["Stable Diffusion", "Illustrator", "ウェブデザイン"],
 	},
@@ -48,7 +51,8 @@ const workExamples: WorkExample[] = [
 		id: "infographic-1",
 		title: "データ可視化インフォグラフィック",
 		category: "インフォグラフィック",
-		description: "複雑なデータを分かりやすく視覚化。AIアシストでレイアウトを最適化",
+		description:
+			"複雑なデータを分かりやすく視覚化。AIアシストでレイアウトを最適化",
 		imageUrl: "/dummy-images/infographic-sample-1.jpg",
 		tags: ["ChatGPT", "Illustrator", "データ可視化"],
 	},
@@ -56,7 +60,8 @@ const workExamples: WorkExample[] = [
 		id: "package-design-1",
 		title: "商品パッケージデザイン",
 		category: "パッケージデザイン",
-		description: "ターゲット層に響くデザインをAIで提案し、実用性を考慮して最終調整",
+		description:
+			"ターゲット層に響くデザインをAIで提案し、実用性を考慮して最終調整",
 		imageUrl: "/dummy-images/package-sample-1.jpg",
 		tags: ["Midjourney", "Photoshop", "パッケージング"],
 	},

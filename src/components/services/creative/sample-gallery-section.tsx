@@ -240,7 +240,10 @@ function CustomMasonryGallery({ photos }: { photos: GalleryItem[] }) {
 
 export function CreativeSampleGallerySection() {
 	return (
-		<section id="gallery" className="w-full py-16 md:py-24 bg-gradient-to-b from-white to-gray-50 dark:from-gray-950 dark:to-gray-900">
+		<section
+			id="gallery"
+			className="w-full py-16 md:py-24 bg-gradient-to-b from-white to-gray-50 dark:from-gray-950 dark:to-gray-900"
+		>
 			<Container width="2xl" paddingY="lg" paddingX="lg">
 				<div className="text-center mb-12">
 					<Heading as="h2" align="center" className="mb-6">
@@ -259,7 +262,8 @@ export function CreativeSampleGallerySection() {
 				{/* 注意事項 */}
 				<div className="text-center mt-12 p-6 bg-violet-50 dark:bg-violet-950/30 rounded-2xl border border-violet-200 dark:border-violet-800">
 					<p className="text-sm text-muted-foreground">
-						※ 掲載されている画像は制作例です。実際のプロジェクトに応じて、お客様のニーズに合ったデザインを制作いたします。
+						※
+						掲載されている画像は制作例です。実際のプロジェクトに応じて、お客様のニーズに合ったデザインを制作いたします。
 					</p>
 				</div>
 			</Container>

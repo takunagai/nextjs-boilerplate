@@ -14,7 +14,8 @@ const reasons = [
 		id: "design-skills",
 		title: "高いデザインスキル",
 		description: "Photoshop・Illustrator の熟練技術",
-		detail: "Adobe Creative Suite を使いこなし、プロレベルの仕上げを実現。15年の制作経験が生み出す確かな品質をお約束します。",
+		detail:
+			"Adobe Creative Suite を使いこなし、プロレベルの仕上げを実現。15年の制作経験が生み出す確かな品質をお約束します。",
 		icon: FaTools,
 		iconColor: "text-violet-600",
 		bgColor: "bg-violet-100 dark:bg-violet-900/30",
@@ -25,7 +26,8 @@ const reasons = [
 		id: "ai-knowledge",
 		title: "最新AI技術への精通",
 		description: "日々情報をキャッチアップ",
-		detail: "Midjourney、DALL-E、Stable Diffusion等の最新AI技術を常に追いかけ、最適なツールで最高の結果を生み出します。",
+		detail:
+			"Midjourney、DALL-E、Stable Diffusion等の最新AI技術を常に追いかけ、最適なツールで最高の結果を生み出します。",
 		icon: FaRobot,
 		iconColor: "text-purple-600",
 		bgColor: "bg-purple-100 dark:bg-purple-900/30",
@@ -36,7 +38,8 @@ const reasons = [
 		id: "teaching",
 		title: "制作過程のレクチャー",
 		description: "スキルアップも一緒に",
-		detail: "単純な制作代行ではなく、制作過程を丁寧に説明。お客様のスキル向上もサポートし、将来の自立制作もお手伝いします。",
+		detail:
+			"単純な制作代行ではなく、制作過程を丁寧に説明。お客様のスキル向上もサポートし、将来の自立制作もお手伝いします。",
 		icon: FaGraduationCap,
 		iconColor: "text-pink-600",
 		bgColor: "bg-pink-100 dark:bg-pink-900/30",
@@ -47,7 +50,8 @@ const reasons = [
 		id: "flexibility",
 		title: "柔軟な対応力",
 		description: "お客様のペースに合わせて",
-		detail: "急な修正、仕様変更、追加要望にも臨機応変に対応。小さなプロジェクトから大型案件まで、規模を問わず承ります。",
+		detail:
+			"急な修正、仕様変更、追加要望にも臨機応変に対応。小さなプロジェクトから大型案件まで、規模を問わず承ります。",
 		icon: FaHandshake,
 		iconColor: "text-rose-600",
 		bgColor: "bg-rose-100 dark:bg-rose-900/30",
@@ -58,7 +62,8 @@ const reasons = [
 		id: "perfectionism",
 		title: "妥協のない品質追求",
 		description: "細部にまでこだわり抜く",
-		detail: "「なんとなく良い」ではなく「明確に優れている」レベルまで追求。お客様が自信を持って使える成果物をお届けします。",
+		detail:
+			"「なんとなく良い」ではなく「明確に優れている」レベルまで追求。お客様が自信を持って使える成果物をお届けします。",
 		icon: FaStar,
 		iconColor: "text-amber-600",
 		bgColor: "bg-amber-100 dark:bg-amber-900/30",

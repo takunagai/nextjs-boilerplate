@@ -199,7 +199,7 @@ export const serviceComments = {
 		"パフォーマンス最適化も実施",
 		"安心のアフターサポート",
 	],
-	"jamstack": [
+	jamstack: [
 		"Next.js + TypeScript で最新技術",
 		"静的生成で高速表示を実現",
 		"SEO最適化とセキュリティ強化",
@@ -213,7 +213,7 @@ export const serviceComments = {
 		"開発効率とUXを両立",
 		"将来の拡張性も考慮した設計",
 	],
-	"wordpress": [
+	wordpress: [
 		"柔軟なCMS機能で管理が簡単",
 		"カスタムテーマで完全オリジナル",
 		"プラグイン開発で独自機能追加",

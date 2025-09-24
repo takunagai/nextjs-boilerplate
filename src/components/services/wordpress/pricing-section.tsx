@@ -20,13 +20,9 @@ const pricingPlans = [
 			"セキュリティ対策",
 			"3ヶ月保守サポート",
 		],
-		notIncluded: [
-			"ECサイト機能",
-			"多言語対応",
-			"高度なカスタマイズ",
-		],
+		notIncluded: ["ECサイト機能", "多言語対応", "高度なカスタマイズ"],
 		buttonText: "詳細を相談",
-		buttonVariant: "outline" as const
+		buttonVariant: "outline" as const,
 	},
 	{
 		name: "プロフェッショナル",
@@ -45,12 +41,9 @@ const pricingPlans = [
 			"6ヶ月保守サポート",
 			"特殊フォーム作成",
 		],
-		notIncluded: [
-			"会員系機能",
-			"EC決済機能",
-		],
+		notIncluded: ["会員系機能", "EC決済機能"],
 		buttonText: "今すぐ相談",
-		buttonVariant: "default" as const
+		buttonVariant: "default" as const,
 	},
 	{
 		name: "エンタープライズ",
@@ -72,7 +65,7 @@ const pricingPlans = [
 		],
 		notIncluded: [],
 		buttonText: "要件を相談",
-		buttonVariant: "outline" as const
+		buttonVariant: "outline" as const,
 	},
 ];
 
@@ -89,9 +82,9 @@ export function WordPressPricingSection() {
 						<div
 							key={index}
 							className={`relative bg-card border rounded-lg p-6 ${
-								plan.popular 
-									? 'border-blue-500 shadow-lg scale-105' 
-									: 'hover:shadow-lg'
+								plan.popular
+									? "border-blue-500 shadow-lg scale-105"
+									: "hover:shadow-lg"
 							} transition-all duration-300`}
 						>
 							{plan.popular && (
@@ -107,7 +100,9 @@ export function WordPressPricingSection() {
 									<h3 className="text-xl font-bold">{plan.name}</h3>
 									<div className="mt-2">
 										<span className="text-3xl font-bold">{plan.price}</span>
-										<span className="text-muted-foreground ml-1">{plan.period}</span>
+										<span className="text-muted-foreground ml-1">
+											{plan.period}
+										</span>
 									</div>
 									<p className="text-sm text-muted-foreground mt-2">
 										{plan.description}
@@ -124,11 +119,18 @@ export function WordPressPricingSection() {
 									))}
 									{plan.notIncluded.length > 0 && (
 										<>
-											<h4 className="font-semibold text-sm mt-4">含まれない機能:</h4>
+											<h4 className="font-semibold text-sm mt-4">
+												含まれない機能:
+											</h4>
 											{plan.notIncluded.map((feature, featureIndex) => (
-												<div key={featureIndex} className="flex items-start gap-2">
+												<div
+													key={featureIndex}
+													className="flex items-start gap-2"
+												>
 													<FaXmark className="w-4 h-4 text-muted-foreground mt-0.5 flex-shrink-0" />
-													<span className="text-sm text-muted-foreground">{feature}</span>
+													<span className="text-sm text-muted-foreground">
+														{feature}
+													</span>
 												</div>
 											))}
 										</>
@@ -136,10 +138,7 @@ export function WordPressPricingSection() {
 								</div>
 
 								<Link href="/contact?service=wordpress" className="block">
-									<Button 
-										variant={plan.buttonVariant}
-										className="w-full"
-									>
+									<Button variant={plan.buttonVariant} className="w-full">
 										{plan.buttonText}
 									</Button>
 								</Link>
@@ -151,8 +150,8 @@ export function WordPressPricingSection() {
 				<div className="mt-12 text-center">
 					<p className="text-sm text-muted-foreground">
 						※ 上記は基本料金です。追加機能・カスタマイズにより変動します
-						<br />
-						※ 運用費: 月額3,000円～（ホスティング・ドメイン・セキュリティ対策込み）
+						<br />※ 運用費:
+						月額3,000円～（ホスティング・ドメイン・セキュリティ対策込み）
 					</p>
 				</div>
 			</Container>

@@ -1,47 +1,58 @@
 import { Container } from "@/components/ui/container";
 import { SectionHeader } from "@/components/ui/section-header";
-import { FaMagnifyingGlass, FaPalette, FaCode, FaRocket, FaCircleCheck } from "react-icons/fa6";
+import {
+	FaMagnifyingGlass,
+	FaPalette,
+	FaCode,
+	FaRocket,
+	FaCircleCheck,
+} from "react-icons/fa6";
 
 const processSteps = [
 	{
 		step: "01",
 		icon: <FaMagnifyingGlass className="w-6 h-6 text-green-600" />,
 		title: "要件定義・技術選定",
-		description: "目的・要件を詳細にヒアリング。最適な技術スタック・アーキテクチャを提案します。",
+		description:
+			"目的・要件を詳細にヒアリング。最適な技術スタック・アーキテクチャを提案します。",
 		deliverables: ["要件定義書", "技術選定資料", "サイト設計書"],
-		duration: "2-3日"
+		duration: "2-3日",
 	},
 	{
 		step: "02",
 		icon: <FaPalette className="w-6 h-6 text-blue-600" />,
 		title: "UI/UXデザイン",
-		description: "ユーザー体験を重視したワイヤーフレーム・デザインを作成。レスポンシブ対応も完璧に。",
+		description:
+			"ユーザー体験を重視したワイヤーフレーム・デザインを作成。レスポンシブ対応も完璧に。",
 		deliverables: ["ワイヤーフレーム", "デザインカンプ", "スタイルガイド"],
-		duration: "3-5日"
+		duration: "3-5日",
 	},
 	{
 		step: "03",
 		icon: <FaCode className="w-6 h-6 text-purple-600" />,
 		title: "Jamstack開発",
-		description: "Next.js + TypeScriptで高品質なコード実装。パフォーマンス・SEO最適化も同時進行。",
+		description:
+			"Next.js + TypeScriptで高品質なコード実装。パフォーマンス・SEO最適化も同時進行。",
 		deliverables: ["フロントエンド実装", "CMS連携", "SEO最適化"],
-		duration: "5-10日"
+		duration: "5-10日",
 	},
 	{
 		step: "04",
 		icon: <FaRocket className="w-6 h-6 text-orange-600" />,
 		title: "デプロイ・公開",
-		description: "Vercel/Netlifyへの自動デプロイ設定。CDN・SSL・ドメイン設定まで一括対応。",
+		description:
+			"Vercel/Netlifyへの自動デプロイ設定。CDN・SSL・ドメイン設定まで一括対応。",
 		deliverables: ["本番環境構築", "ドメイン設定", "SSL証明書"],
-		duration: "1-2日"
+		duration: "1-2日",
 	},
 	{
 		step: "05",
 		icon: <FaCircleCheck className="w-6 h-6 text-pink-600" />,
 		title: "検証・保守サポート",
-		description: "パフォーマンステスト・SEO検証実施。運用マニュアル提供と3ヶ月保守サポート付き。",
+		description:
+			"パフォーマンステスト・SEO検証実施。運用マニュアル提供と3ヶ月保守サポート付き。",
 		deliverables: ["テスト結果", "運用マニュアル", "保守サポート"],
-		duration: "継続"
+		duration: "継続",
 	},
 ];
 
@@ -65,7 +76,9 @@ export function JamstackProcessSection() {
 									<div className="flex items-center justify-center w-12 h-12 bg-green-600/10 rounded-full">
 										{step.icon}
 									</div>
-									<span className="text-2xl font-bold text-green-600">{step.step}</span>
+									<span className="text-2xl font-bold text-green-600">
+										{step.step}
+									</span>
 								</div>
 
 								{/* コンテンツ */}
@@ -82,14 +95,16 @@ export function JamstackProcessSection() {
 									<div>
 										<h4 className="text-sm font-semibold mb-2">成果物:</h4>
 										<div className="flex flex-wrap gap-2">
-											{step.deliverables.map((deliverable, deliverableIndex) => (
-												<span
-													key={deliverableIndex}
-													className="text-xs bg-green-600/10 text-green-700 px-2 py-1 rounded"
-												>
-													{deliverable}
-												</span>
-											))}
+											{step.deliverables.map(
+												(deliverable, deliverableIndex) => (
+													<span
+														key={deliverableIndex}
+														className="text-xs bg-green-600/10 text-green-700 px-2 py-1 rounded"
+													>
+														{deliverable}
+													</span>
+												),
+											)}
 										</div>
 									</div>
 								</div>

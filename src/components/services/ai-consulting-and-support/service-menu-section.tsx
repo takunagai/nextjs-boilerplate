@@ -9,7 +9,7 @@ import {
 	FaUsers,
 	FaWandMagicSparkles,
 } from "react-icons/fa6";
-import { SiN8N, SiWindsurf } from "react-icons/si";
+import { SiN8N } from "react-icons/si";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -21,7 +21,8 @@ const serviceMenuItems = [
 		id: "spot-consultation",
 		title: "スポット相談",
 		subtitle: "時間単位でピンポイント相談",
-		description: "聞きたい内容をピンポイントで、もしくは漠然とした相談もOK！まずはお気軽にこちらからどうぞ。",
+		description:
+			"聞きたい内容をピンポイントで、もしくは漠然とした相談もOK！まずはお気軽にこちらからどうぞ。",
 		features: [
 			"1時間単位でお気軽に相談",
 			"具体的な質問から漠然とした相談まで対応",
@@ -105,7 +106,11 @@ export function ConsultingServiceMenuSection() {
 					<Alert className="max-w-3xl mx-auto border-blue-200 bg-blue-50/50">
 						<FaCircleInfo className="h-4 w-4 text-blue-600" />
 						<AlertDescription className="text-left text-sm">
-							現在、どんなサービスが最も皆様のお役に立てるか模索中です。柔軟に対応いたしますので、いずれの場合もまずは<span className="font-semibold text-blue-600">「スポット相談」</span>からお気軽にご利用ください。
+							現在、どんなサービスが最も皆様のお役に立てるか模索中です。柔軟に対応いたしますので、いずれの場合もまずは
+							<span className="font-semibold text-blue-600">
+								「スポット相談」
+							</span>
+							からお気軽にご利用ください。
 							<span className="block mt-2 font-semibold text-orange-600">
 								🎉 現在、テスター特別価格でサービス提供中！
 							</span>

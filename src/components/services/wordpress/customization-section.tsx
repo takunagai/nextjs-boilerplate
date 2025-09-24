@@ -11,8 +11,8 @@ const customizations = [
 			"直感的なコンテンツ編集画面",
 			"カスタムフィールド設計",
 			"ユーザー権限管理",
-			"編集ガイド・ヘルプ機能"
-		]
+			"編集ガイド・ヘルプ機能",
+		],
 	},
 	{
 		icon: <FaPlug className="w-8 h-8 text-green-600" />,
@@ -22,8 +22,8 @@ const customizations = [
 			"カスタム投稿タイプ作成",
 			"独自フォーム機能",
 			"API連携プラグイン",
-			"パフォーマンス最適化"
-		]
+			"パフォーマンス最適化",
+		],
 	},
 	{
 		icon: <FaUsers className="w-8 h-8 text-purple-600" />,
@@ -33,8 +33,8 @@ const customizations = [
 			"会員登録・ログイン機能",
 			"会員限定コンテンツ",
 			"プロフィール管理",
-			"メール配信システム"
-		]
+			"メール配信システム",
+		],
 	},
 	{
 		icon: <FaCartShopping className="w-8 h-8 text-orange-600" />,
@@ -44,8 +44,8 @@ const customizations = [
 			"商品管理・在庫管理",
 			"決済システム連携",
 			"配送設定・税計算",
-			"顧客管理・注文管理"
-		]
+			"顧客管理・注文管理",
+		],
 	},
 ];
 
@@ -73,7 +73,10 @@ export function WordPressCustomizationSection() {
 								</p>
 								<ul className="space-y-2">
 									{item.features.map((feature, featureIndex) => (
-										<li key={featureIndex} className="text-sm flex items-center">
+										<li
+											key={featureIndex}
+											className="text-sm flex items-center"
+										>
 											<span className="w-1.5 h-1.5 bg-primary rounded-full mr-2"></span>
 											{feature}
 										</li>
@@ -89,11 +92,15 @@ export function WordPressCustomizationSection() {
 					<div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
 						<div>
 							<div className="text-2xl font-bold text-blue-500">50+</div>
-							<div className="text-sm text-muted-foreground">カスタムテーマ</div>
+							<div className="text-sm text-muted-foreground">
+								カスタムテーマ
+							</div>
 						</div>
 						<div>
 							<div className="text-2xl font-bold text-green-600">30+</div>
-							<div className="text-sm text-muted-foreground">プラグイン開発</div>
+							<div className="text-sm text-muted-foreground">
+								プラグイン開発
+							</div>
 						</div>
 						<div>
 							<div className="text-2xl font-bold text-purple-600">20+</div>

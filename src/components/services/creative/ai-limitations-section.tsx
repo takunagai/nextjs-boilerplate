@@ -8,19 +8,23 @@ interface Point {
 const keyPoints: Point[] = [
 	{
 		title: "ちょっとした違和感を調整",
-		description: "AIの生成物は素晴らしいけれど、「なんか違う」と感じることも。長年の経験から、ブランドや用途に合わせて自然に見えるよう細かく調整します。",
+		description:
+			"AIの生成物は素晴らしいけれど、「なんか違う」と感じることも。長年の経験から、ブランドや用途に合わせて自然に見えるよう細かく調整します。",
 	},
 	{
 		title: "的確な指示で効率化",
-		description: "AIへの指示は具体的でないと良い結果が得られません。デザインの知識を活かして、効率的に高品質な素材を生成できる指示を作成します。",
+		description:
+			"AIへの指示は具体的でないと良い結果が得られません。デザインの知識を活かして、効率的に高品質な素材を生成できる指示を作成します。",
 	},
 	{
 		title: "最適な選択と仕上げ",
-		description: "AIが提案する複数の候補から最適なものを選び、Photoshop・Illustratorで実用レベルまで仕上げます。",
+		description:
+			"AIが提案する複数の候補から最適なものを選び、Photoshop・Illustratorで実用レベルまで仕上げます。",
 	},
 	{
 		title: "安心して使える品質保証",
-		description: "著作権の問題がないか確認し、商用利用できる安全な素材として納品。お客様に安心してご利用いただけます。",
+		description:
+			"著作権の問題がないか確認し、商用利用できる安全な素材として納品。お客様に安心してご利用いただけます。",
 	},
 ];
 
@@ -44,10 +48,7 @@ export function AILimitationsSection() {
 				{/* ポイントリスト */}
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
 					{keyPoints.map((point, index) => (
-						<div
-							key={index}
-							className="relative pl-12"
-						>
+						<div key={index} className="relative pl-12">
 							{/* チェックアイコン */}
 							<div className="absolute left-0 top-1 w-8 h-8 bg-gradient-to-br from-amber-500 to-orange-500 rounded-full flex items-center justify-center">
 								<FaCheckCircle className="w-4 h-4 text-white" />

@@ -557,7 +557,7 @@ describe("ProfileEditForm", () => {
 		it("必須フィールドが適切にマークされている", () => {
 			render(<ProfileEditForm initialProfile={mockProfile} />);
 
-			const nameInput = screen.getByRole("textbox", { name: "名前 *" });
+			const nameInput = screen.getByRole("textbox", { name: "名前*" });
 			expect(nameInput).toBeInTheDocument();
 			expect(nameInput).toHaveAttribute("aria-required", "true");
 		});
@@ -656,7 +656,7 @@ describe("ProfileEditForm", () => {
 
 			render(<ProfileEditForm initialProfile={profileWithNullName} />);
 
-			expect(screen.getByRole("textbox", { name: "名前 *" })).toHaveValue("");
+			expect(screen.getByRole("textbox", { name: "名前*" })).toHaveValue("");
 			expect(screen.getByText("U")).toBeInTheDocument(); // イニシャル表示
 		});
 	});
