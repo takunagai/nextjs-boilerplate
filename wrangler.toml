@@ -1,7 +1,10 @@
-name = "nextjs-boilerplate"
+name = "nagai-shouten"
 account_id = "20d0f1d15393a71d8e2d2a056c2d294d"
 compatibility_date = "2025-04-01"
 compatibility_flags = ["nodejs_compat"]
+
+# workers.dev サブドメインを無効化（カスタムドメイン使用のため）
+workers_dev = false
 
 # ワーカーのメイン設定
 main = ".open-next/worker.js"
