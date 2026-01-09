@@ -53,6 +53,7 @@ yarn-error.log*
 # cloudflare
 .cloudflare
 .wrangler
+.open-next
 # firebase
 .firebase
 firebase-debug.log

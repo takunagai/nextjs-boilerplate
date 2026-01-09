@@ -1,1 +1,0 @@
-"use strict";exports.id=4322,exports.ids=[4322],exports.modules={64322:(a,b,c)=>{c.r(b),c.d(b,{default:()=>f});var d=c(21124),e=c(35284);function f(){return(0,d.jsx)(e.$,{variant:"ghost",size:"icon",className:"h-9 w-9","aria-label":"テーマを読み込み中",children:(0,d.jsx)("span",{className:"sr-only",children:"テーマを読み込み中"})})}}};
