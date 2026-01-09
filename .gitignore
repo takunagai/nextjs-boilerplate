@@ -119,3 +119,9 @@ local/
 
 # MCP server directories
 .serena/
+
+# Claude Code
+.ai/
+.claude/plans/
+**/CLAUDE.md
+!CLAUDE.md
