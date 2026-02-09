@@ -26,6 +26,7 @@ export function ParticleBackground({
 	const particlesRef = useRef<Particle[]>([]);
 	const isMobile = useIsMobile();
 	const [isInitialized, setIsInitialized] = useState(false);
+	const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
 	// キャンバス管理
 	const { canvasRef, getContext, getDimensions, clearCanvas } =
@@ -60,6 +61,16 @@ export function ParticleBackground({
 		isMobile,
 	});
 
+	// prefers-reduced-motion 検出
+	useEffect(() => {
+		const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
+		setPrefersReducedMotion(mql.matches);
+		const handler = (e: MediaQueryListEvent) =>
+			setPrefersReducedMotion(e.matches);
+		mql.addEventListener("change", handler);
+		return () => mql.removeEventListener("change", handler);
+	}, []);
+
 	// 初期化
 	useEffect(() => {
 		if (isInitialized) return;
@@ -77,13 +88,34 @@ export function ParticleBackground({
 			const particleCount = getParticleCount(isMobile);
 			particlesRef.current = initializeParticles(particleCount, width, height);
 
-			// アニメーション開始
-			startAnimation();
+			if (prefersReducedMotion) {
+				// reduced-motion: 初期パーティクル位置のみ描画（1フレーム）
+				const ctx = getContext();
+				if (ctx) {
+					clearCanvas();
+					for (const particle of particlesRef.current) {
+						particle.draw(ctx, 0);
+					}
+					drawConnections(ctx, particlesRef.current);
+				}
+			} else {
+				// アニメーション開始
+				startAnimation();
+			}
 			setIsInitialized(true);
 		};
 
 		setupParticles();
-	}, [getDimensions, startAnimation, isInitialized, isMobile]);
+	}, [
+		getDimensions,
+		startAnimation,
+		isInitialized,
+		isMobile,
+		prefersReducedMotion,
+		getContext,
+		clearCanvas,
+		drawConnections,
+	]);
 
 	return (
 		<canvas
