@@ -1,3 +1,8 @@
+import { format } from "date-fns";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { FaArrowLeft } from "react-icons/fa6";
 import { NewsJsonLd } from "@/components/seo/news-jsonld";
 import { Badge } from "@/components/ui/badge";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
@@ -5,11 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { PageHeader } from "@/components/ui/page-header";
 import { getAllNews, getNewsById } from "@/lib/data/news";
-import { format } from "date-fns";
-import type { Metadata } from "next";
-import Link from "next/link";
-import { notFound } from "next/navigation";
-import { FaArrowLeft } from "react-icons/fa6";
+import { sanitizeNewsContent } from "@/lib/security/sanitize";
 
 // 動的メタデータの生成（SEO対策）
 export async function generateMetadata({
@@ -110,7 +111,9 @@ export default async function NewsDetailPage({
 					{news.content ? (
 						<div
 							className="prose prose-slate dark:prose-invert max-w-none"
-							dangerouslySetInnerHTML={{ __html: news.content }}
+							dangerouslySetInnerHTML={{
+								__html: sanitizeNewsContent(news.content),
+							}}
 						/>
 					) : (
 						<div className="prose prose-slate dark:prose-invert max-w-none">
