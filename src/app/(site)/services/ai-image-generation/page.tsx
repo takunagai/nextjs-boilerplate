@@ -9,7 +9,8 @@ import { AIPricingPlans } from "@/components/services/ai-image/ai-pricing-plans"
 import { AIWorkflow } from "@/components/services/ai-image/ai-workflow";
 import { AIPortfolioGallery } from "@/components/services/ai-image/ai-portfolio-gallery";
 import { AITestimonials } from "@/components/services/ai-image/ai-testimonials";
-import { AIFAQ } from "@/components/services/ai-image/ai-faq";
+import { ServiceFAQ } from "@/components/services/shared/service-faq";
+import { aiImageFaqs } from "@/lib/data/ai-image-faq";
 import { RelatedServices } from "@/components/services/ai-image/related-services";
 import { AICta } from "@/components/services/ai-image/ai-cta";
 
@@ -49,7 +50,24 @@ export default function AIImageGenerationPage() {
 			<AIWorkflow />
 			<AIPortfolioGallery />
 			<AITestimonials />
-			<AIFAQ />
+			<ServiceFAQ
+				faqs={aiImageFaqs}
+				description="AI画像制作に関してよくいただくご質問にお答えします"
+			>
+				{/* AI技術に関する補足説明 */}
+				<div className="mt-16 rounded-2xl bg-gradient-to-r from-purple-50 to-blue-50 p-8 dark:from-purple-900/20 dark:to-blue-900/20">
+					<div className="text-center">
+						<h3 className="mb-4 text-xl font-bold">
+							AI技術について
+						</h3>
+						<p className="mx-auto max-w-2xl text-muted-foreground">
+							使用するAI技術は日々進歩しています。最新の技術動向を常にキャッチアップし、
+							お客様により良いサービスを提供できるよう努めています。
+							技術的な詳細や制限事項については、お気軽にお問い合わせください。
+						</p>
+					</div>
+				</div>
+			</ServiceFAQ>
 			<RelatedServices />
 			<AICta />
 		</>

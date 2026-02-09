@@ -8,7 +8,8 @@ import { EquipmentSection } from "@/components/services/photography/equipment-se
 import { PricingPlans } from "@/components/services/photography/pricing-plans";
 import { WorkflowTimeline } from "@/components/services/photography/workflow-timeline";
 import { PhotographyGallery } from "@/components/services/photography/photography-gallery";
-import { PhotographyFAQ } from "@/components/services/photography/photography-faq";
+import { ServiceFAQ } from "@/components/services/shared/service-faq";
+import { photographyFaqs } from "@/lib/data/photography-faq";
 import { Testimonials } from "@/components/services/photography/testimonials";
 import { PhotographyCTA } from "@/components/services/photography/photography-cta";
 
@@ -47,7 +48,10 @@ export default function PhotographyServicePage() {
 			<WorkflowTimeline />
 			<PhotographyGallery />
 			<Testimonials />
-			<PhotographyFAQ />
+			<ServiceFAQ
+				faqs={photographyFaqs}
+				description="お客様からよくいただくご質問にお答えします"
+			/>
 			<PhotographyCTA />
 		</>
 	);

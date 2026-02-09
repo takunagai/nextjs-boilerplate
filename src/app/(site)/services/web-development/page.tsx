@@ -11,8 +11,9 @@ import { StrengthsSection } from "@/components/services/web-development/strength
 import { ServiceMenuSection } from "@/components/services/web-development/service-menu-section";
 import { ProcessSection } from "@/components/services/web-development/process-section";
 import { PricingSection } from "@/components/services/web-development/pricing-section";
-import { FAQSection } from "@/components/services/web-development/faq-section";
+import { ServiceFAQ } from "@/components/services/shared/service-faq";
 import { FinalCTASection } from "@/components/services/web-development/final-cta-section";
+import { webDevelopmentFaqs } from "@/lib/data/web-development-faq";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Container } from "@/components/ui/container";
 import { META } from "@/lib/constants";
@@ -72,7 +73,13 @@ export default function WebDevelopmentPage() {
 				<ServiceMenuSection />
 				<ProcessSection />
 				<PricingSection />
-				<FAQSection />
+				<ServiceFAQ
+					faqs={webDevelopmentFaqs}
+					description="不安なことがあれば、なんでもお聞きください"
+					footerText="他にも気になることがあれば、お気軽にお聞きください。"
+					ctaText="質問・相談してみる →"
+					className="bg-muted/30"
+				/>
 				<FinalCTASection />
 			</main>
 		</>
