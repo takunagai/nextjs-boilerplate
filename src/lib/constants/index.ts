@@ -13,6 +13,9 @@ export { ROUTES } from "./routes";
 // テーマ
 export { THEME, THEME_STORAGE_KEY } from "./theme";
 
+// ビジネス情報
+export { BUSINESS } from "./business";
+
 // 問い合わせ
 // 現在コメントアウトされているため、エクスポートしない
 // export { CONTACT } from './contact';

@@ -9,7 +9,7 @@ import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
 import { PageHeader } from "@/components/ui/page-header";
-import { META } from "@/lib/constants";
+import { BUSINESS, META } from "@/lib/constants";
 import { createBreadcrumbs } from "@/lib/utils";
 
 export const revalidate = 7200;
@@ -65,7 +65,7 @@ export default function PrivacyPolicyPage() {
 						</CardHeader>
 						<CardContent className="space-y-4">
 							<p>
-								株式会社〇〇（以下「当社」）は、お客様の個人情報保護の重要性を認識し、適切な管理と保護に努めています。
+								{BUSINESS.COMPANY_NAME}（以下「当社」）は、お客様の個人情報保護の重要性を認識し、適切な管理と保護に努めています。
 								本プライバシーポリシーは、当社のウェブサイト（以下「本サイト」）における個人情報の取り扱いについて定めるものです。
 							</p>
 							<p>
@@ -239,15 +239,15 @@ export default function PrivacyPolicyPage() {
 								本プライバシーポリシーに関するご質問やご意見は、以下の連絡先までお問い合わせください：
 							</p>
 							<div className="mt-4">
-								<p>株式会社〇〇</p>
-								<p>住所：〒000-0000 東京都〇〇区〇〇町1-2-3</p>
+								<p>{BUSINESS.COMPANY_NAME}</p>
+								<p>住所：{BUSINESS.POSTAL_CODE} {BUSINESS.ADDRESS}</p>
 								<p>
 									メール：
 									<a
-										href="mailto:privacy@example.com"
+										href={`mailto:${BUSINESS.EMAIL}`}
 										className="text-primary hover:underline"
 									>
-										privacy@example.com
+										{BUSINESS.EMAIL}
 									</a>
 								</p>
 							</div>

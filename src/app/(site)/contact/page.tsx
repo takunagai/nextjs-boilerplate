@@ -9,7 +9,7 @@ import {
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Container } from "@/components/ui/container";
 import { PageHeader } from "@/components/ui/page-header";
-import { META } from "@/lib/constants";
+import { BUSINESS, META } from "@/lib/constants";
 import { createBreadcrumbs } from "@/lib/utils";
 
 export const revalidate = 7200;
@@ -58,7 +58,7 @@ export default function ContactPage() {
 							</p>
 							<div className="bg-muted p-4 rounded-lg text-sm">
 								<p className="font-medium">
-									営業時間: <b>平日 9:00〜18:00（土日祝休み）</b>
+									営業時間: <b>{BUSINESS.BUSINESS_HOURS}（{BUSINESS.HOLIDAYS}）</b>
 								</p>
 								<p className="mt-3 text-muted-foreground">
 									お問い合わせの前に
