@@ -12,6 +12,8 @@ import { PageHeader } from "@/components/ui/page-header";
 import { META } from "@/lib/constants";
 import { createBreadcrumbs } from "@/lib/utils";
 
+export const revalidate = 7200;
+
 export const metadata: Metadata = generateMetadata({
 	title: "お問い合わせ",
 	description:

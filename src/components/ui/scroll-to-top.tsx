@@ -25,16 +25,17 @@ export function ScrollToTop({
 	...props
 }: ScrollToTopProps) {
 	const [visible, setVisible] = React.useState(false);
+	const rafRef = React.useRef<number | null>(null);
 
-	// スクロール位置を監視し、表示/非表示を切り替える
+	// スクロール位置を監視し、表示/非表示を切り替える（RAFスロットル）
 	React.useEffect(() => {
 		const handleScroll = () => {
-			// ビューポートの高さに対する倍率でしきい値を計算
-			const scrollThreshold = window.innerHeight * threshold;
-			const currentScrollY = window.scrollY;
-
-			// しきい値を超えたら表示、それ以外は非表示
-			setVisible(currentScrollY > scrollThreshold);
+			if (rafRef.current !== null) return;
+			rafRef.current = requestAnimationFrame(() => {
+				const scrollThreshold = window.innerHeight * threshold;
+				setVisible(window.scrollY > scrollThreshold);
+				rafRef.current = null;
+			});
 		};
 
 		// 初期チェック
@@ -46,6 +47,9 @@ export function ScrollToTop({
 		// クリーンアップ
 		return () => {
 			window.removeEventListener("scroll", handleScroll);
+			if (rafRef.current !== null) {
+				cancelAnimationFrame(rafRef.current);
+			}
 		};
 	}, [threshold]);
 

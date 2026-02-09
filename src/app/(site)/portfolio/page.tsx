@@ -18,6 +18,8 @@ import {
 	portfolioFilterCategories,
 	type PortfolioFilterCategory,
 } from "@/lib/data/portfolio-data";
+
+export const revalidate = 7200;
 import { createBreadcrumbs } from "@/lib/utils";
 
 export const metadata: Metadata = generateMetadata({

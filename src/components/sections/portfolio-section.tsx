@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { FaArrowRight, FaQuoteLeft } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
@@ -49,11 +50,13 @@ export function PortfolioSection() {
 					{portfolioItems.map((item) => (
 						<Card key={item.id} className="h-full">
 							<CardHeader>
-								<div className="aspect-video bg-muted rounded-lg mb-4 overflow-hidden">
-									<img
+								<div className="relative aspect-video bg-muted rounded-lg mb-4 overflow-hidden">
+									<Image
 										src={item.image}
 										alt={`${item.client} ${item.project}`}
-										className="w-full h-full object-cover"
+										fill
+										className="object-cover"
+										sizes="(max-width: 768px) 100vw, 33vw"
 									/>
 								</div>
 								<CardTitle className="text-lg">

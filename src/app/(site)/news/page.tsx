@@ -16,6 +16,8 @@ import {
 } from "@/lib/data/news";
 import { calculatePagination, getPaginatedItems } from "@/lib/utils/pagination";
 
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
 	title: "お知らせ",
 	description:

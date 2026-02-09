@@ -68,23 +68,30 @@ const reasons = [
 
 export function ReasonsSection() {
 	const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+	const rafRef = useRef<number | null>(null);
+	const mouseRef = useRef({ x: 0, y: 0 });
 
 	useEffect(() => {
 		const handleMouseMove = (e: MouseEvent) => {
-			cardsRef.current.forEach((card) => {
-				if (!card) return;
-
-				const rect = card.getBoundingClientRect();
-				const x = e.clientX - rect.left;
-				const y = e.clientY - rect.top;
-
-				card.style.setProperty("--mouse-x", `${x}px`);
-				card.style.setProperty("--mouse-y", `${y}px`);
+			mouseRef.current = { x: e.clientX, y: e.clientY };
+			if (rafRef.current !== null) return;
+			rafRef.current = requestAnimationFrame(() => {
+				const { x, y } = mouseRef.current;
+				cardsRef.current.forEach((card) => {
+					if (!card) return;
+					const rect = card.getBoundingClientRect();
+					card.style.setProperty("--mouse-x", `${x - rect.left}px`);
+					card.style.setProperty("--mouse-y", `${y - rect.top}px`);
+				});
+				rafRef.current = null;
 			});
 		};
 
 		window.addEventListener("mousemove", handleMouseMove);
-		return () => window.removeEventListener("mousemove", handleMouseMove);
+		return () => {
+			window.removeEventListener("mousemove", handleMouseMove);
+			if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+		};
 	}, []);
 
 	return (

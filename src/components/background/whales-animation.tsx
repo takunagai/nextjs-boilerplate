@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { useIsClient } from "usehooks-ts";
 import { useWindowResize } from "@/hooks/use-window-resize";
@@ -29,6 +29,7 @@ interface Whale {
 
 export function WhalesAnimation() {
 	const isClient = useIsClient();
+	const shouldReduceMotion = useReducedMotion();
 	const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 	const [bubbles, setBubbles] = useState<Bubble[]>([]);
 	const [whales, setWhales] = useState<Whale[]>([]);
@@ -106,7 +107,7 @@ export function WhalesAnimation() {
 		setWhales(newWhales);
 	}, [dimensions, isClient]);
 
-	if (!isClient) {
+	if (!isClient || shouldReduceMotion) {
 		return null;
 	}
 
@@ -116,9 +117,6 @@ export function WhalesAnimation() {
 			className="fixed inset-0 z-20 overflow-hidden pointer-events-none"
 			aria-hidden="true"
 		>
-			{/* デバッグ用マーカー */}
-			<div className="absolute top-20 right-4 w-3 h-3 bg-red-500 rounded-full opacity-50" />
-
 			{/* 泡のアニメーション */}
 			{bubbles.map((bubble) => (
 				<motion.div
