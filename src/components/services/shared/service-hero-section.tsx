@@ -9,6 +9,7 @@ export interface ServiceHeroSectionProps {
 	title: React.ReactNode;
 	description: React.ReactNode;
 	highlights?: string[];
+	bottomContent?: React.ReactNode;
 	contactButtonText?: string;
 	serviceMenuButtonText?: string;
 
@@ -33,6 +34,7 @@ export function ServiceHeroSection({
 	title,
 	description,
 	highlights,
+	bottomContent,
 	contactButtonText = "無料相談を予約する",
 	serviceMenuButtonText = "サービス内容を見る",
 	contactButtonHref = "/contact",
@@ -95,6 +97,8 @@ export function ServiceHeroSection({
 							</Link>
 						</Button>
 					</div>
+
+					{bottomContent}
 				</div>
 			</Container>
 		</HeroContainer>
