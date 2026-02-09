@@ -9,6 +9,7 @@ import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { PageHeader } from "@/components/ui/page-header";
+import { META } from "@/lib/constants";
 import { getAllNews, getNewsById } from "@/lib/data/news";
 import { sanitizeNewsContent } from "@/lib/security/sanitize";
 
@@ -67,7 +68,7 @@ export default async function NewsDetailPage({
 	}
 
 	const formattedDate = format(news.date, "yyyy年MM月dd日");
-	const url = `${process.env.NEXT_PUBLIC_SITE_URL || "https://example.com"}/news/${resolvedParams.id}`;
+	const url = `${META.SITE_URL}/news/${resolvedParams.id}`;
 
 	// パンくずリストの項目
 	const breadcrumbItems = [
