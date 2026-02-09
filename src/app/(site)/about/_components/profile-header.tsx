@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
+import { profileBadges } from "@/lib/data/about-data";
 
 export function ProfileHeader() {
 	return (
@@ -32,18 +33,11 @@ export function ProfileHeader() {
 					</div>
 				</div>
 				<div className="flex flex-wrap justify-center gap-3 max-w-2xl mx-auto">
-					<Badge variant="secondary" className="text-sm">
-						15年のウェブ制作経験
-					</Badge>
-					<Badge variant="secondary" className="text-sm">
-						AI活用コンサルティング
-					</Badge>
-					<Badge variant="secondary" className="text-sm">
-						クリエイティブ支援
-					</Badge>
-					<Badge variant="secondary" className="text-sm">
-						ワンストップ対応
-					</Badge>
+					{profileBadges.map((badge) => (
+						<Badge key={badge} variant="secondary" className="text-sm">
+							{badge}
+						</Badge>
+					))}
 				</div>
 			</header>
 

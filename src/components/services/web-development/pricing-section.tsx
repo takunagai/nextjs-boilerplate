@@ -1,59 +1,10 @@
-import { FaCreditCard, FaShield } from "react-icons/fa6";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
 import { Heading } from "@/components/ui/heading";
-
-const pricingPlans = [
-	{
-		id: "light",
-		name: "お手軽プラン",
-		description: "WordPressサイト（5ページ）\n更新しやすい基本サイト",
-		normalCompany: "60万円〜",
-		ourNormal: "30万円〜",
-		specialPrice: "18万円〜",
-		highlight: false,
-	},
-	{
-		id: "standard",
-		name: "しっかりプラン",
-		description: "オリジナルデザイン\nお客様だけのサイト",
-		normalCompany: "100万円〜",
-		ourNormal: "50万円〜",
-		specialPrice: "30万円〜",
-		highlight: true,
-	},
-	{
-		id: "premium",
-		name: "おまかせプラン",
-		description: "こだわり抜いたサイト\n3ヶ月サポート込み",
-		normalCompany: "150万円〜",
-		ourNormal: "80万円〜",
-		specialPrice: "50万円〜",
-		highlight: false,
-	},
-	{
-		id: "additional",
-		name: "ちょい足し",
-		description: "ページだけ追加したい時に",
-		normalCompany: "5万円〜",
-		ourNormal: "3万円〜",
-		specialPrice: "2万円〜",
-		highlight: false,
-	},
-];
-
-const features = [
-	{
-		icon: FaShield,
-		title: "安心の返金保証",
-		description: "満足いただけなければ、遠慮なくお申し出ください",
-	},
-	{
-		icon: FaCreditCard,
-		title: "お支払いも相談OK",
-		description: "分割払いなど、お気軽にご相談ください",
-	},
-];
+import {
+	webDevPricingPlans,
+	webDevPricingFeatures,
+} from "@/lib/data/pricing/web-development";
 
 export function PricingSection() {
 	return (
@@ -87,7 +38,7 @@ export function PricingSection() {
 						</div>
 
 						{/* プランデータ */}
-						{pricingPlans.map((plan) => (
+						{webDevPricingPlans.map((plan) => (
 							<Card
 								key={plan.id}
 								className={`mb-4 ${
@@ -135,7 +86,7 @@ export function PricingSection() {
 
 				{/* 特典・保証 */}
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-					{features.map((feature) => {
+					{webDevPricingFeatures.map((feature) => {
 						const IconComponent = feature.icon;
 						return (
 							<Card key={feature.title} className="text-center">
