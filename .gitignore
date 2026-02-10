@@ -125,3 +125,4 @@ local/
 .claude/plans/
 **/CLAUDE.md
 !/CLAUDE.md
+Log/
