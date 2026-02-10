@@ -18,7 +18,7 @@ export const BUSINESS = {
 	/** 電話番号 */
 	PHONE: "03-1234-5678", // TODO: 本番環境で更新
 	/** LINE公式アカウントURL */
-	LINE_URL: "https://line.me/R/ti/p/@example", // TODO: 本番環境で更新
+	LINE_URL: "https://line.me/ti/p/gwTCBKP8jY",
 	/** 営業時間 */
 	BUSINESS_HOURS: "平日 9:00〜18:00",
 	/** 休業日 */
