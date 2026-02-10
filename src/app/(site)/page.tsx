@@ -5,6 +5,7 @@ import { HeroSection } from "@/components/home/hero-section";
 export const revalidate = 3600; // 1時間キャッシュ
 
 import { BackgroundImageCTA } from "@/components/ui/background-image-cta";
+import { MonitorRecruitmentSection } from "@/components/sections/monitor-recruitment-section";
 import { PortfolioSection } from "@/components/sections/portfolio-section";
 import { ProblemsSection } from "@/components/sections/problems-section";
 import { ProfileSection } from "@/components/sections/profile-section";
@@ -42,6 +43,7 @@ export default function Home() {
 			<WebsiteJsonLd />
 			<main className="flex min-h-screen flex-col items-center">
 				<HeroSection />
+				<MonitorRecruitmentSection />
 				<ProblemsSection />
 				<ServicesSection />
 				<ReasonsSection />
