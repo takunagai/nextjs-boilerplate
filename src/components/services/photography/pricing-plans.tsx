@@ -1,48 +1,9 @@
 import { Container } from "@/components/ui/container";
-import { FaCheck, FaClock, FaCamera, FaImage } from "react-icons/fa6";
-
-const pricingInfo = {
-	base: 5500,
-	hourly: 5500,
-	includes: [
-		"撮影データ全て納品",
-		"基本的な画像補正込み",
-		"著作権譲渡",
-		"商用利用可能",
-		"RAWデータ提供可",
-	],
-};
-
-const examples = [
-	{
-		title: "プロフィール写真撮影",
-		duration: "1時間",
-		photos: "50枚程度",
-		price: "11,000円",
-		description: "ビジネス用プロフィール写真の撮影",
-	},
-	{
-		title: "商品撮影（10点）",
-		duration: "2時間",
-		photos: "100枚程度",
-		price: "16,500円",
-		description: "ECサイト用の商品写真撮影",
-	},
-	{
-		title: "料理撮影（20品）",
-		duration: "3時間",
-		photos: "150枚程度",
-		price: "22,000円",
-		description: "メニュー用の料理写真撮影",
-	},
-	{
-		title: "店舗撮影",
-		duration: "2時間",
-		photos: "80枚程度",
-		price: "16,500円",
-		description: "店舗の内装・外観撮影",
-	},
-];
+import { FaCheck, FaClock, FaCamera } from "react-icons/fa6";
+import {
+	photographyPricingInfo,
+	photographyExamples,
+} from "@/lib/data/pricing/photography";
 
 export function PricingPlans() {
 	return (
@@ -71,13 +32,13 @@ export function PricingPlans() {
 									基本料金
 								</span>
 								<span className="mx-3 text-4xl font-bold text-gray-900 dark:text-white">
-									{pricingInfo.base.toLocaleString()}円
+									{photographyPricingInfo.base.toLocaleString()}円
 								</span>
 								<span className="text-2xl text-gray-600 dark:text-gray-400">
 									+
 								</span>
 								<span className="mx-3 text-4xl font-bold text-gray-900 dark:text-white">
-									{pricingInfo.hourly.toLocaleString()}円
+									{photographyPricingInfo.hourly.toLocaleString()}円
 								</span>
 								<span className="text-2xl text-gray-600 dark:text-gray-400">
 									/時間
@@ -90,7 +51,7 @@ export function PricingPlans() {
 									料金に含まれるもの
 								</h4>
 								<div className="grid gap-3 sm:grid-cols-2">
-									{pricingInfo.includes.map((item, index) => (
+									{photographyPricingInfo.includes.map((item, index) => (
 										<div key={index} className="flex items-center">
 											<FaCheck className="mr-3 h-5 w-5 text-green-500" />
 											<span className="text-gray-700 dark:text-gray-300">
@@ -118,7 +79,7 @@ export function PricingPlans() {
 						料金例
 					</h3>
 					<div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-						{examples.map((example, index) => (
+						{photographyExamples.map((example, index) => (
 							<div
 								key={index}
 								className="rounded-xl bg-white p-6 shadow-md transition-shadow hover:shadow-lg dark:bg-gray-800"

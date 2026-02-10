@@ -6,27 +6,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { SocialLinks } from "@/components/ui/social-links";
-
-const values = [
-	{
-		title: "お客様との関係",
-		highlight: "対等なパートナーとして",
-		items: [
-			"一方的な提案ではなく、一緒に考える",
-			"お客様の強みを引き出すサポート",
-		],
-	},
-	{
-		title: "仕事への姿勢",
-		highlight: "誠実さ",
-		items: ["できることとできないことを正直に", "納期と品質の約束は必ず守る"],
-	},
-	{
-		title: "AI との向き合い方",
-		highlight: "道具として使いこなす",
-		items: ["AI に振り回されない", "あくまで人間が主役"],
-	},
-];
+import { values } from "@/lib/data/about-data";
 
 export function ValuesSection() {
 	return (

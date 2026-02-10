@@ -1,33 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-
-const skillCategories = [
-	{
-		title: "ウェブ制作・ウェブ開発",
-		skills: [
-			"HTML / CSS / JavaScript",
-			"WordPress",
-			"Next.js",
-			"Figma",
-			"Git/GitHub",
-			"Windsurf",
-		],
-	},
-	{
-		title: "AI ツール",
-		skills: [
-			"ChatGPT",
-			"Claude Code",
-			"Nano Banana",
-			"Stable Diffusion",
-			"Suno AI",
-			"Vidu",
-		],
-	},
-	{
-		title: "その他",
-		skills: ["Adobe Creative Cloud", "SEO / アクセス解析", "プロジェクト管理"],
-	},
-];
+import { skillCategories } from "@/lib/data/about-data";
 
 export function SkillsSection() {
 	return (

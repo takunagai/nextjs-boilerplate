@@ -1,7 +1,6 @@
-"use client";
-
 import { FaArrowUpRightFromSquare, FaLine, FaPhone } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
+import { BUSINESS } from "@/lib/constants";
 import {
 	Card,
 	CardContent,
@@ -22,13 +21,13 @@ export function ContactPhoneAndLine() {
 				{/* 電話問い合わせセクション */}
 				<ContactMethodCard
 					title="お電話でのお問い合わせ"
-					description="平日10:00〜17:00にて電話でのお問い合わせを受け付けております。"
+					description={`${BUSINESS.PHONE_HOURS}にて電話でのお問い合わせを受け付けております。`}
 					icon={<FaPhone className="h-5 w-5" />}
 					content={
 						<div className="space-y-2">
-							<p className="text-lg font-semibold">03-1234-5678</p>
+							<p className="text-lg font-semibold">{BUSINESS.PHONE}</p>
 							<p className="text-sm text-muted-foreground">
-								受付時間: 平日 10:00〜17:00
+								受付時間: {BUSINESS.PHONE_HOURS}
 							</p>
 							<p className="text-sm text-muted-foreground">
 								※土日祝日・年末年始を除く
@@ -36,14 +35,8 @@ export function ContactPhoneAndLine() {
 						</div>
 					}
 					footer={
-						<Button
-							variant="outline"
-							className="w-full"
-							onClick={() => {
-								window.location.href = "tel:03-1234-5678";
-							}}
-						>
-							電話をかける
+						<Button variant="outline" className="w-full" asChild>
+							<a href={`tel:${BUSINESS.PHONE}`}>電話をかける</a>
 						</Button>
 					}
 				/>
@@ -59,20 +52,21 @@ export function ContactPhoneAndLine() {
 								LINE公式アカウントを友だち追加して、トーク画面からお問い合わせください。
 							</p>
 							<p className="text-sm text-muted-foreground">
-								24時間受付・返信は営業時間内（平日10:00〜17:00）
+								24時間受付・返信は営業時間内（{BUSINESS.PHONE_HOURS}）
 							</p>
 						</div>
 					}
 					footer={
-						<Button
-							variant="outline"
-							className="w-full flex items-center gap-2"
-							onClick={() => {
-								window.open("https://line.me/R/ti/p/@example", "_blank");
-							}}
-						>
-							<span>友だち追加</span>
-							<FaArrowUpRightFromSquare className="h-4 w-4" />
+						<Button variant="outline" className="w-full" asChild>
+							<a
+								href={BUSINESS.LINE_URL}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="flex items-center gap-2"
+							>
+								<span>友だち追加</span>
+								<FaArrowUpRightFromSquare className="h-4 w-4" />
+							</a>
 						</Button>
 					}
 				/>
