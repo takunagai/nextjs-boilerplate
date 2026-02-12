@@ -16,7 +16,7 @@ type SocialPlatform = "GITHUB" | "X" | "INSTAGRAM" | "FACEBOOK" | "YOUTUBE";
 
 // ソーシャルリンク定義
 const SOCIAL_LINKS = {
-	GITHUB: "https://github.com/nagataku",
+	GITHUB: "https://github.com/takunagai",
 	X: "https://x.com/nagataku_ai",
 	INSTAGRAM: "https://www.instagram.com/nagataku33/",
 	FACEBOOK: "https://www.facebook.com/takuya.nagai.12",

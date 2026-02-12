@@ -23,7 +23,7 @@ export type SocialPlatform =
 
 // ソーシャルメディアの設定
 export const SOCIAL_LINKS = {
-	GITHUB: "https://github.com/example/nextjs-boilerplate",
+	GITHUB: "https://github.com/takunagai",
 	X: "https://x.com/nagataku_ai",
 	INSTAGRAM: "https://www.instagram.com/nagataku33/",
 	FACEBOOK: "https://www.facebook.com/takuya.nagai.12",

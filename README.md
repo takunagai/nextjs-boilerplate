@@ -608,7 +608,7 @@ npm run test:e2e:report
 
 このプロジェクトはVercelへの簡単なデプロイをサポートしています。  
 
-[![Vercelにデプロイ](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fyourusername%2Fnextjs-boilerplate)
+[![Vercelにデプロイ](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Ftakunagai%2Fnextjs-boilerplate)
 
 ### その他のプラットフォーム
 
