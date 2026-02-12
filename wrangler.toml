@@ -29,6 +29,10 @@ observability = { enabled = true }
 directory = ".open-next/assets"
 binding = "ASSETS"
 
+# 不要ファイルをデプロイから除外
+[assets.exclude]
+patterns = [".DS_Store", "*.md", "Thumbs.db"]
+
 # 必要に応じてKV、D1、R2などのリソースバインディングを追加
 # 例：
 # [[env.production.kv_namespaces]]
