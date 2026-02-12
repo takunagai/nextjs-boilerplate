@@ -5,6 +5,7 @@ import {
 	FaChartLine,
 	FaGear,
 	FaRightFromBracket,
+	FaRightToBracket,
 	FaShieldHalved,
 	FaUser,
 	FaUsers,
@@ -36,11 +37,11 @@ export function UserAuthMenu() {
 		return (
 			<Button
 				variant="ghost"
+				size="icon"
 				onClick={() => router.push("/login")}
-				className="gap-2"
+				aria-label="ログイン"
 			>
-				<FaUser className="h-4 w-4" />
-				<span>ログイン</span>
+				<FaRightToBracket className="h-4 w-4" />
 			</Button>
 		);
 	}

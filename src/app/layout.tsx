@@ -120,7 +120,13 @@ export default async function RootLayout({
 								<Header
 									background="transparent"
 									logoText={APP.NAME}
-									items={HEADER_NAVIGATION}
+									items={
+										session
+											? HEADER_NAVIGATION
+											: HEADER_NAVIGATION.filter(
+													(item) => item.href !== "/examples",
+												)
+									}
 									rightContent={<UserAuthMenu />}
 								/>
 								<MainContent>{children}</MainContent>
