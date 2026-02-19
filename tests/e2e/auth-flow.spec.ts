@@ -24,10 +24,10 @@ class AuthFlowPage {
 	async gotoLogin() {
 		await this.page.goto("/login");
 		await this.page.waitForLoadState("domcontentloaded");
-		// フォームフィールドが表示されるまで待機（CI環境では初回レンダリングが遅い）
+		// フォームフィールドが表示されるまで待機（CI環境では初回ビルド+レンダリングが遅い）
 		await this.page
 			.getByLabel("メールアドレス")
-			.waitFor({ state: "visible", timeout: 30000 });
+			.waitFor({ state: "visible", timeout: 45000 });
 	}
 
 	// ログイン実行
@@ -110,11 +110,16 @@ class AuthFlowPage {
 
 	// ダッシュボード要素の存在確認
 	async hasDashboardContent() {
-		// ダッシュボードの特徴的な要素を確認
+		// ダッシュボードの特徴的な要素を確認（描画完了を待機）
 		const dashboardHeader = this.page
 			.locator('h1:has-text("ダッシュボード"), h2:has-text("ダッシュボード")')
 			.first();
-		return await dashboardHeader.isVisible();
+		try {
+			await dashboardHeader.waitFor({ state: "visible", timeout: 15000 });
+			return true;
+		} catch {
+			return false;
+		}
 	}
 }
 
