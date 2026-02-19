@@ -276,6 +276,17 @@
 	}
 }
 
+/* prefers-reduced-motion: アニメーション無効化（defense-in-depth） */
+@media (prefers-reduced-motion: reduce) {
+	.animate-breathing,
+	.animate-slide-up,
+	.animate-scale-in,
+	.animate-neon-glow,
+	.animate-light-flow {
+		animation: none !important;
+	}
+}
+
 /* Aurora Effects for Reasons Section */
 .aurora-1 {
 	background: linear-gradient(
