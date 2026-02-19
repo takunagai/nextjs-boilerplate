@@ -37,7 +37,7 @@ export async function executeServerAction<TInput, TOutput>(
 				revalidatePath(options.revalidatePath);
 			}
 			if (options.revalidateTag) {
-				revalidateTag(options.revalidateTag);
+				revalidateTag(options.revalidateTag, "max");
 			}
 			if (options.redirect) {
 				redirect(options.redirect);

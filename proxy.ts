@@ -178,9 +178,9 @@ function setSecurityHeaders(response: NextResponse, req: NextRequest): void {
 	response.headers.set("Content-Security-Policy", cspDirectives.join("; "));
 }
 
-// 通常のmiddleware関数（テスト目的）
-export default function middleware(req: NextRequest) {
-	console.log("Middleware called for:", req.nextUrl.pathname);
+// Next.js 16 proxy関数（middleware.tsから移行）
+export function proxy(req: NextRequest) {
+	console.log("Proxy called for:", req.nextUrl.pathname);
 
 	// CSRF保護
 	if (!validateCsrf(req)) {

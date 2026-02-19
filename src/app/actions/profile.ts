@@ -125,8 +125,8 @@ export async function updateProfile(formData: unknown) {
 		// キャッシュの無効化（Next.js の revalidation）
 		// テスト環境では revalidate 機能をスキップ
 		if (process.env.NODE_ENV !== "test") {
-			revalidateTag(CACHE_TAGS.PROFILE(userId));
-			revalidateTag(CACHE_TAGS.USER_PROFILES);
+			revalidateTag(CACHE_TAGS.PROFILE(userId), "max");
+			revalidateTag(CACHE_TAGS.USER_PROFILES, "max");
 			revalidatePath("/profile");
 			revalidatePath("/(app)/profile", "page");
 		}
@@ -203,7 +203,7 @@ export async function uploadProfileImage(formData: FormData) {
 		// キャッシュの無効化
 		// テスト環境では revalidate 機能をスキップ
 		if (process.env.NODE_ENV !== "test") {
-			revalidateTag(CACHE_TAGS.PROFILE(userId));
+			revalidateTag(CACHE_TAGS.PROFILE(userId), "max");
 			revalidatePath("/profile");
 			revalidatePath("/(app)/profile", "page");
 		}
@@ -291,8 +291,8 @@ export async function deleteProfile(formData: unknown) {
 		// キャッシュの無効化（削除後なので広範囲に）
 		// テスト環境では revalidate 機能をスキップ
 		if (process.env.NODE_ENV !== "test") {
-			revalidateTag(CACHE_TAGS.PROFILE(userId));
-			revalidateTag(CACHE_TAGS.USER_PROFILES);
+			revalidateTag(CACHE_TAGS.PROFILE(userId), "max");
+			revalidateTag(CACHE_TAGS.USER_PROFILES, "max");
 			revalidatePath("/", "layout"); // 全体的なキャッシュクリア
 		}
 
