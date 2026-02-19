@@ -64,17 +64,13 @@ export function MonitorRecruitmentSection() {
 					</span>
 					<h2 className="text-3xl md:text-4xl font-bold text-slate-800 dark:text-white mb-6 leading-tight">
 						<span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-700 to-slate-500 dark:from-orange-300 dark:to-amber-200">
-							AIで何ができるか、
+							AIの活かし方、
 						</span>
 						<br />
-						一緒に考えませんか？
+						一緒に考えます。
 					</h2>
 					<p className="text-lg text-slate-600 dark:text-stone-300 leading-relaxed">
-						AI活用支援サービスの立ち上げにあたり、みなさまが本当に求めているものを知りたいと思っています。
-						<br className="hidden md:inline" />
-						「AIって実際どう使えるの？」そんな素朴な疑問から、具体的な業務の相談まで。
-						<br className="hidden md:inline" />
-						無料相談やお試し価格での制作を通じて、一緒に可能性を探りませんか？
+						AI活用支援サービスの立ち上げにあたり、皆さまのリアルな声をもとにサービスを磨いていきたいと考えています。素朴な疑問から業務の具体的な相談まで、無料相談やお試し価格でお気軽にどうぞ。
 					</p>
 				</div>
 
@@ -88,20 +84,22 @@ export function MonitorRecruitmentSection() {
 						{serviceCards.map((card) => (
 							<div
 								key={card.title}
-								className="bg-white dark:bg-white/5 p-6 rounded-2xl shadow-sm hover:shadow-md dark:hover:shadow-black/20 transition-shadow duration-300 border border-slate-100 dark:border-stone-600"
+								className="bg-white dark:bg-white/5 p-5 rounded-2xl shadow-sm hover:shadow-md dark:hover:shadow-black/20 transition-shadow duration-300 border border-slate-100 dark:border-stone-600"
 							>
-								<div
-									className={cn(
-										"w-12 h-12 rounded-xl flex items-center justify-center text-2xl mb-4",
-										card.iconBg,
-										card.iconColor,
-									)}
-								>
-									{card.icon}
+								<div className="flex items-center gap-3 mb-3">
+									<div
+										className={cn(
+											"w-10 h-10 rounded-xl flex items-center justify-center text-xl flex-shrink-0",
+											card.iconBg,
+											card.iconColor,
+										)}
+									>
+										{card.icon}
+									</div>
+									<h4 className="text-base font-bold text-slate-800 dark:text-white">
+										{card.title}
+									</h4>
 								</div>
-								<h4 className="text-lg font-bold text-slate-800 dark:text-white mb-2">
-									{card.title}
-								</h4>
 								<p className="text-sm text-slate-600 dark:text-stone-300 leading-relaxed">
 									{card.description}
 								</p>
