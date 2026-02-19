@@ -272,7 +272,9 @@ test.describe("統合パフォーマンステスト", () => {
 			await page.goto("/contact");
 			await page.waitForLoadState("domcontentloaded");
 			// メールタブに切り替え（デフォルトはLINEタブ）
-			await page.getByRole("tab", { name: "メール" }).click({ force: true });
+			await page
+				.getByRole("tab", { name: "メール" })
+				.evaluate((el: HTMLElement) => el.click());
 			await page.getByLabel("お名前").waitFor({ state: "visible" });
 
 			const startTime = performance.now();

@@ -75,10 +75,10 @@ class InputValidationTestPage {
 		await this.page.goto("/contact");
 		await this.page.waitForLoadState("domcontentloaded");
 		// メールタブに切り替え（デフォルトはLINEタブ）
-		// force: true で固定ヘッダー（アナウンスメントバー）の遮りを回避
+		// 固定ヘッダー（アナウンスメントバー）がタブを遮るためJS直接クリック
 		await this.page
 			.getByRole("tab", { name: "メール" })
-			.click({ force: true });
+			.evaluate((el: HTMLElement) => el.click());
 		await this.page.getByLabel("お名前").waitFor({ state: "visible" });
 	}
 
@@ -205,7 +205,7 @@ test.describe("入力検証・サニタイゼーション セキュリティテ�
 				await page.reload();
 				await page.waitForLoadState("domcontentloaded");
 				// リロード後にメールタブに再切り替え
-				// force: true で固定ヘッダー（アナウンスメントバー）の遮りを回避
+				// 固定ヘッダー（アナウンスメントバー）がタブを遮るためJS直接クリック
 				await page
 					.getByRole("tab", { name: "メール" })
 					.click({ timeout: 10000, force: true });
@@ -250,7 +250,7 @@ test.describe("入力検証・サニタイゼーション セキュリティテ�
 				await page.reload();
 				await page.waitForLoadState("domcontentloaded");
 				// リロード後にメールタブに再切り替え
-				// force: true で固定ヘッダー（アナウンスメントバー）の遮りを回避
+				// 固定ヘッダー（アナウンスメントバー）がタブを遮るためJS直接クリック
 				await page
 					.getByRole("tab", { name: "メール" })
 					.click({ timeout: 10000, force: true });
