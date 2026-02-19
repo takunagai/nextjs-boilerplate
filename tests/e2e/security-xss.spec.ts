@@ -96,15 +96,18 @@ class SecurityTestPage {
 
 		// 実行可能な形でのスクリプト注入がないことを確認
 		expect(pageContent).not.toMatch(/<script[^>]*>\s*alert\s*\(/i);
-		expect(pageContent).not.toMatch(/javascript\s*:\s*alert\s*\(/i);
 		expect(pageContent).not.toMatch(/<img[^>]*onerror\s*=\s*['"]*alert\s*\(/i);
 		expect(pageContent).not.toMatch(/<svg[^>]*onload\s*=\s*['"]*alert\s*\(/i);
 		expect(pageContent).not.toMatch(
 			/<iframe[^>]*src\s*=\s*['"]javascript\s*:\s*alert/i,
 		);
 
-		// Note: フォームフィールドに入力されたテキストがエスケープされて表示されることは正常
-		// 重要なのはスクリプトが実行されないことなので、アラート呼び出しチェックのみで十分
+		// javascript: URL の検出は Playwright locator ベースで行う（HTML全体の正規表現だと
+		// URLパラメータやシリアライズデータ内の文字列にマッチして偽陽性が発生するため）
+		const jsLinks = await this.page
+			.locator('a[href^="javascript:"]')
+			.count();
+		expect(jsLinks).toBe(0);
 	}
 
 	// URLパラメータにXSSペイロードを含めてページにアクセス
