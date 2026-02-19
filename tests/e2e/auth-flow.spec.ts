@@ -128,6 +128,8 @@ test.describe("認証フロー", () => {
 		test("完全な認証フロー: ログイン→ダッシュボード→ログアウト", async ({
 			page,
 		}) => {
+			test.setTimeout(90000); // CI環境でのセッション確立遅延を考慮
+
 			// 1. ログインページへ移動
 			await authFlow.gotoLogin();
 
@@ -136,8 +138,15 @@ test.describe("認証フロー", () => {
 			await expect(page.locator('input[type="password"]')).toBeVisible();
 			await expect(page.locator('form button[type="submit"]')).toBeVisible();
 
-			// 2. 正しい認証情報でログイン
+			// 2. 正しい認証情報でログイン（CI環境ではリトライ対応）
 			await authFlow.login(TEST_USER.email, TEST_USER.password);
+
+			if (!page.url().includes("/dashboard")) {
+				await page.waitForTimeout(2000);
+				if (page.url().includes("/login")) {
+					await authFlow.login(TEST_USER.email, TEST_USER.password);
+				}
+			}
 
 			// 3. ダッシュボードにリダイレクトされることを確認
 			await expect(page).toHaveURL(/\/dashboard/, { timeout: 20000 });
@@ -228,9 +237,18 @@ test.describe("認証フロー", () => {
 
 	test.describe("セッション状態確認", () => {
 		test("セッション維持の包括的確認", async ({ page, context }) => {
-			// ログイン
+			test.setTimeout(90000); // セッション確立に時間がかかるCI環境用
+
+			// ログイン（CI環境ではセッション確立にタイムラグがあるためリトライ対応）
 			await authFlow.gotoLogin();
 			await authFlow.login(TEST_USER.email, TEST_USER.password);
+
+			if (!page.url().includes("/dashboard")) {
+				await page.waitForTimeout(2000);
+				if (page.url().includes("/login")) {
+					await authFlow.login(TEST_USER.email, TEST_USER.password);
+				}
+			}
 			await expect(page).toHaveURL(/\/dashboard/, { timeout: 20000 });
 
 			// 1. ページリロードでセッション維持

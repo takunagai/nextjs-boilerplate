@@ -190,6 +190,7 @@ test.describe("入力検証・サニタイゼーション セキュリティテ�
 		});
 
 		test("メールアドレス形式の検証", async ({ page }) => {
+			test.setTimeout(90000); // 5回のループ反復のため延長
 			await validationPage.gotoContact();
 
 			for (const invalidEmail of INVALID_EMAILS.slice(0, 5)) {
@@ -232,6 +233,7 @@ test.describe("入力検証・サニタイゼーション セキュリティテ�
 		});
 
 		test("電話番号形式の検証", async ({ page }) => {
+			test.setTimeout(90000); // 5回のループ反復のため延長
 			await validationPage.gotoContact();
 
 			const invalidPhones = [
