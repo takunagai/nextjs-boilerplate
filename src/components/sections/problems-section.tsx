@@ -44,7 +44,7 @@ export function ProblemsSection({
 	intervalSeconds = 5,
 }: ProblemsSectionProps = {}) {
 	return (
-		<section className="w-full py-16 md:py-24 bg-muted/30">
+		<section className="w-full py-16 md:py-24 bg-gradient-to-br from-orange-50/50 via-amber-50/30 to-orange-50/50 dark:bg-muted/30 dark:from-transparent dark:via-transparent dark:to-transparent">
 			<Container width="2xl" paddingY="lg" paddingX="lg">
 				<div className="text-center mb-12">
 					<Heading as="h2" align="center" className="mb-6">
@@ -57,6 +57,8 @@ export function ProblemsSection({
 					intervalSeconds={intervalSeconds}
 					showIndicator={true}
 					className="max-w-2xl mx-auto space-y-4 mb-12"
+					iconClassName="w-3 h-3 text-amber-600 dark:text-primary"
+					iconWrapperClassName="bg-amber-100 dark:bg-primary/10"
 				/>
 
 				<div className="flex justify-center">

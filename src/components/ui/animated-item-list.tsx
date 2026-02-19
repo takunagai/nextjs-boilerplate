@@ -51,6 +51,7 @@ interface AnimatedItemListProps {
 	className?: string; // コンテナスタイル
 	itemClassName?: string; // 各項目スタイル
 	iconClassName?: string; // アイコンスタイル
+	iconWrapperClassName?: string; // アイコン円形背景スタイル
 	textClassName?: string; // テキストスタイル
 
 	// 高度なカスタマイゼーション
@@ -80,6 +81,7 @@ export function AnimatedItemList({
 	className = "space-y-4",
 	itemClassName = "flex items-start gap-3 p-4 bg-background rounded-lg shadow-sm hover:shadow-md transition-shadow",
 	iconClassName = "w-3 h-3 text-primary",
+	iconWrapperClassName = "bg-primary/10",
 	textClassName = "text-muted-foreground flex-1",
 	renderItem,
 }: AnimatedItemListProps) {
@@ -301,7 +303,7 @@ export function AnimatedItemList({
 				{showIcon && (
 					<div
 						className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center mt-0.5 ${
-							isPlaceholder ? "bg-transparent" : "bg-primary/10"
+							isPlaceholder ? "bg-transparent" : iconWrapperClassName
 						}`}
 					>
 						{renderIcon()}
