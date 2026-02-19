@@ -12,6 +12,9 @@ class ContactFormPage {
 	async goto() {
 		await this.page.goto("/contact");
 		await this.page.waitForLoadState("domcontentloaded");
+		// メールタブに切り替え（デフォルトはLINEタブ）
+		await this.page.getByRole("tab", { name: "メール" }).click();
+		await this.page.getByLabel("お名前").waitFor({ state: "visible" });
 	}
 
 	async fillBasicForm(data: {
@@ -80,7 +83,7 @@ test.describe("お問い合わせフォーム", () => {
 	test("ページが正しく表示される", async ({ page }) => {
 		await expect(page.locator("h1")).toContainText("お問い合わせ");
 		await expect(page.getByRole("tab", { name: "メール" })).toBeVisible();
-		await expect(page.getByRole("tab", { name: "電話・LINE" })).toBeVisible();
+		await expect(page.getByRole("tab", { name: "LINE" })).toBeVisible();
 		await expect(page.getByLabel("お名前")).toBeVisible();
 		await expect(page.getByLabel("メールアドレス")).toBeVisible();
 		await expect(page.getByLabel("お問い合わせ内容")).toBeVisible();

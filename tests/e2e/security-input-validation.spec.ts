@@ -74,6 +74,9 @@ class InputValidationTestPage {
 	async gotoContact() {
 		await this.page.goto("/contact");
 		await this.page.waitForLoadState("domcontentloaded");
+		// メールタブに切り替え（デフォルトはLINEタブ）
+		await this.page.getByRole("tab", { name: "メール" }).click();
+		await this.page.getByLabel("お名前").waitFor({ state: "visible" });
 	}
 
 	// 登録フォームへ移動
@@ -197,6 +200,9 @@ test.describe("入力検証・サニタイゼーション セキュリティテ�
 
 				// ページをリロードして次のテストへ
 				await page.reload();
+				// リロード後にメールタブに再切り替え
+				await page.getByRole("tab", { name: "メール" }).click();
+				await page.getByLabel("お名前").waitFor({ state: "visible" });
 			}
 		});
 
@@ -235,6 +241,9 @@ test.describe("入力検証・サニタイゼーション セキュリティテ�
 
 				await validationPage.expectValidationErrors();
 				await page.reload();
+				// リロード後にメールタブに再切り替え
+				await page.getByRole("tab", { name: "メール" }).click();
+				await page.getByLabel("お名前").waitFor({ state: "visible" });
 			}
 		});
 	});

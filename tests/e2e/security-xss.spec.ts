@@ -35,6 +35,9 @@ class SecurityTestPage {
 	async gotoContact() {
 		await this.page.goto("/contact");
 		await this.page.waitForLoadState("domcontentloaded");
+		// メールタブに切り替え（デフォルトはLINEタブ）
+		await this.page.getByRole("tab", { name: "メール" }).click();
+		await this.page.getByLabel("お名前").waitFor({ state: "visible" });
 	}
 
 	// ログインフォームへ移動
