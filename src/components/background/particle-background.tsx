@@ -1,6 +1,11 @@
 "use client";
 
+import { useTheme } from "next-themes";
 import { useCallback, useEffect, useRef, useState } from "react";
+import {
+	PARTICLE_COLORS,
+	PARTICLE_COLORS_LIGHT,
+} from "@/constants/particle";
 import { useIsMobile } from "@/hooks/use-is-mobile";
 import { useParticleAnimation } from "@/hooks/use-particle-animation";
 import { useParticleCanvas } from "@/hooks/use-particle-canvas";
@@ -25,6 +30,7 @@ export function ParticleBackground({
 }: ParticleBackgroundProps) {
 	const particlesRef = useRef<Particle[]>([]);
 	const isMobile = useIsMobile();
+	const { resolvedTheme } = useTheme();
 	const [isInitialized, setIsInitialized] = useState(false);
 	const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
@@ -71,6 +77,16 @@ export function ParticleBackground({
 		return () => mql.removeEventListener("change", handler);
 	}, []);
 
+	// テーマ変更時にパーティクルカラーを切り替え（位置・速度は維持）
+	useEffect(() => {
+		if (!isInitialized || particlesRef.current.length === 0) return;
+		const colors =
+			resolvedTheme === "dark" ? PARTICLE_COLORS : PARTICLE_COLORS_LIGHT;
+		for (const particle of particlesRef.current) {
+			particle.color = colors[Math.floor(Math.random() * colors.length)];
+		}
+	}, [resolvedTheme, isInitialized]);
+
 	// 初期化
 	useEffect(() => {
 		if (isInitialized) return;
@@ -87,6 +103,13 @@ export function ParticleBackground({
 			// パーティクル初期化
 			const particleCount = getParticleCount(isMobile);
 			particlesRef.current = initializeParticles(particleCount, width, height);
+
+			// テーマに応じたカラーを適用
+			const colors =
+				resolvedTheme === "dark" ? PARTICLE_COLORS : PARTICLE_COLORS_LIGHT;
+			for (const particle of particlesRef.current) {
+				particle.color = colors[Math.floor(Math.random() * colors.length)];
+			}
 
 			if (prefersReducedMotion) {
 				// reduced-motion: 初期パーティクル位置のみ描画（1フレーム）

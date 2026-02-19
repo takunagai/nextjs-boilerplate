@@ -37,8 +37,8 @@ export function HeroSection() {
 			className="relative w-full flex items-center overflow-hidden"
 			style={heroStyle}
 		>
-			{/* 深い紺色のグラデーション背景 */}
-			<div className="absolute inset-0 bg-gradient-to-b from-[#0a0a1f] to-[#1a1a3e] -z-30" />
+			{/* グラデーション背景（Light/Dark対応） */}
+			<div className="absolute inset-0 bg-gradient-to-b from-slate-50 via-blue-50 to-indigo-100 dark:from-[#0a0a1f] dark:via-[#0a0a1f] dark:to-[#1a1a3e] -z-30" />
 
 			{/* パーティクル背景 */}
 			<ParticleBackground className="-z-10" />
@@ -48,7 +48,7 @@ export function HeroSection() {
 					{/* 上部テキスト */}
 					<p
 						className={`
-							text-lg md:text-xl text-white/80 mb-8 transition-all duration-800 ease-out
+							text-lg md:text-xl text-slate-700 dark:text-white/80 mb-8 transition-all duration-800 ease-out
 							${
 								animationStarted
 									? "opacity-100 translate-y-0"
@@ -61,12 +61,12 @@ export function HeroSection() {
 					</p>
 
 					{/* メインアニメーション */}
-					<MinimalAnimation className="mb-8 text-white" />
+					<MinimalAnimation className="mb-8 text-foreground dark:text-white" />
 
 					{/* サブテキスト */}
 					<p
 						className={`
-							text-lg md:text-xl text-white/90 mb-8 max-w-3xl transition-all duration-800 ease-out
+							text-lg md:text-xl text-slate-600 dark:text-white/90 mb-8 max-w-3xl transition-all duration-800 ease-out
 							${
 								animationStarted
 									? "opacity-100 translate-y-0"
@@ -88,9 +88,8 @@ export function HeroSection() {
 						</Button>
 						<Button
 							asChild
-							variant="outline"
+							variant="hero"
 							size="lg"
-							className="bg-white/10 text-white border-white/20 hover:bg-white/20"
 						>
 							<Link href="/services">サービスを見る</Link>
 						</Button>
@@ -106,8 +105,8 @@ export function HeroSection() {
 					onClick={handleScroll}
 					aria-label="Scroll to continue"
 				>
-					<span className="text-sm text-white">Scroll to continue.</span>
-					<FaCaretDown className="h-5 w-5 text-white" />
+					<span className="text-sm text-slate-400 dark:text-white">Scroll to continue.</span>
+					<FaCaretDown className="h-5 w-5 text-slate-400 dark:text-white" />
 				</button>
 			)}
 		</section>

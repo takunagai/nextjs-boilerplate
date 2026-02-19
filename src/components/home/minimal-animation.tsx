@@ -41,7 +41,7 @@ export function MinimalAnimation({ className = "" }: MinimalAnimationProps) {
 				{/* Web */}
 				<span
 					className={`
-						inline-block text-primary
+						inline-block bg-gradient-to-r from-blue-600 to-cyan-400 bg-clip-text text-transparent dark:bg-none dark:text-primary
 						${
 							prefersReducedMotion
 								? "opacity-100"
@@ -67,7 +67,7 @@ export function MinimalAnimation({ className = "" }: MinimalAnimationProps) {
 				{/* First × */}
 				<span
 					className={`
-						inline-block mx-2 text-white
+						inline-block mx-2 text-slate-300 dark:text-white
 						${
 							prefersReducedMotion
 								? "opacity-100"
@@ -86,7 +86,7 @@ export function MinimalAnimation({ className = "" }: MinimalAnimationProps) {
 				{/* AI */}
 				<span
 					className={`
-						inline-block text-primary
+						inline-block bg-gradient-to-r from-violet-600 to-fuchsia-400 bg-clip-text text-transparent dark:bg-none dark:text-primary
 						${
 							prefersReducedMotion
 								? "opacity-100"
@@ -115,7 +115,7 @@ export function MinimalAnimation({ className = "" }: MinimalAnimationProps) {
 				{/* Second × */}
 				<span
 					className={`
-						inline-block mx-2 md:mx-2 text-white
+						inline-block mx-2 md:mx-2 text-slate-300 dark:text-white
 						${
 							prefersReducedMotion
 								? "opacity-100"
@@ -134,7 +134,7 @@ export function MinimalAnimation({ className = "" }: MinimalAnimationProps) {
 				{/* Creative */}
 				<span
 					className={`
-						inline-block text-primary
+						inline-block bg-gradient-to-r from-teal-500 to-emerald-400 bg-clip-text text-transparent dark:bg-none dark:text-primary
 						${
 							prefersReducedMotion
 								? "opacity-100"
