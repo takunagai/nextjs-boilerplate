@@ -167,7 +167,7 @@ export function DesktopNavigation({
 					if (item.children?.length) {
 						const isOpen = openDropdown === item.href;
 						return (
-							<div key={item.href} className="relative group">
+							<div key={item.href} className="relative">
 								<button
 									ref={(el) => {
 										if (el) triggerRefs.current.set(item.href, el);
@@ -198,8 +198,6 @@ export function DesktopNavigation({
 									}}
 									className={cn(
 										"absolute left-0 min-w-[12rem] py-2 bg-background border border-border rounded-md shadow-md mt-1 transition-all duration-150 z-50",
-										!isOpen &&
-											"group-hover:opacity-100 group-focus-within:opacity-100 group-hover:visible group-focus-within:visible",
 										isOpen ? "opacity-100 visible" : "opacity-0 invisible",
 									)}
 									role="menu"
