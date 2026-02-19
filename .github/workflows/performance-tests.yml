@@ -37,13 +37,12 @@ jobs:
       - name: Run performance tests
         run: |
           npx playwright test \
-            performance-core-web-vitals.spec.ts \
-            performance-api.spec.ts \
-            performance-resource-optimization.spec.ts \
+            performance.spec.ts \
             --project=chromium
         env:
           CI: true
           AUTH_SECRET: ci-test-secret-key-for-playwright-tests-minimum-32-chars
+          ALLOW_TEST_USERS: 'true'
           
       - name: Generate performance report
         if: always()
@@ -101,16 +100,17 @@ jobs:
         env:
           CI: true
           AUTH_SECRET: ci-test-secret-key-for-playwright-tests-minimum-32-chars
-          
+          ALLOW_TEST_USERS: 'true'
+
       - name: Run accessibility tests
         run: |
           npx playwright test \
             accessibility.spec.ts \
-            profile-accessibility.spec.ts \
             --project=chromium
         env:
           CI: true
           AUTH_SECRET: ci-test-secret-key-for-playwright-tests-minimum-32-chars
+          ALLOW_TEST_USERS: 'true'
           
       - name: Generate security report
         if: always()

@@ -21,6 +21,7 @@ jobs:
       run: npx playwright test
       env:
         AUTH_SECRET: ci-test-secret-key-for-playwright-tests-minimum-32-chars
+        ALLOW_TEST_USERS: 'true'
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
