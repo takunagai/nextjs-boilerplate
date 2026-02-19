@@ -92,11 +92,8 @@ test.describe("キーボードナビゲーション", () => {
 
 		// 名前フィールドに直接フォーカスできることを確認
 		const nameInput = page.getByLabel("氏名");
-		await nameInput.focus();
-		const isNameFocused = await nameInput.evaluate(
-			(el) => document.activeElement === el,
-		);
-		expect(isNameFocused).toBeTruthy();
+		await nameInput.click(); // focus() よりも確実にフォーカスを設定
+		await expect(nameInput).toBeFocused();
 	});
 });
 
