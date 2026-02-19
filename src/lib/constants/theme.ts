@@ -9,7 +9,7 @@ export const THEME = {
 	/**
 	 * デフォルトテーマ ("light", "dark")
 	 */
-	DEFAULT: "dark",
+	DEFAULT: "light",
 } as const;
 
 /**
