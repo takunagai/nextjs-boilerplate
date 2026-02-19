@@ -200,8 +200,11 @@ test.describe("入力検証・サニタイゼーション セキュリティテ�
 
 				// ページをリロードして次のテストへ
 				await page.reload();
+				await page.waitForLoadState("domcontentloaded");
 				// リロード後にメールタブに再切り替え
-				await page.getByRole("tab", { name: "メール" }).click();
+				await page
+					.getByRole("tab", { name: "メール" })
+					.click({ timeout: 10000 });
 				await page.getByLabel("お名前").waitFor({ state: "visible" });
 			}
 		});
@@ -241,8 +244,11 @@ test.describe("入力検証・サニタイゼーション セキュリティテ�
 
 				await validationPage.expectValidationErrors();
 				await page.reload();
+				await page.waitForLoadState("domcontentloaded");
 				// リロード後にメールタブに再切り替え
-				await page.getByRole("tab", { name: "メール" }).click();
+				await page
+					.getByRole("tab", { name: "メール" })
+					.click({ timeout: 10000 });
 				await page.getByLabel("お名前").waitFor({ state: "visible" });
 			}
 		});

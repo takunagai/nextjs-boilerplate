@@ -8,6 +8,8 @@ import { expect, test } from "@playwright/test";
 
 test.describe("アクセシビリティ基準", () => {
 	test("主要ページ: WCAG準拠確認（リグレッション防止）", async ({ page }) => {
+		// AxeBuilderは内部で新しいページコンテキストを生成するため、CI環境ではタイムアウトしやすい
+		test.setTimeout(120000);
 		// 既知の違反数をベースラインとして設定（段階的に改善する）
 		const maxViolations: Record<string, number> = {
 			"/": 100,

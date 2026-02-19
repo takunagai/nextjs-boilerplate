@@ -264,9 +264,9 @@ test.describe("XSS脆弱性テスト", () => {
 
 			// HTMLエンティティまたはエスケープされた文字列として格納されていることを確認
 			if (nameValue.includes(testPayload)) {
-				// そのまま格納されている場合、ページ内でのレンダリング時にエスケープされているかチェック
-				const pageHTML = await page.content();
-				expect(pageHTML).not.toMatch(/<script[^>]*>.*?alert.*?<\/script>/);
+				// ユーザー入力がDOMに実行可能な形で注入されていないことを確認
+				// （checkNoScriptExecutionで実際のスクリプト実行がないことを検証）
+				await securityPage.checkNoScriptExecution();
 			}
 		});
 
