@@ -74,6 +74,11 @@ class InputValidationTestPage {
 	async gotoContact() {
 		await this.page.goto("/contact");
 		await this.page.waitForLoadState("domcontentloaded");
+		// 固定ヘッダー（アナウンスメントバー）がタブクリックを遮るため非表示化
+		await this.page.addStyleTag({ content: 'header[aria-label="お知らせ"] { display: none !important; }' });
+		// メールタブに切り替え（デフォルトはLINEタブ）
+		await this.page.getByRole("tab", { name: "メール" }).click();
+		await this.page.getByLabel("お名前").waitFor({ state: "visible" });
 	}
 
 	// 登録フォームへ移動
@@ -182,6 +187,7 @@ test.describe("入力検証・サニタイゼーション セキュリティテ�
 		});
 
 		test("メールアドレス形式の検証", async ({ page }) => {
+			test.setTimeout(90000); // 5回のループ反復のため延長
 			await validationPage.gotoContact();
 
 			for (const invalidEmail of INVALID_EMAILS.slice(0, 5)) {
@@ -197,6 +203,11 @@ test.describe("入力検証・サニタイゼーション セキュリティテ�
 
 				// ページをリロードして次のテストへ
 				await page.reload();
+				await page.waitForLoadState("domcontentloaded");
+				// リロード後にアナウンスメントバーを非表示化してからタブ切り替え
+				await page.addStyleTag({ content: 'header[aria-label="お知らせ"] { display: none !important; }' });
+				await page.getByRole("tab", { name: "メール" }).click();
+				await page.getByLabel("お名前").waitFor({ state: "visible" });
 			}
 		});
 
@@ -214,6 +225,7 @@ test.describe("入力検証・サニタイゼーション セキュリティテ�
 		});
 
 		test("電話番号形式の検証", async ({ page }) => {
+			test.setTimeout(90000); // 5回のループ反復のため延長
 			await validationPage.gotoContact();
 
 			const invalidPhones = [
@@ -235,6 +247,11 @@ test.describe("入力検証・サニタイゼーション セキュリティテ�
 
 				await validationPage.expectValidationErrors();
 				await page.reload();
+				await page.waitForLoadState("domcontentloaded");
+				// リロード後にアナウンスメントバーを非表示化してからタブ切り替え
+				await page.addStyleTag({ content: 'header[aria-label="お知らせ"] { display: none !important; }' });
+				await page.getByRole("tab", { name: "メール" }).click();
+				await page.getByLabel("お名前").waitFor({ state: "visible" });
 			}
 		});
 	});
