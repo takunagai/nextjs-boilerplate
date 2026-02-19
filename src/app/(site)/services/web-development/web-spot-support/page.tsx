@@ -8,8 +8,9 @@ import { WebSpotSupportHeroSection } from "@/components/services/web-spot-suppor
 import { WebSpotSupportServicesSection } from "@/components/services/web-spot-support/services-section";
 import { WebSpotSupportPricingSection } from "@/components/services/web-spot-support/pricing-section";
 import { WebSpotSupportProcessSection } from "@/components/services/web-spot-support/process-section";
-import { WebSpotSupportFAQSection } from "@/components/services/web-spot-support/faq-section";
+import { ServiceFAQ } from "@/components/services/shared/service-faq";
 import { BackgroundImageCTA } from "@/components/ui/background-image-cta";
+import { webSpotSupportFaqs } from "@/lib/data/web-spot-support-faq";
 
 // ページ設定
 const pageConfig = createWebDevelopmentServiceConfig(
@@ -51,7 +52,14 @@ export default function WebSpotSupportPage() {
 			<WebSpotSupportServicesSection />
 			<WebSpotSupportPricingSection />
 			<WebSpotSupportProcessSection />
-			<WebSpotSupportFAQSection />
+			<ServiceFAQ
+				faqs={webSpotSupportFaqs}
+				title="よくある質問"
+				description="スポット対応サービスに関するご質問"
+				footerText="お困りごとがございましたら、まずはお気軽にご相談ください"
+				ctaText="今すぐ相談する"
+				ctaHref="/contact?service=web-spot-support"
+			/>
 			<BackgroundImageCTA
 				backgroundImage="/dummy-images/support-team-01.jpg"
 				title="Webのお困りごと、すぐに解決します"

@@ -10,8 +10,9 @@ import { JamstackProcessSection } from "@/components/services/jamstack/process-s
 import { JamstackPricingSection } from "@/components/services/jamstack/pricing-section";
 import { JamstackTechStackSection } from "@/components/services/jamstack/tech-stack-section";
 import { JamstackPortfolioSection } from "@/components/services/jamstack/portfolio-section";
-import { JamstackFAQSection } from "@/components/services/jamstack/faq-section";
+import { ServiceFAQ } from "@/components/services/shared/service-faq";
 import { BackgroundImageCTA } from "@/components/ui/background-image-cta";
+import { jamstackFaqs } from "@/lib/data/jamstack-faq";
 
 // ページ設定
 const pageConfig = createWebDevelopmentServiceConfig(
@@ -56,7 +57,13 @@ export default function JamstackPage() {
 			<JamstackPricingSection />
 			<JamstackTechStackSection />
 			<JamstackPortfolioSection />
-			<JamstackFAQSection />
+			<ServiceFAQ
+				faqs={jamstackFaqs}
+				title="よくある質問"
+				description="Jamstackサイト制作に関するご質問にお答えします"
+				ctaText="無料相談を予約する"
+				ctaHref="/contact?service=jamstack"
+			/>
 			<BackgroundImageCTA
 				backgroundImage="/dummy-images/modern-office-01.jpg"
 				title="次世代Web技術で、未来を先取り"

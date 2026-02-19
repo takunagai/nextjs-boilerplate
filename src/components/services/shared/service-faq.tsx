@@ -1,9 +1,14 @@
-"use client";
-
 import type { ReactNode } from "react";
-import { useState } from "react";
-import { FaChevronDown } from "react-icons/fa6";
+import Link from "next/link";
+import {
+	Accordion,
+	AccordionContent,
+	AccordionItem,
+	AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
+import { SectionHeader } from "@/components/ui/section-header";
 import type { FAQItem } from "@/lib/data/web-development-faq";
 import { cn } from "@/lib/utils";
 
@@ -28,70 +33,39 @@ export function ServiceFAQ({
 	children,
 	className,
 }: ServiceFAQProps) {
-	const [openItems, setOpenItems] = useState<number[]>([]);
-
-	const toggleItem = (index: number) => {
-		setOpenItems((prev) =>
-			prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index],
-		);
-	};
-
 	return (
-		<section className={cn("py-16 sm:py-24", className)}>
+		<section className={cn("py-16 md:py-24", className)}>
 			<Container>
-				<div className="text-center mb-12">
-					<h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-						{title}
-					</h2>
-					{description && (
-						<p className="mt-4 text-lg text-muted-foreground">{description}</p>
-					)}
-				</div>
+				<SectionHeader title={title} description={description} />
 
-				<div className="mx-auto max-w-4xl space-y-4">
-					{faqs.map((faq, index) => {
-						const isOpen = openItems.includes(index);
-						return (
-							<div
+				<div className="mx-auto max-w-4xl">
+					<Accordion type="single" collapsible className="space-y-4">
+						{faqs.map((faq, index) => (
+							<AccordionItem
 								key={faq.question}
-								className="overflow-hidden rounded-lg border border-border bg-card"
+								value={`item-${index}`}
+								className="bg-card border rounded-lg px-6"
 							>
-								<button
-									type="button"
-									onClick={() => toggleItem(index)}
-									aria-expanded={isOpen}
-									className="flex w-full items-center justify-between p-6 text-left transition-colors hover:bg-muted/50"
-								>
-									<span className="font-medium pr-4">{faq.question}</span>
-									<FaChevronDown
-										className={cn(
-											"h-5 w-5 shrink-0 text-muted-foreground transition-transform",
-											isOpen && "rotate-180",
-										)}
-									/>
-								</button>
-								{isOpen && (
-									<div className="border-t border-border px-6 pb-6 pt-4">
-										<p className="text-muted-foreground leading-relaxed">
-											{faq.answer}
-										</p>
-									</div>
-								)}
-							</div>
-						);
-					})}
+								<AccordionTrigger className="text-left hover:no-underline py-6">
+									<span className="font-semibold">{faq.question}</span>
+								</AccordionTrigger>
+								<AccordionContent className="pb-6">
+									<p className="text-muted-foreground leading-relaxed">
+										{faq.answer}
+									</p>
+								</AccordionContent>
+							</AccordionItem>
+						))}
+					</Accordion>
 				</div>
 
 				{children}
 
 				<div className="mt-12 text-center">
 					<p className="mb-4 text-muted-foreground">{footerText}</p>
-					<a
-						href={ctaHref}
-						className="inline-flex items-center rounded-lg bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-					>
-						{ctaText}
-					</a>
+					<Link href={ctaHref}>
+						<Button size="lg">{ctaText}</Button>
+					</Link>
 				</div>
 			</Container>
 		</section>

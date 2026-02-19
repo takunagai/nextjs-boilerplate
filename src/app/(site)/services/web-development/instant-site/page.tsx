@@ -12,8 +12,9 @@ import { ProcessSection } from "@/components/services/instant-site/process-secti
 import { PricingSection } from "@/components/services/instant-site/pricing-section";
 import { TechSpecsSection } from "@/components/services/instant-site/tech-specs-section";
 import { TestimonialsSection } from "@/components/services/instant-site/testimonials-section";
-import { FAQSection } from "@/components/services/instant-site/faq-section";
+import { ServiceFAQ } from "@/components/services/shared/service-faq";
 import { BackgroundImageCTA } from "@/components/ui/background-image-cta";
+import { instantSiteFaqs } from "@/lib/data/instant-site-faq";
 
 // ページ設定
 const pageConfig = createWebDevelopmentServiceConfig(
@@ -57,7 +58,15 @@ export default function InstantSitePage() {
 			<PricingSection />
 			<TechSpecsSection />
 			<TestimonialsSection />
-			<FAQSection />
+			<ServiceFAQ
+				faqs={instantSiteFaqs}
+				title="よくある質問（FAQ）"
+				description="お客様からよくいただく質問にお答えします"
+				className="bg-muted/30"
+				footerText="その他のご質問は、お気軽にお問い合わせください"
+				ctaText="お問い合わせ"
+				ctaHref="/contact?service=instant-site"
+			/>
 			<BackgroundImageCTA
 				backgroundImage="/dummy-images/street-photo-01.jpg"
 				title="半日〜1日で、理想のホームページを"

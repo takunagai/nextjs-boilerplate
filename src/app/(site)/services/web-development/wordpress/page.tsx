@@ -10,8 +10,9 @@ import { WordPressProcessSection } from "@/components/services/wordpress/process
 import { WordPressPricingSection } from "@/components/services/wordpress/pricing-section";
 import { WordPressCustomizationSection } from "@/components/services/wordpress/customization-section";
 import { WordPressPortfolioSection } from "@/components/services/wordpress/portfolio-section";
-import { WordPressFAQSection } from "@/components/services/wordpress/faq-section";
+import { ServiceFAQ } from "@/components/services/shared/service-faq";
 import { BackgroundImageCTA } from "@/components/ui/background-image-cta";
+import { wordPressFaqs } from "@/lib/data/wordpress-faq";
 
 // ページ設定
 const pageConfig = createWebDevelopmentServiceConfig(
@@ -54,7 +55,13 @@ export default function WordPressPage() {
 			<WordPressPricingSection />
 			<WordPressCustomizationSection />
 			<WordPressPortfolioSection />
-			<WordPressFAQSection />
+			<ServiceFAQ
+				faqs={wordPressFaqs}
+				title="よくある質問"
+				description="WordPressサイト制作に関するご質問にお答えします"
+				ctaText="無料相談を予約する"
+				ctaHref="/contact?service=wordpress"
+			/>
 			<BackgroundImageCTA
 				backgroundImage="/dummy-images/office-workspace-01.jpg"
 				title="WordPressで、コンテンツ発信を加速"

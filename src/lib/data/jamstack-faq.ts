@@ -1,15 +1,6 @@
-import { Container } from "@/components/ui/container";
-import { SectionHeader } from "@/components/ui/section-header";
-import {
-	Accordion,
-	AccordionContent,
-	AccordionItem,
-	AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import type { FAQItem } from "./web-development-faq";
 
-const faqs = [
+export const jamstackFaqs: FAQItem[] = [
 	{
 		question: "Jamstackとは何ですか？通常のWebサイトとの違いは？",
 		answer:
@@ -51,46 +42,3 @@ const faqs = [
 			"はい、可能です。Shopify、Stripeとの連携でECサイト、Auth0やSupabaseを使用した会員機能も実装できます。Jamstackの利点を活かしつつ、動的な機能も柔軟に対応いたします。",
 	},
 ];
-
-export function JamstackFAQSection() {
-	return (
-		<section className="py-16 md:py-24">
-			<Container>
-				<SectionHeader
-					title="よくある質問"
-					description="Jamstackサイト制作に関するご質問にお答えします"
-				/>
-
-				<div className="max-w-4xl mx-auto">
-					<Accordion type="single" collapsible className="space-y-4">
-						{faqs.map((faq, index) => (
-							<AccordionItem
-								key={index}
-								value={`item-${index}`}
-								className="bg-card border rounded-lg px-6"
-							>
-								<AccordionTrigger className="text-left hover:no-underline py-6">
-									<span className="font-semibold">{faq.question}</span>
-								</AccordionTrigger>
-								<AccordionContent className="pb-6">
-									<p className="text-muted-foreground leading-relaxed">
-										{faq.answer}
-									</p>
-								</AccordionContent>
-							</AccordionItem>
-						))}
-					</Accordion>
-				</div>
-
-				<div className="text-center mt-12">
-					<p className="text-muted-foreground mb-4">
-						その他のご質問がございましたら、お気軽にお問い合わせください
-					</p>
-					<Link href="/contact?service=jamstack">
-						<Button size="lg">無料相談を予約する</Button>
-					</Link>
-				</div>
-			</Container>
-		</section>
-	);
-}
