@@ -43,6 +43,7 @@ jobs:
             --project=chromium
         env:
           CI: true
+          AUTH_SECRET: ci-test-secret-key-for-playwright-tests-minimum-32-chars
           
       - name: Generate performance report
         if: always()
@@ -99,6 +100,7 @@ jobs:
             --project=chromium
         env:
           CI: true
+          AUTH_SECRET: ci-test-secret-key-for-playwright-tests-minimum-32-chars
           
       - name: Run accessibility tests
         run: |
@@ -108,6 +110,7 @@ jobs:
             --project=chromium
         env:
           CI: true
+          AUTH_SECRET: ci-test-secret-key-for-playwright-tests-minimum-32-chars
           
       - name: Generate security report
         if: always()
