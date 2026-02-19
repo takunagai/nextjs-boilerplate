@@ -74,11 +74,13 @@ class InputValidationTestPage {
 	async gotoContact() {
 		await this.page.goto("/contact");
 		await this.page.waitForLoadState("domcontentloaded");
+		// 固定ヘッダー（アナウンスメントバー）がタブクリックを遮るため非表示化
+		await this.page.evaluate(() => {
+			const bar = document.querySelector('header[aria-label="お知らせ"]');
+			if (bar) (bar as HTMLElement).style.display = "none";
+		});
 		// メールタブに切り替え（デフォルトはLINEタブ）
-		// 固定ヘッダー（アナウンスメントバー）がタブを遮るためJS直接クリック
-		await this.page
-			.getByRole("tab", { name: "メール" })
-			.evaluate((el: HTMLElement) => el.click());
+		await this.page.getByRole("tab", { name: "メール" }).click();
 		await this.page.getByLabel("お名前").waitFor({ state: "visible" });
 	}
 
@@ -204,11 +206,14 @@ test.describe("入力検証・サニタイゼーション セキュリティテ�
 				// ページをリロードして次のテストへ
 				await page.reload();
 				await page.waitForLoadState("domcontentloaded");
-				// リロード後にメールタブに再切り替え
-				// 固定ヘッダー（アナウンスメントバー）がタブを遮るためJS直接クリック
-				await page
-					.getByRole("tab", { name: "メール" })
-					.click({ timeout: 10000, force: true });
+				// リロード後にアナウンスメントバーを非表示化してからタブ切り替え
+				await page.evaluate(() => {
+					const bar = document.querySelector(
+						'header[aria-label="お知らせ"]',
+					);
+					if (bar) (bar as HTMLElement).style.display = "none";
+				});
+				await page.getByRole("tab", { name: "メール" }).click();
 				await page.getByLabel("お名前").waitFor({ state: "visible" });
 			}
 		});
@@ -249,11 +254,14 @@ test.describe("入力検証・サニタイゼーション セキュリティテ�
 				await validationPage.expectValidationErrors();
 				await page.reload();
 				await page.waitForLoadState("domcontentloaded");
-				// リロード後にメールタブに再切り替え
-				// 固定ヘッダー（アナウンスメントバー）がタブを遮るためJS直接クリック
-				await page
-					.getByRole("tab", { name: "メール" })
-					.click({ timeout: 10000, force: true });
+				// リロード後にアナウンスメントバーを非表示化してからタブ切り替え
+				await page.evaluate(() => {
+					const bar = document.querySelector(
+						'header[aria-label="お知らせ"]',
+					);
+					if (bar) (bar as HTMLElement).style.display = "none";
+				});
+				await page.getByRole("tab", { name: "メール" }).click();
 				await page.getByLabel("お名前").waitFor({ state: "visible" });
 			}
 		});

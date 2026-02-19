@@ -271,10 +271,13 @@ test.describe("統合パフォーマンステスト", () => {
 		test("Contact Form - Server Action性能", async ({ page }) => {
 			await page.goto("/contact");
 			await page.waitForLoadState("domcontentloaded");
+			// 固定ヘッダー（アナウンスメントバー）がタブクリックを遮るため非表示化
+			await page.evaluate(() => {
+				const bar = document.querySelector('header[aria-label="お知らせ"]');
+				if (bar) (bar as HTMLElement).style.display = "none";
+			});
 			// メールタブに切り替え（デフォルトはLINEタブ）
-			await page
-				.getByRole("tab", { name: "メール" })
-				.evaluate((el: HTMLElement) => el.click());
+			await page.getByRole("tab", { name: "メール" }).click();
 			await page.getByLabel("お名前").waitFor({ state: "visible" });
 
 			const startTime = performance.now();

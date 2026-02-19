@@ -35,11 +35,13 @@ class SecurityTestPage {
 	async gotoContact() {
 		await this.page.goto("/contact");
 		await this.page.waitForLoadState("domcontentloaded");
+		// 固定ヘッダー（アナウンスメントバー）がタブクリックを遮るため非表示化
+		await this.page.evaluate(() => {
+			const bar = document.querySelector('header[aria-label="お知らせ"]');
+			if (bar) (bar as HTMLElement).style.display = "none";
+		});
 		// メールタブに切り替え（デフォルトはLINEタブ）
-		// 固定ヘッダー（アナウンスメントバー）がタブを遮るためJS直接クリック
-		await this.page
-			.getByRole("tab", { name: "メール" })
-			.evaluate((el: HTMLElement) => el.click());
+		await this.page.getByRole("tab", { name: "メール" }).click();
 		await this.page.getByLabel("お名前").waitFor({ state: "visible" });
 	}
 
