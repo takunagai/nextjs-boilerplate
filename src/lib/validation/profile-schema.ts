@@ -151,6 +151,6 @@ export const profileDeleteConfirmSchema = z.object({
 		}),
 });
 
-export type ProfileDeleteConfirmValues = z.infer<
+export type ProfileDeleteConfirmValues = z.input<
 	typeof profileDeleteConfirmSchema
 >;

@@ -16,6 +16,7 @@ vi.mock("react-icons/fa6", () => ({
 	FaUser: () => <div data-testid="user-icon" />,
 	FaGear: () => <div data-testid="gear-icon" />,
 	FaRightFromBracket: () => <div data-testid="logout-icon" />,
+	FaRightToBracket: () => <div data-testid="login-icon" />,
 	FaShieldHalved: () => <div data-testid="shield-icon" />,
 	FaChartLine: () => <div data-testid="chart-icon" />,
 	FaUsers: () => <div data-testid="users-icon" />,
@@ -47,9 +48,9 @@ describe("UserAuthMenu", () => {
 
 			render(<UserAuthMenu />);
 
-			const loginButton = screen.getByText("ログイン");
+			const loginButton = screen.getByRole("button", { name: "ログイン" });
 			expect(loginButton).toBeInTheDocument();
-			expect(screen.getByTestId("user-icon")).toBeInTheDocument();
+			expect(screen.getByTestId("login-icon")).toBeInTheDocument();
 		});
 
 		it("ログインボタンをクリックすると/loginに遷移する", async () => {
@@ -62,7 +63,7 @@ describe("UserAuthMenu", () => {
 
 			render(<UserAuthMenu />);
 
-			const loginButton = screen.getByText("ログイン");
+			const loginButton = screen.getByRole("button", { name: "ログイン" });
 			await user.click(loginButton);
 
 			expect(mockPush).toHaveBeenCalledWith("/login");

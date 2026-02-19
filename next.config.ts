@@ -1,9 +1,9 @@
 import type { NextConfig } from "next";
 
-// バンドル分析の設定
-const withBundleAnalyzer = require("@next/bundle-analyzer")({
-	enabled: process.env.ANALYZE === "true",
-});
+// バンドル分析の設定（Turbopackデフォルト化に伴い条件分岐）
+const withBundleAnalyzer = process.env.ANALYZE === "true"
+	? require("@next/bundle-analyzer")({ enabled: true })
+	: (config: NextConfig) => config;
 
 const nextConfig: NextConfig = {
 	/* config options here */
@@ -13,10 +13,8 @@ const nextConfig: NextConfig = {
 	// Cloudflare Workers用の設定
 	output: "standalone",
 
-	// Reactコンパイラの有効化
-	experimental: {
-		reactCompiler: true,
-	},
+	// Reactコンパイラの有効化（Next.js 16でトップレベルに移動）
+	reactCompiler: true,
 
 	// 環境変数
 	env: {
