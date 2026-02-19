@@ -1,6 +1,5 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { auth } from "@/lib/auth";
 
 // Edge Runtimeでは通常のMapを使用（メモリリークを防ぐため定期的なクリーンアップが必要）
 const rateLimitMap = new Map<string, { count: number; timestamp: number }>();
@@ -178,9 +177,8 @@ function setSecurityHeaders(response: NextResponse, req: NextRequest): void {
 	response.headers.set("Content-Security-Policy", cspDirectives.join("; "));
 }
 
-// Next.js 16 proxy関数（middleware.tsから移行）
-export function proxy(req: NextRequest) {
-	console.log("Proxy called for:", req.nextUrl.pathname);
+// ミドルウェア関数（OpenNextがproxy.tsを未サポートのため暫定的にmiddleware.tsを使用）
+export function middleware(req: NextRequest) {
 
 	// CSRF保護
 	if (!validateCsrf(req)) {
