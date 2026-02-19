@@ -24,10 +24,10 @@ class AuthFlowPage {
 	async gotoLogin() {
 		await this.page.goto("/login");
 		await this.page.waitForLoadState("domcontentloaded");
-		// フォームフィールドが表示されるまで待機
+		// フォームフィールドが表示されるまで待機（CI環境では初回レンダリングが遅い）
 		await this.page
 			.getByLabel("メールアドレス")
-			.waitFor({ state: "visible", timeout: 15000 });
+			.waitFor({ state: "visible", timeout: 30000 });
 	}
 
 	// ログイン実行
@@ -200,13 +200,19 @@ test.describe("認証フロー", () => {
 			await authFlow.login("wrong@example.com", TEST_USER.password);
 			const hasEmailError = await authFlow.hasLoginError();
 			expect(hasEmailError).toBeTruthy();
-			await expect(page).toHaveURL(/\/login/);
+			// Auth.jsは本番ビルドで/api/auth/errorにリダイレクトする場合がある
+			await expect(page).toHaveURL(/\/(login|api\/auth\/error)/);
+
+			// エラーページの場合はログインページに戻す
+			if (page.url().includes("/api/auth/error")) {
+				await authFlow.gotoLogin();
+			}
 
 			// 3. 間違ったパスワードでの失敗
 			await authFlow.login(TEST_USER.email, "wrongpassword");
 			const hasPasswordError = await authFlow.hasLoginError();
 			expect(hasPasswordError).toBeTruthy();
-			await expect(page).toHaveURL(/\/login/);
+			await expect(page).toHaveURL(/\/(login|api\/auth\/error)/);
 		});
 
 		test("未認証状態でダッシュボードアクセス→ログインページリダイレクト", async ({

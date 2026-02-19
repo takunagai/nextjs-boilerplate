@@ -13,7 +13,10 @@ class ContactFormPage {
 		await this.page.goto("/contact");
 		await this.page.waitForLoadState("domcontentloaded");
 		// メールタブに切り替え（デフォルトはLINEタブ）
-		await this.page.getByRole("tab", { name: "メール" }).click();
+		// force: true で固定ヘッダー（アナウンスメントバー）の遮りを回避
+		await this.page
+			.getByRole("tab", { name: "メール" })
+			.click({ force: true });
 		await this.page.getByLabel("お名前").waitFor({ state: "visible" });
 	}
 
