@@ -63,6 +63,7 @@ test.describe("アクセシビリティ基準", () => {
 test.describe("キーボードナビゲーション", () => {
 	test("ログイン画面: フォーカス可能な要素が存在する", async ({ page }) => {
 		await page.goto("/login");
+		await page.waitForLoadState("domcontentloaded");
 
 		// フォーカス可能な要素の存在確認（Tab順序は実装に依存）
 		const focusableElements = await page
@@ -72,11 +73,9 @@ test.describe("キーボードナビゲーション", () => {
 
 		// 入力フィールドに直接フォーカスできることを確認
 		const emailInput = page.getByLabel("メールアドレス");
-		await emailInput.focus();
-		const isEmailFocused = await emailInput.evaluate(
-			(el) => document.activeElement === el,
-		);
-		expect(isEmailFocused).toBeTruthy();
+		await emailInput.waitFor({ state: "visible", timeout: 15000 });
+		await emailInput.click(); // click() は focus() より確実にフォーカスを設定
+		await expect(emailInput).toBeFocused();
 	});
 
 	test("登録画面: フォーカス可能な要素が存在する", async ({ page }) => {

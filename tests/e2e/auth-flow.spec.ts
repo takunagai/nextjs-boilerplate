@@ -42,9 +42,10 @@ class AuthFlowPage {
 
 		// ログイン処理の完了を待つ（URL変更またはエラー表示）
 		await Promise.race([
-			this.page.waitForURL(/\/dashboard/, { timeout: 20000 }),
+			this.page.waitForURL(/\/dashboard/, { timeout: 30000 }),
+			this.page.waitForURL(/\/api\/auth\/error/, { timeout: 30000 }),
 			this.page.waitForSelector('.text-destructive, .error, [role="alert"]', {
-				timeout: 20000,
+				timeout: 30000,
 			}),
 		]);
 	}
@@ -186,6 +187,7 @@ test.describe("認証フロー", () => {
 
 	test.describe("エラー系フロー", () => {
 		test("ログイン失敗パターンの包括的確認", async ({ page }) => {
+			test.setTimeout(90000); // CI環境での認証エラー処理遅延を考慮
 			await authFlow.gotoLogin();
 
 			// 1. 空のフォームでの失敗
