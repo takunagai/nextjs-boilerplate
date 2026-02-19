@@ -12,8 +12,6 @@ class ContactFormPage {
 	async goto() {
 		await this.page.goto("/contact");
 		await this.page.waitForLoadState("domcontentloaded");
-		// 固定ヘッダー（アナウンスメントバー）がタブクリックを遮るため非表示化
-		await this.page.addStyleTag({ content: 'header[aria-label="お知らせ"] { display: none !important; }' });
 		// メールタブに切り替え（デフォルトはLINEタブ）
 		await this.page.getByRole("tab", { name: "メール" }).click();
 		await this.page.getByLabel("お名前").waitFor({ state: "visible" });
