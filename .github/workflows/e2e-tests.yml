@@ -37,6 +37,7 @@ jobs:
         run: npx playwright test auth-flow.spec.ts contact-form.spec.ts --project=chromium
         env:
           CI: true
+          AUTH_SECRET: ci-test-secret-key-for-playwright-tests-minimum-32-chars
           
       - name: Upload test results
         if: failure()
@@ -77,6 +78,7 @@ jobs:
         run: npx playwright test --project=${{ matrix.browser }}
         env:
           CI: true
+          AUTH_SECRET: ci-test-secret-key-for-playwright-tests-minimum-32-chars
           
       - name: Upload test results
         if: failure()
