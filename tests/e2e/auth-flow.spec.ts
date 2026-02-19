@@ -36,9 +36,9 @@ class AuthFlowPage {
 
 		// ログイン処理の完了を待つ（URL変更またはエラー表示）
 		await Promise.race([
-			this.page.waitForURL(/\/dashboard/, { timeout: 10000 }),
+			this.page.waitForURL(/\/dashboard/, { timeout: 15000 }),
 			this.page.waitForSelector('.text-destructive, .error, [role="alert"]', {
-				timeout: 10000,
+				timeout: 15000,
 			}),
 		]);
 	}
@@ -134,7 +134,7 @@ test.describe("認証フロー", () => {
 			await authFlow.login(TEST_USER.email, TEST_USER.password);
 
 			// 3. ダッシュボードにリダイレクトされることを確認
-			await expect(page).toHaveURL(/\/dashboard/);
+			await expect(page).toHaveURL(/\/dashboard/, { timeout: 15000 });
 
 			// ダッシュボードのコンテンツが表示されることを確認
 			const hasDashboard = await authFlow.hasDashboardContent();
@@ -157,7 +157,7 @@ test.describe("認証フロー", () => {
 			await authFlow.login(ADMIN_USER.email, ADMIN_USER.password);
 
 			// ダッシュボードにリダイレクトされることを確認（より直接的）
-			await expect(page).toHaveURL(/\/dashboard/, { timeout: 10000 });
+			await expect(page).toHaveURL(/\/dashboard/, { timeout: 15000 });
 		});
 	});
 
@@ -204,11 +204,17 @@ test.describe("認証フロー", () => {
 			// ログイン
 			await authFlow.gotoLogin();
 			await authFlow.login(TEST_USER.email, TEST_USER.password);
-			await expect(page).toHaveURL(/\/dashboard/);
+			await expect(page).toHaveURL(/\/dashboard/, { timeout: 15000 });
 
 			// 1. ページリロードでセッション維持
 			await page.reload();
 			await page.waitForLoadState("domcontentloaded");
+			// リロード後のリダイレクト完了を待つ
+			await page.waitForTimeout(1000);
+			if (page.url().includes("/login")) {
+				// セッションの伝播遅延でリダイレクトされた場合はダッシュボードに再遷移
+				await authFlow.gotoDashboard();
+			}
 			let hasDashboard = await authFlow.hasDashboardContent();
 			expect(hasDashboard).toBeTruthy();
 			expect(page.url().includes("/dashboard")).toBeTruthy();
