@@ -20,6 +20,9 @@ const AnnouncementBarContext = createContext<AnnouncementBarContextType>({
 	close: () => {},
 });
 
+// バージョン付きストレージキー（スキーマ変更時にインクリメント）
+const STORAGE_KEY = "announcement-bar-closed:v1";
+
 export function AnnouncementBarProvider({ children }: { children: ReactNode }) {
 	// 初期状態をnullにしてSSR/CSRの不一致を防ぐ
 	const [isVisible, setIsVisible] = useState<boolean | null>(null);
@@ -30,17 +33,26 @@ export function AnnouncementBarProvider({ children }: { children: ReactNode }) {
 		// クライアントサイドでのみ実行
 		if (typeof window === "undefined") return;
 
-		const stored = localStorage.getItem("announcement-bar-closed");
-		const shouldShow = stored !== "true";
+		try {
+			const stored = localStorage.getItem(STORAGE_KEY);
+			const shouldShow = stored !== "true";
 
-		// 初期状態を設定
-		setIsVisible(shouldShow);
+			// 初期状態を設定
+			setIsVisible(shouldShow);
+		} catch {
+			// incognito モードや quota 超過時のフォールバック
+			setIsVisible(true);
+		}
 
 		// 開発環境でのリセット機能
 		if (process.env.NODE_ENV === "development") {
 			// グローバルに関数を公開
 			(window as any).resetAnnouncementBar = () => {
-				localStorage.removeItem("announcement-bar-closed");
+				try {
+					localStorage.removeItem(STORAGE_KEY);
+				} catch {
+					// storage エラーは無視
+				}
 				setIsVisible(true);
 			};
 		}
@@ -51,7 +63,11 @@ export function AnnouncementBarProvider({ children }: { children: ReactNode }) {
 		setTimeout(() => {
 			setIsVisible(false);
 			setIsClosing(false);
-			localStorage.setItem("announcement-bar-closed", "true");
+			try {
+				localStorage.setItem(STORAGE_KEY, "true");
+			} catch {
+				// incognito モードや quota 超過時は状態のみ更新
+			}
 		}, 300); // アニメーション時間と同期
 	};
 
