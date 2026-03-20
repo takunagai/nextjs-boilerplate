@@ -10,6 +10,11 @@ const nextConfig: NextConfig = {
 
 	reactStrictMode: true,
 
+	// バレルインポートの自動最適化（react-icons 等のバンドルサイズ削減）
+	experimental: {
+		optimizePackageImports: ["react-icons"],
+	},
+
 	// Cloudflare Workers用の設定
 	output: "standalone",
 
