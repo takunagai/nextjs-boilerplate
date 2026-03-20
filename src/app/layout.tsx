@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from "next";
+import dynamic from "next/dynamic";
 import { Geist, Geist_Mono } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
 import { UserAuthMenu } from "@/components/auth/user-auth-menu";
-import { WhalesAnimation } from "@/components/background/whales-animation";
 import { AnnouncementBar } from "@/components/layout/announcement-bar";
 import { AnnouncementBarProvider } from "@/components/layout/announcement-bar-context";
 import { Footer } from "@/components/layout/footer";
@@ -15,6 +15,15 @@ import { auth } from "@/lib/auth";
 import { APP, META } from "@/lib/constants";
 import { HEADER_NAVIGATION } from "@/lib/constants/header-navigation";
 import "./globals.css";
+
+// 装飾的背景アニメーション: SSR不要・初期バンドルから除外
+const WhalesAnimation = dynamic(
+	() =>
+		import("@/components/background/whales-animation").then(
+			(m) => m.WhalesAnimation,
+		),
+	{ ssr: false },
+);
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
