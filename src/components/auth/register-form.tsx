@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -44,7 +44,7 @@ type RegisterFormInputs = z.infer<typeof registerSchema>;
  */
 export function RegisterForm() {
 	const router = useRouter();
-	const [isLoading, setIsLoading] = useState(false);
+	const [isLoading, startTransition] = useTransition();
 
 	// フォームの初期化
 	const form = useForm<RegisterFormInputs>({
@@ -60,47 +60,47 @@ export function RegisterForm() {
 	});
 
 	// フォーム送信ハンドラ
-	const onSubmit = async (data: RegisterFormInputs) => {
-		setIsLoading(true);
+	const onSubmit = (data: RegisterFormInputs) => {
+		startTransition(async () => {
+			try {
+				// ここでユーザー登録APIを呼び出し
+				// 実装例: `/api/auth/register` へのPOSTリクエスト
+				const response = await fetch("/api/auth/register", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						name: data.name,
+						email: data.email,
+						password: data.password,
+					}),
+				});
 
-		try {
-			// ここでユーザー登録APIを呼び出し
-			// 実装例: `/api/auth/register` へのPOSTリクエスト
-			const response = await fetch("/api/auth/register", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					name: data.name,
-					email: data.email,
-					password: data.password,
-				}),
-			});
+				const result = (await response.json()) as {
+					success?: boolean;
+					error?: { message?: string };
+				};
 
-			const result = (await response.json()) as {
-				success?: boolean;
-				error?: { message?: string };
-			};
+				if (response.ok && result.success) {
+					toast.success("アカウントが作成されました");
 
-			if (response.ok && result.success) {
-				toast.success("アカウントが作成されました");
-
-				// ログインページへリダイレクト
-				router.push("/login?registered=true");
-			} else {
-				toast.error(result.error?.message || "アカウント登録に失敗しました");
+					// ログインページへリダイレクト
+					router.push("/login?registered=true");
+				} else {
+					toast.error(
+						result.error?.message || "アカウント登録に失敗しました",
+					);
+				}
+			} catch (error) {
+				console.error("Registration error:", error);
+				const errorMessage =
+					error instanceof Error
+						? `登録処理中にエラーが発生しました: ${error.message}`
+						: "登録処理中にエラーが発生しました";
+				toast.error(errorMessage);
 			}
-		} catch (error) {
-			console.error("Registration error:", error);
-			const errorMessage =
-				error instanceof Error
-					? `登録処理中にエラーが発生しました: ${error.message}`
-					: "登録処理中にエラーが発生しました";
-			toast.error(errorMessage);
-		} finally {
-			setIsLoading(false);
-		}
+		});
 	};
 
 	return (

@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useAuth } from "@/hooks/useAuth";
@@ -34,8 +34,8 @@ export function useLoginForm() {
 	// 認証フック
 	const { login } = useAuth();
 
-	// ローディング状態
-	const [isLoading, setIsLoading] = useState(false);
+	// useTransition でローディング状態を管理（ブラウザの応答性を維持）
+	const [isPending, startTransition] = useTransition();
 
 	// エラーメッセージ
 	const [error, setError] = useState<string | undefined>();
@@ -47,41 +47,36 @@ export function useLoginForm() {
 	 * ログイン処理を実行する関数
 	 * @param data フォームの入力値
 	 */
-	const handleLogin = async (data: LoginFormInputs) => {
-		setIsLoading(true);
+	const handleLogin = (data: LoginFormInputs) => {
 		setError(undefined);
 
-		try {
-			// 現在の試行回数を増加
-			const currentAttempts = attempts + 1;
-			setAttempts(currentAttempts);
+		startTransition(async () => {
+			try {
+				// 現在の試行回数を増加
+				setAttempts((prev) => prev + 1);
 
-			// ログイン処理の実行
-			const result = await login({
-				email: data.email,
-				password: data.password,
-			});
+				// ログイン処理の実行
+				const result = await login({
+					email: data.email,
+					password: data.password,
+				});
 
-			// エラー処理
-			if (!result.success) {
-				setError(result.message);
+				// エラー処理
+				if (!result.success) {
+					setError(result.message);
+				}
+			} catch (err) {
+				console.error("ログイン処理エラー:", err);
+				setError(
+					"ログイン処理中にエラーが発生しました。時間をおいて再度お試しください。",
+				);
 			}
-
-			return result;
-		} catch (err) {
-			console.error("ログイン処理エラー:", err);
-			setError(
-				"ログイン処理中にエラーが発生しました。時間をおいて再度お試しください。",
-			);
-			return { success: false, error: "unexpected-error" };
-		} finally {
-			setIsLoading(false);
-		}
+		});
 	};
 
 	return {
 		form,
-		isLoading,
+		isLoading: isPending,
 		error,
 		attempts,
 		handleLogin,
