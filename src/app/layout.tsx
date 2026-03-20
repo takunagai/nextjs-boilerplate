@@ -11,7 +11,7 @@ import { MainContent } from "@/components/layout/main-content";
 import { OrganizationJsonLd, WebsiteJsonLd } from "@/components/seo";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { ScrollToTop } from "@/components/ui/scroll-to-top";
-import { auth } from "@/lib/auth";
+import { getSession } from "@/lib/auth/session";
 import { APP, META } from "@/lib/constants";
 import { HEADER_NAVIGATION } from "@/lib/constants/header-navigation";
 import "./globals.css";
@@ -109,7 +109,7 @@ export default async function RootLayout({
 	children: React.ReactNode;
 }>) {
 	// セッション情報を取得
-	const session = await auth();
+	const session = await getSession();
 
 	return (
 		<html lang="ja" suppressHydrationWarning>

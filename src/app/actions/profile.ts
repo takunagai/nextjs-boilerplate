@@ -17,7 +17,7 @@
 
 import { revalidatePath, revalidateTag } from "next/cache";
 import { z } from "zod";
-import { auth } from "@/lib/auth";
+import { getSession } from "@/lib/auth/session";
 import type { UserProfile } from "@/lib/auth/types";
 import {
 	ActionError,
@@ -39,7 +39,7 @@ const CACHE_TAGS = {
 
 // 認証チェックヘルパー関数
 async function requireAuth() {
-	const session = await auth();
+	const session = await getSession();
 	if (!session?.user?.id) {
 		throw new ActionError("認証が必要です", "AUTHENTICATION_ERROR");
 	}
