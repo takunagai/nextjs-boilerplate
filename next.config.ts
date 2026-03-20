@@ -1,9 +1,10 @@
 import type { NextConfig } from "next";
 
 // バンドル分析の設定（Turbopackデフォルト化に伴い条件分岐）
-const withBundleAnalyzer = process.env.ANALYZE === "true"
-	? require("@next/bundle-analyzer")({ enabled: true })
-	: (config: NextConfig) => config;
+const withBundleAnalyzer =
+	process.env.ANALYZE === "true"
+		? require("@next/bundle-analyzer")({ enabled: true })
+		: (config: NextConfig) => config;
 
 const nextConfig: NextConfig = {
 	/* config options here */

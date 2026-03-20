@@ -88,9 +88,7 @@ export function RegisterForm() {
 					// ログインページへリダイレクト
 					router.push("/login?registered=true");
 				} else {
-					toast.error(
-						result.error?.message || "アカウント登録に失敗しました",
-					);
+					toast.error(result.error?.message || "アカウント登録に失敗しました");
 				}
 			} catch (error) {
 				console.error("Registration error:", error);
