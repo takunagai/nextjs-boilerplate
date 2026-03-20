@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import dynamic from "next/dynamic";
 import { Geist, Geist_Mono } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
 import { UserAuthMenu } from "@/components/auth/user-auth-menu";
+import { LazyWhalesAnimation } from "@/components/background/lazy-whales-animation";
 import { AnnouncementBar } from "@/components/layout/announcement-bar";
 import { AnnouncementBarProvider } from "@/components/layout/announcement-bar-context";
 import { Footer } from "@/components/layout/footer";
@@ -15,15 +15,6 @@ import { getSession } from "@/lib/auth/session";
 import { APP, META } from "@/lib/constants";
 import { HEADER_NAVIGATION } from "@/lib/constants/header-navigation";
 import "./globals.css";
-
-// 装飾的背景アニメーション: SSR不要・初期バンドルから除外
-const WhalesAnimation = dynamic(
-	() =>
-		import("@/components/background/whales-animation").then(
-			(m) => m.WhalesAnimation,
-		),
-	{ ssr: false },
-);
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -123,7 +114,7 @@ export default async function RootLayout({
 				<ThemeProvider>
 					<SessionProvider session={session}>
 						<AnnouncementBarProvider>
-							<WhalesAnimation />
+							<LazyWhalesAnimation />
 							<div className="flex flex-col min-h-screen">
 								<AnnouncementBar />
 								<Header
