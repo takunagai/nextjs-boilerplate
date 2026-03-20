@@ -1,14 +1,20 @@
 import type { NextConfig } from "next";
 
 // バンドル分析の設定（Turbopackデフォルト化に伴い条件分岐）
-const withBundleAnalyzer = process.env.ANALYZE === "true"
-	? require("@next/bundle-analyzer")({ enabled: true })
-	: (config: NextConfig) => config;
+const withBundleAnalyzer =
+	process.env.ANALYZE === "true"
+		? require("@next/bundle-analyzer")({ enabled: true })
+		: (config: NextConfig) => config;
 
 const nextConfig: NextConfig = {
 	/* config options here */
 
 	reactStrictMode: true,
+
+	// バレルインポートの自動最適化（react-icons 等のバンドルサイズ削減）
+	experimental: {
+		optimizePackageImports: ["react-icons"],
+	},
 
 	// Cloudflare Workers用の設定
 	output: "standalone",

@@ -20,7 +20,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { auth } from "@/lib/auth";
+import { getSession } from "@/lib/auth/session";
 
 /**
  * プロフィール編集ページのメタデータ
@@ -35,7 +35,7 @@ export const metadata = {
  */
 export default async function ProfilePage() {
 	// 認証チェック（サーバーサイド）
-	const session = await auth();
+	const session = await getSession();
 	if (!session?.user) {
 		redirect("/login");
 	}

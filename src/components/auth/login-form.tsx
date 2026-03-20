@@ -47,13 +47,10 @@ export function LoginForm() {
 
 	/**
 	 * ログイン処理の実行
+	 * 成功時のリダイレクトは isAuthenticated の useEffect で処理される
 	 */
-	const onSubmit = handleSubmit(async (data) => {
-		const result = await handleLogin(data);
-
-		if (result.success) {
-			router.push("/dashboard");
-		}
+	const onSubmit = handleSubmit((data) => {
+		handleLogin(data);
 	});
 
 	return (

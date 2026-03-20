@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
 import { UserAuthMenu } from "@/components/auth/user-auth-menu";
-import { WhalesAnimation } from "@/components/background/whales-animation";
+import { LazyWhalesAnimation } from "@/components/background/lazy-whales-animation";
 import { AnnouncementBar } from "@/components/layout/announcement-bar";
 import { AnnouncementBarProvider } from "@/components/layout/announcement-bar-context";
 import { Footer } from "@/components/layout/footer";
@@ -11,7 +11,7 @@ import { MainContent } from "@/components/layout/main-content";
 import { OrganizationJsonLd, WebsiteJsonLd } from "@/components/seo";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { ScrollToTop } from "@/components/ui/scroll-to-top";
-import { auth } from "@/lib/auth";
+import { getSession } from "@/lib/auth/session";
 import { APP, META } from "@/lib/constants";
 import { HEADER_NAVIGATION } from "@/lib/constants/header-navigation";
 import "./globals.css";
@@ -100,7 +100,7 @@ export default async function RootLayout({
 	children: React.ReactNode;
 }>) {
 	// セッション情報を取得
-	const session = await auth();
+	const session = await getSession();
 
 	return (
 		<html lang="ja" suppressHydrationWarning>
@@ -114,7 +114,7 @@ export default async function RootLayout({
 				<ThemeProvider>
 					<SessionProvider session={session}>
 						<AnnouncementBarProvider>
-							<WhalesAnimation />
+							<LazyWhalesAnimation />
 							<div className="flex flex-col min-h-screen">
 								<AnnouncementBar />
 								<Header

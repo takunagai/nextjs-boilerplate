@@ -172,7 +172,7 @@ export function getImagesByCategory(category: SampleImage["category"]) {
  * ランダムに画像を取得する関数
  */
 export function getRandomImages(count: number): SampleImage[] {
-	const shuffled = [...sampleImages].sort(() => 0.5 - Math.random());
+	const shuffled = sampleImages.toSorted(() => 0.5 - Math.random());
 	return shuffled.slice(0, count);
 }
 

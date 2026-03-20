@@ -16,8 +16,9 @@
  */
 
 import { revalidatePath, revalidateTag } from "next/cache";
+import { after } from "next/server";
 import { z } from "zod";
-import { auth } from "@/lib/auth";
+import { getSession } from "@/lib/auth/session";
 import type { UserProfile } from "@/lib/auth/types";
 import {
 	ActionError,
@@ -39,7 +40,7 @@ const CACHE_TAGS = {
 
 // 認証チェックヘルパー関数
 async function requireAuth() {
-	const session = await auth();
+	const session = await getSession();
 	if (!session?.user?.id) {
 		throw new ActionError("認証が必要です", "AUTHENTICATION_ERROR");
 	}
@@ -117,9 +118,12 @@ export async function updateProfile(formData: unknown) {
 		// ここではシミュレーションとして遅延を入れる
 		await new Promise((resolve) => setTimeout(resolve, 1000));
 
-		console.log("プロフィール更新:", {
-			userId,
-			data: sanitizedData,
+		// ログ記録をレスポンス後に非ブロッキング実行
+		after(() => {
+			console.log("プロフィール更新:", {
+				userId,
+				data: sanitizedData,
+			});
 		});
 
 		// キャッシュの無効化（Next.js の revalidation）
@@ -193,11 +197,14 @@ export async function uploadProfileImage(formData: FormData) {
 		// シミュレーション用のURL（実際にはアップロード先のURL）
 		const imageUrl = `/api/images/profile/${userId}`;
 
-		console.log("プロフィール画像アップロード:", {
-			userId,
-			fileName: file.name,
-			fileSize: file.size,
-			fileType: file.type,
+		// ログ記録をレスポンス後に非ブロッキング実行
+		after(() => {
+			console.log("プロフィール画像アップロード:", {
+				userId,
+				fileName: file.name,
+				fileSize: file.size,
+				fileType: file.type,
+			});
 		});
 
 		// キャッシュの無効化
@@ -248,10 +255,13 @@ export async function requestEmailChange(newEmail: string) {
 		// 実際のアプリケーションでは、確認メールを送信
 		await new Promise((resolve) => setTimeout(resolve, 1500));
 
-		console.log("メールアドレス変更要求:", {
-			userId,
-			oldEmail: session.user.email,
-			newEmail,
+		// ログ記録をレスポンス後に非ブロッキング実行
+		after(() => {
+			console.log("メールアドレス変更要求:", {
+				userId,
+				oldEmail: session.user.email,
+				newEmail,
+			});
 		});
 
 		return {
@@ -283,9 +293,12 @@ export async function deleteProfile(formData: unknown) {
 		// 関連データ（投稿、コメントなど）の処理も必要
 		await new Promise((resolve) => setTimeout(resolve, 2000));
 
-		console.log("プロフィール削除:", {
-			userId,
-			deletedAt: new Date(),
+		// ログ記録をレスポンス後に非ブロッキング実行
+		after(() => {
+			console.log("プロフィール削除:", {
+				userId,
+				deletedAt: new Date(),
+			});
 		});
 
 		// キャッシュの無効化（削除後なので広範囲に）

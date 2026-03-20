@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
 import { PageHeader } from "@/components/ui/page-header";
-import { auth } from "@/lib/auth";
+import { getSession } from "@/lib/auth/session";
 
 // メタデータ
 export const metadata: Metadata = {
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
  */
 export default async function DashboardPage() {
 	// サーバーサイドで認証状態を確認
-	const session = await auth();
+	const session = await getSession();
 
 	// 未認証の場合はログインページにリダイレクト
 	if (!session) {
