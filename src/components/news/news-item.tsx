@@ -22,7 +22,13 @@ export function NewsItem({
 	const formattedDate = format(date, "yyyy.MM.dd");
 
 	const content = (
-		<li className="list-none p-2 hover:bg-primary-foreground rounded-md">
+		<li
+			className="list-none p-2 hover:bg-primary-foreground rounded-md"
+			style={{
+				contentVisibility: "auto",
+				containIntrinsicSize: "auto 60px",
+			}}
+		>
 			<div className="flex flex-row items-center gap-1 md:w-auto md:min-w-52 md:flex-nowrap">
 				<time dateTime={date.toISOString()} className="text-slate-500 min-w-24">
 					{formattedDate}

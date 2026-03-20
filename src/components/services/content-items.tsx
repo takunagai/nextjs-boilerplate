@@ -86,7 +86,14 @@ export function ContentItems({
 	return (
 		<div className={`grid ${getGridCols()} gap-6 ${className}`}>
 			{items.map((item, index) => (
-				<div key={`${item.title}-${index}`} className="group overflow-hidden">
+				<div
+					key={`${item.title}-${index}`}
+					className="group overflow-hidden"
+					style={{
+						contentVisibility: "auto",
+						containIntrinsicSize: "auto 400px",
+					}}
+				>
 					{item.image && (
 						<div
 							className={`relative w-full ${aspectRatioClass} mb-4 rounded-lg overflow-hidden`}
