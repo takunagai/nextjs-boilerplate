@@ -119,6 +119,7 @@ local/
 
 # MCP server directories
 .serena/
+.superset/
 
 # Claude Code
 .ai/
