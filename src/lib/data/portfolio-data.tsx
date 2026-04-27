@@ -199,6 +199,20 @@ function _getCategoryFromTags(
 // ポートフォリオアイテムのデータ（実際のWebサイトから取得）
 export const portfolioItems: PortfolioItem[] = [
 	{
+		id: "ai-deck",
+		title: "AI Deck",
+		image: "/images/portfolio/ai-deck.png",
+		imageAlt: "AI Deck のWebサイト",
+		category: "web",
+		clientName: "自社開発",
+		servicesTags: ["企画", "デザイン", "開発"],
+		websiteUrl: "https://ai-deck.app/",
+		link: {
+			href: "/portfolio/ai-deck",
+			text: "詳細を見る →",
+		},
+	},
+	{
 		id: "ikigaisagashi",
 		title: "一般社団法人 いきがいさがし",
 		image: "/images/portfolio/ikigaisagashi.jpg",
